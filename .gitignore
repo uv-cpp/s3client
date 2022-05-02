@@ -1,0 +1,16 @@
+.DS_Store
+tmp*
+__*
+*.out
+*.exe
+*.o
+*.a
+*.so
+~*
+'*
+.ipynb_checkpoints
+.idea
+.vscode
+build
+bin
+$HOME*
