@@ -1,1 +1,0 @@
-/usr/bin/c++ -std=c++17 -flto -Ofast CMakeFiles/s3-client.dir/s3-client.cpp.o CMakeFiles/s3-client.dir/url_utility.cpp.o CMakeFiles/s3-client.dir/aws_sign.cpp.o CMakeFiles/s3-client.dir/webclient.cpp.o CMakeFiles/s3-client.dir/utility.cpp.o -o s3-client  ../dep/hash/libhash_lib.a -lcurl -static-libgcc -static-libstdc++ 
