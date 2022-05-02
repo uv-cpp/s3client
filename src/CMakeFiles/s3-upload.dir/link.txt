@@ -1,0 +1,1 @@
+/usr/bin/c++ -std=c++17 -flto -Ofast CMakeFiles/s3-upload.dir/parallel_upload.cpp.o CMakeFiles/s3-upload.dir/url_utility.cpp.o CMakeFiles/s3-upload.dir/aws_sign.cpp.o CMakeFiles/s3-upload.dir/webclient.cpp.o CMakeFiles/s3-upload.dir/response_parser.cpp.o CMakeFiles/s3-upload.dir/utility.cpp.o -o s3-upload  ../dep/hash/libhash_lib.a -lcurl -static-libgcc -static-libstdc++ 

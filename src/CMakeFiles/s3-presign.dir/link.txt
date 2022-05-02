@@ -1,0 +1,1 @@
+/usr/bin/c++ -std=c++17 -flto -Ofast CMakeFiles/s3-presign.dir/presign_url.cpp.o CMakeFiles/s3-presign.dir/aws_sign.cpp.o CMakeFiles/s3-presign.dir/url_utility.cpp.o CMakeFiles/s3-presign.dir/utility.cpp.o -o s3-presign  ../dep/hash/libhash_lib.a -static-libgcc -static-libstdc++ 

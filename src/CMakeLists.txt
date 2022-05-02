@@ -33,6 +33,9 @@
 
 find_package(Threads)
 
+option(TIME_UPLOAD "Time upload" OFF)
+option(IGNORE_SIGPIPE "Ignore SIGPIPE signal" ON)
+
 set(PRESIGN_SRCS presign_url.cpp aws_sign.cpp url_utility.cpp utility.cpp)
 set(SIGN_HEADER_SRCS sign_header.cpp aws_sign.cpp url_utility.cpp utility.cpp)
 set(PAR_UPLOAD_SRCS "parallel_upload.cpp" url_utility.cpp aws_sign.cpp
@@ -73,5 +76,10 @@ target_link_libraries("s3-download" ${LIBRARIES})
 target_link_libraries("s3-download" curl)
 target_link_libraries("s3-download" ${CMAKE_THREAD_LIBS_INIT})
 
-add_compile_definitions(IGNORE_SIGPIPE)
-#add_compile_definitions(TIME_UPLOAD)
+if(IGNORE_SIGPIPE)
+    add_compile_definitions(IGNORE_SIGPIPE)
+endif(IGNORE_SIGPIPE)
+
+if(TIME_UPLOAD)
+    add_compile_definitions(TIME_UPLOAD)
+endif(TIME_UPLOAD)

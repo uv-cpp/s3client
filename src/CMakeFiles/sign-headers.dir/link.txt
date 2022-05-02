@@ -1,0 +1,1 @@
+/usr/bin/c++ -std=c++17 -flto -Ofast CMakeFiles/sign-headers.dir/sign_header.cpp.o CMakeFiles/sign-headers.dir/aws_sign.cpp.o CMakeFiles/sign-headers.dir/url_utility.cpp.o CMakeFiles/sign-headers.dir/utility.cpp.o -o sign-headers  ../dep/hash/libhash_lib.a 

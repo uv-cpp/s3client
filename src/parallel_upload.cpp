@@ -46,6 +46,7 @@
 #include <stdexcept>
 #include <vector>
 #include <chrono>
+#include <iomanip>
 
 
 #include "aws_sign.h"
@@ -287,12 +288,12 @@ int main(int argc, char const* argv[]) {
             throw runtime_error(string("cannot open file ") + config.file);
         }
         fclose(inputFile);
+        // retrieve file size
+        const size_t fileSize = FileSize(config.file);
         string path = "/" + config.bucket + "/" + config.key;
         const string endpoint = 
             config.endpoints[RandomIndex(0, config.endpoints.size()-1)];
         if (config.jobs > 1) {
-            // retrieve file size
-            const size_t fileSize = FileSize(config.file);
             // compute chunk size
             const size_t chunkSize = fileSize / config.jobs;
             // compute last chunk size
@@ -338,7 +339,9 @@ int main(int argc, char const* argv[]) {
                 double(chrono::duration_cast<chrono::nanoseconds>(end - start)
                            .count()) /
                 1E9;
-            cout << "Elapsed: " << elapsed << " s" << endl;
+            cout << "Elapsed time:  " << elapsed << " s" << endl;
+            cout << "Bandwith:      " << std::fixed << std::setprecision(2)
+                 << (fileSize / double(0x100000)) / elapsed << " MiB/s" << endl;
 #endif
             if (!endUpload.Send()) {
                 throw runtime_error("Error sending request: " + req.ErrorMsg());
