@@ -304,7 +304,7 @@ int main(int argc, char const* argv[]) {
             // initiate request
             auto signedHeaders = SignHeaders(
                 config.s3AccessKey, config.s3SecretKey, endpoint, "POST",
-                config.bucket, config.key, "", {{"uploads=", ""}});
+                config.bucket, config.key);
             Map headers(begin(signedHeaders),
                                         end(signedHeaders));
             WebClient req(endpoint, path, "POST", {{"uploads=", ""}}, headers);

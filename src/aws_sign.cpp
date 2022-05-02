@@ -225,11 +225,10 @@ string SignedURL(const string& accessKey, const string& secretKey,
 
     return requestUrl;
 }
-
 //------------------------------------------------------------------------------
 // Sign HTTP headers: return dictionary with {key, value} pairs containing
 // per-header information.
-// TODO: replace argumentd with structure.
+// TODO: replace arguments with struct.
 Map SignHeaders(const string& accessKey, const string& secretKey,
                 const string& endpoint, const string& method,
                 const string& bucketName, const string& keyName,
@@ -251,7 +250,6 @@ Map SignHeaders(const string& accessKey, const string& secretKey,
     Time t = GetDates();
     const string reqParameters =
         parameters.empty() ? "" : UrlEncode(parameters);
-
     string canonicalURI = "/";
 
     if (!bucketName.empty()) {
