@@ -304,10 +304,10 @@ int main(int argc, char const* argv[]) {
             // initiate request
             auto signedHeaders = SignHeaders(
                 config.s3AccessKey, config.s3SecretKey, endpoint, "POST",
-                config.bucket, config.key);
+                config.bucket, config.key, "", {{"uploads", ""}});
             Map headers(begin(signedHeaders),
                                         end(signedHeaders));
-            WebClient req(endpoint, path, "POST", {{"uploads=", ""}}, headers);
+            WebClient req(endpoint, path, "POST", {{"uploads", ""}}, headers);
             if (!req.Send()) {
                 throw runtime_error("Error sending request: " + req.ErrorMsg());
             }
