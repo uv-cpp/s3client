@@ -47,7 +47,7 @@ project(s3-rest
 
 set(DEPENDENCIES "")
 set(LIBRARIES "")
-
+message(${CMAKE_BINARY_DIR})
 # Separate debug-release paths
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin/debug)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin/release)
