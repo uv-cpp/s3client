@@ -273,7 +273,7 @@ Map SignHeaders(const string &accessKey, const string &secretKey,
       xAmzHeaders.insert(kv);
     }
   }
-  allHeaders.insert(begin(additionalHeaders), end(additionalHeaders));
+
   set<string> sortedAllHeadersKeys;
   for (auto kv : allHeaders) {
     sortedAllHeadersKeys.insert(kv.first);
@@ -326,6 +326,7 @@ Map SignHeaders(const string &accessKey, const string &secretKey,
       ", " + string("Signature=") + signature;
 
   allHeaders.insert({"Authorization", authorizationHeader});
+  allHeaders.insert(begin(additionalHeaders), end(additionalHeaders));
   return allHeaders;
 }
 

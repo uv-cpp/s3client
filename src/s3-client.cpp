@@ -215,5 +215,5 @@ int main(int argc, char const *argv[]) {
 }
 
 // to use a tunnel:
-// ssh -f -i /home/ubuntu/.ssh/id_rsa -L 127.0.0.1:8080:<final endpoint>:8080 \
+// ssh -f -i ~/.ssh/id_rsa -L 127.0.0.1:8080:<final endpoint>:8080 \
 // -N <username>o@<server behind the firewall>
