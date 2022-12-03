@@ -105,9 +105,9 @@ template <typename HashMethod> Bytes hmacb(const Bytes &d, const Bytes &k) {
 }
 
 //------------------------------------------------------------------------------
-// Return time in the two formats required to sign AWS requests:
-// - full date-time
-// - date only
+/// Return time in the two formats required to sign AWS requests:
+/// - full date-time
+/// - date only
 Time GetDates() {
   time_t t;
   time(&t);
@@ -125,13 +125,13 @@ Time GetDates() {
 }
 
 //------------------------------------------------------------------------------
-// HMAC encoding byte arrays --> byte array
+/// HMAC encoding byte arrays --> byte array
 Bytes Hash(const Bytes &key, const Bytes &msg) {
   return hmacb<SHA256>(msg, key);
 }
 
 //------------------------------------------------------------------------------
-// Create AWS signature key as byte array
+/// Create AWS signature key as byte array
 Bytes CreateSignatureKey(const string &key, const string &dateStamp,
                          const string &region, const string &service) {
   const string k = "AWS4" + key;
@@ -146,7 +146,7 @@ Bytes CreateSignatureKey(const string &key, const string &dateStamp,
 }
 
 //------------------------------------------------------------------------------
-// Byte to hex string conversion
+/// Byte to hex string conversion
 string Hex(const Bytes &b) {
   ostringstream os;
 
@@ -157,7 +157,7 @@ string Hex(const Bytes &b) {
 }
 
 //------------------------------------------------------------------------------
-// Presign url, 'expiration' time must be specified in seconds
+/// Presign url, 'expiration' time must be specified in seconds
 string SignedURL(const string &accessKey, const string &secretKey,
                  int expiration, const string &endpoint, const string &method,
                  const string &bucketName, const string &keyName,
@@ -226,9 +226,9 @@ string SignedURL(const string &accessKey, const string &secretKey,
   return requestUrl;
 }
 //------------------------------------------------------------------------------
-// Sign HTTP headers: return dictionary with {key, value} pairs containing
-// per-header information.
-// TODO: replace arguments with struct.
+/// Sign HTTP headers: return dictionary with {key, value} pairs containing
+/// per-header information.
+/// @TODO: replace arguments with struct.
 Map SignHeaders(const string &accessKey, const string &secretKey,
                 const string &endpoint, const string &method,
                 const string &bucketName, const string &keyName,
