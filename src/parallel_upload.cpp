@@ -247,7 +247,7 @@ int main(int argc, char const *argv[]) {
         lyra::opt(config.key, "key")["-k"]["--key"]("Key name").required() |
         lyra::opt(config.file, "file")["-f"]["--file"]("File name").required() |
         lyra::opt(config.jobs, "parallel jobs")["-j"]["--jobs"](
-            "Number parallel upload jobs")
+            "Number of parallel upload jobs")
             .optional() |
         lyra::opt(config.credentials,
                   "credentials file")["-c"]["--credentials"](

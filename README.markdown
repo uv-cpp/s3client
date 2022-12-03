@@ -35,6 +35,9 @@ Use `git clone --recurse-submodules` to download dependencies.
 
 The *Portable Hash Library* is copied to a local path (`dep/hash`) because the original
 version does not compile on *MacOS* and the pull requests were not accepted.
+The plan is to replace the current hash library with:
+ *  https://github.com/h5p9sl/hmac_sha256
+ *  https://github.com/amosnier/sha-2
 
 ## License
 

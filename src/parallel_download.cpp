@@ -108,6 +108,8 @@ size_t ObjectSize(const Args &args, const string &path) {
   return size_t(strtoull(cl.c_str(), &ns, 10));
 }
 
+// Extract bytes from object by specifying range in HTTP header:
+// E.g. "Range: bytes=100-1000"
 int DownloadPart(const Args &args, const string &path, int id, size_t chunkSize,
                  size_t lastChunkSize) {
   auto signedHeaders = SignHeaders(args.s3AccessKey, args.s3SecretKey,
