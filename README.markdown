@@ -27,10 +27,14 @@ deployments.
 
 Originally developed to test *Ceph* object storage.
 
-The default *CMake* configuration generates static executables.
+The default *CMake* configuration generates static executables on Linux.
 
 The code is `C++17` compliant.
 
+Use `git clone --recurse-submodules` to download dependencies.
+
+The *Portable Hash Library* is copied to a local path (`dep/hash`) because the original
+version does not compile on *MacOS* and the pull requests were not accepted.
 
 ## License
 
@@ -41,4 +45,4 @@ dependencies on the following software libraries:
 * Lyra, by Rene Rivera - distributed under the Boost license version 1.0
 * Portable Hashing Library, by Stephan Brumme - distributed under the
   zlib license
-  
+

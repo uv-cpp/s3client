@@ -38,27 +38,27 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project(s3-rest 
-			VERSION 1.0
-            DESCRIPTION "Tools to sign and send S3 requests"
-            LANGUAGES CXX)
+        VERSION 1.0
+        DESCRIPTION "Tools to sign and send S3 requests"
+        LANGUAGES CXX)
 
 
 # Variables to be filled by dependent sub-projects
-
 set(DEPENDENCIES "")
 set(LIBRARIES "")
 message(${CMAKE_BINARY_DIR})
+
 # Separate debug-release paths
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin/debug)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin/release)
 
 # Dependencies
 include_directories(${CMAKE_SOURCE_DIR}/include)
-
 include_directories(${CMAKE_SOURCE_DIR}/dep/hash)
+
 add_subdirectory(dep/hash)
 
 include_directories(${CMAKE_SOURCE_DIR}/dep/Lyra/include)
-
 include_directories(${CMAKE_SOURCE_DIR}/include)
+
 add_subdirectory(src)
