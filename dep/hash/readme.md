@@ -1,4 +1,8 @@
+**Note: as of December 2022 local copy of the library is required because compilation on MacOS is broken in the original version and
+the pull request from 2019 was never accepted**.
+
 # Portable C++ Hashing Library
+
 
 This is a mirror of my library hosted at https://create.stephan-brumme.com/hash-library/
 
