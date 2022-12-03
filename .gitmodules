@@ -1,6 +1,6 @@
 [submodule "dep/Lyra"]
 	path = dep/Lyra
-	url = https://github.com/ugovaretto-codex/Lyra.git
+	url = https://github.com/bfgroup/Lyra
 [submodule "dep/hash"]
 	path = dep/hash
 	url = https://github.com/ugovaretto-codex/hash.git
