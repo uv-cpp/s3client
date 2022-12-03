@@ -163,30 +163,26 @@ int main(int argc, char const *argv[]) {
     Validate(args);
     string path = "/" + args.bucket + "/" + args.key;
     vector<future<int>> status(args.jobs);
-    if (args.jobs > 1) {
-      // retrieve file size from remote object
-      const size_t fileSize = ObjectSize(args, path);
-      // compute chunk size
-      const size_t chunkSize = fileSize / args.jobs;
-      // compute last chunk size
-      const size_t lastChunkSize =
-          fileSize % args.jobs == 0 ? chunkSize : fileSize % args.jobs;
-      // create output file
-      std::ofstream ofs(args.file, std::ios::binary | std::ios::out);
-      ofs.seekp(fileSize);
-      ofs.write("", 1);
-      ofs.close();
-      // initiate request
-      for (int i = 0; i != args.jobs; ++i) {
-        status[i] = async(launch::async, DownloadPart, args, path, i, chunkSize,
-                          lastChunkSize);
-      }
-      for (auto &i : status) {
-        if (i.get() > 300)
-          throw runtime_error("Error downloading file");
-      }
-    } else {
-      throw runtime_error("NOT IMPLEMENTED");
+    // retrieve file size from remote object
+    const size_t fileSize = ObjectSize(args, path);
+    // compute chunk size
+    const size_t chunkSize = (fileSize + args.jobs - 1) / args.jobs;
+    // compute last chunk size
+    const size_t lastChunkSize = fileSize - chunkSize * (args.jobs - 1);
+    cout << chunkSize << ' ' << lastChunkSize << ' ' << fileSize << endl;
+    // create output file
+    std::ofstream ofs(args.file, std::ios::binary | std::ios::out);
+    ofs.seekp(fileSize);
+    ofs.write("", 1);
+    ofs.close();
+    // initiate request
+    for (size_t i = 0; i != args.jobs; ++i) {
+      status[i] = async(launch::async, DownloadPart, args, path, i, chunkSize,
+                        lastChunkSize);
+    }
+    for (auto &i : status) {
+      if (i.get() > 300)
+        throw runtime_error("Error downloading file");
     }
     return 0;
   } catch (const exception &e) {
