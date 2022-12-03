@@ -96,7 +96,7 @@ int main(int argc, char const *argv[]) {
           .optional() |
       lyra::opt(args.key, "key")["-k"]["--key"]("Key name").optional();
 
-  // Parse the program arguments:
+  // Parse program arguments:
   auto result = cli.parse({argc, argv});
   if (!result) {
     cerr << result.message() << endl;
@@ -107,11 +107,10 @@ int main(int argc, char const *argv[]) {
     cout << cli;
     return 0;
   }
-  // PrintArgs(args);
   const Map params = ParseParams(args.params);
   const string signedURL =
       SignedURL(args.awsAccessKey, args.awsSecretKey, args.expiration,
                 args.endpoint, ToUpper(args.method), args.bucket, args.key);
-  cout << signedURL;
+  cout << signedURL; // << endl;
   return 0;
 }
