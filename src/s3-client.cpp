@@ -54,7 +54,7 @@ struct Args {
   string s3AccessKey;
   string s3SecretKey;
   string endpoint; // actual endpoint where requests are sent
-  string signUrl;  // url used to sign, allows request to work across tunnels
+  string signUrl;  // url used to sign, allows requests to work across tunnels
   string bucket;
   string key;
   string params;
@@ -64,6 +64,7 @@ struct Args {
   string outfile;
 };
 
+//------------------------------------------------------------------------------
 void Validate(const Args &args) {
   if (args.s3AccessKey.empty() && !args.s3SecretKey.empty() ||
       args.s3SecretKey.empty() && !args.s3AccessKey.empty()) {
@@ -94,6 +95,69 @@ void Validate(const Args &args) {
   }
 }
 
+//-----------------------------------------------------------------------------
+WebClient SendS3Request(Args &args) {
+  // verify peer and host certificate only if signing url == endpoint
+  const bool verify = args.signUrl.empty();
+  ///\warning disabling verification for both peer and host
+  const bool verifyHost = verify;
+  const bool verifyPeer = verify;
+  if (args.signUrl.empty())
+    args.signUrl = args.endpoint;
+  string path;
+  if (!args.bucket.empty()) {
+    path += "/" + args.bucket;
+    if (!args.key.empty())
+      path += "/" + args.key;
+  }
+  const Map params = ParseParams(args.params);
+  Map headers = ParseHeaders(args.headers);
+  if (!args.s3AccessKey.empty()) {
+    auto signedHeaders =
+        SignHeaders(args.s3AccessKey, args.s3SecretKey, args.signUrl,
+                    args.method, args.bucket, args.key, "", params, headers);
+    headers.insert(begin(signedHeaders), end(signedHeaders));
+  }
+  WebClient req(args.endpoint, path, args.method, params, headers);
+  req.SSLVerify(verifyPeer, verifyHost);
+  FILE *of = NULL;
+  if (!args.outfile.empty()) {
+    of = fopen(args.outfile.c_str(), "wb");
+    req.SetWriteFunction(NULL, of); // default is to write to file
+  }
+  if (!args.data.empty()) {
+    if (args.data[0] != '@') {
+      if (ToLower(args.method) == "post") {
+        req.SetUrlEncodedPostData(ParseParams(args.data));
+        req.SetMethod("POST");
+        req.Send();
+      } else { // "put"
+        vector<uint8_t> data(begin(args.data), end(args.data));
+        // req.SetUploadData(data);
+        // req.Send();
+        req.UploadDataFromBuffer(args.data.c_str(), 0, data.size());
+      }
+    } else {
+      if (ToLower(args.method) == "put") {
+        req.UploadFile(args.data.substr(1));
+      } else if (args.method == "post") {
+        ifstream t(args.data.substr(1));
+        const string str((istreambuf_iterator<char>(t)),
+                         istreambuf_iterator<char>());
+        req.SetMethod("POST");
+        req.SetPostData(str);
+        req.Send();
+      } else {
+        throw domain_error("Wrong method " + args.method);
+      }
+    }
+  } else
+    req.Send();
+  if (of)
+    fclose(of);
+  return req;
+}
+
 //------------------------------------------------------------------------------
 int main(int argc, char const *argv[]) {
   try {
@@ -119,8 +183,8 @@ int main(int argc, char const *argv[]) {
         lyra::opt(args.bucket, "bucket")["-b"]["--bucket"]("Bucket name")
             .optional() |
         lyra::opt(args.key, "key")["-k"]["--key"]("Key name").optional() |
-        lyra::opt(args.data, "content")["-d"]["--data"](
-            "Data, use '\\' prefix for file name")
+        lyra::opt(args.data, "content")["-v"]["--value"](
+            "Value data, use '@' prefix for file name")
             .optional() |
         lyra::opt(args.headers, "headers")["-H"]["--headers"](
             "URL request headers. header1:value1;header2:...")
@@ -133,7 +197,7 @@ int main(int argc, char const *argv[]) {
             "tunnels")
             .optional();
 
-    // Parse the program arguments:
+    // Parse rogram arguments:
     auto result = cli.parse({argc, argv});
     if (!result) {
       cerr << result.message() << endl;
@@ -145,65 +209,14 @@ int main(int argc, char const *argv[]) {
       return 0;
     }
     Validate(args);
-    // verify peer and host certificate only if signing url == endpoint
-    const bool verify = args.signUrl.empty();
-    ///\warning disabling verification for both peer and host
-    const bool verifyHost = verify;
-    const bool verifyPeer = verify;
-    if (args.signUrl.empty())
-      args.signUrl = args.endpoint;
-    string path;
-    if (!args.bucket.empty()) {
-      path += "/" + args.bucket;
-      if (!args.key.empty())
-        path += "/" + args.key;
-    }
-    const Map params = ParseParams(args.params);
-    Map headers = ParseHeaders(args.headers);
-    if (!args.s3AccessKey.empty()) {
-      auto signedHeaders =
-          SignHeaders(args.s3AccessKey, args.s3SecretKey, args.signUrl,
-                      args.method, args.bucket, args.key, "", params, headers);
-      headers.insert(begin(signedHeaders), end(signedHeaders));
-    }
-    WebClient req(args.endpoint, path, args.method, params, headers);
-    req.SSLVerify(verifyPeer, verifyHost);
-    FILE *of = NULL;
-    if (!args.outfile.empty()) {
-      of = fopen(args.outfile.c_str(), "wb");
-      req.SetWriteFunction(NULL, of); // default is to write to file
-    }
-    if (!args.data.empty()) {
-      if (args.data[0] != '@') {
-        if (ToLower(args.method) == "post") {
-          req.SetUrlEncodedPostData(ParseParams(args.data));
-          req.SetMethod("POST");
-        } else { // "put"
-          req.SetUploadData(vector<uint8_t>(begin(args.data), end(args.data)));
-        }
-        req.Send();
-      } else {
-        if (ToLower(args.method) == "put") {
-          req.UploadFile(args.data.substr(1));
-        } else if (args.method == "post") {
-          ifstream t(args.data.substr(1));
-          const string str((istreambuf_iterator<char>(t)),
-                           istreambuf_iterator<char>());
-          req.SetMethod("POST");
-          req.SetPostData(str);
-          req.Send();
-        } else {
-          throw domain_error("Wrong method " + args.method);
-        }
-      }
-    } else
-      req.Send();
-    if (of)
-      fclose(of);
-    cout << "Status: " << req.StatusCode() << endl;
+    auto req = std::move(SendS3Request(args));
+    // Status code 0 = no error
+    cout << "Status: " << req.StatusCode() << endl << endl;
+    // Response body
     vector<uint8_t> resp = req.GetResponseBody();
     string t(begin(resp), end(resp));
-    cout << t << endl;
+    cout << t << endl << endl;
+    // Response header
     vector<uint8_t> h = req.GetResponseHeader();
     string hs(begin(h), end(h));
     cout << hs << endl;
@@ -216,4 +229,4 @@ int main(int argc, char const *argv[]) {
 
 // to use a tunnel:
 // ssh -f -i ~/.ssh/id_rsa -L 127.0.0.1:8080:<final endpoint>:8080 \
-// -N <username>o@<server behind the firewall>
+// -N <username>@<server behind the firewall>

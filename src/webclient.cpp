@@ -48,9 +48,9 @@
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
-//#ifdef IGNORE_SIGPIPE REQUIRED!
+// #ifdef IGNORE_SIGPIPE REQUIRED!
 #include <signal.h>
-//#endif
+// #endif
 
 #include "common.h"
 
@@ -263,12 +263,14 @@ bool WebClient::UploadFile(const std::string &fname, size_t fsize) {
 // Upload content from memory buffer, equivalent to uploading file from memory
 bool WebClient::UploadDataFromBuffer(const char *data, size_t offset,
                                      size_t size) {
+
   if (curl_easy_setopt(curl_, CURLOPT_READFUNCTION, MemReader) != CURLE_OK) {
     throw std::runtime_error("Cannot set curl read function");
   }
   if (curl_easy_setopt(curl_, CURLOPT_READDATA, &refBuffer_) != CURLE_OK) {
     throw std::runtime_error("Cannot set curl read data buffer");
   }
+  // std::cout << refBuffer_.data << " " << refBuffer_.offset << std::endl;
   refBuffer_.data = data;
   refBuffer_.offset = offset;
   refBuffer_.size = size;
@@ -406,7 +408,9 @@ bool WebClient::Status(CURLcode cc) const {
 // first instance
 void WebClient::InitEnv() {
   // disable SIGPIPE signal per-thread
-  const struct sigaction sa { SIG_IGN };
+  const struct sigaction sa {
+    SIG_IGN
+  };
   sigaction(SIGPIPE, &sa, NULL);
   // first thread initializes curl, the others wait until
   // initialization is complete; the same mutex is used to initialize
@@ -524,8 +528,7 @@ size_t WebClient::Reader(void *outPtr, size_t size, size_t nmemb,
   inBuffer->offset += size;
   return size;
 }
-// Same as Reader but needs to read from memory, not vector, this way
-// we can point to generic memory regions.
+// Same as Reader but reading from memory
 size_t WebClient::MemReader(void *ptr, size_t size, size_t nmemb,
                             MemReadBuffer *inBuffer) {
   // start element
