@@ -46,7 +46,6 @@ project(s3-rest
 # Variables to be filled by dependent sub-projects
 set(DEPENDENCIES "")
 set(LIBRARIES "")
-message(${CMAKE_BINARY_DIR})
 
 # Separate debug-release paths
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin/debug)
