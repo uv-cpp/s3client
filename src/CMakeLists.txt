@@ -33,6 +33,8 @@
 
 find_package(Threads)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
+
 option(TIME_UPLOAD "Time upload" OFF)
 option(IGNORE_SIGPIPE "Ignore SIGPIPE signal" ON)
 
@@ -43,7 +45,7 @@ set(PAR_UPLOAD_SRCS "parallel_upload.cpp" url_utility.cpp aws_sign.cpp
 set(PAR_DLOAD_SRCS "parallel_download.cpp" url_utility.cpp aws_sign.cpp 
     webclient.cpp response_parser.cpp utility.cpp)
 set(S3_CLIENT_SRCS "s3-client.cpp" url_utility.cpp aws_sign.cpp 
-    webclient.cpp utility.cpp)
+    webclient.cpp utility.cpp lib-s3-client.cpp)
 
 set(CMAKE_CXX_FLAGS "-std=c++17 -flto -Ofast" ${CMAKE_CXX_FLAGS})
 

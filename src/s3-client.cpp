@@ -40,15 +40,18 @@
 #include <set>
 #include <streambuf>
 
-#include "aws_sign.h"
-#include "common.h"
+#include "lib-s3-client.h"
 #include "lyra/lyra.hpp"
-#include "webclient.h"
 
 using namespace std;
 using namespace sss;
 
 //------------------------------------------------------------------------------
+// @TODO: replace parameters with S3Args structure
+// struct Args {
+//  bool showHelp = false;
+//  S3Args s3args;
+// }
 struct Args {
   bool showHelp = false;
   string s3AccessKey;
@@ -64,98 +67,11 @@ struct Args {
   string outfile;
 };
 
-//------------------------------------------------------------------------------
-void Validate(const Args &args) {
-  if (args.s3AccessKey.empty() && !args.s3SecretKey.empty() ||
-      args.s3SecretKey.empty() && !args.s3AccessKey.empty()) {
-    throw invalid_argument(
-        "ERROR: both access and secret keys have to be specified");
-  }
-#ifdef VALIDATE_URL
-  const URL url = ParseURL(args.endpoint);
-  if (url.proto != "http" && url.proto != "https") {
-    throw invalid_argument(
-        "ERROR: only 'http' and 'https' protocols supported");
-  }
-  regex re(R"((\w+\.)*\w+\.\w+)");
-  if (!regex_match(url.host, re)) {
-    throw invalid_argument("ERROR: invalid endpoint format, should be "
-                           "http[s]://hostname[:port]");
-  }
-  if (url.port > 0xFFFF) {
-    throw invalid_argument(
-        "ERROR: invalid port number, should be in range[1-65535]");
-  }
-#endif
-  const set<string> methods({"get", "put", "post", "delete", "head"});
-  if (methods.count(ToLower(args.method)) == 0) {
-    throw invalid_argument(
-        "ERROR: only 'get', 'put', 'post', 'delete', 'head' methods "
-        "supported");
-  }
-}
-
-//-----------------------------------------------------------------------------
-WebClient SendS3Request(Args &args) {
-  // verify peer and host certificate only if signing url == endpoint
-  const bool verify = args.signUrl.empty();
-  ///\warning disabling verification for both peer and host
-  const bool verifyHost = verify;
-  const bool verifyPeer = verify;
-  if (args.signUrl.empty())
-    args.signUrl = args.endpoint;
-  string path;
-  if (!args.bucket.empty()) {
-    path += "/" + args.bucket;
-    if (!args.key.empty())
-      path += "/" + args.key;
-  }
-  const Map params = ParseParams(args.params);
-  Map headers = ParseHeaders(args.headers);
-  if (!args.s3AccessKey.empty()) {
-    auto signedHeaders =
-        SignHeaders(args.s3AccessKey, args.s3SecretKey, args.signUrl,
-                    args.method, args.bucket, args.key, "", params, headers);
-    headers.insert(begin(signedHeaders), end(signedHeaders));
-  }
-  WebClient req(args.endpoint, path, args.method, params, headers);
-  req.SSLVerify(verifyPeer, verifyHost);
-  FILE *of = NULL;
-  if (!args.outfile.empty()) {
-    of = fopen(args.outfile.c_str(), "wb");
-    req.SetWriteFunction(NULL, of); // default is to write to file
-  }
-  if (!args.data.empty()) {
-    if (args.data[0] != '@') {
-      if (ToLower(args.method) == "post") {
-        req.SetUrlEncodedPostData(ParseParams(args.data));
-        req.SetMethod("POST");
-        req.Send();
-      } else { // "put"
-        vector<uint8_t> data(begin(args.data), end(args.data));
-        // req.SetUploadData(data);
-        // req.Send();
-        req.UploadDataFromBuffer(args.data.c_str(), 0, data.size());
-      }
-    } else {
-      if (ToLower(args.method) == "put") {
-        req.UploadFile(args.data.substr(1));
-      } else if (args.method == "post") {
-        ifstream t(args.data.substr(1));
-        const string str((istreambuf_iterator<char>(t)),
-                         istreambuf_iterator<char>());
-        req.SetMethod("POST");
-        req.SetPostData(str);
-        req.Send();
-      } else {
-        throw domain_error("Wrong method " + args.method);
-      }
-    }
-  } else
-    req.Send();
-  if (of)
-    fclose(of);
-  return req;
+// !!! Temporary: will parse S3Args from the command line directly
+S3Args ArgsToS3Args(const Args &args) {
+  return S3Args{args.s3AccessKey, args.s3SecretKey, args.endpoint, args.signUrl,
+                args.bucket,      args.key,         args.params,   args.method,
+                args.headers,     args.data,        args.outfile};
 }
 
 //------------------------------------------------------------------------------
@@ -208,8 +124,9 @@ int main(int argc, char const *argv[]) {
       cout << cli;
       return 0;
     }
-    Validate(args);
-    auto req = std::move(SendS3Request(args));
+    S3Args s3args = ArgsToS3Args(args);
+    Validate(s3args);
+    auto req = std::move(SendS3Request(s3args));
     // Status code 0 = no error
     cout << "Status: " << req.StatusCode() << endl << endl;
     // Response body
