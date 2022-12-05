@@ -67,7 +67,7 @@ set(S3_CLIENT_SRCS "s3-client.cpp" url_utility.cpp aws_sign.cpp
 
 Sample requests are shown below, look here for a complete list:
 
-https://docs.aws.amazon.com/AmazonS3/latest/API/API_CopyObject.html
+https://docs.aws.amazon.com/AmazonS3/latest/API/API_Operations.html
 
 ### List bucket content
 
@@ -172,7 +172,6 @@ bin/debug/s3-client -a $S3TEST_ACCESS -s $S3TEST_SECRET -e $S3TEST_URL -b bucket
 ```
 
 C++:
-
 
 ```cpp
 #include "lib-s3-client.h"
