@@ -8,7 +8,7 @@ and send S3 REST requests.
 * `s3-upload`: parallel upload
 * `s3-download`: parallel download
 
-The `s3-client` is a very low level interface which can log the raw XML/JSON
+The `s3-client` is a very low level interface which can log the all the XML/JSON
 requests and responses.
 
 The upload/download tools work best when reading/writing from SSDs or RAID &
@@ -39,6 +39,9 @@ The plan is to replace the current hash library with:
  *  https://github.com/h5p9sl/hmac_sha256
  *  https://github.com/amosnier/sha-2
 
+Requests are sent through a `WebClient` class which wraps `libcurl`, XML
+responses are parsed using C++11 regex library. 
+
 ## License
 
 This software is distributed under the BSD three-clause license and has
@@ -61,6 +64,10 @@ E.g.
 set(S3_CLIENT_SRCS "s3-client.cpp" url_utility.cpp aws_sign.cpp 
     webclient.cpp utility.cpp lib-s3-client.cpp)
 ```
+
+Sample requests are shown below, look here for a complete list:
+
+https://docs.aws.amazon.com/AmazonS3/latest/API/API_CopyObject.html
 
 ### List bucket content
 
@@ -165,9 +172,10 @@ bin/debug/s3-client -a $S3TEST_ACCESS -s $S3TEST_SECRET -e $S3TEST_URL -b bucket
 ```
 
 C++:
+
+
 ```cpp
 #include "lib-s3-client.h"
-
 ...
 S3Args s3args;
 s3args.s3AccessKey = "Naowkmo0786XzwrF";
@@ -227,6 +235,8 @@ Command line:
 bin/debug/s3-client -a $S3TEST_ACCESS -s $S3TEST_SECRET -e $S3TEST_URL -b bucket1 -k variable_name -v "10,20,30" -m put
 ```
 
+C++
+
 ```cpp
 #include "lib-s3-client.h"
 
@@ -276,6 +286,4 @@ X-Xss-Protection: 1; mode=block
 Date: Mon, 05 Dec 2022 08:22:55 GMT
 ```
 The variable type can e.g. be stored into the metadata by sending an `x-amz-meta-type:IntArray` header together with the request.
-
-
 
