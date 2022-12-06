@@ -79,7 +79,7 @@ bin/debug/s3-client -a $S3TEST_ACCESS -s $S3TEST_SECRET -e $S3TEST_URL -b bucket
 
 C++:
 
-```cpp{5-20}
+```cpp
 #include "lib-s3-client.h"
 
 ...
