@@ -36,57 +36,43 @@ find_package(Threads)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
 
 option(TIME_UPLOAD "Time upload" OFF)
-option(IGNORE_SIGPIPE "Ignore SIGPIPE signal" ON)
-
-set(PRESIGN_SRCS presign_url.cpp aws_sign.cpp url_utility.cpp utility.cpp)
-set(SIGN_HEADER_SRCS sign_header.cpp aws_sign.cpp url_utility.cpp utility.cpp)
-set(PAR_UPLOAD_SRCS "parallel_upload.cpp" url_utility.cpp aws_sign.cpp
-    webclient.cpp response_parser.cpp utility.cpp)
-set(PAR_DLOAD_SRCS "parallel_download.cpp" url_utility.cpp aws_sign.cpp 
-    webclient.cpp response_parser.cpp utility.cpp)
-set(S3_CLIENT_SRCS "s3-client.cpp" url_utility.cpp aws_sign.cpp 
-    webclient.cpp utility.cpp lib-s3-client.cpp)
 
 set(CMAKE_CXX_FLAGS "-std=c++17 -flto -Ofast" ${CMAKE_CXX_FLAGS})
 
-add_executable("s3-presign" ${PRESIGN_SRCS})
-add_executable("sign-headers" ${SIGN_HEADER_SRCS})
-add_executable("s3-client" ${S3_CLIENT_SRCS})
-add_executable("s3-upload" ${PAR_UPLOAD_SRCS})
-add_executable("s3-download" ${PAR_DLOAD_SRCS})
+include_directories(${PROJECT_SOURCE_DIR}/lib/include ${PROJECT_SOURCE_DIR}/dep/Lyra/include)
 
-add_dependencies("s3-presign" ${DEPENDENCIES})
-target_link_libraries("s3-presign" ${LIBRARIES})
-if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-  target_link_libraries("s3-presign" -static-libgcc -static-libstdc++)
-endif()
+# add_executable("s3-presign" presign_url.cpp)
+# add_executable("sign-headers" sign_header.cpp)
+# add_executable("s3-client" s3-client.cpp)
+add_executable("s3-upload" parallel_upload.cpp)
+add_executable("s3-download" parallel_download.cpp)
 
-add_dependencies("sign-headers" ${DEPENDENCIES})
-target_link_libraries("sign-headers" ${LIBRARIES})
-
-add_dependencies("s3-client" ${DEPENDENCIES})
-target_link_libraries("s3-client" ${LIBRARIES})
-target_link_libraries("s3-client" curl)
-if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-  target_link_libraries("s3-client" -static-libgcc -static-libstdc++)
-endif()
-
-add_dependencies("s3-upload" ${DEPENDENCIES})
-target_link_libraries("s3-upload" ${LIBRARIES})
+# target_link_libraries("s3-presign" ${LIBRARIES})
+# if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+#   target_link_libraries("s3-presign" -static-libgcc -static-libstdc++)
+# endif()
+#
+# target_link_libraries("sign-headers" ${LIBRARIES})
+#
+# target_link_libraries("s3-client" ${LIBRARIES})
+# target_link_libraries("s3-client" curl)
+# if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+#   target_link_libraries("s3-client" -static-libgcc -static-libstdc++)
+# endif()
+#
+target_link_libraries("s3-upload" s3client hash_lib)
 target_link_libraries("s3-upload" curl)
 target_link_libraries("s3-upload" ${CMAKE_THREAD_LIBS_INIT} )
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
   target_link_libraries("s3-upload" -static-libgcc -static-libstdc++)
 endif()
-
-add_dependencies("s3-download" ${DEPENDENCIES})
-target_link_libraries("s3-download" ${LIBRARIES})
+link_directories(${LINK_DIRS})
+target_link_libraries("s3-download" s3client hash_lib)
 target_link_libraries("s3-download" curl)
 target_link_libraries("s3-download" ${CMAKE_THREAD_LIBS_INIT})
-
-if(IGNORE_SIGPIPE)
-    add_compile_definitions(IGNORE_SIGPIPE)
-endif(IGNORE_SIGPIPE)
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+  target_link_libraries("s3-download" -static-libgcc -static-libstdc++)
+endif()
 
 if(TIME_UPLOAD)
     add_compile_definitions(TIME_UPLOAD)

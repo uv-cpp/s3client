@@ -29,33 +29,19 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #*******************************************************************************
-cmake_minimum_required(VERSION 3.15)
-if(${CMAKE_VERSION} VERSION_LESS 3.15)
-    cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
-endif()
+find_package(Threads)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(S3_CLIENT_LIB_SRCS src/url_utility.cpp src/aws_sign.cpp 
+    src/webclient.cpp src/utility.cpp src/s3-client.cpp src/response_parser.cpp)
 
-project(s3-rest 
-        VERSION 1.0
-        DESCRIPTION "Tools to sign and send S3 requests"
-        LANGUAGES CXX)
+set(CMAKE_CXX_FLAGS "-std=c++17 -flto -Ofast" ${CMAKE_CXX_FLAGS})
 
-set(HASHLIB_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/dep/hash" CACHE PATH "${PROJECT_SOURCE_DIR}/dep/hash")
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
+include_directories(include)
+include_directories(${HASHLIB_INCLUDE_DIR})
 
-# Separate debug-release paths
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/bin/debug)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin/release)
+add_library(s3client ${S3_CLIENT_LIB_SRCS})
 
-if (CMAKE_BUILD_TYPE EQUAL "DEBUG")
-    set(LINK_DIRS ${CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG} CACHE PATH "")
-else (CMAKE_BUILD_TYPE EQUAL "DEBUG")
-    set(LINK_DIRS ${CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE} CACHE PATH "")
-endif (CMAKE_BUILD_TYPE EQUAL "DEBUG")
-
-add_subdirectory(dep/hash)
-add_subdirectory(lib)
-add_subdirectory(apps)
-
+install(TARGETS s3client
+        RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
+install(FILES ./include/s3-client.h DESTINATION ${CMAKE_INSTALL_PREFIX}/include)

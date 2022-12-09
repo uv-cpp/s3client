@@ -53,3 +53,12 @@ struct S3Args {
 //------------------------------------------------------------------------------
 void Validate(const S3Args &args);
 sss::WebClient SendS3Request(S3Args &args);
+void DownloadFile(const std::string &s3AccessKey,
+                  const std::string &s3SecretKey, const std::string &endpoint,
+                  const std::string &bucket, const std::string &key,
+                  const std::string &file, int retries = 0, int jobs = 1,
+                  const std::string &signUrl = "");
+void UploadFile(const std::string &s3AccessKey, const std::string &s3SecretKey,
+                const std::string &endpoint, const std::string &bucket,
+                const std::string &key, const std::string &file, int jobs = 1,
+                int retries = 0, const std::string &signUrl = "");
