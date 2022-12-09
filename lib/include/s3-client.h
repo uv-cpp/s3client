@@ -33,6 +33,7 @@
 #pragma once
 #include "webclient.h"
 #include <string>
+#include <vector>
 
 //------------------------------------------------------------------------------
 struct S3Args {
@@ -50,6 +51,19 @@ struct S3Args {
   std::string outfile;
 };
 
+struct UploadConfig {
+  std::string s3AccessKey;
+  std::string s3SecretKey;
+  std::string endpoint;
+  std::string bucket;
+  std::string key;
+  std::string file;
+  std::string credentials;
+  std::string awsProfile;
+  std::vector<std::string> endpoints;
+  int maxRetries = 1;
+  int jobs = 1;
+};
 //------------------------------------------------------------------------------
 void Validate(const S3Args &args);
 sss::WebClient SendS3Request(S3Args &args);
@@ -58,7 +72,4 @@ void DownloadFile(const std::string &s3AccessKey,
                   const std::string &bucket, const std::string &key,
                   const std::string &file, int retries = 0, int jobs = 1,
                   const std::string &signUrl = "");
-void UploadFile(const std::string &s3AccessKey, const std::string &s3SecretKey,
-                const std::string &endpoint, const std::string &bucket,
-                const std::string &key, const std::string &file, int jobs = 1,
-                int retries = 0, const std::string &signUrl = "");
+std::string UploadFile(UploadConfig);

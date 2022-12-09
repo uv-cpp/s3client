@@ -34,53 +34,22 @@
 
 // Send S3v4 signed REST requests
 
-#include <fstream>
 #include <iostream>
-#include <regex>
-#include <set>
-#include <streambuf>
 
-#include "lib-s3-client.h"
 #include "lyra/lyra.hpp"
+#include "s3-client.h"
 
 using namespace std;
 using namespace sss;
 
 //------------------------------------------------------------------------------
-// @TODO: replace parameters with S3Args structure
-// struct Args {
-//  bool showHelp = false;
-//  S3Args s3args;
-// }
-struct Args {
-  bool showHelp = false;
-  string s3AccessKey;
-  string s3SecretKey;
-  string endpoint; // actual endpoint where requests are sent
-  string signUrl;  // url used to sign, allows requests to work across tunnels
-  string bucket;
-  string key;
-  string params;
-  string method = "GET";
-  string headers;
-  string data;
-  string outfile;
-};
-
-// !!! Temporary: will parse S3Args from the command line directly
-S3Args ArgsToS3Args(const Args &args) {
-  return S3Args{args.s3AccessKey, args.s3SecretKey, args.endpoint, args.signUrl,
-                args.bucket,      args.key,         args.params,   args.method,
-                args.headers,     args.data,        args.outfile};
-}
-
-//------------------------------------------------------------------------------
 int main(int argc, char const *argv[]) {
   try {
-    Args args;
+    S3Args args;
+    bool showHelp = false;
     auto cli =
-        lyra::help(args.showHelp)
-            .description("Send REST request with S3v4 signing") |
+        lyra::help(showHelp).description(
+            "Send REST request with S3v4 signing") |
         lyra::opt(args.s3AccessKey,
                   "awsAccessKey")["-a"]["--access_key"]("AWS access key")
             .optional() |
@@ -120,13 +89,11 @@ int main(int argc, char const *argv[]) {
       cerr << cli << endl;
       exit(1);
     }
-    if (args.showHelp) {
+    if (showHelp) {
       cout << cli;
       return 0;
     }
-    S3Args s3args = ArgsToS3Args(args);
-    Validate(s3args);
-    auto req = std::move(SendS3Request(s3args));
+    auto req = std::move(SendS3Request(args));
     // Status code 0 = no error
     cout << "Status: " << req.StatusCode() << endl << endl;
     // Response body

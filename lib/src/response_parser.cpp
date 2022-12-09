@@ -30,28 +30,27 @@
  *ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
+#include <iostream>
 #include <regex>
-#include <string>
-
 namespace sss {
 
-std::string XMLTag(const std::string& xml, const std::string& tag) {
-    const std::regex rx{tag + "\\s*>\\s*([^\\s<]+)\\s*<"};
-    std::smatch sm;
-    if (!regex_search(xml, sm, rx)) {
-        return "";
-    }
-    return sm[1];
+std::string XMLTag(const std::string &xml, const std::string &tag) {
+  const std::regex rx{tag + "\\s*>\\s*([^\\s<]+)\\s*<"};
+  std::smatch sm;
+  if (!regex_search(xml, sm, rx)) {
+    return "";
+  }
+  return sm[1];
 }
 
-std::string HTTPHeader(const std::string& headers, const std::string& header) {
-    const std::regex rx{header + "\\s*:\\s*([^\\s]+)"};
-    std::smatch sm;
-    if (!regex_search(headers, sm, rx)) {
-        return "";
-    }
-    return sm[1];//vector<uint8_t> h = req.GetResponseHeader();
-            //string hs(begin(h), end(h));
+std::string HTTPHeader(const std::string &headers, const std::string &header) {
+  const std::regex rx{header + "\\s*:\\s*([^\\s]+)"};
+  std::smatch sm;
+  if (!regex_search(headers, sm, rx)) {
+    return "";
+  }
+  return sm[1]; // vector<uint8_t> h = req.GetResponseHeader();
+                // string hs(begin(h), end(h));
 }
 
 } // namespace sss

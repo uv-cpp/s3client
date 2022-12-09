@@ -43,7 +43,7 @@ include_directories(${PROJECT_SOURCE_DIR}/lib/include ${PROJECT_SOURCE_DIR}/dep/
 
 # add_executable("s3-presign" presign_url.cpp)
 # add_executable("sign-headers" sign_header.cpp)
-# add_executable("s3-client" s3-client.cpp)
+add_executable("s3-client" s3-client.cpp)
 add_executable("s3-upload" parallel_upload.cpp)
 add_executable("s3-download" parallel_download.cpp)
 
@@ -54,12 +54,12 @@ add_executable("s3-download" parallel_download.cpp)
 #
 # target_link_libraries("sign-headers" ${LIBRARIES})
 #
-# target_link_libraries("s3-client" ${LIBRARIES})
-# target_link_libraries("s3-client" curl)
-# if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-#   target_link_libraries("s3-client" -static-libgcc -static-libstdc++)
-# endif()
-#
+target_link_libraries("s3-client" s3client hash_lib) 
+target_link_libraries("s3-client" curl)
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+  target_link_libraries("s3-client" -static-libgcc -static-libstdc++)
+endif()
+
 target_link_libraries("s3-upload" s3client hash_lib)
 target_link_libraries("s3-upload" curl)
 target_link_libraries("s3-upload" ${CMAKE_THREAD_LIBS_INIT} )

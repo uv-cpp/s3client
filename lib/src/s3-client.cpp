@@ -223,19 +223,17 @@ void DownloadFile(const std::string &s3AccessKey,
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //------------------------------------------------------------------------------
-struct UploadConfig {
-  string s3AccessKey;
-  string s3SecretKey;
-  string endpoint;
-  string bucket;
-  string key;
-  string file;
-  string credentials;
-  string awsProfile;
-  vector<string> endpoints;
-  int maxRetries = 2;
-  int jobs = 1;
-};
+namespace sss {
+///@todo use size_t
+extern int RandomIndex(int, int);
+extern ::std::string XMLTag(const ::std::string &xml, const ::std::string &tag);
+extern size_t FileSize(const ::std::string &);
+extern Headers SignHeaders(const ::std::string &accessKey,
+                           const ::std::string &secretKey,
+                           const ::std::string &endpoint,
+                           const ::std::string &method);
+} // namespace sss
+using namespace sss;
 
 vector<string> ReadEndpoints(const string &fname) {
   vector<string> ep;
@@ -258,7 +256,7 @@ bool NotURL(const string &p) {
   return p.empty() || (p.substr(0, 5) != "http:" && p.substr(0, 6) != "https:");
 }
 
-void Validate(const Config &config) {
+void Validate(const UploadConfig &config) {
   if (config.s3AccessKey.empty() && !config.s3SecretKey.empty() ||
       config.s3SecretKey.empty() && !config.s3AccessKey.empty()) {
     throw invalid_argument(
@@ -291,12 +289,13 @@ void Validate(const Config &config) {
 #endif
 }
 
+using Map = map<string, string>;
 using Headers = Map;
 using Parameters = Map;
 
 atomic<int> numRetriesG{0};
 
-WebClient BuildUploadRequest(const Config &config, const string &path,
+WebClient BuildUploadRequest(const UploadConfig &config, const string &path,
                              int partNum, const string &uploadId) {
   Parameters params = {{"partNumber", to_string(partNum + 1)},
                        {"uploadId", uploadId}};
@@ -326,8 +325,24 @@ string BuildEndUploadXML(vector<future<string>> &etags) {
   xml += "</CompleteMultipartUpload>";
   return xml;
 }
-
-WebClient BuildEndUploadRequest(const Config &config, const string &path,
+#include <iostream>
+// WebClient BuildEndUploadRequest(const UploadConfig &config, const string
+// &path,
+//                                 vector<future<string>> &etags,
+//                                 const string &uploadId) {
+//   const size_t ri = RandomIndex(0, int(config.endpoints.size() - 1));
+//   const string endpoint = config.endpoints[ri];
+//   S3Args args;
+//   args.s3AccessKey = config.s3AccessKey;
+//   args.s3SecretKey = config.s3SecretKey;
+//   args.endpoint = endpoint;
+//   args.method = "POST";
+//   args.params = string("uploadId=") + uploadId;
+//   args.data = BuildEndUploadXML(etags);
+//   std::cout << args.data << std::endl;
+//   return SendS3Request(args);
+// }
+WebClient BuildEndUploadRequest(const UploadConfig &config, const string &path,
                                 vector<future<string>> &etags,
                                 const string &uploadId) {
   Parameters params = {{"uploadId", uploadId}};
@@ -343,7 +358,7 @@ WebClient BuildEndUploadRequest(const Config &config, const string &path,
   return req;
 }
 
-string UploadPart(const Config &config, const string &path,
+string UploadPart(const UploadConfig &config, const string &path,
                   const string &uploadId, int i, size_t offset,
                   size_t chunkSize, int maxTries = 1, int tryNum = 1) {
   WebClient ul = BuildUploadRequest(config, path, i, uploadId);
@@ -363,8 +378,7 @@ string UploadPart(const Config &config, const string &path,
   }
   return etag;
 }
-
-void InitConfig(Config &config) {
+void InitConfig(UploadConfig &config) {
   if (config.s3AccessKey.empty() && config.s3SecretKey.empty()) {
     const string fname = config.credentials.empty()
                              ? GetHomeDir() + "/.aws/credentials"
@@ -390,63 +404,38 @@ void InitConfig(Config &config) {
   config.endpoint = config.endpoints[0];
 }
 
-//------------------------------------------------------------------------------
-int main(int argc, char const *argv[]) {
-  try {
-    UploadConfig config;
-    auto cli =
-        lyra::help(config.showHelp).description("Upload file to S3 bucket") |
-        lyra::opt(config.s3AccessKey,
-                  "awsAccessKey")["-a"]["--access_key"]("AWS access key")
-            .optional() |
-        lyra::opt(config.s3SecretKey,
-                  "awsSecretKey")["-s"]["--secret_key"]("AWS secret key")
-            .optional() |
-        lyra::opt(config.endpoint,
-                  "endpoint")["-e"]["--endpoint"]("Endpoint URL")
-            .required() |
-        lyra::opt(config.bucket, "bucket")["-b"]["--bucket"]("Bucket name")
-            .required() |
-        lyra::opt(config.key, "key")["-k"]["--key"]("Key name").required() |
-        lyra::opt(config.file, "file")["-f"]["--file"]("File name").required() |
-        lyra::opt(config.jobs, "parallel jobs")["-j"]["--jobs"](
-            "Number of parallel upload jobs")
-            .optional() |
-        lyra::opt(config.credentials,
-                  "credentials file")["-c"]["--credentials"](
-            "Credentials file, AWS cli format")
-            .optional() |
-        lyra::opt(config.awsProfile, "AWS config profile")["-p"]["--profile"](
-            "Profile in AWS config file")
-            .optional() |
-        lyra::opt(config.maxRetries, "Max retries")["-r"]["--retries"](
-            "Max number of per-multipart part retries")
-            .optional();
-
-    // Parse the program arguments:
-    auto result = cli.parse({argc, argv});
-    if (!result) {
-      cerr << result.message() << endl;
-      cerr << cli << endl;
-      exit(1);
-    }
-    if (config.showHelp) {
-      cout << cli;
-      return 0;
-    }
-
-    InitConfig(config);
-
-    Validate(config);
+/*ETag*/ ::std::string UploadFile(UploadConfig config) {
+  FILE *inputFile = fopen(config.file.c_str(), "rb");
+  if (!inputFile) {
+    throw runtime_error(string("cannot open file ") + config.file);
+  }
+  fclose(inputFile);
+  // retrieve file size
+  const size_t fileSize = sss::FileSize(config.file);
+  string path = "/" + config.bucket + "/" + config.key;
+  if (config.endpoints.empty()) {
+    config.endpoints.push_back(config.endpoint);
+  }
+  const string endpoint =
+      config.endpoints[RandomIndex(0, config.endpoints.size() - 1)];
+  if (config.jobs > 1) {
+    // compute chunk size
+    const size_t chunkSize = fileSize / config.jobs;
+    // compute last chunk size
+    const size_t lastChunkSize = fileSize % config.jobs == 0
+                                     ? chunkSize
+                                     : fileSize % config.jobs + chunkSize;
+    S3Args args;
+    // begin uplaod request -> get upload id
+    args.s3AccessKey = config.s3AccessKey;
+    args.s3SecretKey = config.s3SecretKey;
+    args.endpoint = config.endpoint;
+    args.bucket = config.bucket;
+    args.key = config.key;
+    args.method = "POST";
+    args.params = "uploads=";
+    auto req = SendS3Request(args);
     // initiate request
-    auto signedHeaders =
-        SignHeaders(config.s3AccessKey, config.s3SecretKey, endpoint, "POST",
-                    config.bucket, config.key, "", {{"uploads", ""}});
-    Map headers(begin(signedHeaders), end(signedHeaders));
-    WebClient req(endpoint, path, "POST", {{"uploads", ""}}, headers);
-    if (!req.Send()) {
-      throw runtime_error("Error sending request: " + req.ErrorMsg());
-    }
     if (req.StatusCode() >= 400) {
       const string errcode = XMLTag(req.GetContentText(), "[Cc]ode");
       throw runtime_error("Error sending begin upload request - " + errcode);
@@ -454,41 +443,33 @@ int main(int argc, char const *argv[]) {
     vector<uint8_t> resp = req.GetResponseBody();
     const string xml(begin(resp), end(resp));
     const string uploadId = XMLTag(xml, "[Uu]pload[Ii][dD]");
+    // send parts in parallel and store ETags
     vector<future<string>> etags(config.jobs);
-#ifdef TIME_UPLOAD
-    using Clock = chrono::high_resolution_clock;
-    auto start = Clock::now();
-#endif
     for (int i = 0; i != config.jobs; ++i) {
       const size_t sz = i != config.jobs - 1 ? chunkSize : lastChunkSize;
       etags[i] = async(launch::async, UploadPart, config, path, uploadId, i,
                        chunkSize * i, sz, config.maxRetries, 1);
     }
+    // send end upload request
     WebClient endUpload = BuildEndUploadRequest(config, path, etags, uploadId);
-#ifdef TIME_UPLOAD
-    const auto end = Clock::now();
-    const double elapsed =
-        double(
-            chrono::duration_cast<chrono::nanoseconds>(end - start).count()) /
-        1E9;
-    cout << "Elapsed time:  " << elapsed << " s" << endl;
-    cout << "Bandwith:      " << std::fixed << std::setprecision(2)
-         << (fileSize / double(0x100000)) / elapsed << " MiB/s" << endl;
-#endif
-    if (!endUpload.Send()) {
-      throw runtime_error("Error sending request: " + req.ErrorMsg());
-    }
+    endUpload.Send();
     if (endUpload.StatusCode() >= 400) {
       const string errcode = XMLTag(endUpload.GetContentText(), "[Cc]ode");
       throw runtime_error("Error sending end upload request - " + errcode);
     }
-    const string etag = XMLTag(endUpload.GetContentText(), "[Ee][Tt]ag");
+    string etag = XMLTag(endUpload.GetContentText(), "[Ee][Tt]ag");
+    string etagX = HTTPHeader(req.GetHeaderText(), "[Ee][Tt]ag");
     if (etag.empty()) {
-      cerr << "Error sending end upload request" << endl;
+      throw runtime_error("Empty ETag");
     }
-    cout << etag << endl;
-  }
-  else {
+    if (etag[0] == '"') {
+      etag = etag.substr(1, etag.size() - 2);
+    } else if (etag.substr(0, string("&#34;").size()) == "&#34;") {
+      const size_t quotes = string("&#34;").size();
+      etag = etag.substr(quotes, etag.size() - 2 * quotes);
+    }
+    return etag;
+  } else {
     auto signedHeaders =
         SignHeaders(config.s3AccessKey, config.s3SecretKey, endpoint, "PUT",
                     config.bucket, config.key, "");
@@ -501,46 +482,14 @@ int main(int argc, char const *argv[]) {
       const string errcode = XMLTag(req.GetContentText(), "[Cc]ode");
       throw runtime_error("Error sending upload request - " + errcode);
     }
-    const string etag = HTTPHeader(req.GetHeaderText(), "[Ee][Tt]ag");
+
+    string etag = HTTPHeader(req.GetHeaderText(), "[Ee][Tt]ag");
     if (etag[0] == '"') {
-      cout << etag.substr(1, etag.size() - 2) << endl;
-    } else {
-      cout << etag << endl;
+      etag = etag.substr(1, etag.size() - 2);
     }
     if (etag.empty()) {
       throw runtime_error("Error sending upload request");
     }
+    return etag;
   }
-  if (numRetriesG > 0)
-    cout << "Num retries: " << numRetriesG << endl;
-  return 0;
 }
-catch (const exception &e) {
-  cerr << e.what() << endl;
-  return 1;
-}
-}
-namespace sss {
-///@todo use size_t
-extern int RandomIndex(int, int);
-} // namespace sss
-void UploadFile(UploadConfig &config) {
-
-  FILE *inputFile = fopen(config.file.c_str(), "rb");
-  if (!inputFile) {
-    throw runtime_error(string("cannot open file ") + config.file);
-  }
-  fclose(inputFile);
-  // retrieve file size
-  const size_t fileSize = FileSize(config.file);
-  string path = "/" + config.bucket + "/" + config.key;
-  const string endpoint =
-      config.endpoints[RandomIndex(0, config.endpoints.size() - 1)];
-  if (config.jobs > 1) {
-    // compute chunk size
-    const size_t chunkSize = fileSize / config.jobs;
-    // compute last chunk size
-    const size_t lastChunkSize = fileSize % config.jobs == 0
-                                     ? chunkSize
-                                     : fileSize % config.jobs + chunkSize;
-  }
