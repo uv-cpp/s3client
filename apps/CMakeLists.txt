@@ -29,31 +29,27 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #*******************************************************************************
-# Executables
-
 find_package(Threads)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
 
-option(TIME_UPLOAD "Time upload" OFF)
-
 set(CMAKE_CXX_FLAGS "-std=c++17 -flto -Ofast" ${CMAKE_CXX_FLAGS})
 
-include_directories(${PROJECT_SOURCE_DIR}/lib/include ${PROJECT_SOURCE_DIR}/dep/Lyra/include)
+include_directories(${S3LIB_INCLUDE_DIR}
+                    ${HASH_LIB_INCLUDE_DIR}
+                    ${LYRA_INCLUDE_DIR})
+link_directories(${LINK_DIRS})
 
-# add_executable("s3-presign" presign_url.cpp)
-# add_executable("sign-headers" sign_header.cpp)
+add_executable("s3-presign" presign_url.cpp)
 add_executable("s3-client" s3-client.cpp)
 add_executable("s3-upload" parallel_upload.cpp)
 add_executable("s3-download" parallel_download.cpp)
 
-# target_link_libraries("s3-presign" ${LIBRARIES})
-# if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
-#   target_link_libraries("s3-presign" -static-libgcc -static-libstdc++)
-# endif()
-#
-# target_link_libraries("sign-headers" ${LIBRARIES})
-#
+target_link_libraries("s3-presign" s3client hash_lib)
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+  target_link_libraries("s3-presign" -static-libgcc -static-libstdc++)
+endif()
+
 target_link_libraries("s3-client" s3client hash_lib) 
 target_link_libraries("s3-client" curl)
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
@@ -66,7 +62,7 @@ target_link_libraries("s3-upload" ${CMAKE_THREAD_LIBS_INIT} )
 if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
   target_link_libraries("s3-upload" -static-libgcc -static-libstdc++)
 endif()
-link_directories(${LINK_DIRS})
+
 target_link_libraries("s3-download" s3client hash_lib)
 target_link_libraries("s3-download" curl)
 target_link_libraries("s3-download" ${CMAKE_THREAD_LIBS_INIT})
@@ -74,6 +70,6 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
   target_link_libraries("s3-download" -static-libgcc -static-libstdc++)
 endif()
 
-if(TIME_UPLOAD)
-    add_compile_definitions(TIME_UPLOAD)
-endif(TIME_UPLOAD)
+include(GNUInstallDirs)
+install(TARGETS s3-presign s3-client s3-upload s3-download
+        RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)

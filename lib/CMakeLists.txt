@@ -44,4 +44,5 @@ add_library(s3client ${S3_CLIENT_LIB_SRCS})
 install(TARGETS s3client
         RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
         ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
-install(FILES ./include/s3-client.h DESTINATION ${CMAKE_INSTALL_PREFIX}/include)
+install(DIRECTORY ./include/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include/s3client
+        FILES_MATCHING PATTERN *.h)

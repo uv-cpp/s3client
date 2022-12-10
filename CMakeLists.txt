@@ -43,6 +43,8 @@ project(s3-rest
         LANGUAGES CXX)
 
 set(HASHLIB_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/dep/hash" CACHE PATH "${PROJECT_SOURCE_DIR}/dep/hash")
+set(S3LIB_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/lib/include" CACHE PATH "${PROJECT_SOURCE_DIR}/lib/include")
+set(LYRA_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/dep/Lyra/include" CACHE PATH "${PROJECT_SOURCE_DIR}/dep/Lyra/include")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
 
 # Separate debug-release paths

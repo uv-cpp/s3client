@@ -91,7 +91,7 @@ WebClient SendS3Request(S3Args &args) {
     if (!args.key.empty())
       path += "/" + args.key;
   }
-  const Map params = ParseParams(args.params);
+  const sss::Map params = ParseParams(args.params);
   Map headers = ParseHeaders(args.headers);
   if (!args.s3AccessKey.empty()) {
     auto signedHeaders =
@@ -492,4 +492,25 @@ void InitConfig(UploadConfig &config) {
     }
     return etag;
   }
+}
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+namespace sss {
+extern std::string SignedURL(const string &accessKey, const string &secretKey,
+                             int expiration, const string &endpoint,
+                             const string &method, const string &bucketName,
+                             const string &keyName,
+                             const std::map<std::string, std::string> &params,
+                             const string &region);
+// extern std::map<std::string, std::string> ParseParams(const std::string &);
+} // namespace sss
+std::string SignS3URL(const std::string &accessKey, const string &secretKey,
+                      int expiration, const std::string &endpoint,
+                      const std::string &method, const string &bucketName,
+                      const std::string &keyName, const std::string &params,
+                      const std::string &region) {
+  return SignedURL(accessKey, secretKey, expiration, endpoint, method,
+                   bucketName, keyName, ParseParams(params), region);
 }

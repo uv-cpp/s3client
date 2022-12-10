@@ -73,3 +73,9 @@ void DownloadFile(const std::string &s3AccessKey,
                   const std::string &file, int retries = 0, int jobs = 1,
                   const std::string &signUrl = "");
 std::string UploadFile(UploadConfig);
+std::string SignS3URL(const std::string &accessKey,
+                      const std::string &secretKey, int expiration,
+                      const std::string &endpoint, const std::string &method,
+                      const std::string &bucketName, const std::string &keyName,
+                      const std::string &params = "",
+                      const std::string &region = "us-east");

@@ -31,17 +31,11 @@
  *POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 #include <iostream>
-#include <map>
 #include <string>
 
-#include "aws_sign.h"
-#include "common.h"
 #include "lyra/lyra.hpp"
-#include "url_utility.h"
-
+#include "s3-client.h"
 using namespace std;
-
-using namespace sss;
 
 //------------------------------------------------------------------------------
 struct Args {
@@ -61,7 +55,7 @@ void PrintArgs(const Args &args) {
   cout << "awsAccessKey: " << args.awsAccessKey << endl
        << "awsSecretKey: " << args.awsSecretKey << endl
        << "endpoint:     " << args.endpoint << endl
-       << "method:       " << ToUpper(args.method) << endl
+       << "method:       " << args.method << endl
        << "bucket:       " << args.bucket << endl
        << "key:          " << args.key << endl
        << "expiration:   " << args.expiration << endl
@@ -107,10 +101,9 @@ int main(int argc, char const *argv[]) {
     cout << cli;
     return 0;
   }
-  const Map params = ParseParams(args.params);
   const string signedURL =
-      SignedURL(args.awsAccessKey, args.awsSecretKey, args.expiration,
-                args.endpoint, ToUpper(args.method), args.bucket, args.key);
+      SignS3URL(args.awsAccessKey, args.awsSecretKey, args.expiration,
+                args.endpoint, args.method, args.bucket, args.key, args.params);
   cout << signedURL; // << endl;
   return 0;
 }
