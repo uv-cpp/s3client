@@ -36,7 +36,12 @@
 #include <vector>
 
 //------------------------------------------------------------------------------
-struct S3Args {
+struct S3Credentials {
+  std::string s3AccessKey;
+  std::string s3SecretKey;
+};
+
+struct S3ClientConfig {
   std::string s3AccessKey;
   std::string s3SecretKey;
   std::string endpoint; // actual endpoint where requests are sent
@@ -44,38 +49,50 @@ struct S3Args {
       signUrl; // url used to sign, allows requests to work across tunnels
   std::string bucket;
   std::string key;
-  std::string params;
+  std::string params; // "param1=val1;param2=val2..."
   std::string method = "GET";
-  std::string headers;
-  std::string data;
-  std::string outfile;
+  std::string headers; // "Header1:value1;Header2:value2..."
+  std::string data;    // if prefixed with '@' assume filename if not send bytes
+  std::string outfile; // if not empty stores returned response body into file
 };
 
-struct UploadConfig {
+struct S3FileTransferConfig {
   std::string s3AccessKey;
   std::string s3SecretKey;
   std::string endpoint;
+  std::string signUrl; //@warning not implemented @todo implement
   std::string bucket;
   std::string key;
   std::string file;
-  std::string credentials;
+  std::string
+      credentials; //@warning not implemented @todo remove
+                   // and expose InitConfig
+                   // if access and secret not empty credentials is not checked
+                   // else it is interpreted as a file name
+                   // formatted according to AWS standard; if empty
+                   // the standard $HOME/.aws/credentials file is searched for
   std::string awsProfile;
   std::vector<std::string> endpoints;
   int maxRetries = 1;
   int jobs = 1;
 };
+
+struct S3SignUrlConfig {
+  std::string s3AccessKey;
+  std::string s3SecretKey;
+  std::string endpoint;
+  int expiration; // @todo Unsigned!
+  std::string method;
+  std::string bucket;
+  std::string key;
+  std::string params; // "param1=val1;param2=var2"
+  std::string region = "us-east";
+};
 //------------------------------------------------------------------------------
-void Validate(const S3Args &args);
-sss::WebClient SendS3Request(S3Args &args);
-void DownloadFile(const std::string &s3AccessKey,
-                  const std::string &s3SecretKey, const std::string &endpoint,
-                  const std::string &bucket, const std::string &key,
-                  const std::string &file, int retries = 0, int jobs = 1,
-                  const std::string &signUrl = "");
-std::string UploadFile(UploadConfig);
-std::string SignS3URL(const std::string &accessKey,
-                      const std::string &secretKey, int expiration,
-                      const std::string &endpoint, const std::string &method,
-                      const std::string &bucketName, const std::string &keyName,
-                      const std::string &params = "",
-                      const std::string &region = "us-east");
+void Validate(const S3ClientConfig &s);
+sss::WebClient SendS3Request(S3ClientConfig);
+void DownloadFile(S3FileTransferConfig);
+std::string UploadFile(S3FileTransferConfig);
+std::string SignS3URL(const S3SignUrlConfig &);
+S3Credentials GetS3Credentials(const std::string &fileName,
+                               std::string awsProfile);

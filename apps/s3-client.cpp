@@ -45,7 +45,7 @@ using namespace sss;
 //------------------------------------------------------------------------------
 int main(int argc, char const *argv[]) {
   try {
-    S3Args args;
+    S3ClientConfig args;
     bool showHelp = false;
     auto cli =
         lyra::help(showHelp).description(

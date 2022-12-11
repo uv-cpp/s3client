@@ -38,42 +38,18 @@
 using namespace std;
 
 //------------------------------------------------------------------------------
-struct Args {
-  bool showHelp = false;
-  string awsAccessKey;
-  string awsSecretKey;
-  string endpoint;
-  string bucket;
-  string key;
-  string params;
-  string method;
-  int expiration = 3600;
-};
-
-//------------------------------------------------------------------------------
-void PrintArgs(const Args &args) {
-  cout << "awsAccessKey: " << args.awsAccessKey << endl
-       << "awsSecretKey: " << args.awsSecretKey << endl
-       << "endpoint:     " << args.endpoint << endl
-       << "method:       " << args.method << endl
-       << "bucket:       " << args.bucket << endl
-       << "key:          " << args.key << endl
-       << "expiration:   " << args.expiration << endl
-       << "parameters:   " << args.params << endl;
-}
-
-//------------------------------------------------------------------------------
 // Generate and sign url for usage with AWS S3 compatible environment such
 // as Amazone services and Ceph object gateway
 int main(int argc, char const *argv[]) {
   // The parser with the multiple option arguments and help option.
-  Args args;
+  S3SignUrlConfig args;
+  bool showHelp = false;
   auto cli =
-      lyra::help(args.showHelp).description("Pre-sign S3 URLs") |
-      lyra::opt(args.awsAccessKey,
+      lyra::help(showHelp).description("Pre-sign S3 URLs") |
+      lyra::opt(args.s3AccessKey,
                 "awsAccessKey")["-a"]["--access_key"]("AWS access key")
           .required() |
-      lyra::opt(args.awsSecretKey,
+      lyra::opt(args.s3SecretKey,
                 "awsSecretKey")["-s"]["--secret_key"]("AWS secret key")
           .required() |
       lyra::opt(args.endpoint, "endpoint")["-e"]["--endpoint"]("Endpoint URL")
@@ -97,13 +73,11 @@ int main(int argc, char const *argv[]) {
     cerr << cli << endl;
     exit(1);
   }
-  if (args.showHelp) {
+  if (showHelp) {
     cout << cli;
     return 0;
   }
-  const string signedURL =
-      SignS3URL(args.awsAccessKey, args.awsSecretKey, args.expiration,
-                args.endpoint, args.method, args.bucket, args.key, args.params);
+  const string signedURL = SignS3URL(args);
   cout << signedURL; // << endl;
   return 0;
 }

@@ -41,23 +41,13 @@
 using namespace std;
 using namespace filesystem;
 
-struct DArgs {
-  bool showHelp = false;
-  string s3AccessKey;
-  string s3SecretKey;
-  string endpoint;
-  string bucket;
-  string key;
-  string file;
-  int jobs = 1;
-};
-
 //------------------------------------------------------------------------------
 int main(int argc, char const *argv[]) {
   try {
-    DArgs args;
+    S3FileTransferConfig args;
+    bool showHelp = false;
     auto cli =
-        lyra::help(args.showHelp).description("Download file from S3 bucket") |
+        lyra::help(showHelp).description("Download file from S3 bucket") |
         lyra::opt(args.s3AccessKey,
                   "awsAccessKey")["-a"]["--access_key"]("AWS access key")
             .optional() |
@@ -73,20 +63,18 @@ int main(int argc, char const *argv[]) {
         lyra::opt(args.jobs,
                   "parallel jobs")["-j"]["--jobs"]("Number of parallel jobs")
             .optional();
-
-    if (args.showHelp) {
+    if (showHelp) {
       cout << cli;
       return 0;
     }
-    // Parse the program arguments:
+    // Parse program arguments:
     auto result = cli.parse({argc, argv});
     if (!result) {
       cerr << result.message() << endl;
       cerr << cli << endl;
       exit(1);
     }
-    DownloadFile(args.s3AccessKey, args.s3SecretKey, args.endpoint, args.bucket,
-                 args.key, args.file, args.jobs);
+    DownloadFile(args);
     return 0;
   } catch (const exception &e) {
     cerr << e.what() << endl;

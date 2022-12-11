@@ -46,7 +46,7 @@ using namespace std;
 using namespace sss;
 
 //------------------------------------------------------------------------------
-void Validate(const S3Args &args) {
+void Validate(const S3ClientConfig &args) {
   if (args.s3AccessKey.empty() && !args.s3SecretKey.empty() ||
       args.s3SecretKey.empty() && !args.s3AccessKey.empty()) {
     throw invalid_argument(
@@ -77,7 +77,7 @@ void Validate(const S3Args &args) {
 }
 
 //-----------------------------------------------------------------------------
-WebClient SendS3Request(S3Args &args) {
+WebClient SendS3Request(S3ClientConfig args) {
   // verify peer and host certificate only if signing url == endpoint
   const bool verify = args.signUrl.empty();
   ///\warning disabling verification for both peer and host
@@ -141,22 +141,13 @@ WebClient SendS3Request(S3Args &args) {
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-struct DArgs {
-  string s3AccessKey;
-  string s3SecretKey;
-  string endpoint;
-  string bucket;
-  string key;
-  string file;
-  int jobs = 1;
-};
 namespace sss {
 extern string HTTPHeader(const string &, const string &);
 }
 size_t ObjectSize(const string &s3AccessKey, const string &s3SecretKey,
                   const string &endpoint, const string &bucket,
                   const string &key, const string &signUrl = "") {
-  S3Args args;
+  S3ClientConfig args;
   args.s3AccessKey = s3AccessKey;
   args.s3SecretKey = s3SecretKey;
   args.endpoint = endpoint;
@@ -172,7 +163,7 @@ size_t ObjectSize(const string &s3AccessKey, const string &s3SecretKey,
 }
 // Extract bytes from object by specifying range in HTTP header:
 // E.g. "Range: bytes=100-1000"
-int DownloadPart(const DArgs &args, const string &path, int id,
+int DownloadPart(const S3FileTransferConfig &args, const string &path, int id,
                  size_t chunkSize, size_t lastChunkSize) {
   auto signedHeaders = SignHeaders(args.s3AccessKey, args.s3SecretKey,
                                    args.endpoint, "GET", args.bucket, args.key);
@@ -189,30 +180,26 @@ int DownloadPart(const DArgs &args, const string &path, int id,
   return req.StatusCode();
 }
 
-void DownloadFile(const std::string &s3AccessKey,
-                  const std::string &s3SecretKey, const std::string &endpoint,
-                  const std::string &bucket, const std::string &key,
-                  const std::string &file, int jobs, int retries,
-                  const std::string &signUrl) {
+void DownloadFile(S3FileTransferConfig config) {
 
-  vector<future<int>> status(jobs);
+  vector<future<int>> status(config.jobs);
   // retrieve file size from remote object
   const size_t fileSize =
-      ObjectSize(s3AccessKey, s3SecretKey, endpoint, bucket, key, signUrl);
+      ObjectSize(config.s3AccessKey, config.s3SecretKey, config.endpoint,
+                 config.bucket, config.key, config.signUrl);
   // compute chunk size
-  const size_t chunkSize = (fileSize + jobs - 1) / jobs;
+  const size_t chunkSize = (fileSize + config.jobs - 1) / config.jobs;
   // compute last chunk size
-  const size_t lastChunkSize = fileSize - chunkSize * (jobs - 1);
+  const size_t lastChunkSize = fileSize - chunkSize * (config.jobs - 1);
   // create output file
-  std::ofstream ofs(file, std::ios::binary | std::ios::out);
+  std::ofstream ofs(config.file, std::ios::binary | std::ios::out);
   ofs.seekp(fileSize);
   ofs.write("", 1);
   ofs.close();
   // initiate request
-  string path = "/" + bucket + "/" + key;
-  DArgs args = {s3AccessKey, s3SecretKey, endpoint, bucket, key, file, jobs};
-  for (size_t i = 0; i != jobs; ++i) {
-    status[i] = async(launch::async, DownloadPart, args, path, i, chunkSize,
+  string path = "/" + config.bucket + "/" + config.key;
+  for (size_t i = 0; i != config.jobs; ++i) {
+    status[i] = async(launch::async, DownloadPart, config, path, i, chunkSize,
                       lastChunkSize);
   }
   for (auto &i : status) {
@@ -256,7 +243,7 @@ bool NotURL(const string &p) {
   return p.empty() || (p.substr(0, 5) != "http:" && p.substr(0, 6) != "https:");
 }
 
-void Validate(const UploadConfig &config) {
+void Validate(const S3FileTransferConfig &config) {
   if (config.s3AccessKey.empty() && !config.s3SecretKey.empty() ||
       config.s3SecretKey.empty() && !config.s3AccessKey.empty()) {
     throw invalid_argument(
@@ -295,8 +282,9 @@ using Parameters = Map;
 
 atomic<int> numRetriesG{0};
 
-WebClient BuildUploadRequest(const UploadConfig &config, const string &path,
-                             int partNum, const string &uploadId) {
+WebClient BuildUploadRequest(const S3FileTransferConfig &config,
+                             const string &path, int partNum,
+                             const string &uploadId) {
   Parameters params = {{"partNumber", to_string(partNum + 1)},
                        {"uploadId", uploadId}};
   const string endpoint = config.endpoints[partNum % config.endpoints.size()];
@@ -325,24 +313,9 @@ string BuildEndUploadXML(vector<future<string>> &etags) {
   xml += "</CompleteMultipartUpload>";
   return xml;
 }
-#include <iostream>
-// WebClient BuildEndUploadRequest(const UploadConfig &config, const string
-// &path,
-//                                 vector<future<string>> &etags,
-//                                 const string &uploadId) {
-//   const size_t ri = RandomIndex(0, int(config.endpoints.size() - 1));
-//   const string endpoint = config.endpoints[ri];
-//   S3Args args;
-//   args.s3AccessKey = config.s3AccessKey;
-//   args.s3SecretKey = config.s3SecretKey;
-//   args.endpoint = endpoint;
-//   args.method = "POST";
-//   args.params = string("uploadId=") + uploadId;
-//   args.data = BuildEndUploadXML(etags);
-//   std::cout << args.data << std::endl;
-//   return SendS3Request(args);
-// }
-WebClient BuildEndUploadRequest(const UploadConfig &config, const string &path,
+
+WebClient BuildEndUploadRequest(const S3FileTransferConfig &config,
+                                const string &path,
                                 vector<future<string>> &etags,
                                 const string &uploadId) {
   Parameters params = {{"uploadId", uploadId}};
@@ -358,7 +331,7 @@ WebClient BuildEndUploadRequest(const UploadConfig &config, const string &path,
   return req;
 }
 
-string UploadPart(const UploadConfig &config, const string &path,
+string UploadPart(const S3FileTransferConfig &config, const string &path,
                   const string &uploadId, int i, size_t offset,
                   size_t chunkSize, int maxTries = 1, int tryNum = 1) {
   WebClient ul = BuildUploadRequest(config, path, i, uploadId);
@@ -378,20 +351,22 @@ string UploadPart(const UploadConfig &config, const string &path,
   }
   return etag;
 }
-void InitConfig(UploadConfig &config) {
+
+S3Credentials GetS3Credentials(const string &fileName, string awsProfile) {
+  const string fname =
+      fileName.empty() ? GetHomeDir() + "/.aws/credentials" : fileName;
+  awsProfile = awsProfile.empty() ? "default" : awsProfile;
+  Toml toml = ParseTomlFile(fname);
+  if (toml.find(awsProfile) == toml.end()) {
+    throw invalid_argument("ERROR: profile " + awsProfile + " not found");
+  }
+  return {toml[awsProfile]["aws_access_key_id"],
+          toml[awsProfile]["aws_secret_access_key"]};
+}
+
+S3FileTransferConfig InitConfig(S3FileTransferConfig config) {
   if (config.s3AccessKey.empty() && config.s3SecretKey.empty()) {
-    const string fname = config.credentials.empty()
-                             ? GetHomeDir() + "/.aws/credentials"
-                             : config.credentials;
-    config.awsProfile =
-        config.awsProfile.empty() ? "default" : config.awsProfile;
-    Toml toml = ParseTomlFile(fname);
-    if (toml.find(config.awsProfile) == toml.end()) {
-      throw invalid_argument("ERROR: profile " + config.awsProfile +
-                             " not found");
-    }
-    config.s3AccessKey = toml[config.awsProfile]["aws_access_key_id"];
-    config.s3SecretKey = toml[config.awsProfile]["aws_secret_access_key"];
+    auto c = GetS3Credentials(config.credentials, config.awsProfile);
   }
   if (config.endpoint.empty())
     throw invalid_argument("Error, empty endpoint");
@@ -402,9 +377,10 @@ void InitConfig(UploadConfig &config) {
   if (config.endpoints.empty())
     throw invalid_argument("Error, no endpoints specified");
   config.endpoint = config.endpoints[0];
+  return std::move(config);
 }
 
-/*ETag*/ ::std::string UploadFile(UploadConfig config) {
+/*ETag*/ ::std::string UploadFile(S3FileTransferConfig config) {
   FILE *inputFile = fopen(config.file.c_str(), "rb");
   if (!inputFile) {
     throw runtime_error(string("cannot open file ") + config.file);
@@ -425,7 +401,7 @@ void InitConfig(UploadConfig &config) {
     const size_t lastChunkSize = fileSize % config.jobs == 0
                                      ? chunkSize
                                      : fileSize % config.jobs + chunkSize;
-    S3Args args;
+    S3ClientConfig args;
     // begin uplaod request -> get upload id
     args.s3AccessKey = config.s3AccessKey;
     args.s3SecretKey = config.s3SecretKey;
@@ -506,11 +482,8 @@ extern std::string SignedURL(const string &accessKey, const string &secretKey,
                              const string &region);
 // extern std::map<std::string, std::string> ParseParams(const std::string &);
 } // namespace sss
-std::string SignS3URL(const std::string &accessKey, const string &secretKey,
-                      int expiration, const std::string &endpoint,
-                      const std::string &method, const string &bucketName,
-                      const std::string &keyName, const std::string &params,
-                      const std::string &region) {
-  return SignedURL(accessKey, secretKey, expiration, endpoint, method,
-                   bucketName, keyName, ParseParams(params), region);
+std::string SignS3URL(const S3SignUrlConfig &config) {
+  return SignedURL(config.s3AccessKey, config.s3SecretKey, config.expiration,
+                   config.endpoint, config.method, config.bucket, config.key,
+                   ParseParams(config.params), config.region);
 }

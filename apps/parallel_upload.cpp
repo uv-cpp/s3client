@@ -42,7 +42,7 @@ using namespace std;
 //------------------------------------------------------------------------------
 int main(int argc, char const *argv[]) {
   try {
-    UploadConfig config;
+    S3FileTransferConfig config;
     bool showHelp = false;
     auto cli =
         lyra::help(showHelp).description("Upload file to S3 bucket") |
