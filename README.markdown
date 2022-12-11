@@ -1,37 +1,50 @@
-# S3 toolkit
+# S3 client tools
 
-Set of C++ libraries and command line utilities to sign URLs and headers
-and send S3 REST requests.
+C++ client library and tools.
+Originally developed to test *Ceph* object storage and learn the S3 API.
+All the code is tested on MacOS (x86 and ARM) and Linux (x86) only. 
+
+* `libs3client`: high level functions to sign and send requests and perform parallel uploads/downloads
+
+All the following tools are simple wrapper around library functions:
 
 * `s3-client`: send raw requests
 * `s3-presign`: generate pre-signed `URL`
 * `s3-upload`: parallel upload
 * `s3-download`: parallel download
 
-The `s3-client` is a very low level interface which can log the all the XML/JSON
-requests and responses.
+Launch without arguments to see options.
+
+## Build and install
+
+The `install.sh` script includes the code for checking out the code, building
+and installing to a user specified path.
+Just [download](https://github.com/uv-cpp/s3client/blob/main/install.sh) and run.
+`libcurl` must be available for the code to build.
+
+E.g.
+Building and installing a release version under `$HOME/.local` (default is `/usr/local`).
+
+1. `git clone --recurse-submodules https://github.com/uv-cpp/s3client.git`
+2. `mkdir -p s3client/build`
+3. `cd s3client/build`
+4. `cmake ../ -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=~/.local`;
+5. `make -j 8`
+6. `make install`
+
+Include files are found under `${CMAKE_INSTALL_PREFIX}/include/s3client`.
+The library is found under `${CMAKE_INSTALL_PREFIX}/lib` and the executables
+under `${CMAKE_INSTALL_PREFIX}/bin`.
+
+The `s3-client` tool is a low level interface which can log all the XML/JSON
+requests and responses. All the requests is supported by passing *URL*
+parameters and headers on the command line and data either through the command line 
+or external files.
 
 The upload/download tools work best when reading/writing from SSDs or RAID &
 parallel file-systems with `stripe size = chunk size`.
 
-The upload and download applications read credentials from the standard AWS
-configuration file in the user's home directory or from env variables.
-
-Note that these tools have the ability to use a URL for signing the request
-which can be different from the endpoint, which means that they work across
-SSH tunnels and *netcat* bridges, not the case with other clients.
-The `aws` cli tool does have an `ssm` option to create a tunnel, but it relies
-on a complex mechanism which requires describing the instance first by
-invoking an `ec2` command and it won't work with standalone *Ceph*
-deployments.
-
-Originally developed to test *Ceph* object storage.
-
-The default *CMake* configuration generates static executables on Linux.
-
 The code is `C++17` compliant.
-
-Use `git clone --recurse-submodules` to download dependencies.
 
 The *Portable Hashing Library* code is copied to a local path (`dep/hash`) because the original
 version does not compile on *MacOS* and the pull requests were not accepted.
@@ -39,24 +52,23 @@ The plan is to replace the current hash library with:
  *  https://github.com/h5p9sl/hmac_sha256
  *  https://github.com/amosnier/sha-2
 
-Requests are sent through a `WebClient` class which wraps `libcurl`, XML
-responses are parsed using C++11 regex library. 
+Requests are sent through a `WebClient` class which wraps `libcurl` and *XML*
+responses are parsed using the standard regex library provided by the C++
+compiler. 
 
 ## License
 
 This software is distributed under the BSD three-clause license and has
 dependencies on the following software libraries:
 
-* libcurl - distributed unded the curl license, derived from MIT/X
-* Lyra, by Rene Rivera - distributed under the Boost license version 1.0
-* Portable Hashing Library, by Stephan Brumme - distributed under the
+* *libcurl* - distributed unded the curl license, derived from MIT/X
+* *Lyra*, by Rene Rivera - distributed under the Boost license version 1.0
+* *Portable Hashing Library*, by Stephan Brumme - distributed under the
   zlib license
 
 ## Sending S3 requests
 
 The `s3-client` application is just a wrapper around the `sss::SendS3Request` function.
-A `lib-s3-client` library will be provided in the future, but for the time being, source
-code needs to be compiled together with the application.
 
 E.g.
 
@@ -80,7 +92,7 @@ bin/debug/s3-client -a $S3TEST_ACCESS -s $S3TEST_SECRET -e $S3TEST_URL -b bucket
 C++:
 
 ```cpp
-#include "lib-s3-client.h"
+#include "s3-client.h"
 
 ...
 S3Args s3args;
@@ -174,7 +186,7 @@ bin/debug/s3-client -a $S3TEST_ACCESS -s $S3TEST_SECRET -e $S3TEST_URL -b bucket
 C++:
 
 ```cpp
-#include "lib-s3-client.h"
+#include "s3-client.h"
 ...
 S3Args s3args;
 s3args.s3AccessKey = "Naowkmo0786XzwrF";
@@ -237,7 +249,7 @@ bin/debug/s3-client -a $S3TEST_ACCESS -s $S3TEST_SECRET -e $S3TEST_URL -b bucket
 C++
 
 ```cpp
-#include "lib-s3-client.h"
+#include "-s3-client.h"
 
 ...
 S3Args s3args;

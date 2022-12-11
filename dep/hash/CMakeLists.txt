@@ -1,5 +1,5 @@
 # encoding library
-add_library(hash_lib STATIC
+add_library(hash_lib 
     crc32.cpp
     digest.cpp
     keccak.cpp
@@ -7,7 +7,6 @@ add_library(hash_lib STATIC
     sha1.cpp
     sha3.cpp
     sha256.cpp)
-    
-# Add library to dependencies and library list in parent scope
-set(DEPENDENCIES ${DEPENDENCIES} hash_lib PARENT_SCOPE)
-set(LIBRARIES ${LIBRARIES} hash_lib PARENT_SCOPE)
+install(TARGETS hash_lib
+        RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)

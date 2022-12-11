@@ -40,7 +40,9 @@ include_directories(include)
 include_directories(${HASHLIB_INCLUDE_DIR})
 
 add_library(s3client ${S3_CLIENT_LIB_SRCS})
+target_link_libraries(s3client curl hash_lib)
 
+include(GNUInstallDirs)
 install(TARGETS s3client
         RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
         ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib)
