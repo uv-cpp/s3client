@@ -69,7 +69,7 @@ int main(int argc, char const *argv[]) {
             .optional() |
         lyra::opt(args.key, "key")["-k"]["--key"]("Key name").optional() |
         lyra::opt(args.data, "content")["-v"]["--value"](
-            "Value data, use '@' prefix for file name")
+            "Value data if -F option not present, filename otherwise")
             .optional() |
         lyra::opt(args.headers, "headers")["-H"]["--headers"](
             "URL request headers. header1:value1;header2:...")
@@ -80,7 +80,10 @@ int main(int argc, char const *argv[]) {
         lyra::opt(args.signUrl, "signing url")["-S"]["--sign-url"](
             "URL for signing; can be different from endpoint to support "
             "tunnels")
-            .optional();
+            .optional() |
+        lyra::opt(args.dataIsFileName,
+                  "'data' is file")["-F"]["--data-is-filename"](
+            "Interpret 'data' field as file name and read data from file");
 
     // Parse rogram arguments:
     auto result = cli.parse({argc, argv});

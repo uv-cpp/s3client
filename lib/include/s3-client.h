@@ -51,9 +51,11 @@ struct S3ClientConfig {
   std::string key;
   std::string params; // "param1=val1;param2=val2..."
   std::string method = "GET";
-  std::string headers; // "Header1:value1;Header2:value2..."
-  std::string data;    // if prefixed with '@' assume filename if not send bytes
+  std::string headers;    // "Header1:value1;Header2:value2..."
+  std::vector<char> data; // if dataIsFileName == true  assume filename, if
+                          // not send 'data' bytes
   std::string outfile; // if not empty stores returned response body into file
+  bool dataIsFileName = false;
 };
 
 struct S3FileTransferConfig {

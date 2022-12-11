@@ -107,22 +107,22 @@ WebClient SendS3Request(S3ClientConfig args) {
     req.SetWriteFunction(NULL, of); // default is to write to file
   }
   if (!args.data.empty()) {
-    if (args.data[0] != '@') {
+    if (!args.dataIsFileName) {
       if (ToLower(args.method) == "post") {
-        req.SetUrlEncodedPostData(ParseParams(args.data));
+        req.SetUrlEncodedPostData(ParseParams(args.data.data()));
         req.SetMethod("POST");
         req.Send();
       } else { // "put"
-        vector<uint8_t> data(begin(args.data), end(args.data));
-        // req.SetUploadData(data);
-        // req.Send();
-        req.UploadDataFromBuffer(args.data.c_str(), 0, data.size());
+        // vector<uint8_t> data(begin(args.data), end(args.data));
+        //  req.SetUploadData(data);
+        //  req.Send();
+        req.UploadDataFromBuffer(args.data.data(), 0, args.data.size());
       }
     } else {
       if (ToLower(args.method) == "put") {
-        req.UploadFile(args.data.substr(1));
+        req.UploadFile(args.data.data());
       } else if (args.method == "post") {
-        ifstream t(args.data.substr(1));
+        ifstream t(args.data.data());
         const string str((istreambuf_iterator<char>(t)),
                          istreambuf_iterator<char>());
         req.SetMethod("POST");
