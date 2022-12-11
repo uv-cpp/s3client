@@ -19,7 +19,7 @@ Launch without arguments to see options.
 
 The `install.sh` script includes the code for checking out the code, building
 and installing to a user specified path.
-Just [download](https://github.com/uv-cpp/s3client/blob/main/install.sh) and run.
+Just [download](https://raw.githubusercontent.com/uv-cpp/s3client/main/install.sh) and run.
 `libcurl` must be available for the code to build.
 
 E.g.
