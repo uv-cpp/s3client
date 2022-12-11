@@ -2,7 +2,7 @@
 
 C++ client library and tools.
 Originally developed to test *Ceph* object storage and learn the S3 API.
-All the code is tested on MacOS (x86 and ARM) and Linux (x86) only. 
+All the code is tested on MacOS (x86 and ARM) and Linux (x86 - SuSE and Ubuntu) only. 
 
 * `libs3client`: high level functions to sign and send requests and perform parallel uploads/downloads
 
@@ -20,10 +20,13 @@ Launch without arguments to see options.
 The `install.sh` script includes the code for checking out the code, building
 and installing to a user specified path.
 Just [download](https://raw.githubusercontent.com/uv-cpp/s3client/main/install.sh) and run.
+```sh
+bash ./install.sh <install path>
+```
 `libcurl` must be available for the code to build.
 
-E.g.
-Building and installing a release version under `$HOME/.local` (default is `/usr/local`).
+...or build it manually 
+E.g. Building and installing a release version under `$HOME/.local` (default is `/usr/local`).
 
 1. `git clone --recurse-submodules https://github.com/uv-cpp/s3client.git`
 2. `mkdir -p s3client/build`
