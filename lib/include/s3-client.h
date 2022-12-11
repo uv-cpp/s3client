@@ -30,71 +30,86 @@
  *ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
+/**
+ * \file s3-cliant.h
+ * \brief declaration of functions and data types for sending S3 requests,
+ * signing URLs and downloading and uploading files.
+ */
 #pragma once
 #include "webclient.h"
 #include <string>
 #include <vector>
 
 //------------------------------------------------------------------------------
+/// S3 Credentials in AWS format
 struct S3Credentials {
   std::string s3AccessKey;
   std::string s3SecretKey;
 };
 
+/// Parameters for SendS3Request calls.
 struct S3ClientConfig {
   std::string s3AccessKey;
   std::string s3SecretKey;
-  std::string endpoint; // actual endpoint where requests are sent
+  std::string endpoint; //< actual endpoint where requests are sent
   std::string
-      signUrl; // url used to sign, allows requests to work across tunnels
+      signUrl; //< url used to sign, allows requests to work across tunnels
   std::string bucket;
   std::string key;
-  std::string params; // "param1=val1;param2=val2..."
+  std::string params; //< "param1=val1;param2=val2..."
   std::string method = "GET";
-  std::string headers;    // "Header1:value1;Header2:value2..."
-  std::vector<char> data; // if dataIsFileName == true  assume filename, if
-                          // not send 'data' bytes
+  std::string headers; //< "Header1:value1;Header2:value2..."
   std::string outfile; // if not empty stores returned response body into file
-  bool dataIsFileName = false;
+  /// if dataIsFileName == true  assume filename, if
+  /// not send 'data' bytes
+  std::vector<char> data;
+  bool dataIsFileName = false; //< if true interpret 'data' as file name
 };
 
+/// Parameters for calls to upload and download file functions.
 struct S3FileTransferConfig {
   std::string s3AccessKey;
   std::string s3SecretKey;
   std::string endpoint;
-  std::string signUrl; //@warning not implemented @todo implement
+  std::string signUrl; //< @warning not implemented @todo implement
   std::string bucket;
   std::string key;
   std::string file;
-  std::string
-      credentials; //@warning not implemented @todo remove
-                   // and expose InitConfig
-                   // if access and secret not empty credentials is not checked
-                   // else it is interpreted as a file name
-                   // formatted according to AWS standard; if empty
-                   // the standard $HOME/.aws/credentials file is searched for
+  /// credentials file; @warning not implemented @todo remove
+  /// and use GetS3Credentials to retrieve credential information
+  /// before calling other functions.
+  std::string credentials;
   std::string awsProfile;
   std::vector<std::string> endpoints;
-  int maxRetries = 1;
-  int jobs = 1;
+  int maxRetries =
+      1; //< mximum number of retries per chunk, only implementd for upload
+  int jobs = 1; //< number of parallel threads of execution
 };
 
+/// Parameters for calls to SignS3URL function.
 struct S3SignUrlConfig {
   std::string s3AccessKey;
   std::string s3SecretKey;
   std::string endpoint;
-  int expiration; // @todo Unsigned!
+  int expiration; //< expiration time in seconds  @todo Unsigned!
   std::string method;
   std::string bucket;
   std::string key;
-  std::string params; // "param1=val1;param2=var2"
+  std::string params; //< URL parameters: "param1=val1;param2=var2"
   std::string region = "us-east";
 };
 //------------------------------------------------------------------------------
+/// Validate S3 client request parameters.
 void Validate(const S3ClientConfig &s);
+/// Send S3 request to endpoint.
 sss::WebClient SendS3Request(S3ClientConfig);
+/// Parallel download of object to file, @see S3FileTransferConfig
 void DownloadFile(S3FileTransferConfig);
+/// Parallel upload of file to object, @see S3FileTransferConfig
 std::string UploadFile(S3FileTransferConfig);
+/// Sign S3 request.
 std::string SignS3URL(const S3SignUrlConfig &);
+/// Read S3 credentials from file. Whn reading from .aws folder an aws profile
+/// can be selected.
 S3Credentials GetS3Credentials(const std::string &fileName,
                                std::string awsProfile);
