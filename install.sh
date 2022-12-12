@@ -4,7 +4,7 @@ then
     echo "Error - Directory s3client exists"
     exit 1
 fi
-if (($# != 2))
+if (($# != 1))
 then
   echo "Error - missing install prefix"
   echo "usage: $0 <install prefix>"
