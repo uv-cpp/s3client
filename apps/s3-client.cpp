@@ -68,7 +68,7 @@ int main(int argc, char const *argv[]) {
         lyra::opt(args.bucket, "bucket")["-b"]["--bucket"]("Bucket name")
             .optional() |
         lyra::opt(args.key, "key")["-k"]["--key"]("Key name").optional() |
-        lyra::opt(args.data, "content")["-v"]["--value"](
+        lyra::opt(args.data, "content")["-d"]["--data"](
             "Value data if -F option not present, filename otherwise")
             .optional() |
         lyra::opt(args.headers, "headers")["-H"]["--headers"](
