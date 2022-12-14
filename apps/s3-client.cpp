@@ -34,7 +34,9 @@
 
 // Send S3v4 signed REST requests
 
+#include <algorithm>
 #include <iostream>
+#include <vector>
 
 #include "lyra/lyra.hpp"
 #include "s3-client.h"
@@ -47,6 +49,7 @@ int main(int argc, char const *argv[]) {
   try {
     S3ClientConfig args;
     bool showHelp = false;
+    string data;
     auto cli =
         lyra::help(showHelp).description(
             "Send REST request with S3v4 signing") |
@@ -68,7 +71,7 @@ int main(int argc, char const *argv[]) {
         lyra::opt(args.bucket, "bucket")["-b"]["--bucket"]("Bucket name")
             .optional() |
         lyra::opt(args.key, "key")["-k"]["--key"]("Key name").optional() |
-        lyra::opt(args.data, "content")["-d"]["--data"](
+        lyra::opt(data, "content")["-d"]["--data"](
             "Value data if -F option not present, filename otherwise")
             .optional() |
         lyra::opt(args.headers, "headers")["-H"]["--headers"](
@@ -96,6 +99,12 @@ int main(int argc, char const *argv[]) {
     if (showHelp) {
       cout << cli;
       return 0;
+    }
+    if (!data.empty()) {
+      std::copy(begin(data), end(data), back_inserter(args.data));
+      if (args.dataIsFileName) {
+        args.data.push_back('\0');
+      }
     }
     auto req = std::move(SendS3Request(args));
     // Status code 0 = no error
