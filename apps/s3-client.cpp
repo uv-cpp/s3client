@@ -83,7 +83,8 @@ int main(int argc, char const *argv[]) {
             .optional() |
         lyra::opt(args.dataIsFileName,
                   "'data' is file")["-F"]["--data-is-filename"](
-            "Interpret 'data' field as file name and read data from file");
+            "Interpret 'data' field as file name and read data from file")
+            .optional();
 
     // Parse rogram arguments:
     auto result = cli.parse({argc, argv});
