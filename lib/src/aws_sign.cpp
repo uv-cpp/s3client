@@ -33,6 +33,7 @@
 // Functions to sign S3 URL and HTTP headers
 // See:
 // https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html
+// https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-header-based-auth.html
 #include <hmac.h>
 #include <sha256.h>
 
@@ -47,6 +48,7 @@
 
 #include "common.h"
 #include "url_utility.h"
+
 using namespace std;
 
 namespace sss {
@@ -262,42 +264,38 @@ Map SignHeaders(const string &accessKey, const string &secretKey,
 
   const string canonicalQueryString = reqParameters;
 
+  // Canonical and signed headers
   const Map defaultHeaders = {{"host", host},
                               {"x-amz-content-sha256", payloadHash},
                               {"x-amz-date", t.timeStamp}};
 
-  Map allHeaders = defaultHeaders;
-  Map xAmzHeaders;
+  Map canonicalHeaders = defaultHeaders;
+  set<string> sortedSignedHeadersKeys;
+  for (auto kv : defaultHeaders) {
+    sortedSignedHeadersKeys.insert(kv.first);
+  }
+  // add x-amz headers
   for (auto kv : additionalHeaders) {
     if (kv.first.find("x-amz-") == 0 || kv.first.find("content-length") == 0) {
-      xAmzHeaders.insert(kv);
+      canonicalHeaders.insert(kv);
+      sortedSignedHeadersKeys.insert(kv.first);
     }
   }
 
-  set<string> sortedAllHeadersKeys;
-  for (auto kv : allHeaders) {
-    sortedAllHeadersKeys.insert(kv.first);
-  }
-
-  Map signedHeaders = defaultHeaders;
-  signedHeaders.insert(begin(xAmzHeaders), end(xAmzHeaders));
-  set<string> sortedSignedHeadersKeys;
-  for (auto kv : signedHeaders) {
-    sortedSignedHeadersKeys.insert(kv.first);
-  }
-
+  // canonical headers string
   ostringstream os;
-  for (auto k : sortedAllHeadersKeys) {
-    os << k << ":" << allHeaders[k] << '\n';
+  for (auto kv : canonicalHeaders) {
+    os << kv.first << ":" << kv.second << "\n";
   }
-  const string canonicalHeadersStr = os.str();
-  os.str("");
 
+  string canonicalHeadersStr = os.str();
+
+  os.str("");
   for (auto k : sortedSignedHeadersKeys) {
-    os << k << ';';
+    os << k << ";";
   }
+
   string signedHeadersStr = os.str();
-  // remove last ';'
   signedHeadersStr = signedHeadersStr.substr(0, signedHeadersStr.size() - 1);
 
   // canonical request
@@ -325,6 +323,8 @@ Map SignHeaders(const string &accessKey, const string &secretKey,
       credentialScope + ", " + string("SignedHeaders=") + signedHeadersStr +
       ", " + string("Signature=") + signature;
 
+  auto allHeaders = defaultHeaders;
+  allHeaders.insert(begin(defaultHeaders), end(defaultHeaders));
   allHeaders.insert({"Authorization", authorizationHeader});
   allHeaders.insert(begin(additionalHeaders), end(additionalHeaders));
   return allHeaders;
