@@ -38,7 +38,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project(s3-client
-        VERSION 0.5
+        VERSION 0.6
         DESCRIPTION "Tools to sign and send S3 requests"
         LANGUAGES CXX)
 
