@@ -40,6 +40,7 @@
 #include <string>
 using namespace std;
 using namespace filesystem;
+using namespace sss;
 
 //------------------------------------------------------------------------------
 int main(int argc, char const *argv[]) {

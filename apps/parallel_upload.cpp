@@ -35,10 +35,12 @@
 
 #include <iostream>
 #include <string>
-using namespace std;
 
 #include "lyra/lyra.hpp"
 #include "s3-client.h"
+
+using namespace std;
+using namespace sss;
 //------------------------------------------------------------------------------
 int main(int argc, char const *argv[]) {
   try {

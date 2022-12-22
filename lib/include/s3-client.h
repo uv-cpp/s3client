@@ -36,9 +36,12 @@
  * signing URLs and downloading and uploading files.
  */
 #pragma once
+#include "common.h"
 #include "webclient.h"
 #include <string>
 #include <vector>
+
+namespace sss {
 
 //------------------------------------------------------------------------------
 /// S3 Credentials in AWS format
@@ -118,7 +121,7 @@ using ByteArray = std::vector<uint8_t>;
 using StringArray = std::vector<std::string>;
 using Etag = std::string;
 using MetaDataMap = std::map<std::string, std::string>;
-using HeaderMap = std::map<std::string, std::string>;
+using UploadId = std::string;
 
 class S3Client {
 
@@ -132,13 +135,13 @@ public:
   S3Client(S3Client &&other)
       : access_(other.access_), secret_(other.secret_),
         endpoint_(other.endpoint_), signingEndpoint_(other.signingEndpoint_),
-        webClient(std::move(other.webClient_)) {}
+        webClient_(std::move(other.webClient_)) {}
 
 public:
   StringArray ListBuckets();
-  HeaderMap ListBucket(const std::string &bucket);
+  Headers ListBucket(const std::string &bucket);
   StringArray ListObjects(const std::string &bucket);
-  HeaderMap ListObject(const std::string &bucket, const std::string &key);
+  Headers ListObject(const std::string &bucket, const std::string &key);
   void CreateBucket(const std::string &bucket);
   ByteArray Get(const std::string &bucket, const std::string &key,
                 size_t begin = 0, size_t end = 0);
@@ -152,7 +155,7 @@ public:
                       const MetaDataMap &metaData = MetaDataMap{});
   bool IsBucket(const std::string &bucket);
   bool IsKey(const std::string &bucket, const std::string &key);
-  Etag UploadFile(const std::string &bucket, const srd::string &key,
+  Etag UploadFile(const std::string &bucket, const std::string &key,
                   const std::string &fileName);
   void DownloadFile(const std::string &bucket, const std::string &key,
                     const std::string &fileName);
@@ -169,4 +172,6 @@ private:
   std::string secret_;
   std::string endpoint_;
   std::string signingEndpoint_;
-}
+};
+
+} // namespace sss

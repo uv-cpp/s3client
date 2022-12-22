@@ -32,52 +32,53 @@
  ******************************************************************************/
 /**
  * \file aws_sigh.h
- * \brief Public interface to signing URLs and HTTP headers with the S3v4 
+ * \brief Public interface to signing URLs and HTTP headers with the S3v4
  *        protocol standard.
  */
 
 #pragma once
-#include <string>
 #include "common.h"
+#include <string>
 
 namespace sss {
 
 /// Generate presigned URL
-std::string SignedURL(const std::string& accessKey,
-                      const std::string& secretKey, int expiration,
-                      const std::string& endpoint, const std::string& method,
-                      const std::string& bucketName = "",
-                      const std::string& keyName = "",
-                      const Map& params = Map(),
-                      const std::string& region = "us-east-1");
+std::string SignedURL(const std::string &accessKey,
+                      const std::string &secretKey, int expiration,
+                      const std::string &endpoint, const std::string &method,
+                      const std::string &bucketName = "",
+                      const std::string &keyName = "",
+                      const Parameters &params = Map(),
+                      const std::string &region = "us-east-1");
 
 /// Sign headers
-Map SignHeaders(const std::string& accessKey, const std::string& secretKey,
-                const std::string& endpoint, const std::string& method,
-                const std::string& bucketName = "",
-                const std::string& keyName = "", std::string payloadHash = "",
-                const Map& parameters = Map(),
-                const Map& additionalHeaders = Map(),
-                const std::string& region = "us-east-1",
-                const std::string& service = "s3");
+Headers SignHeaders(const std::string &accessKey, const std::string &secretKey,
+                    const std::string &endpoint, const std::string &method,
+                    const std::string &bucketName = "",
+                    const std::string &keyName = "",
+                    std::string payloadHash = "",
+                    const Parameters &parameters = Map(),
+                    const Headers &additionalHeaders = Map(),
+                    const std::string &region = "us-east-1",
+                    const std::string &service = "s3");
 
-/// Struct 
+/// Struct
 struct SignHeadersInfo {
-    std::string key;
-    std::string secret;
-    std::string endpoint;
-    std::string method;
-    std::string bucket;
-    std::string bucketKey;
-    std::string payloadHash;
-    Map parameters;
-    Map additionalHeaders;
-    std::string region{"us-east-1"};
-    std::string service{"s3"};
+  std::string key;
+  std::string secret;
+  std::string endpoint;
+  std::string method;
+  std::string bucket;
+  std::string bucketKey;
+  std::string payloadHash;
+  Parameters parameters;
+  Headers additionalHeaders;
+  std::string region{"us-east-1"};
+  std::string service{"s3"};
 };
 
-/// Sign headers. Alternative signature using a single \c stuct 
+/// Sign headers. Alternative signature using a single \c stuct
 /// instead of multiple parameters
-Map SignHeaders(const SignHeadersInfo& hi);
+Map SignHeaders(const SignHeadersInfo &hi);
 
-} // namespace
+} // namespace sss

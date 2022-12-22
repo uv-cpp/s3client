@@ -36,6 +36,7 @@
 #include "lyra/lyra.hpp"
 #include "s3-client.h"
 using namespace std;
+using namespace sss;
 
 //------------------------------------------------------------------------------
 // Generate and sign url for usage with AWS S3 compatible environment such

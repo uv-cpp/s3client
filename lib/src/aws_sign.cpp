@@ -163,7 +163,7 @@ string Hex(const Bytes &b) {
 string SignedURL(const string &accessKey, const string &secretKey,
                  int expiration, const string &endpoint, const string &method,
                  const string &bucketName, const string &keyName,
-                 const Map &params, const string &region) {
+                 const Parameters &params, const string &region) {
   const URL url = ParseURL(endpoint);
   const string host =
       url.port <= 0 ? url.host : url.host + ":" + to_string(url.port);
@@ -171,11 +171,11 @@ string SignedURL(const string &accessKey, const string &secretKey,
   const string credentials =
       accessKey + "/" + t.dateStamp + "/" + region + "/s3/aws4_request";
 
-  Map parameters = {{"X-Amz-Algorithm", "AWS4-HMAC-SHA256"},
-                    {"X-Amz-Credential", credentials},
-                    {"X-Amz-Date", t.timeStamp},
-                    {"X-Amz-Expires", to_string(expiration)},
-                    {"X-Amz-SignedHeaders", "host"}};
+  Parameters parameters = {{"X-Amz-Algorithm", "AWS4-HMAC-SHA256"},
+                           {"X-Amz-Credential", credentials},
+                           {"X-Amz-Date", t.timeStamp},
+                           {"X-Amz-Expires", to_string(expiration)},
+                           {"X-Amz-SignedHeaders", "host"}};
 
   if (!params.empty()) {
     parameters.insert(begin(params), end(params));
@@ -231,12 +231,12 @@ string SignedURL(const string &accessKey, const string &secretKey,
 /// Sign HTTP headers: return dictionary with {key, value} pairs containing
 /// per-header information.
 /// @TODO: replace arguments with struct.
-Map SignHeaders(const string &accessKey, const string &secretKey,
-                const string &endpoint, const string &method,
-                const string &bucketName, const string &keyName,
-                string payloadHash, const Map &parameters,
-                const Map &additionalHeaders, const string &region,
-                const string &service) {
+Headers SignHeaders(const string &accessKey, const string &secretKey,
+                    const string &endpoint, const string &method,
+                    const string &bucketName, const string &keyName,
+                    string payloadHash, const Parameters &parameters,
+                    const Headers &additionalHeaders, const string &region,
+                    const string &service) {
 #ifndef NDEBUG
   // do not want to waste time converting to lowercase
   for (auto kv : additionalHeaders) {

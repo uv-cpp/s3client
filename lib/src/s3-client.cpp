@@ -36,6 +36,7 @@
 #include "s3-client.h"
 #include "aws_sign.h"
 #include "common.h"
+#include "response_parser.h"
 
 #include <fstream>
 #include <future>
@@ -43,7 +44,8 @@
 #include <thread>
 
 using namespace std;
-using namespace sss;
+
+namespace sss {
 
 //------------------------------------------------------------------------------
 void Validate(const S3ClientConfig &args) {
@@ -141,9 +143,6 @@ WebClient SendS3Request(S3ClientConfig args) {
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-namespace sss {
-extern string HTTPHeader(const string &, const string &);
-}
 size_t ObjectSize(const string &s3AccessKey, const string &s3SecretKey,
                   const string &endpoint, const string &bucket,
                   const string &key, const string &signUrl = "") {
@@ -210,17 +209,7 @@ void DownloadFile(S3FileTransferConfig config) {
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //------------------------------------------------------------------------------
-namespace sss {
 ///@todo use size_t
-extern int RandomIndex(int, int);
-extern ::std::string XMLTag(const ::std::string &xml, const ::std::string &tag);
-extern size_t FileSize(const ::std::string &);
-extern Headers SignHeaders(const ::std::string &accessKey,
-                           const ::std::string &secretKey,
-                           const ::std::string &endpoint,
-                           const ::std::string &method);
-} // namespace sss
-using namespace sss;
 
 vector<string> ReadEndpoints(const string &fname) {
   vector<string> ep;
@@ -275,10 +264,6 @@ void Validate(const S3FileTransferConfig &config) {
   }
 #endif
 }
-
-using Map = map<string, string>;
-using Headers = Map;
-using Parameters = Map;
 
 atomic<int> numRetriesG{0};
 
@@ -473,17 +458,10 @@ S3FileTransferConfig InitConfig(S3FileTransferConfig config) {
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 //------------------------------------------------------------------------------
-namespace sss {
-extern std::string SignedURL(const string &accessKey, const string &secretKey,
-                             int expiration, const string &endpoint,
-                             const string &method, const string &bucketName,
-                             const string &keyName,
-                             const std::map<std::string, std::string> &params,
-                             const string &region);
 // extern std::map<std::string, std::string> ParseParams(const std::string &);
-} // namespace sss
 std::string SignS3URL(const S3SignUrlConfig &config) {
   return SignedURL(config.s3AccessKey, config.s3SecretKey, config.expiration,
                    config.endpoint, config.method, config.bucket, config.key,
                    ParseParams(config.params), config.region);
 }
+} // namespace sss
