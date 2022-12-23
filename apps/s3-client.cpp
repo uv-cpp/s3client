@@ -91,7 +91,7 @@ int main(int argc, char const *argv[]) {
             "Interpret 'data' field as file name and read data from file")
             .optional();
 
-    // Parse rogram arguments:
+    // Parse program arguments:
     auto result = cli.parse({argc, argv});
     if (!result) {
       cerr << result.message() << endl;

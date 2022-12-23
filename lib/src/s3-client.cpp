@@ -40,9 +40,9 @@
 
 #include <fstream>
 #include <future>
+#include <iostream>
 #include <set>
 #include <thread>
-
 using namespace std;
 
 namespace sss {
@@ -284,6 +284,7 @@ string BuildEndUploadXML(vector<future<string>> &etags) {
     xml += part;
   }
   xml += "</CompleteMultipartUpload>";
+  std::cout << xml << std::endl;
   return xml;
 }
 
@@ -306,7 +307,7 @@ WebClient BuildEndUploadRequest(const S3FileTransferConfig &config,
 
 string UploadPart(const S3FileTransferConfig &config, const string &path,
                   const string &uploadId, int i, size_t offset,
-                  size_t chunkSize, int maxTries = 1, int tryNum = 1) {
+                  size_t chunkSize, int maxTries, int tryNum) {
   WebClient ul = BuildUploadRequest(config, path, i, uploadId);
   const bool ok = ul.UploadFile(config.file, offset, chunkSize);
   if (!ok) {
@@ -324,6 +325,34 @@ string UploadPart(const S3FileTransferConfig &config, const string &path,
   }
   return etag;
 }
+// string UploadPart(const S3FileTransferConfig &config, const string &path,
+//                   const string &uploadId, int i, size_t offset,
+//                   size_t chunkSize, int tryNum = 1) {
+//   WebClient ul = BuildUploadRequest(config, path, i, uploadId);
+//   const bool ok = ul.UploadFile(config.file, offset, chunkSize);
+//   if (!ok) {
+//     if (tryNum == config.maxRetries) {
+//       throw(runtime_error("Cannot upload chunk " + to_string(i + 1)));
+//     } else {
+//       return UploadPart(config, path, uploadId, i, offset, chunkSize,
+//       ++tryNum);
+//     }
+//   } else {
+//     std::cout << ul.GetHeaderText() << std::endl;
+//     string etag = HTTPHeader(ul.GetHeaderText(), "[Ee][tT]ag");
+//     if (etag.empty()) {
+//       throw(runtime_error("No ETag found in HTTP header"));
+//     } else {
+//       if (etag[0] == '"') {
+//         etag = etag.substr(1, etag.size() - 2);
+//       } else if (etag.substr(0, string("&#34;").size()) == "&#34;") {
+//         const size_t quotes = string("&#34;").size();
+//         etag = etag.substr(quotes, etag.size() - 2 * quotes);
+//       }
+//       return etag;
+//     }
+//   }
+// }
 
 S3Credentials GetS3Credentials(const string &fileName, string awsProfile) {
   const string fname =
@@ -337,7 +366,8 @@ S3Credentials GetS3Credentials(const string &fileName, string awsProfile) {
           toml[awsProfile]["aws_secret_access_key"]};
 }
 
-/*ETag*/ ::std::string UploadFile(S3FileTransferConfig config) {
+/*ETag*/ ::std::string UploadFile(const S3FileTransferConfig &config,
+                                  const MetaDataMap &metaData) {
   FILE *inputFile = fopen(config.file.c_str(), "rb");
   if (!inputFile) {
     throw runtime_error(string("cannot open file ") + config.file);
@@ -358,6 +388,10 @@ S3Credentials GetS3Credentials(const string &fileName, string awsProfile) {
                                      ? chunkSize
                                      : fileSize % config.jobs + chunkSize;
     S3ClientConfig args;
+    MetaDataMap metaHeaders;
+    for (auto kv : metaData) {
+      metaHeaders["x-amz-meta-" + kv.first] = kv.second;
+    }
     // begin uplaod request -> get upload id
     args.accessKey = config.accessKey;
     args.secretKey = config.secretKey;
@@ -366,6 +400,7 @@ S3Credentials GetS3Credentials(const string &fileName, string awsProfile) {
     args.key = config.key;
     args.method = "POST";
     args.params = {{"uploads", ""}};
+    args.headers = metaHeaders;
     auto req = SendS3Request(args);
     // initiate request
     if (req.StatusCode() >= 400) {
@@ -380,7 +415,7 @@ S3Credentials GetS3Credentials(const string &fileName, string awsProfile) {
     for (int i = 0; i != config.jobs; ++i) {
       const size_t sz = i != config.jobs - 1 ? chunkSize : lastChunkSize;
       etags[i] = async(launch::async, UploadPart, config, path, uploadId, i,
-                       chunkSize * i, sz, config.maxRetries, 1);
+                       chunkSize * i, sz, 1, 1);
     }
     // send end upload request
     WebClient endUpload = BuildEndUploadRequest(config, path, etags, uploadId);

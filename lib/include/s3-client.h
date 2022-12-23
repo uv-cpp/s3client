@@ -105,7 +105,8 @@ WebClient SendS3Request(S3ClientConfig);
 /// Parallel download of object to file, @see S3FileTransferConfig
 void DownloadFile(S3FileTransferConfig);
 /// Parallel upload of file to object, @see S3FileTransferConfig
-std::string UploadFile(S3FileTransferConfig);
+std::string UploadFile(const S3FileTransferConfig &,
+                       const MetaDataMap & = MetaDataMap{});
 /// Sign S3 request.
 std::string SignS3URL(const S3SignUrlConfig &);
 /// Read S3 credentials from file. Whn reading from .aws folder an aws profile
