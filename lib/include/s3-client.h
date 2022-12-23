@@ -59,9 +59,9 @@ struct S3ClientConfig {
       signUrl; //< url used to sign, allows requests to work across tunnels
   std::string bucket;
   std::string key;
-  std::string params; //< "param1=val1;param2=val2..."
+  Parameters params;
   std::string method = "GET";
-  std::string headers; //< "Header1:value1;Header2:value2..."
+  Headers headers;
   std::string outfile; // if not empty stores returned response body into file
   /// if dataIsFileName == true  assume filename, if
   /// not send 'data' bytes
@@ -101,11 +101,12 @@ struct S3SignUrlConfig {
   std::string params; //< URL parameters: "param1=val1;param2=var2"
   std::string region = "us-east";
 };
+
 //------------------------------------------------------------------------------
 /// Validate S3 client request parameters.
 void Validate(const S3ClientConfig &s);
 /// Send S3 request to endpoint.
-sss::WebClient SendS3Request(S3ClientConfig);
+WebClient SendS3Request(S3ClientConfig);
 /// Parallel download of object to file, @see S3FileTransferConfig
 void DownloadFile(S3FileTransferConfig);
 /// Parallel upload of file to object, @see S3FileTransferConfig

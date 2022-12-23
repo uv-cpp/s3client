@@ -93,15 +93,14 @@ WebClient SendS3Request(S3ClientConfig args) {
     if (!args.key.empty())
       path += "/" + args.key;
   }
-  const sss::Map params = ParseParams(args.params);
-  Map headers = ParseHeaders(args.headers);
+  auto headers = args.headers;
   if (!args.s3AccessKey.empty()) {
-    auto signedHeaders =
-        SignHeaders(args.s3AccessKey, args.s3SecretKey, args.signUrl,
-                    args.method, args.bucket, args.key, "", params, headers);
+    auto signedHeaders = SignHeaders(args.s3AccessKey, args.s3SecretKey,
+                                     args.signUrl, args.method, args.bucket,
+                                     args.key, "", args.params, headers);
     headers.insert(begin(signedHeaders), end(signedHeaders));
   }
-  WebClient req(args.endpoint, path, args.method, params, headers);
+  WebClient req(args.endpoint, path, args.method, args.params, headers);
   req.SSLVerify(verifyPeer, verifyHost);
   FILE *of = NULL;
   if (!args.outfile.empty()) {
@@ -208,7 +207,7 @@ void DownloadFile(S3FileTransferConfig config) {
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-//------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
 ///@todo use size_t
 
 vector<string> ReadEndpoints(const string &fname) {
@@ -394,7 +393,7 @@ S3FileTransferConfig InitConfig(S3FileTransferConfig config) {
     args.bucket = config.bucket;
     args.key = config.key;
     args.method = "POST";
-    args.params = "uploads=";
+    args.params = {{"uploads", ""}};
     auto req = SendS3Request(args);
     // initiate request
     if (req.StatusCode() >= 400) {
