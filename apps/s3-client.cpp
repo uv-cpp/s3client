@@ -87,8 +87,7 @@ int main(int argc, char const *argv[]) {
             "URL for signing; can be different from endpoint to support "
             "tunnels")
             .optional() |
-        lyra::opt(args.dataIsFileName,
-                  "'data' is file name")["-F"]["--data-is-filename"](
+        lyra::opt(args.dataIsFileName)["-F"]["--data-is-filename"](
             "Interpret 'data' field as file name and read data from file")
             .optional();
 

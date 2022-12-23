@@ -36,11 +36,13 @@
 
 #include "lyra/lyra.hpp"
 #include "s3-client.h"
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <string>
 using namespace std;
 using namespace sss;
+using namespace filesystem;
 
 //------------------------------------------------------------------------------
 int main(int argc, char const *argv[]) {
@@ -51,6 +53,7 @@ int main(int argc, char const *argv[]) {
     string endpointsFile;
     string credentialsFile;
     string awsProfile;
+    bool overwrite = false;
     auto cli =
         lyra::help(showHelp).description("Download file from S3 bucket") |
         lyra::opt(config.accessKey,
@@ -79,6 +82,9 @@ int main(int argc, char const *argv[]) {
             .optional() |
         lyra::opt(config.jobs,
                   "parallel jobs")["-j"]["--jobs"]("Number of parallel jobs")
+            .optional() |
+        lyra::opt(overwrite)["-y"]["--overwrite"](
+            "Overwrite exsisting file, default is 'false'")
             .optional();
     if (showHelp) {
       cout << cli;
@@ -90,6 +96,12 @@ int main(int argc, char const *argv[]) {
       cerr << result.message() << endl;
       cerr << cli << endl;
       exit(1);
+    }
+
+    if (exists(config.file) && !overwrite) {
+      cerr << "File exists, use the '-y' command line switch to overwrite"
+           << endl;
+      exit(EXIT_FAILURE);
     }
     if (!endpoint.empty()) {
       config.endpoints.push_back(endpoint);
