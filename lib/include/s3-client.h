@@ -46,14 +46,14 @@ namespace sss {
 //------------------------------------------------------------------------------
 /// S3 Credentials in AWS format
 struct S3Credentials {
-  std::string s3AccessKey;
-  std::string s3SecretKey;
+  std::string accessKey;
+  std::string secretKey;
 };
 
 /// Parameters for SendS3Request calls.
 struct S3ClientConfig {
-  std::string s3AccessKey;
-  std::string s3SecretKey;
+  std::string accessKey;
+  std::string secretKey;
   std::string endpoint; //< actual endpoint where requests are sent
   std::string
       signUrl; //< url used to sign, allows requests to work across tunnels
@@ -71,17 +71,13 @@ struct S3ClientConfig {
 
 /// Parameters for calls to upload and download file functions.
 struct S3FileTransferConfig {
-  std::string s3AccessKey;
-  std::string s3SecretKey;
+  std::string accessKey;
+  std::string secretKey;
   std::string endpoint;
   std::string signUrl; //< @warning not implemented @todo implement
   std::string bucket;
   std::string key;
   std::string file;
-  /// credentials file; @warning not implemented @todo remove
-  /// and use GetS3Credentials to retrieve credential information
-  /// before calling other functions.
-  std::string credentials;
   std::string awsProfile;
   std::vector<std::string> endpoints;
   int maxRetries =
@@ -91,8 +87,8 @@ struct S3FileTransferConfig {
 
 /// Parameters for calls to SignS3URL function.
 struct S3SignUrlConfig {
-  std::string s3AccessKey;
-  std::string s3SecretKey;
+  std::string accessKey;
+  std::string secretKey;
   std::string endpoint;
   int expiration; //< expiration time in seconds  @todo Unsigned!
   std::string method;

@@ -47,10 +47,10 @@ int main(int argc, char const *argv[]) {
   bool showHelp = false;
   auto cli =
       lyra::help(showHelp).description("Pre-sign S3 URLs") |
-      lyra::opt(args.s3AccessKey,
+      lyra::opt(args.accessKey,
                 "awsAccessKey")["-a"]["--access_key"]("AWS access key")
           .required() |
-      lyra::opt(args.s3SecretKey,
+      lyra::opt(args.secretKey,
                 "awsSecretKey")["-s"]["--secret_key"]("AWS secret key")
           .required() |
       lyra::opt(args.endpoint, "endpoint")["-e"]["--endpoint"]("Endpoint URL")

@@ -46,12 +46,14 @@ int main(int argc, char const *argv[]) {
   try {
     S3FileTransferConfig config;
     bool showHelp = false;
+    string credentialsFile;
+    string awsProfile;
     auto cli =
         lyra::help(showHelp).description("Upload file to S3 bucket") |
-        lyra::opt(config.s3AccessKey,
+        lyra::opt(config.accessKey,
                   "awsAccessKey")["-a"]["--access_key"]("AWS access key")
             .optional() |
-        lyra::opt(config.s3SecretKey,
+        lyra::opt(config.secretKey,
                   "awsSecretKey")["-s"]["--secret_key"]("AWS secret key")
             .optional() |
         lyra::opt(config.endpoint,
@@ -64,11 +66,10 @@ int main(int argc, char const *argv[]) {
         lyra::opt(config.jobs, "parallel jobs")["-j"]["--jobs"](
             "Number of parallel upload jobs")
             .optional() |
-        lyra::opt(config.credentials,
-                  "credentials file")["-c"]["--credentials"](
+        lyra::opt(credentialsFile, "credentials file")["-c"]["--credentials"](
             "Credentials file, AWS cli format")
             .optional() |
-        lyra::opt(config.awsProfile, "AWS config profile")["-p"]["--profile"](
+        lyra::opt(awsProfile, "AWS config profile")["-p"]["--profile"](
             "Profile in AWS config file")
             .optional() |
         lyra::opt(config.maxRetries, "Max retries")["-r"]["--retries"](
@@ -85,6 +86,18 @@ int main(int argc, char const *argv[]) {
     if (showHelp) {
       cout << cli;
       return 0;
+    }
+    if (config.accessKey.empty() || config.secretKey.empty()) {
+      if (credentialsFile.empty()) {
+        cerr << "Specify either access and secret keys OR path to aws "
+                "credentials file with profile name,"
+             << '\n'
+             << "default profile selected if no profile name given";
+      } else {
+        auto c = GetS3Credentials(credentialsFile, awsProfile);
+        config.accessKey = c.accessKey;
+        config.secretKey = c.secretKey;
+      }
     }
     cout << UploadFile(config);
     return 0;

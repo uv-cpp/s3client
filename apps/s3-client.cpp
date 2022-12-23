@@ -56,10 +56,10 @@ int main(int argc, char const *argv[]) {
     auto cli =
         lyra::help(showHelp).description(
             "Send REST request with S3v4 signing") |
-        lyra::opt(args.s3AccessKey,
+        lyra::opt(args.accessKey,
                   "awsAccessKey")["-a"]["--access_key"]("AWS access key")
             .optional() |
-        lyra::opt(args.s3SecretKey,
+        lyra::opt(args.secretKey,
                   "awsSecretKey")["-s"]["--secret_key"]("AWS secret key")
             .optional() |
         lyra::opt(args.endpoint,

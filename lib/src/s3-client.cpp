@@ -49,8 +49,8 @@ namespace sss {
 
 //------------------------------------------------------------------------------
 void Validate(const S3ClientConfig &args) {
-  if (args.s3AccessKey.empty() && !args.s3SecretKey.empty() ||
-      args.s3SecretKey.empty() && !args.s3AccessKey.empty()) {
+  if (args.accessKey.empty() && !args.secretKey.empty() ||
+      args.secretKey.empty() && !args.accessKey.empty()) {
     throw invalid_argument(
         "ERROR: both access and secret keys have to be specified");
   }
@@ -94,10 +94,10 @@ WebClient SendS3Request(S3ClientConfig args) {
       path += "/" + args.key;
   }
   auto headers = args.headers;
-  if (!args.s3AccessKey.empty()) {
-    auto signedHeaders = SignHeaders(args.s3AccessKey, args.s3SecretKey,
-                                     args.signUrl, args.method, args.bucket,
-                                     args.key, "", args.params, headers);
+  if (!args.accessKey.empty()) {
+    auto signedHeaders =
+        SignHeaders(args.accessKey, args.secretKey, args.signUrl, args.method,
+                    args.bucket, args.key, "", args.params, headers);
     headers.insert(begin(signedHeaders), end(signedHeaders));
   }
   WebClient req(args.endpoint, path, args.method, args.params, headers);
@@ -146,8 +146,8 @@ size_t ObjectSize(const string &s3AccessKey, const string &s3SecretKey,
                   const string &endpoint, const string &bucket,
                   const string &key, const string &signUrl = "") {
   S3ClientConfig args;
-  args.s3AccessKey = s3AccessKey;
-  args.s3SecretKey = s3SecretKey;
+  args.accessKey = s3AccessKey;
+  args.secretKey = s3SecretKey;
   args.endpoint = endpoint;
   args.signUrl = signUrl;
   args.bucket = bucket;
@@ -163,7 +163,7 @@ size_t ObjectSize(const string &s3AccessKey, const string &s3SecretKey,
 // E.g. "Range: bytes=100-1000"
 int DownloadPart(const S3FileTransferConfig &args, const string &path, int id,
                  size_t chunkSize, size_t lastChunkSize) {
-  auto signedHeaders = SignHeaders(args.s3AccessKey, args.s3SecretKey,
+  auto signedHeaders = SignHeaders(args.accessKey, args.secretKey,
                                    args.endpoint, "GET", args.bucket, args.key);
   Headers headers(begin(signedHeaders), end(signedHeaders));
   const size_t sz = id < args.jobs - 1 ? chunkSize : lastChunkSize;
@@ -183,7 +183,7 @@ void DownloadFile(S3FileTransferConfig config) {
   vector<future<int>> status(config.jobs);
   // retrieve file size from remote object
   const size_t fileSize =
-      ObjectSize(config.s3AccessKey, config.s3SecretKey, config.endpoint,
+      ObjectSize(config.accessKey, config.secretKey, config.endpoint,
                  config.bucket, config.key, config.signUrl);
   // compute chunk size
   const size_t chunkSize = (fileSize + config.jobs - 1) / config.jobs;
@@ -232,8 +232,8 @@ bool NotURL(const string &p) {
 }
 
 void Validate(const S3FileTransferConfig &config) {
-  if (config.s3AccessKey.empty() && !config.s3SecretKey.empty() ||
-      config.s3SecretKey.empty() && !config.s3AccessKey.empty()) {
+  if (config.accessKey.empty() && !config.secretKey.empty() ||
+      config.secretKey.empty() && !config.accessKey.empty()) {
     throw invalid_argument(
         "ERROR: both access and secret keys have to be specified");
   }
@@ -273,7 +273,7 @@ WebClient BuildUploadRequest(const S3FileTransferConfig &config,
                        {"uploadId", uploadId}};
   const string endpoint = config.endpoints[partNum % config.endpoints.size()];
   auto signedHeaders =
-      SignHeaders(config.s3AccessKey, config.s3SecretKey, endpoint, "PUT",
+      SignHeaders(config.accessKey, config.secretKey, endpoint, "PUT",
                   config.bucket, config.key, "", params);
   Headers headers(begin(signedHeaders), end(signedHeaders));
   WebClient req(endpoint, path, "PUT", params, headers);
@@ -306,7 +306,7 @@ WebClient BuildEndUploadRequest(const S3FileTransferConfig &config,
   const size_t ri = RandomIndex(0, int(config.endpoints.size() - 1));
   const string endpoint = config.endpoints[ri];
   auto signedHeaders =
-      SignHeaders(config.s3AccessKey, config.s3SecretKey, endpoint, "POST",
+      SignHeaders(config.accessKey, config.secretKey, endpoint, "POST",
                   config.bucket, config.key, "", params);
   Headers headers(begin(signedHeaders), end(signedHeaders));
   WebClient req(endpoint, path, "POST", params, headers);
@@ -349,9 +349,6 @@ S3Credentials GetS3Credentials(const string &fileName, string awsProfile) {
 }
 
 S3FileTransferConfig InitConfig(S3FileTransferConfig config) {
-  if (config.s3AccessKey.empty() && config.s3SecretKey.empty()) {
-    auto c = GetS3Credentials(config.credentials, config.awsProfile);
-  }
   if (config.endpoint.empty())
     throw invalid_argument("Error, empty endpoint");
   if (NotURL(config.endpoint))
@@ -387,8 +384,8 @@ S3FileTransferConfig InitConfig(S3FileTransferConfig config) {
                                      : fileSize % config.jobs + chunkSize;
     S3ClientConfig args;
     // begin uplaod request -> get upload id
-    args.s3AccessKey = config.s3AccessKey;
-    args.s3SecretKey = config.s3SecretKey;
+    args.accessKey = config.accessKey;
+    args.secretKey = config.secretKey;
     args.endpoint = config.endpoint;
     args.bucket = config.bucket;
     args.key = config.key;
@@ -431,7 +428,7 @@ S3FileTransferConfig InitConfig(S3FileTransferConfig config) {
     return etag;
   } else {
     auto signedHeaders =
-        SignHeaders(config.s3AccessKey, config.s3SecretKey, endpoint, "PUT",
+        SignHeaders(config.accessKey, config.secretKey, endpoint, "PUT",
                     config.bucket, config.key, "");
     Map headers(begin(signedHeaders), end(signedHeaders));
     WebClient req(config.endpoint, path, "PUT", {}, headers);
@@ -459,7 +456,7 @@ S3FileTransferConfig InitConfig(S3FileTransferConfig config) {
 //------------------------------------------------------------------------------
 // extern std::map<std::string, std::string> ParseParams(const std::string &);
 std::string SignS3URL(const S3SignUrlConfig &config) {
-  return SignedURL(config.s3AccessKey, config.s3SecretKey, config.expiration,
+  return SignedURL(config.accessKey, config.secretKey, config.expiration,
                    config.endpoint, config.method, config.bucket, config.key,
                    ParseParams(config.params), config.region);
 }
