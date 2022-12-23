@@ -94,6 +94,11 @@ int main(int argc, char const *argv[]) {
     if (!endpoint.empty()) {
       config.endpoints.push_back(endpoint);
     } else {
+      if (endpointsFile.empty()) {
+        cerr << "Specify either an endpoing or a file to read endpoints from"
+             << endl;
+        exit(EXIT_FAILURE);
+      }
       ifstream is(endpointsFile);
       if (!is) {
         cerr << "Cannot read from " << endpointsFile << endl;
