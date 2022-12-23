@@ -40,7 +40,6 @@
 
 #include <fstream>
 #include <future>
-#include <iostream>
 #include <set>
 #include <thread>
 using namespace std;
@@ -284,7 +283,6 @@ string BuildEndUploadXML(vector<future<string>> &etags) {
     xml += part;
   }
   xml += "</CompleteMultipartUpload>";
-  std::cout << xml << std::endl;
   return xml;
 }
 
@@ -307,52 +305,30 @@ WebClient BuildEndUploadRequest(const S3FileTransferConfig &config,
 
 string UploadPart(const S3FileTransferConfig &config, const string &path,
                   const string &uploadId, int i, size_t offset,
-                  size_t chunkSize, int maxTries, int tryNum) {
+                  size_t chunkSize, int tryNum) {
   WebClient ul = BuildUploadRequest(config, path, i, uploadId);
   const bool ok = ul.UploadFile(config.file, offset, chunkSize);
   if (!ok) {
-    throw(runtime_error("Cannot upload chunk " + to_string(i + 1)));
-  }
-  const string etag = HTTPHeader(ul.GetHeaderText(), "[Ee][Tt]ag");
-  if (etag.empty()) {
-    if (tryNum == maxTries) {
+    if (tryNum == config.maxRetries) {
+      throw(runtime_error("Cannot upload chunk " + to_string(i + 1)));
+    } else {
+      return UploadPart(config, path, uploadId, i, offset, chunkSize, ++tryNum);
+    }
+  } else {
+    string etag = HTTPHeader(ul.GetHeaderText(), "Etag");
+    if (etag.empty()) {
       throw(runtime_error("No ETag found in HTTP header"));
     } else {
-      numRetriesG += 1;
-      return UploadPart(config, path, uploadId, i, offset, chunkSize, maxTries,
-                        ++tryNum);
+      if (etag[0] == '"') {
+        etag = etag.substr(1, etag.size() - 2);
+      } else if (etag.substr(0, string("&#34;").size()) == "&#34;") {
+        const size_t quotes = string("&#34;").size();
+        etag = etag.substr(quotes, etag.size() - 2 * quotes);
+      }
+      return etag;
     }
   }
-  return etag;
 }
-// string UploadPart(const S3FileTransferConfig &config, const string &path,
-//                   const string &uploadId, int i, size_t offset,
-//                   size_t chunkSize, int tryNum = 1) {
-//   WebClient ul = BuildUploadRequest(config, path, i, uploadId);
-//   const bool ok = ul.UploadFile(config.file, offset, chunkSize);
-//   if (!ok) {
-//     if (tryNum == config.maxRetries) {
-//       throw(runtime_error("Cannot upload chunk " + to_string(i + 1)));
-//     } else {
-//       return UploadPart(config, path, uploadId, i, offset, chunkSize,
-//       ++tryNum);
-//     }
-//   } else {
-//     std::cout << ul.GetHeaderText() << std::endl;
-//     string etag = HTTPHeader(ul.GetHeaderText(), "[Ee][tT]ag");
-//     if (etag.empty()) {
-//       throw(runtime_error("No ETag found in HTTP header"));
-//     } else {
-//       if (etag[0] == '"') {
-//         etag = etag.substr(1, etag.size() - 2);
-//       } else if (etag.substr(0, string("&#34;").size()) == "&#34;") {
-//         const size_t quotes = string("&#34;").size();
-//         etag = etag.substr(quotes, etag.size() - 2 * quotes);
-//       }
-//       return etag;
-//     }
-//   }
-// }
 
 S3Credentials GetS3Credentials(const string &fileName, string awsProfile) {
   const string fname =
@@ -395,7 +371,7 @@ S3Credentials GetS3Credentials(const string &fileName, string awsProfile) {
     // begin uplaod request -> get upload id
     args.accessKey = config.accessKey;
     args.secretKey = config.secretKey;
-    auto endpoint = config.endpoints.front();
+    args.endpoint = config.endpoints.front();
     args.bucket = config.bucket;
     args.key = config.key;
     args.method = "POST";
@@ -415,7 +391,7 @@ S3Credentials GetS3Credentials(const string &fileName, string awsProfile) {
     for (int i = 0; i != config.jobs; ++i) {
       const size_t sz = i != config.jobs - 1 ? chunkSize : lastChunkSize;
       etags[i] = async(launch::async, UploadPart, config, path, uploadId, i,
-                       chunkSize * i, sz, 1, 1);
+                       chunkSize * i, sz, 1);
     }
     // send end upload request
     WebClient endUpload = BuildEndUploadRequest(config, path, etags, uploadId);
