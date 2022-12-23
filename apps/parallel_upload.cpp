@@ -68,7 +68,7 @@ int main(int argc, char const *argv[]) {
         lyra::opt(config.bucket, "bucket")["-b"]["--bucket"]("Bucket name")
             .required() |
         lyra::opt(config.key, "key")["-k"]["--key"]("Key name").required() |
-        lyra::opt(config.file, "file")["-f"]["--file"]("File name").required() |
+        lyra::opt(config.file, "file")["-f"]["--file"]("File name").optional() |
         lyra::opt(config.jobs, "parallel jobs")["-j"]["--jobs"](
             "Number of parallel upload jobs")
             .optional() |
@@ -93,6 +93,8 @@ int main(int argc, char const *argv[]) {
       cout << cli;
       exit(EXIT_SUCCESS);
     }
+    if (config.file.empty())
+      config.file = config.key;
     if (endpoint.empty() && endpointsFile.empty()) {
       cerr << "Specify either an endpoint URL or a file name containing a list "
               "of URLs, one per line"

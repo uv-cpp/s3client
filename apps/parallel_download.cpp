@@ -70,7 +70,7 @@ int main(int argc, char const *argv[]) {
         lyra::opt(config.bucket, "bucket")["-b"]["--bucket"]("Bucket name")
             .required() |
         lyra::opt(config.key, "key")["-k"]["--key"]("Key name").required() |
-        lyra::opt(config.file, "file")["-f"]["--file"]("File name").required() |
+        lyra::opt(config.file, "file")["-f"]["--file"]("File name").optional() |
         lyra::opt(credentialsFile, "credentials file")["-c"]["--credentials"](
             "Credentials file, AWS cli format")
             .optional() |
@@ -97,7 +97,8 @@ int main(int argc, char const *argv[]) {
       cerr << cli << endl;
       exit(1);
     }
-
+    if (config.file.empty())
+      config.file = config.key;
     if (exists(config.file) && !overwrite) {
       cerr << "File exists, use the '-y' command line switch to overwrite"
            << endl;
