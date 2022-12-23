@@ -73,7 +73,6 @@ struct S3ClientConfig {
 struct S3FileTransferConfig {
   std::string accessKey;
   std::string secretKey;
-  std::string endpoint;
   std::string signUrl; //< @warning not implemented @todo implement
   std::string bucket;
   std::string key;

@@ -33,11 +33,13 @@
 
 // Parallel file upload to S3 servers
 
+#include <fstream>
 #include <iostream>
 #include <string>
 
 #include "lyra/lyra.hpp"
 #include "s3-client.h"
+#include "utility.h"
 
 using namespace std;
 using namespace sss;
@@ -48,6 +50,8 @@ int main(int argc, char const *argv[]) {
     bool showHelp = false;
     string credentialsFile;
     string awsProfile;
+    string endpoint;
+    string endpointsFile;
     auto cli =
         lyra::help(showHelp).description("Upload file to S3 bucket") |
         lyra::opt(config.accessKey,
@@ -56,9 +60,11 @@ int main(int argc, char const *argv[]) {
         lyra::opt(config.secretKey,
                   "awsSecretKey")["-s"]["--secret_key"]("AWS secret key")
             .optional() |
-        lyra::opt(config.endpoint,
-                  "endpoint")["-e"]["--endpoint"]("Endpoint URL")
-            .required() |
+        lyra::opt(endpoint, "endpoint")["-e"]["--endpoint"]("Endpoint URL")
+            .optional() |
+        lyra::opt(endpointsFile, "endpointsFile")["-E"]["--endpoints-file"](
+            "File with list of endpoints")
+            .optional() |
         lyra::opt(config.bucket, "bucket")["-b"]["--bucket"]("Bucket name")
             .required() |
         lyra::opt(config.key, "key")["-k"]["--key"]("Key name").required() |
@@ -81,23 +87,40 @@ int main(int argc, char const *argv[]) {
     if (!result) {
       cerr << result.message() << endl;
       cerr << cli << endl;
-      exit(1);
+      exit(EXIT_FAILURE);
     }
     if (showHelp) {
       cout << cli;
-      return 0;
+      exit(EXIT_SUCCESS);
+    }
+    if (endpoint.empty() && endpointsFile.empty()) {
+      cerr << "Specify either an endpoint URL or a file name containing a list "
+              "of URLs, one per line"
+           << endl;
+    }
+    if (!endpoint.empty()) {
+      config.endpoints.push_back(endpoint);
+    } else {
+      ifstream is(endpointsFile);
+      if (!is) {
+        cerr << "Cannot read from " << endpointsFile << endl;
+        exit(EXIT_FAILURE);
+      }
+      string line;
+      while (getline(is, line)) {
+        Trim(line);
+        if (line.empty() || line[0] == '#')
+          continue;
+        config.endpoints.push_back(line);
+      }
     }
     if (config.accessKey.empty() || config.secretKey.empty()) {
       if (credentialsFile.empty()) {
-        cerr << "Specify either access and secret keys OR path to aws "
-                "credentials file with profile name,"
-             << '\n'
-             << "default profile selected if no profile name given";
-      } else {
-        auto c = GetS3Credentials(credentialsFile, awsProfile);
-        config.accessKey = c.accessKey;
-        config.secretKey = c.secretKey;
+        credentialsFile = GetHomeDir() + "/.aws/credentials";
       }
+      auto c = GetS3Credentials(credentialsFile, awsProfile);
+      config.accessKey = c.accessKey;
+      config.secretKey = c.secretKey;
     }
     cout << UploadFile(config);
     return 0;

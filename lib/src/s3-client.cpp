@@ -155,7 +155,7 @@ size_t ObjectSize(const string &s3AccessKey, const string &s3SecretKey,
   auto req = SendS3Request(args);
   const vector<uint8_t> h = req.GetResponseHeader();
   const string hs(begin(h), end(h));
-  const string cl = sss::HTTPHeader(hs, "[Cc]ontent-[Ll]ength");
+  const string cl = sss::HTTPHeader(hs, "Content-Length");
   char *ns;
   return size_t(strtoull(cl.c_str(), &ns, 10));
 }
@@ -163,27 +163,33 @@ size_t ObjectSize(const string &s3AccessKey, const string &s3SecretKey,
 // E.g. "Range: bytes=100-1000"
 int DownloadPart(const S3FileTransferConfig &args, const string &path, int id,
                  size_t chunkSize, size_t lastChunkSize) {
-  auto signedHeaders = SignHeaders(args.accessKey, args.secretKey,
-                                   args.endpoint, "GET", args.bucket, args.key);
+  const auto endpoint = args.endpoints[RandomIndex(0, args.endpoints.size())];
+  const auto signedHeaders = SignHeaders(
+      args.accessKey, args.secretKey, endpoint, "GET", args.bucket, args.key);
   Headers headers(begin(signedHeaders), end(signedHeaders));
   const size_t sz = id < args.jobs - 1 ? chunkSize : lastChunkSize;
   const string range = "bytes=" + to_string(id * chunkSize) + "-" +
                        to_string(id * chunkSize + sz - 1);
   headers.insert({"Range", range});
-  WebClient req(args.endpoint, path, "GET", {}, headers);
+  WebClient req(endpoint, path, "GET", {}, headers);
   FILE *out = fopen(args.file.c_str(), "wb");
   fseek(out, id * chunkSize, SEEK_SET);
   req.SetWriteFunction(NULL, out);
-  req.Send();
+  auto retries = args.maxRetries;
+  while (!req.Send() && retries)
+    --retries;
   return req.StatusCode();
 }
 
 void DownloadFile(S3FileTransferConfig config) {
 
   vector<future<int>> status(config.jobs);
+  if (config.endpoints.empty()) {
+    throw std::logic_error("No endpoint specified");
+  }
   // retrieve file size from remote object
   const size_t fileSize =
-      ObjectSize(config.accessKey, config.secretKey, config.endpoint,
+      ObjectSize(config.accessKey, config.secretKey, config.endpoints.front(),
                  config.bucket, config.key, config.signUrl);
   // compute chunk size
   const size_t chunkSize = (fileSize + config.jobs - 1) / config.jobs;
@@ -209,23 +215,6 @@ void DownloadFile(S3FileTransferConfig config) {
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 ///@todo use size_t
-
-vector<string> ReadEndpoints(const string &fname) {
-  vector<string> ep;
-  ifstream in(fname);
-  if (in.fail()) {
-    throw runtime_error("Cannot open configuration file " + fname);
-  }
-  string line;
-  while (getline(in, line)) {
-    Trim(line);
-    if (line.length() == 0 || line[0] == '#')
-      continue;
-    ep.push_back(line);
-    line = "";
-  }
-  return ep;
-}
 
 bool NotURL(const string &p) {
   return p.empty() || (p.substr(0, 5) != "http:" && p.substr(0, 6) != "https:");
@@ -348,19 +337,6 @@ S3Credentials GetS3Credentials(const string &fileName, string awsProfile) {
           toml[awsProfile]["aws_secret_access_key"]};
 }
 
-S3FileTransferConfig InitConfig(S3FileTransferConfig config) {
-  if (config.endpoint.empty())
-    throw invalid_argument("Error, empty endpoint");
-  if (NotURL(config.endpoint))
-    config.endpoints = ReadEndpoints(config.endpoint);
-  else
-    config.endpoints.push_back(config.endpoint);
-  if (config.endpoints.empty())
-    throw invalid_argument("Error, no endpoints specified");
-  config.endpoint = config.endpoints[0];
-  return std::move(config);
-}
-
 /*ETag*/ ::std::string UploadFile(S3FileTransferConfig config) {
   FILE *inputFile = fopen(config.file.c_str(), "rb");
   if (!inputFile) {
@@ -370,9 +346,8 @@ S3FileTransferConfig InitConfig(S3FileTransferConfig config) {
   // retrieve file size
   const size_t fileSize = sss::FileSize(config.file);
   string path = "/" + config.bucket + "/" + config.key;
-  if (config.endpoints.empty()) {
-    config.endpoints.push_back(config.endpoint);
-  }
+  if (config.endpoints.empty())
+    throw std::logic_error("Missing endpoint information");
   const string endpoint =
       config.endpoints[RandomIndex(0, config.endpoints.size() - 1)];
   if (config.jobs > 1) {
@@ -386,7 +361,7 @@ S3FileTransferConfig InitConfig(S3FileTransferConfig config) {
     // begin uplaod request -> get upload id
     args.accessKey = config.accessKey;
     args.secretKey = config.secretKey;
-    args.endpoint = config.endpoint;
+    auto endpoint = config.endpoints.front();
     args.bucket = config.bucket;
     args.key = config.key;
     args.method = "POST";
@@ -394,12 +369,12 @@ S3FileTransferConfig InitConfig(S3FileTransferConfig config) {
     auto req = SendS3Request(args);
     // initiate request
     if (req.StatusCode() >= 400) {
-      const string errcode = XMLTag(req.GetContentText(), "[Cc]ode");
+      const string errcode = XMLTag(req.GetContentText(), "Code");
       throw runtime_error("Error sending begin upload request - " + errcode);
     }
     vector<uint8_t> resp = req.GetResponseBody();
     const string xml(begin(resp), end(resp));
-    const string uploadId = XMLTag(xml, "[Uu]pload[Ii][dD]");
+    const string uploadId = XMLTag(xml, "uploadId");
     // send parts in parallel and store ETags
     vector<future<string>> etags(config.jobs);
     for (int i = 0; i != config.jobs; ++i) {
@@ -411,11 +386,11 @@ S3FileTransferConfig InitConfig(S3FileTransferConfig config) {
     WebClient endUpload = BuildEndUploadRequest(config, path, etags, uploadId);
     endUpload.Send();
     if (endUpload.StatusCode() >= 400) {
-      const string errcode = XMLTag(endUpload.GetContentText(), "[Cc]ode");
+      const string errcode = XMLTag(endUpload.GetContentText(), "Code");
       throw runtime_error("Error sending end upload request - " + errcode);
     }
-    string etag = XMLTag(endUpload.GetContentText(), "[Ee][Tt]ag");
-    string etagX = HTTPHeader(req.GetHeaderText(), "[Ee][Tt]ag");
+    string etag = XMLTag(endUpload.GetContentText(), "Etag");
+    string etagX = HTTPHeader(req.GetHeaderText(), "Etag");
     if (etag.empty()) {
       throw runtime_error("Empty ETag");
     }
@@ -431,16 +406,16 @@ S3FileTransferConfig InitConfig(S3FileTransferConfig config) {
         SignHeaders(config.accessKey, config.secretKey, endpoint, "PUT",
                     config.bucket, config.key, "");
     Map headers(begin(signedHeaders), end(signedHeaders));
-    WebClient req(config.endpoint, path, "PUT", {}, headers);
+    WebClient req(endpoint, path, "PUT", {}, headers);
     if (!req.UploadFile(config.file)) {
       throw runtime_error("Error sending request: " + req.ErrorMsg());
     }
     if (req.StatusCode() >= 400) {
-      const string errcode = XMLTag(req.GetContentText(), "[Cc]ode");
+      const string errcode = XMLTag(req.GetContentText(), "Code");
       throw runtime_error("Error sending upload request - " + errcode);
     }
 
-    string etag = HTTPHeader(req.GetHeaderText(), "[Ee][Tt]ag");
+    string etag = HTTPHeader(req.GetHeaderText(), "Etag");
     if (etag[0] == '"') {
       etag = etag.substr(1, etag.size() - 2);
     }
