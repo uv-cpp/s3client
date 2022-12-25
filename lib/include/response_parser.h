@@ -54,7 +54,7 @@ std::string XMLTag(const std::string &xml, const std::string &tag);
 /// \param header header name
 std::string HTTPHeader(const std::string &headers, const std::string &header);
 
-/// Extract and return HTTP headers as key-value tuples
+/// Extract and return HTTP headers as key-value pairs
 /// \param headers text containing the header section of an HTTP payload
 /// \return \c std::map<std::string, std::string> of {header name, header value}
 /// tuples

@@ -105,7 +105,7 @@ int main(int argc, char const *argv[]) {
     if (!params.empty())
       args.params = ParseParams(params);
     if (!headers.empty())
-      args.headers = ParseParams(headers);
+      args.headers = ParseHeaders(headers);
     if (!data.empty()) {
       std::copy(begin(data), end(data), back_inserter(args.data));
       if (args.dataIsFileName) {

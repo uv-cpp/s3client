@@ -39,12 +39,19 @@
 
 #include "lyra/lyra.hpp"
 #include "s3-client.h"
+#include "url_utility.h"
 #include "utility.h"
 
 using namespace std;
 using namespace sss;
 //------------------------------------------------------------------------------
 int main(int argc, char const *argv[]) {
+  const std::string x = "meta1:value1;meta2:value2";
+  for (auto i : SplitRange(x, ";")) {
+    auto s = begin(SplitRange(i, ":"));
+    cout << *s++ << ": " << *s << endl;
+  }
+  return 0;
   try {
     S3FileTransferConfig config;
     bool showHelp = false;
@@ -52,6 +59,7 @@ int main(int argc, char const *argv[]) {
     string awsProfile;
     string endpoint;
     string endpointsFile;
+    string metaData;
     auto cli =
         lyra::help(showHelp).description("Upload file to S3 bucket") |
         lyra::opt(config.accessKey,
@@ -80,6 +88,10 @@ int main(int argc, char const *argv[]) {
             .optional() |
         lyra::opt(config.maxRetries, "Max retries")["-r"]["--retries"](
             "Max number of per-multipart part retries")
+            .optional() |
+        lyra::opt(metaData, "metaData")["-m"]["--meta"](
+            "Metadata list formatted as headers: "
+            "meta_key1:meta_value1;meta_key2:meta_value2")
             .optional();
 
     // Parse the program arguments:
@@ -124,6 +136,7 @@ int main(int argc, char const *argv[]) {
       config.accessKey = c.accessKey;
       config.secretKey = c.secretKey;
     }
+
     cout << UploadFile(config);
     return 0;
   } catch (const exception &e) {

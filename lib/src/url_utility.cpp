@@ -121,13 +121,13 @@ Parameters ParseParams(string s) {
   if (s.empty())
     return Parameters();
   vector<string> slist;
-  split(s, slist, ";");
+  Split(s, slist, ";");
   Map params;
   for (auto p : slist) {
     vector<string> kv;
     if (p.find_first_of("=") == string::npos)
       p += "=";
-    split(p, kv, "=", 1);
+    Split(p, kv, "=", 1);
     assert(kv.size() == 1 || kv.size() == 2);
     const string key = kv[0];
     const string value = kv.size() == 2 ? kv[1] : "";
@@ -146,11 +146,11 @@ Headers ParseHeaders(const string &s) {
   if (s.empty())
     return Headers();
   vector<string> slist;
-  split(s, slist, ";");
+  Split(s, slist, ";");
   Headers headers;
   for (auto p : slist) {
     vector<string> kv;
-    split(p, kv, ":", 1);
+    Split(p, kv, ":", 1);
     assert(kv.size() == 1 || kv.size() == 2);
     const string key = kv[0];
     const string value = kv.size() == 2 ? kv[1] : "";
