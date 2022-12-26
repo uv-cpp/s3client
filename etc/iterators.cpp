@@ -1,7 +1,6 @@
 #include <iostream>
-#include <ranges>
 #include <string>
-#include <string_view>
+
 /// Iterate over splits.
 ///
 /// A constanst reference to the parsed string is kept internally.
@@ -80,17 +79,10 @@ inline auto end(const SplitRange &sr) { return sr.end(); }
 using namespace std;
 
 int main(int, char **) {
-  const std::string x = "meta1:value1;meta2:value2";
+  const std::string x = "meta1:value1"; // meta2:value2";
   for (auto i : SplitRange(x, ";")) {
     auto s = begin(SplitRange(i, ":"));
     cout << *s++ << ": " << *s << endl;
-  }
-
-  const string_view sv{x};
-  const string_view delim{";"};
-
-  for (const auto i : views::split(sv, delim)) {
-    cout << i << endl;
   }
 
   return 0;

@@ -133,13 +133,12 @@ int main(int argc, char const *argv[]) {
 
     MetaDataMap mm;
     if (!metaData.empty()) {
-      /// @todo replace with split iterator/range
-      MetaDataMap mm2;
-      mm = ParseHeaders(metaData);
-      for (auto kv : mm) {
-        mm2["x-amz-meta-" + kv.first] = kv.second;
+      for (auto i : SplitRange(metaData, ";")) {
+        auto s = begin(SplitRange(i, ":"));
+        auto k = *s++;
+        auto v = *s;
+        mm["x-amz-meta-" + ToLower(k)] = v;
       }
-      mm = mm2;
     }
     cout << UploadFile(config, mm);
     return 0;
