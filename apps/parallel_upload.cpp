@@ -46,12 +46,6 @@ using namespace std;
 using namespace sss;
 //------------------------------------------------------------------------------
 int main(int argc, char const *argv[]) {
-  const std::string x = "meta1:value1;meta2:value2";
-  for (auto i : SplitRange(x, ";")) {
-    auto s = begin(SplitRange(i, ":"));
-    cout << *s++ << ": " << *s << endl;
-  }
-  return 0;
   try {
     S3FileTransferConfig config;
     bool showHelp = false;
@@ -137,7 +131,17 @@ int main(int argc, char const *argv[]) {
       config.secretKey = c.secretKey;
     }
 
-    cout << UploadFile(config);
+    MetaDataMap mm;
+    if (!metaData.empty()) {
+      /// @todo replace with split iterator/range
+      MetaDataMap mm2;
+      mm = ParseHeaders(metaData);
+      for (auto kv : mm) {
+        mm2["x-amz-meta-" + kv.first] = kv.second;
+      }
+      mm = mm2;
+    }
+    cout << UploadFile(config, mm);
     return 0;
   } catch (const exception &e) {
     cerr << e.what() << endl;

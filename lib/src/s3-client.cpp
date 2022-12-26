@@ -415,7 +415,7 @@ S3Credentials GetS3Credentials(const string &fileName, string awsProfile) {
   } else {
     auto signedHeaders =
         SignHeaders(config.accessKey, config.secretKey, endpoint, "PUT",
-                    config.bucket, config.key, "");
+                    config.bucket, config.key, "", {}, metaData);
     Map headers(begin(signedHeaders), end(signedHeaders));
     WebClient req(endpoint, path, "PUT", {}, headers);
     if (!req.UploadFile(config.file)) {

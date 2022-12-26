@@ -79,6 +79,13 @@ void Split(const std::string &str, ContainerT &cont,
   }
 }
 
+/// Ranges *are broken* in Clang 15, need to implement my own splitter.
+/// https://stackoverflow.com/questions/72716894/how-to-use-stdviewstransform-on-a-vector/72718016
+
+/// Iterate over splits.
+///
+/// A constanst reference to the parsed string is kept internally.
+/// The delimiter is copied to allow for
 class SplitIterator {
   friend class SplitRange;
 
