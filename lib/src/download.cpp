@@ -79,8 +79,9 @@ int DownloadPart(const S3FileTransferConfig &args, const string &path, int id,
       args.accessKey, args.secretKey, endpoint, "GET", args.bucket, args.key);
   Headers headers(begin(signedHeaders), end(signedHeaders));
   const size_t sz = min(chunkSize, objectSize - id * chunkSize);
+  const bool lastChunk = chunkSize * id + sz == objectSize;
   const string range = "bytes=" + to_string(id * chunkSize) + "-" +
-                       to_string(id * chunkSize + sz - 1);
+                       to_string(id * chunkSize + sz - (lastChunk ? 0 : 1));
   headers.insert({"Range", range});
   WebClient req(endpoint, path, "GET", {}, headers);
   FILE *out = fopen(args.file.c_str(), "wb");
