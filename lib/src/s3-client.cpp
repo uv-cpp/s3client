@@ -139,7 +139,6 @@ WebClient SendS3Request(S3ClientConfig args) {
   return req;
 }
 
-//------------------------------------------------------------------------------
 S3Credentials GetS3Credentials(const string &fileName, string awsProfile) {
   const string fname =
       fileName.empty() ? GetHomeDir() + "/.aws/credentials" : fileName;

@@ -117,59 +117,8 @@ S3Credentials GetS3Credentials(const std::string &fileName,
 
 using ByteArray = std::vector<uint8_t>;
 using StringArray = std::vector<std::string>;
-using Etag = std::string;
+using ETag = std::string;
 using MetaDataMap = std::map<std::string, std::string>;
 using UploadId = std::string;
-
-class S3Client {
-
-public:
-  S3Client(const std::string &access, const std::string &secret,
-           const std::string &endpoint, const std::string &signingEndpoint = "")
-      : access_(access), secret_(secret), endpoint_(endpoint),
-        signingEndpoint_(signingEndpoint) {}
-  S3Client() = delete;
-  S3Client(const S3Client &) = delete;
-  S3Client(S3Client &&other)
-      : access_(other.access_), secret_(other.secret_),
-        endpoint_(other.endpoint_), signingEndpoint_(other.signingEndpoint_),
-        webClient_(std::move(other.webClient_)) {}
-
-public:
-  StringArray ListBuckets();
-  Headers ListBucket(const std::string &bucket);
-  StringArray ListObjects(const std::string &bucket);
-  Headers ListObject(const std::string &bucket, const std::string &key);
-  void CreateBucket(const std::string &bucket);
-  ByteArray Get(const std::string &bucket, const std::string &key,
-                size_t begin = 0, size_t end = 0);
-  Etag Put(const std::string &bucket, const std::string &key,
-           const uint8_t *data, size_t size,
-           const MetaDataMap &metaData = MetaDataMap{});
-  void DeleteObject(const std::string &bucket, const std::string &key);
-  void DeleteBucket(const std::string &bucket);
-  Etag PutNoOverwrite(const std::string &bucket, const std::string &key,
-                      const uint8_t *data, size_t size,
-                      const MetaDataMap &metaData = MetaDataMap{});
-  bool IsBucket(const std::string &bucket);
-  bool IsKey(const std::string &bucket, const std::string &key);
-  Etag UploadFile(const std::string &bucket, const std::string &key,
-                  const std::string &fileName);
-  void DownloadFile(const std::string &bucket, const std::string &key,
-                    const std::string &fileName);
-  Etag UploadData(const std::string &bucket, const std::string &key,
-                  const uint8_t *data, size_t size);
-  UploadId BeginUpload(const std::string &bucket, const std::string &key);
-  Etag UploadPart(const UploadId &uploadId, const std::string &bucket,
-                  const std::string &key, const uint8_t *data, size_t size);
-  Etag EndUpload(const std::vector<UploadId> &ids);
-
-private:
-  sss::WebClient webClient_;
-  std::string access_;
-  std::string secret_;
-  std::string endpoint_;
-  std::string signingEndpoint_;
-};
 
 } // namespace sss
