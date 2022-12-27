@@ -81,7 +81,8 @@ struct S3FileTransferConfig {
   std::vector<std::string> endpoints;
   int maxRetries =
       1; //< mximum number of retries per chunk, only implementd for upload
-  int jobs = 1; //< number of parallel threads of execution
+  int jobs = 1;            //< number of parallel threads of execution
+  size_t chunksPerJob = 1; //< number of chunks per job
 };
 
 /// Parameters for calls to SignS3URL function.

@@ -74,6 +74,10 @@ int main(int argc, char const *argv[]) {
         lyra::opt(config.jobs, "parallel jobs")["-j"]["--jobs"](
             "Number of parallel upload jobs")
             .optional() |
+        lyra::opt(config.chunksPerJob,
+                  "chunks per job")["-n"]["--parts_per_job"](
+            "Number of parts per job")
+            .optional() |
         lyra::opt(credentialsFile, "credentials file")["-c"]["--credentials"](
             "Credentials file, AWS cli format")
             .optional() |
@@ -135,7 +139,14 @@ int main(int argc, char const *argv[]) {
     if (!metaData.empty()) {
       for (auto i : SplitRange(metaData, ";")) {
         auto s = begin(SplitRange(i, ":"));
+        if (s == end(SplitRange(i, ":"))) {
+          throw std::logic_error("Missing metadata");
+        }
         auto k = *s++;
+        if (s == end(SplitRange(metaData, ";"))) {
+          throw std::logic_error(
+              "Wrong metadata format: should be 'meta key:meta value'");
+        }
         auto v = *s;
         mm["x-amz-meta-" + ToLower(k)] = v;
       }

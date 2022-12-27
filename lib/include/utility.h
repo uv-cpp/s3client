@@ -88,9 +88,7 @@ class SplitIterator {
 
 public:
   using iterator_category = std::forward_iterator_tag;
-  using difference_type = std::ptrdiff_t;
   using value_type = std::string;
-  using pointer = std::string *;   // or also value_type*
   using reference = std::string &; // or also value_type&
 public:
   SplitIterator(const std::string &str, const std::string &delims = " ")
@@ -124,6 +122,8 @@ public:
   std::string operator*() {
     return str_.substr(prev_, std::min(cur_, str_.size()) - prev_);
   }
+
+  std::string operator->() { return operator*(); }
 
 private:
   const std::string &str_;

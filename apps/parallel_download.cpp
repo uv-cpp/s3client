@@ -83,6 +83,10 @@ int main(int argc, char const *argv[]) {
         lyra::opt(config.jobs,
                   "parallel jobs")["-j"]["--jobs"]("Number of parallel jobs")
             .optional() |
+        lyra::opt(config.chunksPerJob,
+                  "chunks per job")["-n"]["--parts_per_job"](
+            "Number of parts per job")
+            .optional() |
         lyra::opt(overwrite)["-y"]["--overwrite"](
             "Overwrite exsisting file, default is 'false'")
             .optional();
