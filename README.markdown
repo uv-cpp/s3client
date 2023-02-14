@@ -12,6 +12,7 @@ All the following tools are simple wrapper around library functions:
 * `s3-presign`: generate pre-signed `URL`
 * `s3-upload`: parallel upload
 * `s3-download`: parallel download
+* `s3-gen-credentials`: generate access and secret keys
 
 Launch without arguments to see options.
 
@@ -58,6 +59,25 @@ The plan is to replace the current hash library with:
 Requests are sent through a `WebClient` class which wraps `libcurl` and *XML*
 responses are parsed using the standard regex library provided by the C++
 compiler. 
+
+## Test
+
+The script `minio_setup.sh` downloads configures and runs a minio server instance
+inside a contatiner using *podman*.
+
+Run the script after building all the applications and making sure that
+the `s3-gen-credentials` executable is findable through the `PATH` variable.
+
+Usage
+```sh
+./minio_setup.sh <minio alias> <data path>
+```
+Run
+```sh
+chmod u+x ./minio_setup.sh
+./minio_setup.sh myalias ~/tmp/minio_data
+```
+
 
 ## License
 
