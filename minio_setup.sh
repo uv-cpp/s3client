@@ -13,11 +13,13 @@ if (($# == 0))
 then
   echo "Run minio with podman"
   echo "usage: $0 <minio alias name> <data path>"
+  echo
   echo "Data path is created if it does not exist"
   echo "S3CLIENT_TEST_SECRET and S3CLIENT_TEST_ACCESS env variables contain generated access and secret"
   echo "An entry is added into $HOME/.mc/config.json"
   echo "Use 'podman ps' to view and 'podman kill' to kill running containers"
   echo "To remove entry from mc configuration run 'mc alias remove <alias name>'"
+  echo "Access and secret are the username and password for the minio console"
   exit 0
 fi
 if (($# != 2))
