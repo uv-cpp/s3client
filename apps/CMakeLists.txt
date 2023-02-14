@@ -44,6 +44,7 @@ add_executable("s3-presign" presign_url.cpp)
 add_executable("s3-client" s3-client.cpp)
 add_executable("s3-upload" parallel_upload.cpp)
 add_executable("s3-download" parallel_download.cpp)
+add_executable("s3-gen-credentials" generate_s3_credentials.cpp)
 
 target_link_libraries("s3-presign" s3client hash_lib)
 # if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
@@ -71,5 +72,5 @@ target_link_libraries("s3-download" ${CMAKE_THREAD_LIBS_INIT})
 # endif()
 
 include(GNUInstallDirs)
-install(TARGETS s3-presign s3-client s3-upload s3-download
+install(TARGETS s3-presign s3-client s3-upload s3-download s3-gen-credentials 
         RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
