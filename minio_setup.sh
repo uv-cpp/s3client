@@ -42,8 +42,8 @@ podman run \
   -p $PORT:9000 \
   -p $ADMIN_PORT:9090 \
   -v "$DATA_PATH:/data" \
-  -e "MINIO_ROOT_USER=ROOT" \
-  -e "MINIO_ROOT_PASSWORD=PASSWORD" \
+  -e "MINIO_ROOT_USER=$ACCESS" \
+  -e "MINIO_ROOT_PASSWORD=$SECRET" \
   quay.io/minio/minio server /data --console-address ":$ADMIN_PORT" &
 if [ $? -ne 0 ]; then
   echo "Error running podman"
@@ -59,18 +59,6 @@ done
 sleep 5
 URL="http://127.0.0.1:$PORT"
 #create alias using default credentials set above
-mc alias set $1 $URL ROOT PASSWORD
-if [ $? -ne 0 ]; then
-  echo "Error running 'mc alias set'"
-  exit 2
-fi
-#add user with new credentials
-mc admin user add $1 $ACCESS $SECRET
-if [ $? -ne 0 ]; then
-  echo "Error running 'mc admin user add'"
-  exit 2
-fi
-#change alias to use new credentials
 mc alias set $1 $URL $ACCESS $SECRET
 if [ $? -ne 0 ]; then
   echo "Error running 'mc alias set'"
