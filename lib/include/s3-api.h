@@ -36,6 +36,7 @@
 
 namespace sss {
 
+namespace api {
 struct BucketInfo {};
 struct ObjectInfo {};
 struct PartInfo {};
@@ -85,6 +86,10 @@ public:
                  const ByteArray &buffer, size_t size, size_t offset = 0);
   ETag UploadPart(const std::string &bucket, const std::string &key,
                   const UploadId &uid);
+  const std::string &Access() const { return access_; }
+  const std::string &Secret() const { return secret_; }
+  const std::string &Endpoint() const { return endpoint_; }
+  const std::string &SigningEndpoint() const { return signingEndpoint_; }
 
 private:
   sss::WebClient webClient_;
@@ -93,4 +98,5 @@ private:
   std::string endpoint_;
   std::string signingEndpoint_;
 };
+} // namespace api
 } // namespace sss

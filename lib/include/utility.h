@@ -95,7 +95,7 @@ public:
       : str_(str), delims_(delims), cur_(str_.find_first_of(delims_)),
         prev_(0) {}
 
-  SplitIterator operator++() {
+  SplitIterator &operator++() {
     if (cur_ == std::string::npos) {
       prev_ = std::string::npos;
       return *this;
@@ -107,7 +107,7 @@ public:
 
   SplitIterator operator++(int) {
     SplitIterator i = *this;
-    operator++();
+    ++*this;
     return i;
   }
 

@@ -96,7 +96,6 @@ WebClient BuildEndUploadRequest(const S3FileTransferConfig &config,
                   config.bucket, config.key, "", params);
   Headers headers(begin(signedHeaders), end(signedHeaders));
   WebClient req(endpoint, path, "POST", params, headers);
-  req.SetMethod("POST");
   req.SetPostData(BuildEndUploadXML(etags));
   return req;
 }
