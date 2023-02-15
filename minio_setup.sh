@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #Runs minio on localhost through podman and configures alias with
 #secret and access keys
-#usage: ./minio_setup.sh <alias name> <data directlry path>
+#usage: ./minio_setup.sh <alias name> <data directory path>
 #The data directory is created if it does not exist
-#Usind default ports 9000 (APO) and 9090 (admin)
-#Requires s3-gen-credentials to be built and 
+#Usind default ports 9000 (API) and 9090 (admin)
+#Requires s3-gen-credentials to be built and accessible through PATH variable 
 
 #Access and secret keys are stored into environmnt variables
 
@@ -19,7 +19,7 @@ then
   echo "An entry is added into $HOME/.mc/config.json"
   echo "Use 'podman ps' to view and 'podman kill' to kill running containers"
   echo "To remove entry from mc configuration run 'mc alias remove <alias name>'"
-  echo "Access and secret are the username and password for the minio console"
+  echo "Access and secret keys are the username and password for the minio console"
   exit 0
 fi
 if (($# != 2))
