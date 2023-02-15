@@ -203,7 +203,6 @@ vector<string> UploadParts(const S3FileTransferConfig &args, const string &path,
       throw runtime_error("Error sending end upload request - " + errcode);
     }
     string etag = XMLTag(endUpload.GetContentText(), "Etag");
-    string etagX = HTTPHeader(req.GetHeaderText(), "Etag");
     if (etag.empty()) {
       throw runtime_error("Empty ETag");
     }

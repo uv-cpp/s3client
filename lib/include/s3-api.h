@@ -56,7 +56,8 @@ public:
         webClient_(std::move(other.webClient_)) {}
 
 public:
-  bool CompleteMultiplartUpload(const UploadId &uid,
+  ETag CompleteMultiplartUpload(const UploadId &uid, const std::string &bucket,
+                                const std::string &key,
                                 const std::vector<ETag> &etags);
   void CreateBucket(const std::string &bucket);
   UploadId CreateMultipartUpload(const std::string &bucket,
@@ -90,6 +91,7 @@ public:
   const std::string &Secret() const { return secret_; }
   const std::string &Endpoint() const { return endpoint_; }
   const std::string &SigningEndpoint() const { return signingEndpoint_; }
+  WebClient &GetWebClient() { return webClient_; }
 
 private:
   sss::WebClient webClient_;
