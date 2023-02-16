@@ -51,8 +51,7 @@ namespace api {
 namespace {
 //-----------------------------------------------------------------------------
 void BuildUploadRequest(S3Client &s3, const string &bucket, const string &key,
-                        const string &path, int partNum,
-                        const string &uploadId) {
+                        int partNum, const string &uploadId) {
   Parameters params = {{"partNumber", to_string(partNum + 1)},
                        {"uploadId", uploadId}};
   const string &endpoint =
@@ -63,6 +62,7 @@ void BuildUploadRequest(S3Client &s3, const string &bucket, const string &key,
   Headers headers(begin(signedHeaders), end(signedHeaders));
   WebClient &wc = s3.GetWebClient();
   wc.SetHeaders(headers);
+  const string path = "/" + bucket + "/" + key;
   wc.SetPath(path);
   wc.SetMethod("PUT");
   wc.SetReqParameters(params);
@@ -114,7 +114,7 @@ string UploadPart(S3Client &s3, const string &bucket, const string &key,
                   int i, size_t chunkSize, size_t size, int tryNum,
                   int maxRetries = 1) {
   if (tryNum == 1)
-    BuildUploadRequest(s3, bucket, key, path, i, uploadId);
+    BuildUploadRequest(s3, bucket, key, i, uploadId);
   const size_t sz = min(chunkSize, size - chunkSize * i);
   const size_t offset = chunkSize * i;
   WebClient &wc = s3.GetWebClient();
@@ -144,9 +144,9 @@ string UploadPart(S3Client &s3, const string &bucket, const string &key,
   }
 }
 } // namespace
-//============================================================================
+//=============================================================================
 // Class implementation
-//============================================================================
+//=============================================================================
 
 ETag S3Client::CompleteMultiplartUpload(const UploadId &uid,
                                         const string &bucket, const string &key,
@@ -169,6 +169,24 @@ ETag S3Client::CompleteMultiplartUpload(const UploadId &uid,
     etag = etag.substr(quotes, etag.size() - 2 * quotes);
   }
   return etag;
+}
+//-----------------------------------------------------------------------------
+UploadId S3Client::CreateMultipartUpload(const std::string &bucket,
+                                         const std::string &key,
+                                         const MetaDataMap &metaData) {
+  webClient_.SetReqParameters({{"uploads", ""}});
+  webClient_.SetMethod("POST");
+  webClient_.SetPath("/" + bucket + "/" + key);
+  webClient_.SetHeaders(metaData);
+  webClient_.Send();
+
+  if (webClient_.StatusCode() >= 400) {
+    const string errcode = XMLTag(webClient_.GetContentText(), "Code");
+    throw runtime_error("Error sending begin upload request - " + errcode);
+  }
+  const vector<uint8_t> resp = webClient_.GetResponseBody();
+  const string xml(begin(resp), end(resp));
+  return XMLTag(xml, "uploadId");
 }
 } // namespace api
 } // namespace sss
