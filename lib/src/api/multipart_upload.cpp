@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * BSD 3-Clause License
  *
@@ -109,24 +108,21 @@ atomic<int> retriesG;
 int GetUploadRetries() { return retriesG; }
 
 //-----------------------------------------------------------------------------
-string UploadPart(S3Client &s3, const string &bucket, const string &key,
-                  const char *data, const string &path, const string &uploadId,
-                  int i, size_t chunkSize, size_t size, int tryNum,
-                  int maxRetries = 1) {
+ETag DoUploadPart(S3Client &s3, const string &bucket, const string &key,
+                  const char *data, const string &uploadId, int i, size_t size,
+                  int tryNum, int maxRetries = 1) {
   if (tryNum == 1)
     BuildUploadRequest(s3, bucket, key, i, uploadId);
-  const size_t sz = min(chunkSize, size - chunkSize * i);
-  const size_t offset = chunkSize * i;
   WebClient &wc = s3.GetWebClient();
   const bool ok = wc.UploadDataFromBuffer(
-      data, offset, sz); // UploadFile(config.file, offset, sz);
+      data, 0, size); // UploadFile(config.file, offset, sz);
   if (!ok) {
     if (tryNum == maxRetries) {
       throw(runtime_error("Cannot upload chunk " + to_string(i + 1)));
     } else {
       retriesG++;
-      return UploadPart(s3, bucket, key, data, path, uploadId, i, offset,
-                        chunkSize, ++tryNum, maxRetries);
+      return DoUploadPart(s3, bucket, key, data, uploadId, i, size, ++tryNum,
+                          maxRetries);
     }
   } else {
     string etag = HTTPHeader(wc.GetHeaderText(), "Etag");
@@ -179,6 +175,7 @@ UploadId S3Client::CreateMultipartUpload(const std::string &bucket,
   webClient_.SetPath("/" + bucket + "/" + key);
   webClient_.SetHeaders(metaData);
   webClient_.Send();
+  retriesG = 0;
 
   if (webClient_.StatusCode() >= 400) {
     const string errcode = XMLTag(webClient_.GetContentText(), "Code");
@@ -187,6 +184,13 @@ UploadId S3Client::CreateMultipartUpload(const std::string &bucket,
   const vector<uint8_t> resp = webClient_.GetResponseBody();
   const string xml(begin(resp), end(resp));
   return XMLTag(xml, "uploadId");
+}
+//-----------------------------------------------------------------------------
+ETag S3Client::UploadPart(const std::string &bucket, const std::string &key,
+                          const UploadId &uid, int partNum, const char *data,
+                          size_t size, int maxRetries) {
+  return DoUploadPart(*this, bucket, key, data, uid, partNum, size, 1,
+                      maxRetries);
 }
 } // namespace api
 } // namespace sss

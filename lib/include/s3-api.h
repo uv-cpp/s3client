@@ -86,7 +86,8 @@ public:
   ETag PutObject(const std::string &bucket, const std::string &key,
                  const ByteArray &buffer, size_t size, size_t offset = 0);
   ETag UploadPart(const std::string &bucket, const std::string &key,
-                  const UploadId &uid);
+                  const UploadId &uid, int partNum, const char *data,
+                  size_t size, int maxRetries);
   const std::string &Access() const { return access_; }
   const std::string &Secret() const { return secret_; }
   const std::string &Endpoint() const { return endpoint_; }
