@@ -179,9 +179,9 @@ UploadId S3Client::CreateMultipartUpload(const std::string &bucket,
 
   if (webClient_.StatusCode() >= 400) {
     const string errcode = XMLTag(webClient_.GetContentText(), "Code");
-    throw runtime_error("Error sending begin upload request - " + errcode);
+    throw runtime_error("Error sending create upload request - " + errcode);
   }
-  const vector<uint8_t> resp = webClient_.GetResponseBody();
+  const vector<uint8_t> &resp = webClient_.GetResponseBody();
   const string xml(begin(resp), end(resp));
   return XMLTag(xml, "uploadId");
 }

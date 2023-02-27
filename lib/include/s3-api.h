@@ -56,14 +56,19 @@ public:
         webClient_(std::move(other.webClient_)) {}
 
 public:
+  void AbortMultipartUpload(const UploadId &);
+  // [x]
   ETag CompleteMultiplartUpload(const UploadId &uid, const std::string &bucket,
                                 const std::string &key,
                                 const std::vector<ETag> &etags);
-  void CreateBucket(const std::string &bucket);
+  // [x]
+  void CreateBucket(const std::string &bucket, const Headers & = {{}});
+  // [x]
   UploadId CreateMultipartUpload(const std::string &bucket,
                                  const std::string &key,
                                  const MetaDataMap &metaData = {});
-  bool DeleteBucket(const std::string &bucket);
+  // [x]
+  void DeleteBucket(const std::string &bucket);
   bool DeleteObjects(const std::string &bucket,
                      const std::vector<std::string> &objects);
   ByteArray GetObject(const std::string &bucket, const std::string &key,
@@ -73,8 +78,8 @@ public:
                  size_t end = 0);
   MetaDataMap GetObjectAttributes(const std::string &bucket,
                                   const std::string &key);
-  bool HeadBucket(const std::string &bucket);
-  bool HeadObject(const std::string &bucket, const std::string &key);
+  Headers HeadBucket(const std::string &bucket);
+  Headers HeadObject(const std::string &bucket, const std::string &key);
   std::vector<BucketInfo> ListBuckets();
   std::vector<ObjectInfo> ListObjects(const std::string &bucket);
   std::vector<ObjectInfo> ListObjectsV2(const std::string &bucket,
@@ -85,6 +90,7 @@ public:
                                   int max_parts);
   ETag PutObject(const std::string &bucket, const std::string &key,
                  const ByteArray &buffer, size_t size, size_t offset = 0);
+  // [x]
   ETag UploadPart(const std::string &bucket, const std::string &key,
                   const UploadId &uid, int partNum, const char *data,
                   size_t size, int maxRetries);
