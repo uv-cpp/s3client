@@ -38,6 +38,7 @@
 
 #include <regex>
 #include <string>
+#include <vector>
 
 #include "common.h"
 
@@ -49,6 +50,13 @@ namespace sss {
 /// \return \c <tag> content
 std::string XMLTag(const std::string &xml, const std::string &tag);
 
+/// Extract and return content of all XML tags matching word
+/// \param xml XML text
+/// \param tag \c <tag> name
+/// \return \c content of each tag matching name
+std::vector<std::string> XMLTags(const std::string &xml,
+                                 const std::string &tag);
+
 /// Extract and return HTTP header
 /// \param headers text containing the header section of an HTTP payload
 /// \param header header name
@@ -56,13 +64,13 @@ std::string HTTPHeader(const std::string &headers, const std::string &header);
 
 /// Extract and return HTTP headers as key-value pairs
 /// \param headers text containing the header section of an HTTP payload
-/// \return \c std::map<std::string, std::string> of {header name, header value}
-/// tuples
+/// \return \c std::map<std::string, std::string> of {header name, header
+/// value} tuples
 Headers HTTPHeaders(const std::string &headers);
 
 /// Extract and return \c x-amz-meta-* headers
 /// \param headers text containing the header section of an HTTP payload
-/// \return \c std::map<std::string, std::string> of {header name, header value}
-/// tuples
+/// \return \c std::map<std::string, std::string> of {header name, header
+/// value} tuples
 MetaDataMap MetaDataHeaders(const std::string &headers);
 } // namespace sss

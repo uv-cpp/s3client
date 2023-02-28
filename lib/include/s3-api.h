@@ -37,9 +37,21 @@
 namespace sss {
 
 namespace api {
-struct BucketInfo {};
-struct ObjectInfo {};
-struct PartInfo {};
+struct BucketInfo {
+  std::string name;
+  std::string creationDate; //@todo replace with std::tm
+};
+
+struct ObjectInfo {
+  std::string key;
+  std::string LastModified; //@todo replace with std:tm
+  ETag etag;
+  size_t size;
+  std::string storageClass;
+  // ObjectOwner owner;
+};
+//@todo
+// struct PartInfo {};
 
 // https://docs.aws.amazon.com/AmazonS3/latest/API/API_Operations_Amazon_Simple_Storage_Service.html
 class S3Client {
@@ -54,6 +66,11 @@ public:
       : access_(other.access_), secret_(other.secret_),
         endpoint_(other.endpoint_), signingEndpoint_(other.signingEndpoint_),
         webClient_(std::move(other.webClient_)) {}
+
+public:
+  bool TestBucket(const std::string &bucket);
+  bool TestObject(const std::string &bucket, const std::string &key);
+  void Clear();
 
 public:
   void AbortMultipartUpload(const UploadId &);
@@ -78,16 +95,19 @@ public:
                  size_t end = 0);
   MetaDataMap GetObjectAttributes(const std::string &bucket,
                                   const std::string &key);
+  // [x]
   Headers HeadBucket(const std::string &bucket);
   Headers HeadObject(const std::string &bucket, const std::string &key);
+  // [x]
   std::vector<BucketInfo> ListBuckets();
   std::vector<ObjectInfo> ListObjects(const std::string &bucket);
   std::vector<ObjectInfo> ListObjectsV2(const std::string &bucket,
                                         const std::string &prefix,
                                         bool fetchOwner, size_t maxKeys);
-  std::vector<PartInfo> ListParts(const std::string &bucket,
-                                  const std::string &key, const UploadId &uid,
-                                  int max_parts);
+  // not implemented
+  // std::vector<PartInfo> ListParts(const std::string &bucket,
+  //                                 const std::string &key, const UploadId
+  //                                 &uid, int max_parts);
   ETag PutObject(const std::string &bucket, const std::string &key,
                  const ByteArray &buffer, size_t size, size_t offset = 0);
   // [x]

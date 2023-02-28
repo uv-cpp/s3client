@@ -47,6 +47,19 @@ string XMLTag(const string &xml, const string &tag) {
   return sm[1];
 }
 
+vector<string> XMLTags(const string &xml, const string &tag) {
+  const regex rx{tag + "\\s*>\\s*([^\\s<]+)\\s*<", regex_constants::icase};
+  smatch sm;
+  vector<string> tags;
+  if (!regex_search(xml, sm, rx)) {
+    return tags;
+  }
+  for (const auto &i : sm) {
+    tags.push_back(i.str());
+  }
+  return tags;
+}
+
 string HTTPHeader(const string &headers, const string &header) {
   const regex rx{header + "\\s*:\\s*([^\\s]+)", regex_constants::icase};
   smatch sm;
