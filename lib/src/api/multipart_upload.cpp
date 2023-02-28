@@ -144,9 +144,9 @@ ETag DoUploadPart(S3Client &s3, const string &bucket, const string &key,
 // Class implementation
 //=============================================================================
 
-ETag S3Client::CompleteMultiplartUpload(const UploadId &uid,
-                                        const string &bucket, const string &key,
-                                        const vector<ETag> &etags) {
+ETag S3Client::CompleteMultipartUpload(const UploadId &uid,
+                                       const string &bucket, const string &key,
+                                       const vector<ETag> &etags) {
 
   BuildEndUploadRequest(*this, bucket, key, etags, uid);
   webClient_.Send();

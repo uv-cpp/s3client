@@ -70,14 +70,20 @@ public:
 public:
   bool TestBucket(const std::string &bucket);
   bool TestObject(const std::string &bucket, const std::string &key);
-  void Clear();
+  void Clear() {
+    webClient_.SetPath("");
+    webClient_.SetHeaders({{}});
+    webClient_.SetReqParameters({{}});
+    webClient_.SetPostData("");
+    webClient_.SetUploadData({});
+  }
 
 public:
   void AbortMultipartUpload(const UploadId &);
   // [x]
-  ETag CompleteMultiplartUpload(const UploadId &uid, const std::string &bucket,
-                                const std::string &key,
-                                const std::vector<ETag> &etags);
+  ETag CompleteMultipartUpload(const UploadId &uid, const std::string &bucket,
+                               const std::string &key,
+                               const std::vector<ETag> &etags);
   // [x]
   void CreateBucket(const std::string &bucket, const Headers & = {{}});
   // [x]
@@ -86,13 +92,23 @@ public:
                                  const MetaDataMap &metaData = {});
   // [x]
   void DeleteBucket(const std::string &bucket);
-  bool DeleteObjects(const std::string &bucket,
-                     const std::vector<std::string> &objects);
+  // [x]
+  void DeleteObject(const std::string &bucket, const std::string &key,
+                    const Headers & = {{}});
+  // @todo
+  // bool DeleteObjects(const std::string &bucket,
+  //                   const std::vector<std::string> &objects);
+  // [xj]
   ByteArray GetObject(const std::string &bucket, const std::string &key,
-                      size_t begin = 0, size_t end = 0);
-  bool GetObject(const std::string &bucket, const std::string &key,
+                      size_t begin = 0, size_t end = 0, Headers = {{}});
+  // [x]
+  void GetObject(const std::string &bucket, const std::string &key,
                  ByteArray &buffer, size_t offset, size_t begin = 0,
-                 size_t end = 0);
+                 size_t end = 0, Headers headers = {{}});
+  // [x]
+  void GetObject(const std::string &bucket, const std::string &key,
+                 char *buffer, size_t offset, size_t begin = 0, size_t end = 0,
+                 Headers headers = {{}});
   MetaDataMap GetObjectAttributes(const std::string &bucket,
                                   const std::string &key);
   // [x]
@@ -108,8 +124,13 @@ public:
   // std::vector<PartInfo> ListParts(const std::string &bucket,
   //                                 const std::string &key, const UploadId
   //                                 &uid, int max_parts);
+  // [x]
   ETag PutObject(const std::string &bucket, const std::string &key,
-                 const ByteArray &buffer, size_t size, size_t offset = 0);
+                 const ByteArray &buffer, const Headers & = {{}});
+  // [x]
+  ETag PutObject(const std::string &bucket, const std::string &key,
+                 const char *, size_t size, size_t offset = 0,
+                 const Headers & = {{}});
   // [x]
   ETag UploadPart(const std::string &bucket, const std::string &key,
                   const UploadId &uid, int partNum, const char *data,

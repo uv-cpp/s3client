@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * BSD 3-Clause License
  *
@@ -48,15 +47,6 @@ using namespace std;
 
 namespace sss {
 namespace api {
-
-//------------------------------------------------------------------------------
-void S3Client::Clear() {
-  webClient_.SetPath("");
-  webClient_.SetHeaders({{}});
-  webClient_.SetReqParameters({{}});
-  webClient_.SetPostData("");
-  webClient_.SetUploadData({});
-}
 
 //------------------------------------------------------------------------------
 bool S3Client::TestBucket(const string &bucket) {

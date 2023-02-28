@@ -32,7 +32,7 @@
 find_package(Threads)
 
 set(S3_API_SRCS src/api/multipart_upload.cpp
-    src/api/bucket.cpp)
+    src/api/bucket.cpp src/api/error.cpp)
 
 set(S3_CLIENT_LIB_SRCS src/url_utility.cpp src/aws_sign.cpp 
     src/webclient.cpp src/utility.cpp src/s3-client.cpp src/response_parser.cpp
