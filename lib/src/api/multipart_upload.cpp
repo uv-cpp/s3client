@@ -144,16 +144,15 @@ ETag DoUploadPart(S3Client &s3, const string &bucket, const string &key,
 // Class implementation
 //=============================================================================
 
+void HandleError(const WebClient &, const std::string & = "");
+
 ETag S3Client::CompleteMultipartUpload(const UploadId &uid,
                                        const string &bucket, const string &key,
                                        const vector<ETag> &etags) {
 
   BuildEndUploadRequest(*this, bucket, key, etags, uid);
   webClient_.Send();
-  if (webClient_.StatusCode() >= 400) {
-    const string errcode = XMLTag(webClient_.GetContentText(), "Code");
-    throw runtime_error("Error sending end upload request - " + errcode);
-  }
+  HandleError(webClient_);
   string etag = XMLTag(webClient_.GetContentText(), "Etag");
   if (etag.empty()) {
     throw runtime_error("Empty ETag");
@@ -166,6 +165,7 @@ ETag S3Client::CompleteMultipartUpload(const UploadId &uid,
   }
   return etag;
 }
+
 //-----------------------------------------------------------------------------
 UploadId S3Client::CreateMultipartUpload(const std::string &bucket,
                                          const std::string &key,
@@ -176,15 +176,12 @@ UploadId S3Client::CreateMultipartUpload(const std::string &bucket,
   webClient_.SetHeaders(metaData);
   webClient_.Send();
   retriesG = 0;
-
-  if (webClient_.StatusCode() >= 400) {
-    const string errcode = XMLTag(webClient_.GetContentText(), "Code");
-    throw runtime_error("Error sending create upload request - " + errcode);
-  }
+  HandleError(webClient_);
   const vector<uint8_t> &resp = webClient_.GetResponseBody();
   const string xml(begin(resp), end(resp));
   return XMLTag(xml, "uploadId");
 }
+
 //-----------------------------------------------------------------------------
 ETag S3Client::UploadPart(const std::string &bucket, const std::string &key,
                           const UploadId &uid, int partNum, const char *data,
@@ -192,5 +189,17 @@ ETag S3Client::UploadPart(const std::string &bucket, const std::string &key,
   return DoUploadPart(*this, bucket, key, data, uid, partNum, size, 1,
                       maxRetries);
 }
+
+//-----------------------------------------------------------------------------
+void S3Client::AbortMultipartUpload(const string &bucket, const string &key,
+                                    const UploadId &uid) {
+  Clear();
+  webClient_.SetMethod("DELETE");
+  webClient_.SetPath(bucket + "/" + key);
+  webClient_.SetReqParameters({{"uploadId", uid}});
+  webClient_.Send();
+  HandleError(webClient_);
+}
+
 } // namespace api
 } // namespace sss
