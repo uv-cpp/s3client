@@ -43,18 +43,32 @@ struct BucketInfo {
 };
 
 struct ObjectInfo {
+  std::string checksumAlgo;
   std::string key;
-  std::string LastModified; //@todo replace with std:tm
+  std::string lastModified; //@todo replace with std:tm
   ETag etag;
   size_t size;
   std::string storageClass;
-  // ObjectOwner owner;
+  // ObjectOwner
+  std::string ownerDisplayName;
+  std::string ownerID;
 };
 //@todo
 // struct PartInfo {};
 
 // https://docs.aws.amazon.com/AmazonS3/latest/API/API_Operations_Amazon_Simple_Storage_Service.html
 class S3Client {
+public:
+  struct ListObjectV2Config {
+    std::string continuationToken;
+    std::string delimiter;
+    std::string encodingType;
+    std::string fetchOwner;
+    size_t maxKeys = 0;
+    std::string prefix;
+    std::string startAfter;
+  };
+
 public:
   S3Client(const std::string &access, const std::string &secret,
            const std::string &endpoint, const std::string &signingEndpoint = "")
@@ -109,17 +123,15 @@ public:
   void GetObject(const std::string &bucket, const std::string &key,
                  char *buffer, size_t offset, size_t begin = 0, size_t end = 0,
                  Headers headers = {{}});
-  MetaDataMap GetObjectAttributes(const std::string &bucket,
-                                  const std::string &key);
   // [x]
   Headers HeadBucket(const std::string &bucket);
   Headers HeadObject(const std::string &bucket, const std::string &key,
                      const Headers & = {{}});
   // [x]
   std::vector<BucketInfo> ListBuckets();
+  // [x]
   std::vector<ObjectInfo> ListObjectsV2(const std::string &bucket,
-                                        const std::string &prefix,
-                                        bool fetchOwner, size_t maxKeys,
+                                        const ListObjectV2Config &config,
                                         const Headers & = {{}});
   // not implemented
   // std::vector<PartInfo> ListParts(const std::string &bucket,

@@ -50,6 +50,7 @@ namespace sss {
 namespace api {
 
 extern void HandleError(const WebClient &, const string & = "");
+extern void Handle400Error(const WebClient &, const string & = "");
 
 //------------------------------------------------------------------------------
 ETag S3Client::PutObject(const std::string &bucket, const std::string &key,
@@ -153,5 +154,68 @@ void S3Client::DeleteObject(const std::string &bucket, const std::string &key,
   webClient_.Send();
   HandleError(webClient_);
 }
+
+//------------------------------------------------------------------------------
+Headers S3Client::HeadObject(const std::string &bucket, const std::string &key,
+                             const Headers &headers) {
+  Clear();
+  webClient_.SetMethod("HEAD");
+  webClient_.SetPath(bucket + "/" + key);
+  webClient_.SetHeaders(headers);
+  webClient_.Send();
+  Handle400Error(webClient_);
+  return HTTPHeaders(webClient_.GetHeaderText());
+}
+
+//------------------------------------------------------------------------------
+bool S3Client::TestObject(const std::string &bucket, const std::string &key) {
+  try {
+    HeadObject(bucket, key);
+    return true;
+  } catch (...) {
+    return false;
+  }
+}
+
+//------------------------------------------------------------------------------
+std::vector<ObjectInfo>
+S3Client::ListObjectsV2(const std::string &bucket,
+                        const ListObjectV2Config &config,
+                        const Headers &headers) {
+
+  Clear();
+  Map params;
+  params["continuation_token"] = config.continuationToken;
+  params["delimiter"] = config.delimiter;
+  params["encoding-type"] = config.encodingType;
+  params["fetch-owner"] = config.fetchOwner;
+  params["max-keys"] = config.maxKeys;
+  params["prefix"] = config.prefix;
+  params["start-after"] = config.startAfter;
+  webClient_.SetReqParameters(params);
+  webClient_.SetPath(bucket);
+  webClient_.SetHeaders(headers);
+  webClient_.Send();
+  HandleError(webClient_);
+  const string &text = webClient_.GetContentText();
+
+  const bool truncated =
+      ToLower(XMLTag(text, "IsTruncated")) == "true" ? true : false;
+  const auto tags = XMLTags(text, "Contents");
+  vector<ObjectInfo> objInfo;
+  for (const auto &t : tags) {
+    ObjectInfo oi = {.checksumAlgo = XMLTag(t, "CheckSumAlgorithm"),
+                     .key = XMLTag(t, "Key"),
+                     .lastModified = XMLTag(t, "LastModified"),
+                     .etag = XMLTag(t, "ETag"),
+                     .size = stoul(XMLTag(t, "Size")),
+                     .storageClass = XMLTag(t, "StorageClass"),
+                     .ownerDisplayName = XMLTag(t, "DisplayName"),
+                     .ownerID = XMLTag(t, "ID")};
+    objInfo.push_back(oi);
+  }
+  return objInfo;
+}
+
 } // namespace api
 } // namespace sss
