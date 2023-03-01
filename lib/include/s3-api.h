@@ -113,13 +113,14 @@ public:
                                   const std::string &key);
   // [x]
   Headers HeadBucket(const std::string &bucket);
-  Headers HeadObject(const std::string &bucket, const std::string &key);
+  Headers HeadObject(const std::string &bucket, const std::string &key,
+                     const Headers & = {{}});
   // [x]
   std::vector<BucketInfo> ListBuckets();
-  std::vector<ObjectInfo> ListObjects(const std::string &bucket);
   std::vector<ObjectInfo> ListObjectsV2(const std::string &bucket,
                                         const std::string &prefix,
-                                        bool fetchOwner, size_t maxKeys);
+                                        bool fetchOwner, size_t maxKeys,
+                                        const Headers & = {{}});
   // not implemented
   // std::vector<PartInfo> ListParts(const std::string &bucket,
   //                                 const std::string &key, const UploadId
