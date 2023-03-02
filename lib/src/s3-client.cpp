@@ -97,6 +97,7 @@ WebClient SendS3Request(S3ClientConfig args) {
     auto signedHeaders =
         SignHeaders(args.accessKey, args.secretKey, args.signUrl, args.method,
                     args.bucket, args.key, "", args.params, headers);
+    //@todo headers = SignHeaders(...)
     headers.insert(begin(signedHeaders), end(signedHeaders));
   }
   WebClient req(args.endpoint, path, args.method, args.params, headers);
@@ -128,9 +129,8 @@ WebClient SendS3Request(S3ClientConfig args) {
         req.SetMethod("POST");
         req.SetPostData(str);
         req.Send();
-      } else {
-        throw domain_error("Wrong method " + args.method);
       }
+      elsle { throw domain_error("Wrong method " + args.method); }
     }
   } else
     req.Send();

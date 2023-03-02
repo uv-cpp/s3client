@@ -107,7 +107,7 @@ vector<BucketInfo> S3Client::ListBuckets() {
     const string errorcode = XMLTag(webClient_.GetContentText(), "Code");
     throw runtime_error("Error sending 'create bucket' request - " + errorcode);
   }
-  const string &content = webClient_.GetContentText();
+  const string content = webClient_.GetContentText();
   auto tags = XMLTags(content, "Bucket");
   vector<BucketInfo> bi;
   for (const auto &i : tags) {

@@ -1,4 +1,3 @@
-
 /*******************************************************************************
  * BSD 3-Clause License
  *
@@ -113,7 +112,7 @@ int main(int argc, char const *argv[]) {
       }
     }
     auto req = SendS3Request(args);
-    // Status code 0 = no error
+    // Status code 20* = no error
     cout << "Status: " << req.StatusCode() << endl << endl;
     // Response body
     vector<uint8_t> resp = req.GetResponseBody();

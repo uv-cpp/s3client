@@ -50,17 +50,17 @@ Params ParseCmdLine(int argc, char **argv) {
     printUsage(argv, cerr);
     exit(EXIT_FAILURE);
   }
-  const string access = getenv(argv[1]);
+  const string access = getenv(argv[1]) ? getenv(argv[1]) : "";
   if (access.empty()) {
     cerr << "Error: cannot read access env var " << argv[1] << endl;
     exit(EXIT_FAILURE);
   }
-  const string secret = getenv(argv[2]);
+  const string secret = getenv(argv[2]) ? getenv(argv[2]) : "";
   if (secret.empty()) {
     cerr << "Error: cannot read secret env var " << argv[2] << endl;
     exit(EXIT_FAILURE);
   }
-  const string url = getenv(argv[3]);
+  const string url = getenv(argv[3]) ? getenv(argv[3]) : "";
   if (secret.empty()) {
     cerr << "Error: cannot read url env var " << argv[3] << endl;
     exit(EXIT_FAILURE);
