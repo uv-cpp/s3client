@@ -2,7 +2,7 @@
 # BSD 3-Clause License
 # 
 # Copyright (c) 2020-2022, Ugo Varetto
-# All rights reserved.
+
 # 
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -29,36 +29,24 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #*******************************************************************************
-cmake_minimum_required(VERSION 3.15)
-if(${CMAKE_VERSION} VERSION_LESS 3.15)
-    cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
-endif()
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-project(s3-client
-        VERSION 0.7
-        DESCRIPTION "Tools to sign and send S3 requests"
-        LANGUAGES CXX)
-
-set(HASHLIB_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/dep/hash" CACHE PATH "${PROJECT_SOURCE_DIR}/dep/hash")
-set(S3LIB_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/lib/include" CACHE PATH "${PROJECT_SOURCE_DIR}/lib/include")
-set(LYRA_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/dep/Lyra/include" CACHE PATH "${PROJECT_SOURCE_DIR}/dep/Lyra/include")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
 
-# Separate debug-release paths
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/build)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${CMAKE_BINARY_DIR}/build/debug)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/build/release)
+set(CMAKE_CXX_FLAGS "-std=c++17 -flto -Ofast" ${CMAKE_CXX_FLAGS})
 
-if (CMAKE_BUILD_TYPE EQUAL "DEBUG")
-    set(LINK_DIRS ${CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG} CACHE PATH "")
-else (CMAKE_BUILD_TYPE EQUAL "DEBUG")
-    set(LINK_DIRS ${CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE} CACHE PATH "")
-endif (CMAKE_BUILD_TYPE EQUAL "DEBUG")
+include_directories(${S3LIB_INCLUDE_DIR}
+                    ${HASH_LIB_INCLUDE_DIR}
+                    ${LYRA_INCLUDE_DIR})
+link_directories(${LINK_DIRS})
 
-add_subdirectory(dep/hash)
-add_subdirectory(lib)
-add_subdirectory(apps)
-add_subdirectory(test)
+add_executable("bucket-test" api/bucket-test.cpp)
+add_executable("object-test" api/object-test.cpp)
+add_executable("multipart-uplaod-test" api/multipart-upload-test.cpp)
+
+target_link_libraries("bucket-test" s3client hash_lib curl) 
+target_link_libraries("object-test" s3client hash_lib curl) 
+target_link_libraries("multipart-uplaod-test" s3client hash_lib curl) 
+
+#include(GNUInstallDirs)
+#install(TARGETS bucket-test object-test multipart-uplaod-test 
+#        RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/share/sss)
