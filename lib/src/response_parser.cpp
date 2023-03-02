@@ -60,6 +60,20 @@ vector<string> XMLTags(const string &xml, const string &tag) {
   return tags;
 }
 
+string XMLTagPath(const string &xml, const string &path) {
+  const char split_char = '/';
+
+  std::istringstream split(xml);
+  std::vector<std::string> tokens;
+  string curTag;
+  for (std::string each; std::getline(split, each, split_char);) {
+    curTag = XMLTag(curTag, each);
+    if (curTag.empty())
+      return "";
+  }
+  return curTag;
+}
+
 string HTTPHeader(const string &headers, const string &header) {
   const regex rx{header + "\\s*:\\s*([^\\s]+)", regex_constants::icase};
   smatch sm;
