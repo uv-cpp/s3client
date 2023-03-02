@@ -36,16 +36,16 @@ set(CMAKE_CXX_FLAGS "-std=c++17 -flto -Ofast" ${CMAKE_CXX_FLAGS})
 
 include_directories(${S3LIB_INCLUDE_DIR}
                     ${HASH_LIB_INCLUDE_DIR}
-                    ${LYRA_INCLUDE_DIR})
+                    )
 link_directories(${LINK_DIRS})
 
-add_executable("bucket-test" api/bucket-test.cpp)
-add_executable("object-test" api/object-test.cpp)
-add_executable("multipart-uplaod-test" api/multipart-upload-test.cpp)
+add_executable("bucket-test" api/bucket-test.cpp api/utility.cpp)
+add_executable("object-test" api/object-test.cpp api/utility.cpp)
+add_executable("multipart-upload-test" api/multipart-upload-test.cpp api/utility.cpp)
 
 target_link_libraries("bucket-test" s3client hash_lib curl) 
 target_link_libraries("object-test" s3client hash_lib curl) 
-target_link_libraries("multipart-uplaod-test" s3client hash_lib curl) 
+target_link_libraries("multipart-upload-test" s3client hash_lib curl) 
 
 #include(GNUInstallDirs)
 #install(TARGETS bucket-test object-test multipart-uplaod-test 
