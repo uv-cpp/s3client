@@ -31,6 +31,7 @@
  *POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 #include "response_parser.h"
+#include <algorithm>
 #include <iostream>
 #include <regex>
 
@@ -38,34 +39,39 @@ using namespace std;
 
 namespace sss {
 
+string RTrim(const std::string &s) {
+  const string BLANKS = " \n\t\r\v";
+  size_t end = s.find_last_not_of(BLANKS);
+  return (end == std::string::npos) ? "" : s.substr(0, end + 1);
+}
+
 string XMLTag(const string &xml, const string &tag) {
-  const regex rx{tag + "\\s*>\\s*([^\\s]+)\\s*<\\s*/\\s*" + tag,
+  const regex rx{tag + "[^>]*>\\s*(.+)\\s*<\\s*/\\s*" + tag + "\\s*>",
                  regex_constants::icase};
   smatch sm;
   if (!regex_search(xml, sm, rx)) {
     return "";
   }
-  return sm[1];
+  return RTrim(sm[1]);
 }
 
 vector<string> XMLTags(const string &xml, const string &tag) {
-  const regex rx{tag + "\\s*>\\s*([^\\s]+)\\s*<\\s*/\\s*" + tag,
-                 regex_constants::icase};
+  const regex rx{tag + "\\s*>\\s*(.+)\\s*<\\s*/\\s*" + tag + "\\s*>",
+                 regex_constants::icase | regex_constants::optimize};
   smatch sm;
   vector<string> tags;
-  if (!regex_search(xml, sm, rx)) {
-    return tags;
-  }
-  for (const auto &i : sm) {
-    tags.push_back(i.str());
+  string::const_iterator searchStart(cbegin(xml));
+  while (regex_search(searchStart, cend(xml), sm, rx)) {
+    cout << sm[1] << endl;
+    tags.push_back(RTrim(sm[1]));
+    searchStart = sm.suffix().first;
   }
   return tags;
 }
 
 string XMLTagPath(const string &xml, const string &path) {
   const char split_char = '/';
-
-  std::istringstream split(xml);
+  istringstream split(xml);
   std::vector<std::string> tokens;
   string curTag;
   for (std::string each; std::getline(split, each, split_char);) {

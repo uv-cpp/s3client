@@ -56,6 +56,11 @@ std::string XMLTag(const std::string &xml, const std::string &tag);
 /// \return \c content of each tag matching name
 std::vector<std::string> XMLTags(const std::string &xml,
                                  const std::string &tag);
+/// Extract and return content of XML tag matching hierchical path.
+/// \param xml XML text
+/// \param path \c tag path separated by \c '/' character
+/// \return content of tag if found, empty string otherwise
+std::string XMLTagPath(const std::string &xml, const std::string &path);
 
 /// Extract and return HTTP header
 /// \param headers text containing the header section of an HTTP payload

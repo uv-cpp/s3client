@@ -174,11 +174,11 @@ public:
   Headers HeadObject(const std::string &bucket, const std::string &key,
                      const Headers & = {{}});
 
-  std::vector<BucketInfo> ListBuckets(const Headers &headers = {{}});
+  std::string ListBuckets(const Headers &headers = {{}});
 
-  std::vector<ObjectInfo> ListObjectsV2(const std::string &bucket,
-                                        const ListObjectV2Config &config,
-                                        const Headers & = {{}});
+  std::string ListObjectsV2(const std::string &bucket,
+                            const ListObjectV2Config &config,
+                            const Headers & = {{}});
   // not implemented
   // std::vector<PartInfo> ListParts(const std::string &bucket,
   //                                 const std::string &key, const UploadId

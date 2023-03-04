@@ -176,10 +176,9 @@ bool S3Client::TestObject(const std::string &bucket, const std::string &key) {
 }
 
 //------------------------------------------------------------------------------
-std::vector<ObjectInfo>
-S3Client::ListObjectsV2(const std::string &bucket,
-                        const ListObjectV2Config &config,
-                        const Headers &headers) {
+string S3Client::ListObjectsV2(const std::string &bucket,
+                               const ListObjectV2Config &config,
+                               const Headers &headers) {
 
   Clear();
   Map params;
@@ -195,24 +194,7 @@ S3Client::ListObjectsV2(const std::string &bucket,
   webClient_.SetHeaders(headers);
   webClient_.Send();
   HandleError(webClient_);
-  const string &text = webClient_.GetContentText();
-
-  const bool truncated =
-      ToLower(XMLTag(text, "IsTruncated")) == "true" ? true : false;
-  const auto tags = XMLTags(text, "Contents");
-  vector<ObjectInfo> objInfo;
-  for (const auto &t : tags) {
-    ObjectInfo oi = {.checksumAlgo = XMLTag(t, "CheckSumAlgorithm"),
-                     .key = XMLTag(t, "Key"),
-                     .lastModified = XMLTag(t, "LastModified"),
-                     .etag = XMLTag(t, "ETag"),
-                     .size = stoul(XMLTag(t, "Size")),
-                     .storageClass = XMLTag(t, "StorageClass"),
-                     .ownerDisplayName = XMLTag(t, "DisplayName"),
-                     .ownerID = XMLTag(t, "ID")};
-    objInfo.push_back(oi);
-  }
-  return objInfo;
+  return webClient_.GetContentText();
 }
 
 } // namespace api

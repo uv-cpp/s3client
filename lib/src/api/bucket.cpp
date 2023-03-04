@@ -76,18 +76,9 @@ Headers S3Client::HeadBucket(const string &bucket, const Headers &headers) {
 }
 
 //------------------------------------------------------------------------------
-vector<BucketInfo> S3Client::ListBuckets(const Headers &headers) {
+string S3Client::ListBuckets(const Headers &headers) {
   const auto &wc = Send({.method = "GET", .headers = headers});
-  const string content = wc.GetContentText();
-  return {};
-  auto tags = XMLTags(content, "Bucket");
-  vector<BucketInfo> bi;
-  for (const auto &i : tags) {
-    const auto name = XMLTag(i, "Name");
-    const auto creationDate = XMLTag(i, "CreationDate");
-    bi.push_back({name, creationDate});
-  }
-  return bi;
+  return wc.GetContentText();
 }
 
 } // namespace api
