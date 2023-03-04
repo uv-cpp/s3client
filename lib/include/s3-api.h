@@ -21,14 +21,14 @@
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- *ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
- *LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- *CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- *SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- *INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- *CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- *ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- *POSSIBILITY OF SUCH DAMAGE.
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 #pragma once
 
@@ -65,9 +65,10 @@ public:
     std::string delimiter;
     std::string encodingType;
     std::string fetchOwner;
-    size_t maxKeys = 0;
+    size_t maxKeys;
     std::string prefix;
     std::string startAfter;
+    ListObjectV2Config() : maxKeys(0) {}
   };
   struct SendParams {
     std::string method = "GET";
@@ -79,7 +80,7 @@ public:
     std::string signUrl;
     std::string payloadHash;
     const std::string &postData = "";
-    const std::vector<uint8_t> &uploadData = {};
+    const std::vector<char> &uploadData = {};
   };
 
 public:
@@ -123,13 +124,15 @@ public:
     webClient_.SetMethod(p.method);
     webClient_.SetReqParameters(p.params);
     webClient_.SetHeaders(sh);
-    if (!p.uploadData.empty()) {
-      webClient_.SetUploadData(p.uploadData);
+    if (ToLower(p.method) == "put") {
+      webClient_.UploadDataFromBuffer(p.uploadData.data(), 0,
+                                      p.uploadData.size());
+    } else if (ToLower(p.method) == "post") {
+      webClient_.SetUrlEncodedPostData(ParseParams(p.postData.data()));
+      webClient_.Send();
+    } else {
+      webClient_.Send();
     }
-    if (!p.postData.empty()) {
-      webClient_.SetPostData(p.postData);
-    }
-    webClient_.Send();
     if (ToLower(p.method) == "head") {
       Handle400Error(webClient_);
     } else {
@@ -159,8 +162,8 @@ public:
   // @todo
   // bool DeleteObjects(const std::string &bucket,
   //                   const std::vector<std::string> &objects);
-  ByteArray GetObject(const std::string &bucket, const std::string &key,
-                      size_t begin = 0, size_t end = 0, Headers = {{}});
+  const ByteArray &GetObject(const std::string &bucket, const std::string &key,
+                             size_t begin = 0, size_t end = 0, Headers = {{}});
 
   void GetObject(const std::string &bucket, const std::string &key,
                  ByteArray &buffer, size_t offset, size_t begin = 0,
@@ -176,9 +179,10 @@ public:
 
   std::string ListBuckets(const Headers &headers = {{}});
 
-  std::string ListObjectsV2(const std::string &bucket,
-                            const ListObjectV2Config &config,
-                            const Headers & = {{}});
+  std::string
+  ListObjectsV2(const std::string &bucket,
+                const ListObjectV2Config &config = ListObjectV2Config{},
+                const Headers & = {{}});
   // not implemented
   // std::vector<PartInfo> ListParts(const std::string &bucket,
   //                                 const std::string &key, const UploadId

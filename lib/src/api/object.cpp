@@ -53,14 +53,14 @@ namespace api {
 //------------------------------------------------------------------------------
 ETag S3Client::PutObject(const std::string &bucket, const std::string &key,
                          const ByteArray &buffer, const Headers &headers) {
-  Clear();
-  webClient_.SetMethod("PUT");
-  webClient_.SetPath(bucket + "/" + key);
-  webClient_.SetHeaders(headers);
-  webClient_.SetUploadData(buffer);
-  webClient_.Send();
-  HandleError(webClient_);
-  const string etag = XMLTag(webClient_.GetContentText(), "ETag");
+
+  const auto &wc = Send({.method = "PUT",
+                         .bucket = bucket,
+                         .key = key,
+                         .headers = headers,
+                         .uploadData = buffer});
+  HandleError(wc);
+  const string etag = HTTPHeader(wc.GetHeaderText(), "ETag");
   if (etag.empty()) {
     throw runtime_error("Missing ETag");
   }
@@ -86,37 +86,30 @@ ETag S3Client::PutObject(const std::string &bucket, const std::string &key,
 }
 
 //------------------------------------------------------------------------------
-ByteArray S3Client::GetObject(const std::string &bucket, const std::string &key,
-                              size_t begin, size_t end, Headers headers) {
+const ByteArray &S3Client::GetObject(const std::string &bucket,
+                                     const std::string &key, size_t begin,
+                                     size_t end, Headers headers) {
 
-  Clear();
-  webClient_.SetMethod("GET");
-  webClient_.SetPath(bucket + "/" + key);
   if (end > 0) {
     headers.insert(
         {"Range", "bytes=" + to_string(begin) + "-" + to_string(end)});
   }
-  webClient_.SetHeaders(headers);
-  webClient_.Send();
-  HandleError(webClient_);
-  return webClient_.GetResponseBody();
+  const auto &wc =
+      Send({.method = "GET", .bucket = bucket, .key = key, .headers = headers});
+  return wc.GetResponseBody();
 }
 
 //------------------------------------------------------------------------------
 void S3Client::GetObject(const std::string &bucket, const std::string &key,
                          ByteArray &buffer, size_t offset, size_t begin,
                          size_t end, Headers headers) {
-  Clear();
-  webClient_.SetMethod("GET");
-  webClient_.SetPath(bucket + "/" + key);
   if (end > 0) {
     headers.insert(
         {"Range", "bytes=" + to_string(begin) + "-" + to_string(end)});
   }
-  webClient_.SetHeaders(headers);
-  webClient_.Send();
-  HandleError(webClient_);
-  const auto &bytes = webClient_.GetResponseBody();
+  const auto &wc =
+      Send({.method = "GET", .bucket = bucket, .key = key, .headers = headers});
+  const auto &bytes = wc.GetResponseBody();
   if (buffer.begin() + offset + bytes.size() >= buffer.end()) {
     throw range_error("Out buffer too small");
   }
@@ -128,41 +121,28 @@ void S3Client::GetObject(const std::string &bucket, const std::string &key,
                          char *buffer, size_t offset, size_t begin, size_t end,
                          Headers headers) {
 
-  Clear();
-  webClient_.SetMethod("GET");
-  webClient_.SetPath(bucket + "/" + key);
   if (end > 0) {
     headers.insert(
         {"Range", "bytes=" + to_string(begin) + "-" + to_string(end)});
   }
-  webClient_.SetHeaders(headers);
-  webClient_.Send();
-  HandleError(webClient_);
-  const auto &bytes = webClient_.GetResponseBody();
+  const auto &wc =
+      Send({.method = "GET", .bucket = bucket, .key = key, .headers = headers});
+  const auto &bytes = wc.GetResponseBody();
   copy(bytes.begin(), bytes.end(), buffer + offset);
 }
 
 //------------------------------------------------------------------------------
 void S3Client::DeleteObject(const std::string &bucket, const std::string &key,
                             const Headers &headers) {
-  Clear();
-  webClient_.SetMethod("DELETE");
-  webClient_.SetPath(bucket + "/" + key);
-  webClient_.SetHeaders(headers);
-  webClient_.Send();
-  HandleError(webClient_);
+  Send({.method = "DELETE", .bucket = bucket, .key = key, .headers = headers});
 }
 
 //------------------------------------------------------------------------------
 Headers S3Client::HeadObject(const std::string &bucket, const std::string &key,
                              const Headers &headers) {
-  Clear();
-  webClient_.SetMethod("HEAD");
-  webClient_.SetPath(bucket + "/" + key);
-  webClient_.SetHeaders(headers);
-  webClient_.Send();
-  Handle400Error(webClient_);
-  return HTTPHeaders(webClient_.GetHeaderText());
+  const auto &wc = Send(
+      {.method = "HEAD", .bucket = bucket, .key = key, .headers = headers});
+  return HTTPHeaders(wc.GetHeaderText());
 }
 
 //------------------------------------------------------------------------------
@@ -180,20 +160,18 @@ string S3Client::ListObjectsV2(const std::string &bucket,
                                const ListObjectV2Config &config,
                                const Headers &headers) {
 
-  Clear();
   Map params;
   params["continuation_token"] = config.continuationToken;
   params["delimiter"] = config.delimiter;
   params["encoding-type"] = config.encodingType;
   params["fetch-owner"] = config.fetchOwner;
-  params["max-keys"] = config.maxKeys;
+  params["max-keys"] = to_string(config.maxKeys);
   params["prefix"] = config.prefix;
   params["start-after"] = config.startAfter;
-  webClient_.SetReqParameters(params);
-  webClient_.SetPath(bucket);
-  webClient_.SetHeaders(headers);
-  webClient_.Send();
-  HandleError(webClient_);
+  const auto &wc = Send({.method = "GET",
+                         .bucket = bucket,
+                         .params = params,
+                         .headers = headers});
   return webClient_.GetContentText();
 }
 

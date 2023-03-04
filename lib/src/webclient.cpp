@@ -217,11 +217,11 @@ long WebClient::StatusCode() const { return responseCode_; }
 // Return full URL
 const std::string &WebClient::GetUrl() const { return url_; }
 // Return response content
-const std::vector<uint8_t> &WebClient::GetResponseBody() const {
+const std::vector<char> &WebClient::GetResponseBody() const {
   return writeBuffer_.data;
 }
 // Return raw header buffer
-const std::vector<uint8_t> &WebClient::GetResponseHeader() const {
+const std::vector<char> &WebClient::GetResponseHeader() const {
   return headerBuffer_;
 }
 // Set write function to use to write received data
@@ -241,7 +241,7 @@ bool WebClient::SetReadFunction(ReadFunction f, void *ptr) {
   return true;
 }
 // Fill buffer with data to be uploaded
-void WebClient::SetUploadData(const std::vector<uint8_t> &data) {
+void WebClient::SetUploadData(const std::vector<char> &data) {
   readBuffer_.data = data;
   readBuffer_.offset = 0;
 }
@@ -385,12 +385,12 @@ void WebClient::SetVerbose(bool verbose) {
 }
 // Returns content as text
 std::string WebClient::GetContentText() const {
-  std::vector<uint8_t> content = GetResponseBody();
+  std::vector<char> content = GetResponseBody();
   return std::string(begin(content), end(content));
 }
 // Returns headers as text
 std::string WebClient::GetHeaderText() const {
-  std::vector<uint8_t> header = GetResponseHeader();
+  std::vector<char> header = GetResponseHeader();
   return std::string(begin(header), end(header));
 }
 
@@ -501,16 +501,16 @@ size_t WebClient::Writer(char *data, size_t size, size_t nmemb,
   assert(outbuffer);
   size = size * nmemb;
   outbuffer->data.insert(begin(outbuffer->data) + outbuffer->offset,
-                         (uint8_t *)data, (uint8_t *)data + size);
+                         (char *)data, (char *)data + size);
   outbuffer->offset += size;
   return size;
 }
 // Writer function for headers: appends response headers to buffer.
 size_t WebClient::HeaderWriter(char *data, size_t size, size_t nmemb,
-                               std::vector<uint8_t> *writerData) {
+                               std::vector<char> *writerData) {
   assert(writerData);
-  writerData->insert(writerData->end(), (uint8_t *)data,
-                     (uint8_t *)data + size * nmemb);
+  writerData->insert(writerData->end(), (char *)data,
+                     (char *)data + size * nmemb);
   return size * nmemb;
 }
 // Reader function, writes data to be sent into outPtr buffer in chunks.
@@ -528,7 +528,7 @@ size_t WebClient::Reader(void *outPtr, size_t size, size_t nmemb,
   // end point min between end of buffer and start + chunk size
   const auto e = std::min(b + size, end(inBuffer->data));
   // copy from vector into curl internal buffer
-  std::copy(b, e, (uint8_t *)outPtr);
+  std::copy(b, e, (char *)outPtr);
   // update offset
   size = size_t(e - b);
   inBuffer->offset += size;

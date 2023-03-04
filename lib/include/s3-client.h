@@ -123,7 +123,7 @@ std::string SignS3URL(const S3SignUrlConfig &);
 S3Credentials GetS3Credentials(const std::string &fileName,
                                std::string awsProfile);
 
-using ByteArray = std::vector<uint8_t>;
+using ByteArray = std::vector<char>;
 using StringArray = std::vector<std::string>;
 using ETag = std::string;
 using MetaDataMap = std::map<std::string, std::string>;

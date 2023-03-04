@@ -60,6 +60,7 @@ void BuildUploadRequest(S3Client &s3, const string &bucket, const string &key,
       SignHeaders(s3.Access(), s3.Secret(), s3.SigningEndpoint(), "PUT", bucket,
                   key, "", params);
   Headers headers(begin(signedHeaders), end(signedHeaders));
+  s3.Clear();
   WebClient &wc = s3.GetWebClient();
   wc.SetHeaders(headers);
   const string path = "/" + bucket + "/" + key;
@@ -176,7 +177,7 @@ UploadId S3Client::CreateMultipartUpload(const std::string &bucket,
   webClient_.Send();
   retriesG = 0;
   HandleError(webClient_);
-  const vector<uint8_t> &resp = webClient_.GetResponseBody();
+  const vector<char> &resp = webClient_.GetResponseBody();
   const string xml(begin(resp), end(resp));
   return XMLTag(xml, "uploadId");
 }

@@ -115,11 +115,11 @@ int main(int argc, char const *argv[]) {
     // Status code 20* = no error
     cout << "Status: " << req.StatusCode() << endl << endl;
     // Response body
-    vector<uint8_t> resp = req.GetResponseBody();
+    vector<char> resp = req.GetResponseBody();
     string t(begin(resp), end(resp));
     cout << t << endl << endl;
     // Response header
-    vector<uint8_t> h = req.GetResponseHeader();
+    vector<char> h = req.GetResponseHeader();
     string hs(begin(h), end(h));
     cout << hs << endl;
     return 0;

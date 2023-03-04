@@ -57,7 +57,7 @@ size_t ObjectSize(const string &s3AccessKey, const string &s3SecretKey,
   args.bucket = bucket;
   args.key = key;
   auto req = SendS3Request(args);
-  const vector<uint8_t> h = req.GetResponseHeader();
+  const vector<char> h = req.GetResponseHeader();
   const string hs(begin(h), end(h));
   const string cl = sss::HTTPHeader(hs, "Content-Length");
   char *ns;

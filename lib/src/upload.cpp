@@ -181,7 +181,7 @@ vector<string> UploadParts(const S3FileTransferConfig &args, const string &path,
       const string errcode = XMLTag(req.GetContentText(), "Code");
       throw runtime_error("Error sending begin upload request - " + errcode);
     }
-    vector<uint8_t> resp = req.GetResponseBody();
+    vector<char> resp = req.GetResponseBody();
     const string xml(begin(resp), end(resp));
     const string uploadId = XMLTag(xml, "uploadId");
     const size_t numParts = config.chunksPerJob * config.jobs;
