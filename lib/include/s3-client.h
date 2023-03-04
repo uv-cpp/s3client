@@ -99,6 +99,14 @@ struct S3SignUrlConfig {
 };
 
 //------------------------------------------------------------------------------
+struct BucketValidation {
+  bool valid = false;
+  std::string error;
+  operator bool() const { return valid; }
+};
+/// Validate bucket name.
+BucketValidation ValidateBucket(const std::string name);
+
 /// Validate S3 client request parameters.
 void Validate(const S3ClientConfig &s);
 /// Send S3 request to endpoint.

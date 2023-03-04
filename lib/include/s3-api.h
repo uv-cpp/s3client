@@ -32,8 +32,9 @@
  ******************************************************************************/
 #pragma once
 
+#include "aws_sign.h"
+#include "error.h"
 #include "s3-client.h"
-
 namespace sss {
 
 namespace api {
@@ -68,12 +69,27 @@ public:
     std::string prefix;
     std::string startAfter;
   };
+  struct SendParams {
+    std::string method = "GET";
+    std::string bucket;
+    std::string key;
+    Parameters params;
+    Headers headers;
+    std::string region = "us-east-1";
+    std::string signUrl;
+    std::string payloadHash;
+    const std::string &postData = "";
+    const std::vector<uint8_t> &uploadData = {};
+  };
 
 public:
   S3Client(const std::string &access, const std::string &secret,
            const std::string &endpoint, const std::string &signingEndpoint = "")
       : access_(access), secret_(secret), endpoint_(endpoint),
-        signingEndpoint_(signingEndpoint) {}
+        signingEndpoint_(signingEndpoint) {
+    if (signingEndpoint_.empty())
+      signingEndpoint_ = endpoint_;
+  }
   S3Client() = delete;
   S3Client(const S3Client &) = delete;
   S3Client(S3Client &&other)
@@ -91,6 +107,36 @@ public:
     webClient_.SetPostData("");
     webClient_.SetUploadData({});
   }
+  const WebClient &Send(const SendParams &p) {
+    auto sh = SignHeaders(Access(), Secret(), Endpoint(), p.method, p.bucket,
+                          p.key, p.payloadHash, p.params, p.headers, p.region);
+    std::string path;
+    if (!p.bucket.empty()) {
+      path += "/" + p.bucket;
+      if (!p.key.empty()) {
+        path += "/" + p.key;
+      }
+    }
+    Clear();
+    webClient_.SetEndpoint(Endpoint());
+    webClient_.SetPath(path);
+    webClient_.SetMethod(p.method);
+    webClient_.SetReqParameters(p.params);
+    webClient_.SetHeaders(sh);
+    if (!p.uploadData.empty()) {
+      webClient_.SetUploadData(p.uploadData);
+    }
+    if (!p.postData.empty()) {
+      webClient_.SetPostData(p.postData);
+    }
+    webClient_.Send();
+    if (ToLower(p.method) == "head") {
+      Handle400Error(webClient_);
+    } else {
+      HandleError(webClient_);
+    }
+    return webClient_;
+  }
 
 public:
   void AbortMultipartUpload(const std::string &bucket, const std::string &key,
@@ -106,7 +152,7 @@ public:
                                  const std::string &key,
                                  const MetaDataMap &metaData = {});
 
-  void DeleteBucket(const std::string &bucket);
+  void DeleteBucket(const std::string &bucket, const Headers &headers = {{}});
 
   void DeleteObject(const std::string &bucket, const std::string &key,
                     const Headers & = {{}});
@@ -124,11 +170,11 @@ public:
                  char *buffer, size_t offset, size_t begin = 0, size_t end = 0,
                  Headers headers = {{}});
 
-  Headers HeadBucket(const std::string &bucket);
+  Headers HeadBucket(const std::string &bucket, const Headers &headers = {{}});
   Headers HeadObject(const std::string &bucket, const std::string &key,
                      const Headers & = {{}});
 
-  std::vector<BucketInfo> ListBuckets();
+  std::vector<BucketInfo> ListBuckets(const Headers &headers = {{}});
 
   std::vector<ObjectInfo> ListObjectsV2(const std::string &bucket,
                                         const ListObjectV2Config &config,

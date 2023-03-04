@@ -48,33 +48,31 @@ int main(int argc, char **argv) {
   const string prefix = "sss-api-test-";
   string bucketName;
   ////
-  string name = "CreateBucket";
+  string action = "CreateBucket";
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
-    bucketName = prefix + TimeStamp();
+    bucketName = prefix + ToLower(Timestamp());
     s3.CreateBucket(bucketName);
-    TestOutput(name, true);
+    TestOutput(action, true);
   } catch (const exception &e) {
-    TestOutput(name, false, e.what());
+    TestOutput(action, false, e.what());
   }
   ////
-  name = "HeadBucket";
+  action = "HeadBucket";
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
-    bucketName = prefix + TimeStamp();
     s3.HeadBucket(bucketName);
-    TestOutput(name, true);
+    TestOutput(action, true);
   } catch (const exception &e) {
-    TestOutput(name, false, e.what());
+    TestOutput(action, false, e.what());
   }
   ////
-  name = "ListBuckets";
+  action = "ListBuckets";
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
     auto buckets = s3.ListBuckets();
     bool found = false;
     for (const auto &b : buckets) {
-      cout << b.name << endl;
       if (b.name == bucketName) {
         found = true;
       }
@@ -82,17 +80,17 @@ int main(int argc, char **argv) {
     if (!found) {
       throw logic_error("Bucket " + bucketName + " not found");
     }
-    TestOutput(name, true);
+    TestOutput(action, true);
   } catch (const exception &e) {
-    TestOutput(name, false, e.what());
+    TestOutput(action, false, e.what());
   }
   ////
-  name = "DeleteBucket";
+  action = "DeleteBucket";
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
     s3.DeleteBucket(bucketName);
-    TestOutput(name, true);
+    TestOutput(action, true);
   } catch (const exception &e) {
-    TestOutput(name, false, e.what());
+    TestOutput(action, false, e.what());
   }
 }

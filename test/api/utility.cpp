@@ -83,18 +83,22 @@ void TestS3Access(const Params &config) {
 }
 
 //----------------------------------------------------------------------------
-string TimeStamp() {
-  const time_t t = chrono::system_clock::to_time_t(chrono::system_clock::now());
-  string timeStr = ctime(&t);
-  timeStr.pop_back();
-  replace(begin(timeStr), end(timeStr), ' ', '-');
-  return timeStr;
-}
-
-//----------------------------------------------------------------------------
 void TestOutput(const std::string &name, bool success, const std::string &msg,
                 bool last) {
   cout << name << "," << (success ? 1 : 0) << "," << (msg.empty() ? " " : msg);
   if (!last)
     cout << endl;
+}
+
+//----------------------------------------------------------------------------
+string Timestamp() {
+  time_t t;
+  time(&t);
+  struct tm *ts;
+  ts = gmtime(&t);
+
+  const size_t BUFSIZE = 128;
+  vector<char> buf1(BUFSIZE, '\0');
+  strftime(buf1.data(), BUFSIZE, "%Y%m%dT%H%M%SZ", ts);
+  return string(buf1.data());
 }

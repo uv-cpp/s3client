@@ -136,7 +136,13 @@ bool WebClient::SSLVerify(bool verifyPeer, bool verifyHost) {
 // Set full URL
 bool WebClient::SetUrl(const std::string &url) {
   url_ = url;
-  return curl_easy_setopt(curl_, CURLOPT_URL, url_.c_str()) == CURLE_OK;
+  const auto res = curl_easy_setopt(curl_, CURLOPT_URL, url_.c_str());
+  if (res != CURLE_OK) {
+    throw runtime_error(string("Error setting URL - ") +
+                        curl_easy_strerror(res));
+  }
+  //@todo return void!
+  return true;
 }
 // Set endpoint: <proto>://<server>:<port>
 void WebClient::SetEndpoint(const std::string &ep) {
@@ -390,7 +396,7 @@ std::string WebClient::GetHeaderText() const {
 
 // private:
 
-// @warning !!!HACK Check status and discards SIGPIPE errors
+// @warning !!!HACK Checks status and discards SIGPIPE errors
 bool WebClient::Status(CURLcode cc) const {
   if (cc == 0)
     return true;
@@ -432,7 +438,7 @@ bool WebClient::Init() {
   curl_ = curl_easy_init();
   // curl_easy_setopt(curl_, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_2_0);
   if (!curl_) {
-    throw(std::runtime_error("Cannot create Curl connection"));
+    throw(std::runtime_error("Cannot create Curl handle"));
     return false;
   }
   if (curl_easy_setopt(curl_, CURLOPT_ERRORBUFFER, errorBuffer_.data()) !=
@@ -483,11 +489,11 @@ handle_error:
 }
 // Build URL from <proto>://<server>:<port> AND /<path>
 bool WebClient::BuildURL() {
-  url_ = endpoint_ + path_;
+  string url = endpoint_ + path_;
   if (!params_.empty()) {
-    url_ += "?" + UrlEncode(params_);
+    url += "?" + UrlEncode(params_);
   }
-  return SetUrl(url_);
+  return SetUrl(url);
 }
 // Writer function: appends received content to buffer.
 size_t WebClient::Writer(char *data, size_t size, size_t nmemb,

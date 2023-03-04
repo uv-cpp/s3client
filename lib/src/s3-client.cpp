@@ -8,7 +8,7 @@
  * modification, are permitted provided that the following conditions are met:
  *
  * 1. Redistributions of source code must retain the above copyright notice,
- *this list of conditions and the following disclaimer.
+ *    this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
@@ -40,6 +40,7 @@
 
 #include <fstream>
 #include <future>
+#include <regex>
 #include <set>
 #include <thread>
 using namespace std;
@@ -94,14 +95,17 @@ WebClient SendS3Request(S3ClientConfig args) {
   }
   auto headers = args.headers;
   if (!args.accessKey.empty()) {
-    auto signedHeaders =
+    headers =
         SignHeaders(args.accessKey, args.secretKey, args.signUrl, args.method,
                     args.bucket, args.key, "", args.params, headers);
-    //@todo headers = SignHeaders(...)
-    headers.insert(begin(signedHeaders), end(signedHeaders));
   }
-  WebClient req(args.endpoint, path, args.method, args.params, headers);
+  WebClient req;
   req.SSLVerify(verifyPeer, verifyHost);
+  req.SetEndpoint(args.endpoint);
+  req.SetPath(path);
+  req.SetMethod(args.method);
+  req.SetReqParameters(args.params);
+  req.SetHeaders(headers);
   FILE *of = NULL;
   if (!args.outfile.empty()) {
     of = fopen(args.outfile.c_str(), "wb");
@@ -129,8 +133,9 @@ WebClient SendS3Request(S3ClientConfig args) {
         req.SetMethod("POST");
         req.SetPostData(str);
         req.Send();
+      } else {
+        throw domain_error("Wrong method " + args.method);
       }
-      elsle { throw domain_error("Wrong method " + args.method); }
     }
   } else
     req.Send();
@@ -158,4 +163,45 @@ std::string SignS3URL(const S3SignUrlConfig &config) {
                    config.endpoint, config.method, config.bucket, config.key,
                    ParseParams(config.params), config.region);
 }
+
+//-----------------------------------------------------------------------------
+// Validate bucket name according to:
+// https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html
+BucketValidation ValidateBucket(const string &name) {
+  if (name.empty())
+    return {false, "Empty"};
+  if (name.size() > 63) {
+    return {false, "Size > 63"};
+  }
+  if (!isalnum(name[0])) {
+    return {false, "Name must start with a number or a digit"};
+  }
+  const string prefix = "xn--";
+  if (name.substr(0, prefix.size()) == prefix) {
+    return {false, "Name cannot start with 'xn--'"};
+  }
+  const string suffix = "-s3alias";
+  if (name.substr(name.size() - suffix.size()) == suffix) {
+    return {false, "Name cannot end with '-s3alias;"};
+  }
+  for (size_t i = 0; i < name.size(); ++i) {
+    if (!islower(name[i])) {
+      return {false, "Only lowercase letters allowed"};
+    }
+    if (i > 0) {
+      if (name[i] == '-' && name[i - 1] == '-') {
+        return {false, "Cannot have two consecutive '-' characters"};
+      }
+    }
+    if (name[i] != '.' && name[i] != '-' && !isalnum(name[i])) {
+      return {false, "Only numbers, digits, '.' and '-' charachters allowers"};
+    }
+  }
+  const regex iprx = regex("\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}");
+  if (regex_match(name, iprx)) {
+    return {false, "IP addresses not allowed"};
+  }
+  return {true, ""};
+}
+
 } // namespace sss

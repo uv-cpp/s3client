@@ -50,64 +50,36 @@ namespace api {
 
 //------------------------------------------------------------------------------
 bool S3Client::TestBucket(const string &bucket) {
-  Clear(); // clear headers, req parameters, post data, upload data
-  webClient_.SetPath(bucket);
-  webClient_.SetMethod("HEAD");
-  webClient_.Send();
-  if (webClient_.StatusCode() < 300) {
+  try {
+    Send({.method = "GET", .bucket = bucket, .signUrl = SigningEndpoint()});
     return true;
-  } else {
+  } catch (...) {
     return false;
   }
 }
+
 //------------------------------------------------------------------------------
 void S3Client::CreateBucket(const std::string &bucket, const Headers &headers) {
-  Clear(); // clear headers, req parameters, post data, upload data
-  webClient_.SetPath(bucket);
-  webClient_.SetMethod("PUT");
-  webClient_.SetHeaders(headers);
-  webClient_.Send();
-  if (webClient_.StatusCode() >= 400) {
-    const string errorcode = XMLTag(webClient_.GetContentText(), "Code");
-    throw runtime_error("Error sending 'create bucket' request - " + errorcode);
-  }
+  Send({.method = "PUT", .bucket = bucket, .headers = headers});
 }
 
 //------------------------------------------------------------------------------
-void S3Client::DeleteBucket(const std::string &bucket) {
-  Clear(); // clear headers, req parameters, post data, upload data
-  webClient_.SetPath(bucket);
-  webClient_.SetMethod("DELETE");
-  webClient_.Send();
-  if (webClient_.StatusCode() >= 400) {
-    const string errorcode = XMLTag(webClient_.GetContentText(), "Code");
-    throw runtime_error("Error sending 'create bucket' request - " + errorcode);
-  }
+void S3Client::DeleteBucket(const std::string &bucket, const Headers &headers) {
+  Send({.method = "DELETE", .bucket = bucket, .headers = headers});
 }
 
 //------------------------------------------------------------------------------
-Headers S3Client::HeadBucket(const string &bucket) {
-  Clear(); // clear headers, req parameters, post data, upload data
-  webClient_.SetPath(bucket);
-  webClient_.SetMethod("HEAD");
-  webClient_.Send();
-  if (webClient_.StatusCode() >= 400) {
-    throw runtime_error("Error sending 'head bucket' request - " +
-                        to_string(webClient_.StatusCode()));
-  }
-  return HTTPHeaders(webClient_.GetHeaderText());
+Headers S3Client::HeadBucket(const string &bucket, const Headers &headers) {
+  const auto &wc =
+      Send({.method = "HEAD", .bucket = bucket, .headers = headers});
+  return HTTPHeaders(wc.GetContentText());
 }
 
 //------------------------------------------------------------------------------
-vector<BucketInfo> S3Client::ListBuckets() {
-  Clear(); // clear headers, req parameters, post data, upload data
-  webClient_.SetMethod("GET");
-  webClient_.Send();
-  if (webClient_.StatusCode() >= 400) {
-    const string errorcode = XMLTag(webClient_.GetContentText(), "Code");
-    throw runtime_error("Error sending 'create bucket' request - " + errorcode);
-  }
-  const string content = webClient_.GetContentText();
+vector<BucketInfo> S3Client::ListBuckets(const Headers &headers) {
+  const auto &wc = Send({.method = "GET", .headers = headers});
+  const string content = wc.GetContentText();
+  return {};
   auto tags = XMLTags(content, "Bucket");
   vector<BucketInfo> bi;
   for (const auto &i : tags) {

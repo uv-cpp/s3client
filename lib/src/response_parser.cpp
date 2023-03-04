@@ -39,7 +39,8 @@ using namespace std;
 namespace sss {
 
 string XMLTag(const string &xml, const string &tag) {
-  const regex rx{tag + "\\s*>\\s*([^\\s<]+)\\s*<", regex_constants::icase};
+  const regex rx{tag + "\\s*>\\s*([^\\s]+)\\s*<\\s*/\\s*" + tag,
+                 regex_constants::icase};
   smatch sm;
   if (!regex_search(xml, sm, rx)) {
     return "";
@@ -48,7 +49,8 @@ string XMLTag(const string &xml, const string &tag) {
 }
 
 vector<string> XMLTags(const string &xml, const string &tag) {
-  const regex rx{tag + "\\s*>\\s*([^\\s<]+)\\s*<", regex_constants::icase};
+  const regex rx{tag + "\\s*>\\s*([^\\s]+)\\s*<\\s*/\\s*" + tag,
+                 regex_constants::icase};
   smatch sm;
   vector<string> tags;
   if (!regex_search(xml, sm, rx)) {

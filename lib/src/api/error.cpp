@@ -5,7 +5,6 @@
 using namespace std;
 
 namespace sss {
-namespace api {
 // Handle error throwing exception
 void HandleError(const WebClient &wc, const string &prefix) {
   if (wc.StatusCode() >= 400) {
@@ -13,5 +12,10 @@ void HandleError(const WebClient &wc, const string &prefix) {
     throw runtime_error(prefix + error);
   }
 }
-} // namespace api
+// Handle error throwing exception
+void Handle400Error(const WebClient &wc, const string &prefix) {
+  if (wc.StatusCode() >= 400) {
+    throw runtime_error(prefix + to_string(wc.StatusCode()));
+  }
+}
 } // namespace sss

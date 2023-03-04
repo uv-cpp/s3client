@@ -45,7 +45,7 @@ Params ParseCmdLine(int argc, char **argv);
 
 void TestS3Access(const Params &config);
 
-std::string TimeStamp();
+std::string Timestamp();
 
 void TestOutput(const std::string &name, bool success,
                 const std::string &msg = "", bool last = false);

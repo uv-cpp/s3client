@@ -35,6 +35,7 @@
 
 #include "aws_sign.h"
 #include "common.h"
+#include "error.h"
 #include "response_parser.h"
 #include "s3-api.h"
 #include "s3-client.h"
@@ -48,9 +49,6 @@ using namespace std;
 
 namespace sss {
 namespace api {
-
-extern void HandleError(const WebClient &, const string & = "");
-extern void Handle400Error(const WebClient &, const string & = "");
 
 //------------------------------------------------------------------------------
 ETag S3Client::PutObject(const std::string &bucket, const std::string &key,
