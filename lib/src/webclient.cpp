@@ -276,7 +276,6 @@ bool WebClient::UploadDataFromBuffer(const char *data, size_t offset,
   if (curl_easy_setopt(curl_, CURLOPT_READDATA, &refBuffer_) != CURLE_OK) {
     throw std::runtime_error("Cannot set curl read data buffer");
   }
-  // std::cout << refBuffer_.data << " " << refBuffer_.offset << std::endl;
   refBuffer_.data = data;
   refBuffer_.offset = offset;
   refBuffer_.size = size;

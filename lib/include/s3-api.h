@@ -197,7 +197,7 @@ public:
 
   ETag UploadPart(const std::string &bucket, const std::string &key,
                   const UploadId &uid, int partNum, const char *data,
-                  size_t size, int maxRetries);
+                  size_t size, int maxRetries = 1);
   const std::string &Access() const { return access_; }
   const std::string &Secret() const { return secret_; }
   const std::string &Endpoint() const { return endpoint_; }
