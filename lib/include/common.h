@@ -33,20 +33,21 @@
 /**
  * \file common.h
  * \brief Common definitions
- * 
-*/
+ *
+ */
 
 #pragma once
-#include <string>
 #include <map>
-//#include <unordered_map>
+#include <string>
+// #include <unordered_map>
 
 namespace sss {
 
 ///@todo review and use unordered_map when parameters do not need to be in
-///alphabetical order
+/// alphabetical order
 using Map = std::map<std::string, std::string>;
 using Headers = Map;
 using Parameters = Map;
- 
+using MetaDataMap = Map;
+
 } // namespace sss

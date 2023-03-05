@@ -30,22 +30,61 @@
  *ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
+#include "response_parser.h"
+#include <algorithm>
 #include <iostream>
 #include <regex>
+
+using namespace std;
+
 namespace sss {
 
-std::string XMLTag(const std::string &xml, const std::string &tag) {
-  const std::regex rx{tag + "\\s*>\\s*([^\\s<]+)\\s*<"};
-  std::smatch sm;
+string RTrim(const std::string &s) {
+  const string BLANKS = " \n\t\r\v";
+  size_t end = s.find_last_not_of(BLANKS);
+  return (end == std::string::npos) ? "" : s.substr(0, end + 1);
+}
+
+string XMLTag(const string &xml, const string &tag) {
+  const regex rx{tag + "[^>]*>\\s*(.+)\\s*<\\s*/\\s*" + tag + "\\s*>",
+                 regex_constants::icase};
+  smatch sm;
   if (!regex_search(xml, sm, rx)) {
     return "";
   }
-  return sm[1];
+  return RTrim(sm[1]);
 }
 
-std::string HTTPHeader(const std::string &headers, const std::string &header) {
-  const std::regex rx{header + "\\s*:\\s*([^\\s]+)"};
-  std::smatch sm;
+vector<string> XMLTags(const string &xml, const string &tag) {
+  const regex rx{tag + "\\s*>\\s*(.+)\\s*<\\s*/\\s*" + tag + "\\s*>",
+                 regex_constants::icase | regex_constants::optimize};
+  smatch sm;
+  vector<string> tags;
+  string::const_iterator searchStart(cbegin(xml));
+  while (regex_search(searchStart, cend(xml), sm, rx)) {
+    cout << sm[1] << endl;
+    tags.push_back(RTrim(sm[1]));
+    searchStart = sm.suffix().first;
+  }
+  return tags;
+}
+
+string XMLTagPath(const string &xml, const string &path) {
+  const char split_char = '/';
+  istringstream split(xml);
+  std::vector<std::string> tokens;
+  string curTag;
+  for (std::string each; std::getline(split, each, split_char);) {
+    curTag = XMLTag(curTag, each);
+    if (curTag.empty())
+      return "";
+  }
+  return curTag;
+}
+
+string HTTPHeader(const string &headers, const string &header) {
+  const regex rx{header + "\\s*:\\s*([^\\s]+)", regex_constants::icase};
+  smatch sm;
   if (!regex_search(headers, sm, rx)) {
     return "";
   }
@@ -53,4 +92,27 @@ std::string HTTPHeader(const std::string &headers, const std::string &header) {
                 // string hs(begin(h), end(h));
 }
 
+namespace {
+Headers HTTPHeaderFilter(const string &txt, const string &filterRx) {
+  Headers headers;
+  regex h(filterRx, regex_constants::icase);
+  smatch sm;
+  string::const_iterator si(txt.cbegin());
+  while (regex_search(si, txt.cend(), sm, h)) {
+    if (sm.size() > 1) {
+      headers[sm[1]] = sm[2];
+    }
+    si = sm.suffix().first;
+  }
+  return headers;
+}
+} // namespace
+
+Headers HTTPHeaders(const string &txt) {
+  return HTTPHeaderFilter(txt, "\\s*(\\w+)\\s*:\\s*(\\w+)");
+}
+
+MetaDataMap MetaDataHeaders(const string &txt) {
+  return HTTPHeaderFilter(txt, "\\s*x-amz-meta-(\\w+)\\s*:\\s*(\\w+)");
+}
 } // namespace sss

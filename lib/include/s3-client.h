@@ -36,29 +36,32 @@
  * signing URLs and downloading and uploading files.
  */
 #pragma once
+#include "common.h"
 #include "webclient.h"
 #include <string>
 #include <vector>
 
+namespace sss {
+
 //------------------------------------------------------------------------------
 /// S3 Credentials in AWS format
 struct S3Credentials {
-  std::string s3AccessKey;
-  std::string s3SecretKey;
+  std::string accessKey;
+  std::string secretKey;
 };
 
 /// Parameters for SendS3Request calls.
 struct S3ClientConfig {
-  std::string s3AccessKey;
-  std::string s3SecretKey;
+  std::string accessKey;
+  std::string secretKey;
   std::string endpoint; //< actual endpoint where requests are sent
   std::string
       signUrl; //< url used to sign, allows requests to work across tunnels
   std::string bucket;
   std::string key;
-  std::string params; //< "param1=val1;param2=val2..."
+  Parameters params;
   std::string method = "GET";
-  std::string headers; //< "Header1:value1;Header2:value2..."
+  Headers headers;
   std::string outfile; // if not empty stores returned response body into file
   /// if dataIsFileName == true  assume filename, if
   /// not send 'data' bytes
@@ -68,28 +71,24 @@ struct S3ClientConfig {
 
 /// Parameters for calls to upload and download file functions.
 struct S3FileTransferConfig {
-  std::string s3AccessKey;
-  std::string s3SecretKey;
-  std::string endpoint;
+  std::string accessKey;
+  std::string secretKey;
   std::string signUrl; //< @warning not implemented @todo implement
   std::string bucket;
   std::string key;
   std::string file;
-  /// credentials file; @warning not implemented @todo remove
-  /// and use GetS3Credentials to retrieve credential information
-  /// before calling other functions.
-  std::string credentials;
   std::string awsProfile;
   std::vector<std::string> endpoints;
   int maxRetries =
       1; //< mximum number of retries per chunk, only implementd for upload
-  int jobs = 1; //< number of parallel threads of execution
+  int jobs = 1;            //< number of parallel threads of execution
+  size_t chunksPerJob = 1; //< number of chunks per job
 };
 
 /// Parameters for calls to SignS3URL function.
 struct S3SignUrlConfig {
-  std::string s3AccessKey;
-  std::string s3SecretKey;
+  std::string accessKey;
+  std::string secretKey;
   std::string endpoint;
   int expiration; //< expiration time in seconds  @todo Unsigned!
   std::string method;
@@ -98,18 +97,36 @@ struct S3SignUrlConfig {
   std::string params; //< URL parameters: "param1=val1;param2=var2"
   std::string region = "us-east";
 };
+
 //------------------------------------------------------------------------------
+struct BucketValidation {
+  bool valid = false;
+  std::string error;
+  operator bool() const { return valid; }
+};
+/// Validate bucket name.
+BucketValidation ValidateBucket(const std::string name);
+
 /// Validate S3 client request parameters.
 void Validate(const S3ClientConfig &s);
 /// Send S3 request to endpoint.
-sss::WebClient SendS3Request(S3ClientConfig);
+WebClient SendS3Request(S3ClientConfig);
 /// Parallel download of object to file, @see S3FileTransferConfig
 void DownloadFile(S3FileTransferConfig);
 /// Parallel upload of file to object, @see S3FileTransferConfig
-std::string UploadFile(S3FileTransferConfig);
+std::string UploadFile(const S3FileTransferConfig &,
+                       const MetaDataMap & = MetaDataMap{});
 /// Sign S3 request.
 std::string SignS3URL(const S3SignUrlConfig &);
 /// Read S3 credentials from file. Whn reading from .aws folder an aws profile
 /// can be selected.
 S3Credentials GetS3Credentials(const std::string &fileName,
                                std::string awsProfile);
+
+using ByteArray = std::vector<char>;
+using StringArray = std::vector<std::string>;
+using ETag = std::string;
+using MetaDataMap = std::map<std::string, std::string>;
+using UploadId = std::string;
+
+} // namespace sss

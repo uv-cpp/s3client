@@ -70,7 +70,7 @@ int main(int argc, char **argv) {
 
     } else if (string(argv[1]) == "-h") {
       cout << "Generates S3 access and secret keys" << endl
-           << "Usage: " << argv[0] << " [access|key]";
+           << "Usage: " << argv[0] << " [access|key]" << endl;
       exit(EXIT_SUCCESS);
     } else {
       cerr << "ERROR - unrecognized parameter, usage: " << argv[0]

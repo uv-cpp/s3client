@@ -36,32 +36,59 @@
 
 #include "lyra/lyra.hpp"
 #include "s3-client.h"
+#include <filesystem>
+#include <fstream>
 #include <iostream>
 #include <string>
 using namespace std;
+using namespace sss;
 using namespace filesystem;
 
 //------------------------------------------------------------------------------
 int main(int argc, char const *argv[]) {
   try {
-    S3FileTransferConfig args;
+    S3FileTransferConfig config;
     bool showHelp = false;
+    string endpoint;
+    string endpointsFile;
+    string credentialsFile;
+    string awsProfile;
+    bool overwrite = false;
     auto cli =
         lyra::help(showHelp).description("Download file from S3 bucket") |
-        lyra::opt(args.s3AccessKey,
+        lyra::opt(config.accessKey,
                   "awsAccessKey")["-a"]["--access_key"]("AWS access key")
             .optional() |
-        lyra::opt(args.s3SecretKey,
+        lyra::opt(config.secretKey,
                   "awsSecretKey")["-s"]["--secret_key"]("AWS secret key")
             .optional() |
-        lyra::opt(args.endpoint, "endpoint")["-e"]["--endpoint"]("Endpoint URL")
+        lyra::opt(endpoint, "endpoint")["-e"]["--endpoint"]("Endpoint URL")
+            .optional() |
+        lyra::opt(endpointsFile, "endpointsFile")["-E"]["--endpoints-file"](
+            "File with list of endpoints")
+            .optional() |
+        lyra::opt(config.bucket, "bucket")["-b"]["--bucket"]("Bucket name")
             .required() |
-        lyra::opt(args.bucket, "bucket")["-b"]["--bucket"]("Bucket name")
-            .required() |
-        lyra::opt(args.key, "key")["-k"]["--key"]("Key name").required() |
-        lyra::opt(args.file, "file")["-f"]["--file"]("File name").required() |
-        lyra::opt(args.jobs,
+        lyra::opt(config.key, "key")["-k"]["--key"]("Key name").required() |
+        lyra::opt(config.file, "file")["-f"]["--file"]("File name").optional() |
+        lyra::opt(credentialsFile, "credentials file")["-c"]["--credentials"](
+            "Credentials file, AWS cli format")
+            .optional() |
+        lyra::opt(awsProfile, "AWS config profile")["-p"]["--profile"](
+            "Profile in AWS config file")
+            .optional() |
+        lyra::opt(config.maxRetries, "Max retries")["-r"]["--retries"](
+            "Max number of per-multipart part retries")
+            .optional() |
+        lyra::opt(config.jobs,
                   "parallel jobs")["-j"]["--jobs"]("Number of parallel jobs")
+            .optional() |
+        lyra::opt(config.chunksPerJob,
+                  "chunks per job")["-n"]["--parts_per_job"](
+            "Number of parts per job")
+            .optional() |
+        lyra::opt(overwrite)["-y"]["--overwrite"](
+            "Overwrite exsisting file, default is 'false'")
             .optional();
     if (showHelp) {
       cout << cli;
@@ -74,7 +101,43 @@ int main(int argc, char const *argv[]) {
       cerr << cli << endl;
       exit(1);
     }
-    DownloadFile(args);
+    if (config.file.empty())
+      config.file = config.key;
+    if (exists(config.file) && !overwrite) {
+      cerr << "File exists, use the '-y' command line switch to overwrite"
+           << endl;
+      exit(EXIT_FAILURE);
+    }
+    if (!endpoint.empty()) {
+      config.endpoints.push_back(endpoint);
+    } else {
+      if (endpointsFile.empty()) {
+        cerr << "Specify either an endpoing or a file to read endpoints from"
+             << endl;
+        exit(EXIT_FAILURE);
+      }
+      ifstream is(endpointsFile);
+      if (!is) {
+        cerr << "Cannot read from " << endpointsFile << endl;
+        exit(EXIT_FAILURE);
+      }
+      string line;
+      while (getline(is, line)) {
+        Trim(line);
+        if (line.empty() || line[0] == '#')
+          continue;
+        config.endpoints.push_back(line);
+      }
+    }
+    if (config.accessKey.empty() || config.secretKey.empty()) {
+      if (credentialsFile.empty()) {
+        credentialsFile = GetHomeDir() + "/.aws/credentials";
+      }
+      auto c = GetS3Credentials(credentialsFile, awsProfile);
+      config.accessKey = c.accessKey;
+      config.secretKey = c.secretKey;
+    }
+    DownloadFile(config);
     return 0;
   } catch (const exception &e) {
     cerr << e.what() << endl;

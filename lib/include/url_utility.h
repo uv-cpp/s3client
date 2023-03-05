@@ -41,11 +41,13 @@
 
 #pragma once
 #include <algorithm>
+#include <iostream>
 #include <map>
 #include <string>
 #include <vector>
 
 #include "common.h"
+#include "utility.h"
 
 /** \addtogroup internal
  *  @{
@@ -53,58 +55,33 @@
 
 namespace sss {
 
-/// Split string and puts substrings into container
-/// \param str input text
-/// \param[out] cont container with \c push_back() method
-/// \param delims delimiter
-/// \param count number of delimiters to parse
-template <class ContainerT>
-void split(const std::string& str, ContainerT& cont,
-           const std::string& delims = " ",
-           const size_t count = std::string::npos) {
-    std::size_t cur, prev = 0;
-    cur = str.find_first_of(delims);
-    size_t i = 0;
-    while (cur != std::string::npos && count != i) {
-        cont.push_back(str.substr(prev, cur - prev));
-        prev = cur + 1;
-        cur = str.find_first_of(delims, prev);
-        i += 1;
-    }
-    if (cur == std::string::npos) {
-        cont.push_back(str.substr(prev, cur - prev));
-    } else {
-        cont.push_back(str.substr(prev, std::string::npos));
-    }
-}
-
 /// URL type
 struct URL {
-    int port = -1;      ///< internet port
-    std::string host;   ///< host name
-    std::string proto;  ///< protocol, one of \c http or \c https
+  int port = -1;     ///< internet port
+  std::string host;  ///< host name
+  std::string proto; ///< protocol, one of \c http or \c https
 };
 
 /// Extract URL parameters from string
 /// \sa URL
 /// \param s text
 /// \return URL
-URL ParseURL(const std::string& s);
+URL ParseURL(const std::string &s);
 
 /// URL-encode url
 /// \param s text
 /// \return url-encoded url
-std::string UrlEncode(const std::string& s);
+std::string UrlEncode(const std::string &s);
 
 /// URL-encode url from \c {key,value} pairs
 /// \param p \c {key,value} map
 /// \return url-encoded url
-std::string UrlEncode(const Map& p);
+std::string UrlEncode(const Map &p);
 
 /// Time data type, used to generate pre-signed URLs
 struct Time {
-    std::string timeStamp;  ///< full date-time in \c "%Y%m%dT%H%M%SZ" format
-    std::string dateStamp;  ///< date in \c "%Y%m%d" format
+  std::string timeStamp; ///< full date-time in \c "%Y%m%dT%H%M%SZ" format
+  std::string dateStamp; ///< date in \c "%Y%m%d" format
 };
 
 /// Return current time and data in the two formats required to sign AWS S3
@@ -119,12 +96,12 @@ using Bytes = std::vector<uint8_t>;
 /// \param key
 /// \param msg message to encode
 /// \return HMAC hash
-Bytes Hash(const Bytes& key, const Bytes& msg);
+Bytes Hash(const Bytes &key, const Bytes &msg);
 
 /// Translate bytes to hexadecimal encoded ASCII string
 /// \param b byte array
 /// \return ASCII-encoded hex numbers
-std::string Hex(const Bytes& b);
+std::string Hex(const Bytes &b);
 
 /// Create signature key
 /// \param key this is the secret part of the {key,secret} credentials
@@ -133,33 +110,23 @@ std::string Hex(const Bytes& b);
 /// \param service service e.g. \c s3
 /// \return hash of internally generated key and binary-encoded text \c
 /// "aws4_request"
-Bytes CreateSignatureKey(const std::string& key, const std::string& dateStamp,
-                         const std::string& region, const std::string& service);
-
-/// Convert to uppercase text
-/// \param s text
-/// \return uppercase text
-std::string ToUpper(std::string s);
-
-/// Convert to lowercase
-/// \param s text
-/// \return lowercase text
-std::string ToLower(std::string s);
+Bytes CreateSignatureKey(const std::string &key, const std::string &dateStamp,
+                         const std::string &region, const std::string &service);
 
 /// From \c "key1=value1;key2=value2;key3=;key4" to \c {key, value} dictionary
 /// \param s text
 /// \return \c {name,value} dictionary
-Map ParseParams(std::string s);
+Parameters ParseParams(std::string s);
 
 /// From \c "key1:value1;key2:value2 to \c {key, value} dictionary
 /// See \c https://www.w3.org/Protocols/rfc2616/rfc2616.html
-Map ParseHeaders(const std::string& s);
+Headers ParseHeaders(const std::string &s);
 
 /// Adds \c x-amz-meta- prefix to map keys and checks that total size is less
 /// than maximum metadata header size (currently 2kB).
-Map ToMeta(const Map& metadata);
+Map ToMeta(const Map &metadata);
 
-}  // namespace sss
+} // namespace sss
 
 /**
  * @}

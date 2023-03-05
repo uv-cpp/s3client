@@ -30,55 +30,56 @@
  *ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
-/**
- * \file aws_sigh.h
- * \brief Public interface to signing URLs and HTTP headers with the S3v4
- *        protocol standard.
- */
 
-#pragma once
+// Upload files
+
+#include "aws_sign.h"
 #include "common.h"
-#include <string>
+#include "response_parser.h"
+#include "s3-api.h"
+#include "s3-client.h"
+
+#include <fstream>
+#include <future>
+#include <set>
+#include <thread>
+using namespace std;
 
 namespace sss {
+namespace api {
 
-/// Generate presigned URL
-std::string SignedURL(const std::string &accessKey,
-                      const std::string &secretKey, int expiration,
-                      const std::string &endpoint, const std::string &method,
-                      const std::string &bucketName = "",
-                      const std::string &keyName = "",
-                      const Parameters &params = Map(),
-                      const std::string &region = "us-east-1");
+//------------------------------------------------------------------------------
+bool S3Client::TestBucket(const string &bucket) {
+  try {
+    Send({.method = "GET", .bucket = bucket, .signUrl = SigningEndpoint()});
+    return true;
+  } catch (...) {
+    return false;
+  }
+}
 
-/// Sign headers
-Headers SignHeaders(const std::string &accessKey, const std::string &secretKey,
-                    const std::string &endpoint, const std::string &method,
-                    const std::string &bucketName = "",
-                    const std::string &keyName = "",
-                    std::string payloadHash = "",
-                    const Parameters &parameters = Map(),
-                    const Headers &additionalHeaders = Map(),
-                    const std::string &region = "us-east-1",
-                    const std::string &service = "s3");
+//------------------------------------------------------------------------------
+void S3Client::CreateBucket(const std::string &bucket, const Headers &headers) {
+  Send({.method = "PUT", .bucket = bucket, .headers = headers});
+}
 
-/// Struct
-struct SignHeadersInfo {
-  std::string key;
-  std::string secret;
-  std::string endpoint;
-  std::string method;
-  std::string bucket;
-  std::string bucketKey;
-  std::string payloadHash;
-  Parameters parameters;
-  Headers additionalHeaders;
-  std::string region{"us-east-1"};
-  std::string service{"s3"};
-};
+//------------------------------------------------------------------------------
+void S3Client::DeleteBucket(const std::string &bucket, const Headers &headers) {
+  Send({.method = "DELETE", .bucket = bucket, .headers = headers});
+}
 
-/// Sign headers. Alternative signature using a single \c stuct
-/// instead of multiple parameters
-Map SignHeaders(const SignHeadersInfo &hi);
+//------------------------------------------------------------------------------
+Headers S3Client::HeadBucket(const string &bucket, const Headers &headers) {
+  const auto &wc =
+      Send({.method = "HEAD", .bucket = bucket, .headers = headers});
+  return HTTPHeaders(wc.GetContentText());
+}
 
+//------------------------------------------------------------------------------
+string S3Client::ListBuckets(const Headers &headers) {
+  const auto &wc = Send({.method = "GET", .headers = headers});
+  return wc.GetContentText();
+}
+
+} // namespace api
 } // namespace sss
