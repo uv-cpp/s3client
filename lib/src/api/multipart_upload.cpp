@@ -49,27 +49,6 @@ using namespace std;
 namespace sss {
 namespace api {
 namespace {
-// //-----------------------------------------------------------------------------
-// void BuildUploadRequest(S3Client &s3, const string &bucket, const string
-// &key,
-//                         int partNum, const string &uploadId) {
-//   Parameters params = {{"partNumber", to_string(partNum + 1)},
-//                        {"uploadId", uploadId}};
-//   const string &endpoint =
-//       s3.Endpoint(); // config.endpoints[partNum % config.endpoints.size()];
-//   auto signedHeaders =
-//       SignHeaders(s3.Access(), s3.Secret(), s3.SigningEndpoint(), "PUT",
-//       bucket,
-//                   key, "", params);
-//   Headers headers(begin(signedHeaders), end(signedHeaders));
-//   s3.Clear();
-//   WebClient &wc = s3.GetWebClient();
-//   wc.SetHeaders(headers);
-//   const string path = "/" + bucket + "/" + key;
-//   wc.SetPath(path);
-//   wc.SetMethod("PUT");
-//   wc.SetReqParameters(params);
-// }
 
 //-----------------------------------------------------------------------------
 string BuildEndUploadXML(const vector<ETag> &etags) {
@@ -98,23 +77,15 @@ ETag DoUploadPart(S3Client &s3, const string &bucket, const string &key,
                   int tryNum, int maxRetries = 1) {
   const Parameters params = {{"partNumber", to_string(i + 1)},
                              {"uploadId", uploadId}};
-  const auto &wc = s3.Send({.method = "PUT",
-                            .bucket = bucket,
-                            .key = key,
-                            .params = params,
-                            .uploadData = data,
-                            .uploadDataSize = size});
 
-  if (false) {
-    if (tryNum == maxRetries) {
+  try {
+    const auto &wc = s3.Send({.method = "PUT",
+                              .bucket = bucket,
+                              .key = key,
+                              .params = params,
+                              .uploadData = data,
+                              .uploadDataSize = size});
 
-      throw(runtime_error("Cannot upload chunk " + to_string(i + 1)));
-    } else {
-      retriesG++;
-      return DoUploadPart(s3, bucket, key, data, uploadId, i, size, ++tryNum,
-                          maxRetries);
-    }
-  } else {
     string etag = HTTPHeader(wc.GetHeaderText(), "Etag");
     if (etag.empty()) {
       throw(runtime_error("No ETag found in HTTP header"));
@@ -126,6 +97,17 @@ ETag DoUploadPart(S3Client &s3, const string &bucket, const string &key,
         etag = etag.substr(quotes, etag.size() - 2 * quotes);
       }
       return etag;
+    }
+
+  } catch (const exception &e) {
+    if (tryNum == maxRetries) {
+
+      throw(runtime_error("Cannot upload chunk " + to_string(i + 1) + " - " +
+                          e.what()));
+    } else {
+      retriesG++;
+      return DoUploadPart(s3, bucket, key, data, uploadId, i, size, ++tryNum,
+                          maxRetries);
     }
   }
 }
