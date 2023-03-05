@@ -58,7 +58,8 @@ ETag S3Client::PutObject(const std::string &bucket, const std::string &key,
                          .bucket = bucket,
                          .key = key,
                          .headers = headers,
-                         .uploadData = buffer});
+                         .uploadData = buffer.data(),
+                         .uploadDataSize = buffer.size()});
   HandleError(wc);
   const string etag = HTTPHeader(wc.GetHeaderText(), "ETag");
   if (etag.empty()) {

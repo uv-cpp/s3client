@@ -269,7 +269,8 @@ bool WebClient::UploadFile(const std::string &fname, size_t fsize) {
 // Upload content from memory buffer, equivalent to uploading file from memory
 bool WebClient::UploadDataFromBuffer(const char *data, size_t offset,
                                      size_t size) {
-
+  if (size == 0)
+    return true;
   if (curl_easy_setopt(curl_, CURLOPT_READFUNCTION, MemReader) != CURLE_OK) {
     throw std::runtime_error("Cannot set curl read function");
   }
@@ -536,10 +537,11 @@ size_t WebClient::Reader(void *outPtr, size_t size, size_t nmemb,
 // Same as Reader but reading from memory
 size_t WebClient::MemReader(void *ptr, size_t size, size_t nmemb,
                             MemReadBuffer *inBuffer) {
-  // start element
+  // j std::cout << inBuffer->offset << "/" << inBuffer->size << std::endl;
+  //   start element
   const auto b = inBuffer->data + inBuffer->offset;
   // one past last element
-  const auto end = inBuffer->data + inBuffer->offset + inBuffer->size;
+  const auto end = inBuffer->data + inBuffer->size;
   if (b >= end) {
     return 0; // 0 marks the end of buffer
   }

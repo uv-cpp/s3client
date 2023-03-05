@@ -49,25 +49,27 @@ using namespace std;
 namespace sss {
 namespace api {
 namespace {
-//-----------------------------------------------------------------------------
-void BuildUploadRequest(S3Client &s3, const string &bucket, const string &key,
-                        int partNum, const string &uploadId) {
-  Parameters params = {{"partNumber", to_string(partNum + 1)},
-                       {"uploadId", uploadId}};
-  const string &endpoint =
-      s3.Endpoint(); // config.endpoints[partNum % config.endpoints.size()];
-  auto signedHeaders =
-      SignHeaders(s3.Access(), s3.Secret(), s3.SigningEndpoint(), "PUT", bucket,
-                  key, "", params);
-  Headers headers(begin(signedHeaders), end(signedHeaders));
-  s3.Clear();
-  WebClient &wc = s3.GetWebClient();
-  wc.SetHeaders(headers);
-  const string path = "/" + bucket + "/" + key;
-  wc.SetPath(path);
-  wc.SetMethod("PUT");
-  wc.SetReqParameters(params);
-}
+// //-----------------------------------------------------------------------------
+// void BuildUploadRequest(S3Client &s3, const string &bucket, const string
+// &key,
+//                         int partNum, const string &uploadId) {
+//   Parameters params = {{"partNumber", to_string(partNum + 1)},
+//                        {"uploadId", uploadId}};
+//   const string &endpoint =
+//       s3.Endpoint(); // config.endpoints[partNum % config.endpoints.size()];
+//   auto signedHeaders =
+//       SignHeaders(s3.Access(), s3.Secret(), s3.SigningEndpoint(), "PUT",
+//       bucket,
+//                   key, "", params);
+//   Headers headers(begin(signedHeaders), end(signedHeaders));
+//   s3.Clear();
+//   WebClient &wc = s3.GetWebClient();
+//   wc.SetHeaders(headers);
+//   const string path = "/" + bucket + "/" + key;
+//   wc.SetPath(path);
+//   wc.SetMethod("PUT");
+//   wc.SetReqParameters(params);
+// }
 
 //-----------------------------------------------------------------------------
 string BuildEndUploadXML(const vector<ETag> &etags) {
@@ -85,25 +87,6 @@ string BuildEndUploadXML(const vector<ETag> &etags) {
   return xml;
 }
 
-//-----------------------------------------------------------------------------
-void BuildEndUploadRequest(S3Client &s3, const string &bucket,
-                           const string &key, const vector<ETag> &etags,
-                           const string &uploadId) {
-  Parameters params = {{"uploadId", uploadId}};
-  // const size_t ri = RandomIndex(0, int(config.endpoints.size() - 1));
-  const string &endpoint = s3.Endpoint(); // config.endpoints[ri];
-  auto signedHeaders = SignHeaders(s3.Access(), s3.Secret(), endpoint, "POST",
-                                   bucket, key, "", params);
-  Headers headers(begin(signedHeaders), end(signedHeaders));
-  WebClient &wc = s3.GetWebClient();
-  const string path = "/" + bucket + "/" + key;
-  wc.SetMethod("POST");
-  wc.SetReqParameters(params);
-  wc.SetPath(path);
-  wc.SetHeaders(signedHeaders);
-  wc.SetPostData(BuildEndUploadXML(etags));
-}
-
 atomic<int> retriesG;
 
 //-----------------------------------------------------------------------------
@@ -113,13 +96,18 @@ int GetUploadRetries() { return retriesG; }
 ETag DoUploadPart(S3Client &s3, const string &bucket, const string &key,
                   const char *data, const string &uploadId, int i, size_t size,
                   int tryNum, int maxRetries = 1) {
-  if (tryNum == 1)
-    BuildUploadRequest(s3, bucket, key, i, uploadId);
-  WebClient &wc = s3.GetWebClient();
-  const bool ok = wc.UploadDataFromBuffer(
-      data, 0, size); // UploadFile(config.file, offset, sz);
-  if (!ok) {
+  const Parameters params = {{"partNumber", to_string(i + 1)},
+                             {"uploadId", uploadId}};
+  const auto &wc = s3.Send({.method = "PUT",
+                            .bucket = bucket,
+                            .key = key,
+                            .params = params,
+                            .uploadData = data,
+                            .uploadDataSize = size});
+
+  if (false) {
     if (tryNum == maxRetries) {
+
       throw(runtime_error("Cannot upload chunk " + to_string(i + 1)));
     } else {
       retriesG++;
@@ -150,10 +138,14 @@ ETag S3Client::CompleteMultipartUpload(const UploadId &uid,
                                        const string &bucket, const string &key,
                                        const vector<ETag> &etags) {
 
-  BuildEndUploadRequest(*this, bucket, key, etags, uid);
-  webClient_.Send();
-  HandleError(webClient_);
-  string etag = XMLTag(webClient_.GetContentText(), "Etag");
+  Parameters params = {{"uploadId", uid}};
+  const string postData = BuildEndUploadXML(etags);
+  const auto &wc = Send({.method = "POST",
+                         .bucket = bucket,
+                         .key = key,
+                         .params = params,
+                         .postData = postData});
+  string etag = XMLTag(wc.GetContentText(), "ETag");
   if (etag.empty()) {
     throw runtime_error("Empty ETag");
   }
@@ -169,14 +161,13 @@ ETag S3Client::CompleteMultipartUpload(const UploadId &uid,
 //-----------------------------------------------------------------------------
 UploadId S3Client::CreateMultipartUpload(const std::string &bucket,
                                          const std::string &key,
-                                         const MetaDataMap &metaData) {
-  webClient_.SetReqParameters({{"uploads", ""}});
-  webClient_.SetMethod("POST");
-  webClient_.SetPath("/" + bucket + "/" + key);
-  webClient_.SetHeaders(metaData);
-  webClient_.Send();
+                                         const Headers &headers) {
+  const auto &wc = Send({.method = "POST",
+                         .bucket = bucket,
+                         .key = key,
+                         .params = {{"uploads", ""}},
+                         .headers = headers});
   retriesG = 0;
-  HandleError(webClient_);
   const vector<char> &resp = webClient_.GetResponseBody();
   const string xml(begin(resp), end(resp));
   return XMLTag(xml, "uploadId");

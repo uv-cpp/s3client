@@ -10,13 +10,14 @@ using namespace api;
 int main(int argc, char **argv) {
   const Params cfg = ParseCmdLine(argc, argv);
   TestS3Access(cfg);
-  const size_t SIZE = 7000000;
+  const size_t SIZE = 93000000;
   // Check the default configuration for the minimum object size, 5MiB should
   // be supported on most systems
   // 2 x 3M + 1M chunks
-  const size_t CHUNK_SIZE = SIZE / 2;
-  const size_t LAST_CHUNK_SIZE = SIZE % 2;
-  const vector<char> data(13000000);
+  const size_t NUM_CHUNKS = 3;
+  const size_t CHUNK_SIZE = (SIZE + NUM_CHUNKS - 1) / NUM_CHUNKS;
+  const size_t LAST_CHUNK_SIZE = SIZE - CHUNK_SIZE * (NUM_CHUNKS - 1);
+  const vector<char> data(SIZE);
   const string prefix = "sss-api-test-";
   const string bucket = prefix + ToLower(Timestamp());
   const string key = prefix + "obj-" + ToLower(Timestamp());
@@ -56,13 +57,12 @@ int main(int argc, char **argv) {
   }
   ///
   action = "CompleteMultipartUpload";
-  const bool LAST = true;
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
     s3.CompleteMultipartUpload(uid, bucket, key, etags);
-    TestOutput(action, true, "", LAST);
+    TestOutput(action, true);
   } catch (const exception &e) {
-    TestOutput(action, false, e.what(), LAST);
+    TestOutput(action, false, e.what());
   }
 
   try {

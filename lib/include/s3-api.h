@@ -80,7 +80,8 @@ public:
     std::string signUrl;
     std::string payloadHash;
     const std::string &postData = "";
-    const std::vector<char> &uploadData = {};
+    const char *uploadData = nullptr;
+    size_t uploadDataSize = 0;
   };
 
 public:
@@ -125,10 +126,15 @@ public:
     webClient_.SetReqParameters(p.params);
     webClient_.SetHeaders(sh);
     if (ToLower(p.method) == "put") {
-      webClient_.UploadDataFromBuffer(p.uploadData.data(), 0,
-                                      p.uploadData.size());
+      if (p.uploadData)
+        webClient_.UploadDataFromBuffer(p.uploadData, 0, p.uploadDataSize);
+      else
+        webClient_.Send();
     } else if (ToLower(p.method) == "post") {
-      webClient_.SetUrlEncodedPostData(ParseParams(p.postData.data()));
+      if (!p.postData.empty()) {
+        //      webClient_.SetUrlEncodedPostData(ParseParams(p.postData.data()));
+        webClient_.SetPostData(p.postData);
+      }
       webClient_.Send();
     } else {
       webClient_.Send();
@@ -153,7 +159,7 @@ public:
 
   UploadId CreateMultipartUpload(const std::string &bucket,
                                  const std::string &key,
-                                 const MetaDataMap &metaData = {});
+                                 const Headers &headers = {});
 
   void DeleteBucket(const std::string &bucket, const Headers &headers = {{}});
 
