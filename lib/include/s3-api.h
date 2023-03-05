@@ -80,6 +80,7 @@ public:
     std::string signUrl;
     std::string payloadHash;
     const std::string &postData = "";
+    bool urlEncodePostParams = false;
     const char *uploadData = nullptr;
     size_t uploadDataSize = 0;
   };
@@ -132,8 +133,11 @@ public:
         webClient_.Send();
     } else if (ToLower(p.method) == "post") {
       if (!p.postData.empty()) {
-        //      webClient_.SetUrlEncodedPostData(ParseParams(p.postData.data()));
-        webClient_.SetPostData(p.postData);
+        if (p.urlEncodePostParams) {
+          webClient_.SetUrlEncodedPostData(ParseParams(p.postData.data()));
+        } else {
+          webClient_.SetPostData(p.postData);
+        }
       }
       webClient_.Send();
     } else {
