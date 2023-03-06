@@ -88,31 +88,13 @@ int main(int argc, char **argv) {
     TestOutput(action, false, e.what());
   }
   ///
-  action = "CompleteMultipartUpload";
+  action = "AbortMultipartUpload";
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
-    s3.CompleteMultipartUpload(uid, bucket, key, etags);
+    s3.AbortMultipartUpload(bucket, key, uid);
     TestOutput(action, true);
   } catch (const exception &e) {
     TestOutput(action, false, e.what());
-  }
-
-  try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
-    // delete object
-    s3.DeleteObject(bucket, key);
-  } catch (...) {
-    cerr << "Error deleting object " << bucket << "/" << key << endl;
-    exit(EXIT_FAILURE);
-  }
-  // delete bucket
-  try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
-    s3.DeleteBucket(bucket);
-  } catch (...) {
-    cerr << "Error deleting bucket " << bucket;
-
-    exit(EXIT_FAILURE);
   }
   return 0;
 }

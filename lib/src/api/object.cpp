@@ -52,15 +52,15 @@ namespace api {
 
 //------------------------------------------------------------------------------
 ETag S3Client::PutObject(const std::string &bucket, const std::string &key,
-                         const ByteArray &buffer, const Headers &headers) {
+                         const ByteArray &buffer, Headers headers) {
 
+  headers.insert({"content-length", to_string(buffer.size())});
   const auto &wc = Send({.method = "PUT",
                          .bucket = bucket,
                          .key = key,
                          .headers = headers,
                          .uploadData = buffer.data(),
                          .uploadDataSize = buffer.size()});
-  HandleError(wc);
   const string etag = HTTPHeader(wc.GetHeaderText(), "ETag");
   if (etag.empty()) {
     throw runtime_error("Missing ETag");
@@ -71,8 +71,9 @@ ETag S3Client::PutObject(const std::string &bucket, const std::string &key,
 //------------------------------------------------------------------------------
 ETag S3Client::PutObject(const std::string &bucket, const std::string &key,
                          const char *buffer, size_t size, size_t offset,
-                         const Headers &headers) {
+                         Headers headers) {
 
+  headers.insert({"content-length", to_string(size)});
   Clear();
   webClient_.SetMethod("PUT");
   webClient_.SetPath(bucket + "/" + key);

@@ -70,11 +70,12 @@ int GetUploadRetries() { return retriesG; }
 //-----------------------------------------------------------------------------
 ETag DoUploadPart(S3Client &s3, const string &bucket, const string &key,
                   const char *data, const string &uploadId, int i, size_t size,
-                  int tryNum, int maxRetries = 1) {
+                  int tryNum, int maxRetries = 1, Headers headers = {}) {
   const Parameters params = {{"partNumber", to_string(i + 1)},
                              {"uploadId", uploadId}};
 
   try {
+    headers.insert({"content-length", to_string(size)});
     const auto &wc = s3.Send({.method = "PUT",
                               .bucket = bucket,
                               .key = key,
@@ -137,10 +138,15 @@ ETag S3Client::CompleteMultipartUpload(const UploadId &uid,
 }
 
 //-----------------------------------------------------------------------------
+// For Amazon Glacier:
+// The part size must be a megabyte (1024 KB) multiplied by a power of 2
+// for example, 1048576 (1 MB), 2097152 (2 MB), 4194304 (4 MB), 8388608 (8 MB),
+// and so on. The minimum allowable part size is 1 MB, and the maximum is 4 GB.
 UploadId S3Client::CreateMultipartUpload(const std::string &bucket,
                                          const std::string &key,
                                          size_t partSize, Headers headers) {
-  headers.insert({"x-amz-part-size", to_string(partSize)});
+  if (partSize > 0)
+    headers.insert({"x-amz-part-size", to_string(partSize)});
   const auto &wc = Send({.method = "POST",
                          .bucket = bucket,
                          .key = key,
@@ -155,20 +161,18 @@ UploadId S3Client::CreateMultipartUpload(const std::string &bucket,
 //-----------------------------------------------------------------------------
 ETag S3Client::UploadPart(const std::string &bucket, const std::string &key,
                           const UploadId &uid, int partNum, const char *data,
-                          size_t size, int maxRetries) {
+                          size_t size, int maxRetries, Headers headers) {
   return DoUploadPart(*this, bucket, key, data, uid, partNum, size, 1,
-                      maxRetries);
+                      maxRetries, headers);
 }
 
 //-----------------------------------------------------------------------------
 void S3Client::AbortMultipartUpload(const string &bucket, const string &key,
                                     const UploadId &uid) {
-  Clear();
-  webClient_.SetMethod("DELETE");
-  webClient_.SetPath(bucket + "/" + key);
-  webClient_.SetReqParameters({{"uploadId", uid}});
-  webClient_.Send();
-  HandleError(webClient_);
+  Send({.method = "DELETE",
+        .bucket = bucket,
+        .key = key,
+        .params = {{"uploadId", uid}}});
 }
 
 } // namespace api

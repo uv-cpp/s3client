@@ -163,7 +163,7 @@ public:
   void CreateBucket(const std::string &bucket, const Headers & = {{}});
 
   UploadId CreateMultipartUpload(const std::string &bucket,
-                                 const std::string &key, size_t partSize,
+                                 const std::string &key, size_t partSize = 0,
                                  Headers headers = {});
 
   void DeleteBucket(const std::string &bucket, const Headers &headers = {{}});
@@ -200,15 +200,14 @@ public:
   //                                 &uid, int max_parts);
 
   ETag PutObject(const std::string &bucket, const std::string &key,
-                 const ByteArray &buffer, const Headers & = {{}});
+                 const ByteArray &buffer, Headers = {{}});
 
   ETag PutObject(const std::string &bucket, const std::string &key,
-                 const char *, size_t size, size_t offset = 0,
-                 const Headers & = {{}});
+                 const char *, size_t size, size_t offset = 0, Headers = {{}});
 
   ETag UploadPart(const std::string &bucket, const std::string &key,
                   const UploadId &uid, int partNum, const char *data,
-                  size_t size, int maxRetries = 1);
+                  size_t size, int maxRetries = 1, Headers headers = {{}});
   const std::string &Access() const { return access_; }
   const std::string &Secret() const { return secret_; }
   const std::string &Endpoint() const { return endpoint_; }
