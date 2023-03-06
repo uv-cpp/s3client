@@ -210,6 +210,12 @@ public:
   void SetVerbose(bool verbose);
   /// Redirect stderr to file. Returns \c false when it fails.
   bool RedirectSTDErr(FILE *f);
+  /// Clear inernal buffers
+  void ClearBuffers() {
+    writeBuffer_.data.clear();
+    writeBuffer_.offset = 0;
+    headerBuffer_.clear();
+  }
 
 private:
   /**

@@ -109,6 +109,7 @@ public:
     webClient_.SetReqParameters({{}});
     webClient_.SetPostData("");
     webClient_.SetUploadData({});
+    webClient_.ClearBuffers();
   }
   const WebClient &Send(const SendParams &p) {
     auto sh = SignHeaders(Access(), Secret(), Endpoint(), p.method, p.bucket,
@@ -162,8 +163,8 @@ public:
   void CreateBucket(const std::string &bucket, const Headers & = {{}});
 
   UploadId CreateMultipartUpload(const std::string &bucket,
-                                 const std::string &key,
-                                 const Headers &headers = {});
+                                 const std::string &key, size_t partSize,
+                                 Headers headers = {});
 
   void DeleteBucket(const std::string &bucket, const Headers &headers = {{}});
 

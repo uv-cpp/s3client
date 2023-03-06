@@ -535,10 +535,8 @@ size_t WebClient::Reader(void *outPtr, size_t size, size_t nmemb,
   return size;
 }
 // Same as Reader but reading from memory
-size_t WebClient::MemReader(void *ptr, size_t size, size_t nmemb,
+size_t WebClient::MemReader(void *ptr, size_t bsize, size_t nmemb,
                             MemReadBuffer *inBuffer) {
-  // j std::cout << inBuffer->offset << "/" << inBuffer->size << std::endl;
-  //   start element
   const auto b = inBuffer->data + inBuffer->offset;
   // one past last element
   const auto end = inBuffer->data + inBuffer->size;
@@ -546,9 +544,10 @@ size_t WebClient::MemReader(void *ptr, size_t size, size_t nmemb,
     return 0; // 0 marks the end of buffer
   }
   // chunk size in bytes = block size (size) x number of blocks(nmemb)
-  size = size * nmemb;
+  size_t size = bsize * nmemb;
   // end point min between end of buffer and start + chunk size
   const auto e = std::min(b + size, end);
+
   // copy from memory into curl internal buffer
   std::copy(b, e, (char *)ptr);
   // update offset
