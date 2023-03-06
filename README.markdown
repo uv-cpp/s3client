@@ -66,6 +66,10 @@ In order to test the tools and API you need access to an S3 storage service.
 One option is to use the free *play.min.io* service, another option is to 
 configure a local instance of the *minio* server.
 
+The access and secret keys for *play.min.io* are stored inside the
+`~/.mc/config.json` files configured after installing the the
+[minio client](https://min.io/docs/minio/linux/reference/minio-mc.html).
+
 The script `minio_setup.sh` downloads configures and runs a minio server instance
 inside a contatiner using *podman*.
 
