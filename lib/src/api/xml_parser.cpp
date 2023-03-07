@@ -47,7 +47,7 @@ std::vector<ObjectInfo> ParseObjects(const std::string &xml) {
     return {};
   // const XMLElement* pTrunc = pRoot->FirstChildElement("IsTruncated");
   // bool truncated = false;
-  // pTrunc->QueryBoolText(&truncated);
+  // if(pTrunc) pTrunc->QueryBoolText(&truncated);
   const XMLElement *pElement = pRoot->FirstChildElement("Contents");
   if (!pElement)
     return {};
@@ -62,6 +62,8 @@ std::vector<ObjectInfo> ParseObjects(const std::string &xml) {
     obj.key = e ? e->GetText() : "";
     e = pElement->FirstChildElement("LastModified");
     obj.lastModified = e ? e->GetText() : "";
+    e = pElement->FirstChildElement("Size");
+    obj.size = e ? stoul(e->GetText()) : 0;
     e = pElement->FirstChildElement("Owner");
     if (e) {
       e = pElement->FirstChildElement("DisplayName");

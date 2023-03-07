@@ -5,8 +5,9 @@ Originally developed to test *Ceph* object storage and learn the S3 API.
 All the code is tested on MacOS (x86 and ARM) and Linux (x86 - SuSE and Ubuntu) only. 
 
 * `libs3client`: high level functions to sign and send requests and perform parallel uploads/downloads
+* S3 API accessible through the `libs3client` library, see `s3-api.h` include. 
 
-All the following tools are simple wrapper around library functions:
+The following tools simple wrappers around library functions:
 
 * `s3-client`: send raw requests
 * `s3-presign`: generate pre-signed `URL`
@@ -60,6 +61,14 @@ Requests are sent through a `WebClient` class which wraps `libcurl` and *XML*
 responses are parsed using the standard regex library provided by the C++
 compiler. 
 
+### Compilation options
+
+By default the library and all the command line tools and the S3 API extensions are built.
+To disable building the command line tools set `APPS=OFF`.
+To disable building the S3 API set `API=OFF`.
+
+The tests currently cover the S3 API only and are built together the API.
+
 ## Test
 
 In order to test the tools and API you need access to an S3 storage service.
@@ -96,6 +105,7 @@ dependencies on the following software libraries:
 * *Lyra*, by Rene Rivera - distributed under the Boost license version 1.0
 * *Portable Hashing Library*, by Stephan Brumme - distributed under the
   zlib license
+* Tinyxml2 - zlib (included in source tree)
 
 ## Sending S3 requests
 
