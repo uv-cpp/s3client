@@ -50,6 +50,8 @@ using namespace std;
 namespace sss {
 namespace api {
 
+std::vector<ObjectInfo> ParseObjects(const std::string &xml);
+
 //------------------------------------------------------------------------------
 ETag S3Client::PutObject(const std::string &bucket, const std::string &key,
                          const ByteArray &buffer, Headers headers) {
@@ -158,23 +160,23 @@ bool S3Client::TestObject(const std::string &bucket, const std::string &key) {
 }
 
 //------------------------------------------------------------------------------
-string S3Client::ListObjectsV2(const std::string &bucket,
-                               const ListObjectV2Config &config,
-                               const Headers &headers) {
+vector<ObjectInfo> S3Client::ListObjectsV2(const std::string &bucket,
+                                           const ListObjectV2Config &config,
+                                           const Headers &headers) {
 
   Map params;
   params["continuation_token"] = config.continuationToken;
   params["delimiter"] = config.delimiter;
   params["encoding-type"] = config.encodingType;
   params["fetch-owner"] = config.fetchOwner;
-  params["max-keys"] = to_string(config.maxKeys);
+  // params["max-keys"] = to_string(config.maxKeys);
   params["prefix"] = config.prefix;
   params["start-after"] = config.startAfter;
   const auto &wc = Send({.method = "GET",
                          .bucket = bucket,
                          .params = params,
                          .headers = headers});
-  return webClient_.GetContentText();
+  return ParseObjects(webClient_.GetContentText());
 }
 
 } // namespace api

@@ -77,7 +77,7 @@ int main(int argc, char **argv) {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
     auto objects = s3.ListObjectsV2(bucketName);
     if (objects.empty()) {
-      throw runtime_error("Empty bucket list");
+      throw runtime_error("Empty object list");
     }
     TestOutput(action, true);
   } catch (const exception &e) {

@@ -48,6 +48,8 @@ using namespace std;
 namespace sss {
 namespace api {
 
+std::vector<BucketInfo> ParseBuckets(const std::string &xml);
+
 //------------------------------------------------------------------------------
 bool S3Client::TestBucket(const string &bucket) {
   try {
@@ -76,9 +78,10 @@ Headers S3Client::HeadBucket(const string &bucket, const Headers &headers) {
 }
 
 //------------------------------------------------------------------------------
-string S3Client::ListBuckets(const Headers &headers) {
+vector<BucketInfo> S3Client::ListBuckets(const Headers &headers) {
   const auto &wc = Send({.method = "GET", .headers = headers});
-  return wc.GetContentText();
+  const string &c = wc.GetContentText();
+  return ParseBuckets(wc.GetContentText());
 }
 
 } // namespace api

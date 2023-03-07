@@ -188,9 +188,9 @@ public:
   Headers HeadObject(const std::string &bucket, const std::string &key,
                      const Headers & = {{}});
 
-  std::string ListBuckets(const Headers &headers = {{}});
+  std::vector<BucketInfo> ListBuckets(const Headers &headers = {{}});
 
-  std::string
+  std::vector<ObjectInfo>
   ListObjectsV2(const std::string &bucket,
                 const ListObjectV2Config &config = ListObjectV2Config{},
                 const Headers & = {{}});

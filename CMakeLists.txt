@@ -38,13 +38,17 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project(s3-client
-        VERSION 0.8.2
+        VERSION 0.9
         DESCRIPTION "Tools to sign and send S3 requests"
         LANGUAGES CXX)
+
+option(API "Build API" ON) 
+option(APPS "Build Apps" ON)
 
 set(HASHLIB_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/dep/hash" CACHE PATH "${PROJECT_SOURCE_DIR}/dep/hash")
 set(S3LIB_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/lib/include" CACHE PATH "${PROJECT_SOURCE_DIR}/lib/include")
 set(LYRA_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/dep/Lyra/include" CACHE PATH "${PROJECT_SOURCE_DIR}/dep/Lyra/include")
+set(TINYXML2_DIR "${PROJECT_SOURCE_DIR}/dep/tinyxml2" CACHE PATH "${PROJECT_SOURCE_DIR}/dep/tinyxml2")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
 
 # Separate debug-release paths
@@ -58,7 +62,12 @@ else (CMAKE_BUILD_TYPE EQUAL "DEBUG")
     set(LINK_DIRS ${CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE} CACHE PATH "")
 endif (CMAKE_BUILD_TYPE EQUAL "DEBUG")
 
+
 add_subdirectory(dep/hash)
 add_subdirectory(lib)
+if(APPS)
 add_subdirectory(apps)
+endif(APPS)
+if(API)
 add_subdirectory(test)
+endif(API)
