@@ -70,6 +70,10 @@ public:
     std::string startAfter;
     ListObjectV2Config() : maxKeys(0) {}
   };
+  struct ListObjectV2Result {
+    bool truncated;
+    std::vector<ObjectInfo> keys;
+  };
   struct SendParams {
     std::string method = "GET";
     std::string bucket;
@@ -190,7 +194,7 @@ public:
 
   std::vector<BucketInfo> ListBuckets(const Headers &headers = {{}});
 
-  std::vector<ObjectInfo>
+  ListObjectV2Result
   ListObjectsV2(const std::string &bucket,
                 const ListObjectV2Config &config = ListObjectV2Config{},
                 const Headers & = {{}});

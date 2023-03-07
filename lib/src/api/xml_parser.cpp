@@ -36,7 +36,7 @@ std::vector<BucketInfo> ParseBuckets(const std::string &xml) {
 }
 
 //------------------------------------------------------------------------------
-std::vector<ObjectInfo> ParseObjects(const std::string &xml) {
+S3Client::ListObjectV2Result ParseObjects(const std::string &xml) {
   XMLDocument doc;
   doc.Parse(xml.c_str());
   //<xml...>
@@ -45,13 +45,15 @@ std::vector<ObjectInfo> ParseObjects(const std::string &xml) {
   pRoot = pRoot->NextSibling();
   if (!pRoot)
     return {};
-  // const XMLElement* pTrunc = pRoot->FirstChildElement("IsTruncated");
-  // bool truncated = false;
-  // if(pTrunc) pTrunc->QueryBoolText(&truncated);
+  const XMLElement *pTrunc = pRoot->FirstChildElement("IsTruncated");
+  bool truncated = false;
+  if (pTrunc)
+    pTrunc->QueryBoolText(&truncated);
   const XMLElement *pElement = pRoot->FirstChildElement("Contents");
   if (!pElement)
     return {};
-  vector<ObjectInfo> oi;
+  S3Client::ListObjectV2Result res;
+  res.truncated = truncated;
   do {
     ObjectInfo obj;
     const XMLElement *e = pElement->FirstChildElement("ChecksumAlgorithm");
@@ -71,12 +73,11 @@ std::vector<ObjectInfo> ParseObjects(const std::string &xml) {
       e = pElement->FirstChildElement("ID");
       obj.ownerID = e ? e->GetText() : "";
     }
-    oi.push_back(obj);
-
+    res.keys.push_back(obj);
   } while ((pElement = pElement->NextSiblingElement()));
-  return oi;
+
+  return res;
 }
-// std::vector<PartInfo> ParseParts(const std::string& xml);
 } // namespace api
 } // namespace sss
 

@@ -50,7 +50,7 @@ using namespace std;
 namespace sss {
 namespace api {
 
-std::vector<ObjectInfo> ParseObjects(const std::string &xml);
+S3Client::ListObjectV2Result ParseObjects(const std::string &xml);
 
 //------------------------------------------------------------------------------
 ETag S3Client::PutObject(const std::string &bucket, const std::string &key,
@@ -160,9 +160,10 @@ bool S3Client::TestObject(const std::string &bucket, const std::string &key) {
 }
 
 //------------------------------------------------------------------------------
-vector<ObjectInfo> S3Client::ListObjectsV2(const std::string &bucket,
-                                           const ListObjectV2Config &config,
-                                           const Headers &headers) {
+S3Client::ListObjectV2Result
+S3Client::ListObjectsV2(const std::string &bucket,
+                        const ListObjectV2Config &config,
+                        const Headers &headers) {
 
   Map params;
   params["continuation_token"] = config.continuationToken;
