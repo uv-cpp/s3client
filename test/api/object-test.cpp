@@ -79,6 +79,16 @@ int main(int argc, char **argv) {
     if (objects.keys.empty()) {
       throw runtime_error("Empty object list");
     }
+    bool found = false;
+    for (const auto &k : objects.keys) {
+      if (k.key == objName) {
+        found = true;
+        break;
+      }
+      if (!found) {
+        throw logic_error("Object not found");
+      }
+    }
     TestOutput(action, true);
   } catch (const exception &e) {
     TestOutput(action, false, e.what());
