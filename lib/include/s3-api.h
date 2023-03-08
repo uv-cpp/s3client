@@ -35,6 +35,7 @@
 #include "aws_sign.h"
 #include "error.h"
 #include "s3-client.h"
+#include "webclient.h"
 namespace sss {
 
 namespace api {
@@ -116,7 +117,11 @@ public:
     webClient_.ClearBuffers();
   }
   const WebClient &Send(const SendParams &p) {
-    auto sh = SignHeaders(Access(), Secret(), Endpoint(), p.method, p.bucket,
+    // if credentials empty send regular unsigned request
+    auto sh =
+        Access().empty()
+            ? Headers()
+            : SignHeaders(Access(), Secret(), Endpoint(), p.method, p.bucket,
                           p.key, p.payloadHash, p.params, p.headers, p.region);
     std::string path;
     if (!p.bucket.empty()) {
@@ -155,6 +160,24 @@ public:
     }
     return webClient_;
   }
+
+  void Send(const SendParams &params, WebClient::ReadFunction sendFun,
+            void *sendUserData, WebClient::WriteFunction receiveFun,
+            void *receiveUserData);
+
+public:
+  void GetFileObject(const std::string &fileName, const std::string &bucket,
+                     const std::string &key, size_t offset = 0,
+                     size_t begin = 0, size_t end = 0, Headers = {{}});
+
+  ETag PutFileObject(const std::string &fileName, size_t offset, size_t size,
+                     const std::string &bucket, const std::string &key,
+                     Headers = {{}});
+
+  ETag UploadFilePart(const std::string &file, size_t offset, size_t size,
+                      const std::string &bucket, const std::string &key,
+                      const UploadId &uid, int partNum, int maxRetries = 1,
+                      Headers headers = {{}});
 
 public:
   void AbortMultipartUpload(const std::string &bucket, const std::string &key,

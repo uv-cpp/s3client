@@ -65,6 +65,7 @@ namespace sss {
 /// When a method fails returning \c false, you can extract the error message
 /// by invoking the ErrorMsg() method.
 class WebClient {
+public:
   /// Function type invoked by \e libcurl to write received data
   using WriteFunction = size_t (*)(char *data, size_t size, size_t nmemb,
                                    void *writerData);
@@ -72,6 +73,7 @@ class WebClient {
   using ReadFunction = size_t (*)(void *ptr, size_t size, size_t nmemb,
                                   void *userdata);
 
+private:
   /// Buffer keeping track of end of last read operation.
   struct Buffer {
     size_t offset = 0;      ///< pointer to next insertion point
