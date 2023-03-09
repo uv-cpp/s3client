@@ -34,6 +34,7 @@
 
 #include "aws_sign.h"
 #include "error.h"
+#include "response_parser.h"
 #include "s3-client.h"
 #include "webclient.h"
 namespace sss {
@@ -117,25 +118,7 @@ public:
     webClient_.ClearBuffers();
   }
   const WebClient &Send(const SendParams &p) {
-    // if credentials empty send regular unsigned request
-    auto sh =
-        Access().empty()
-            ? Headers()
-            : SignHeaders(Access(), Secret(), Endpoint(), p.method, p.bucket,
-                          p.key, p.payloadHash, p.params, p.headers, p.region);
-    std::string path;
-    if (!p.bucket.empty()) {
-      path += "/" + p.bucket;
-      if (!p.key.empty()) {
-        path += "/" + p.key;
-      }
-    }
-    Clear();
-    webClient_.SetEndpoint(Endpoint());
-    webClient_.SetPath(path);
-    webClient_.SetMethod(p.method);
-    webClient_.SetReqParameters(p.params);
-    webClient_.SetHeaders(sh);
+    Config(p);
     if (ToLower(p.method) == "put") {
       if (p.uploadData)
         webClient_.UploadDataFromBuffer(p.uploadData, 0, p.uploadDataSize);
@@ -160,18 +143,22 @@ public:
     }
     return webClient_;
   }
-
+  WebClient &Config(const SendParams &);
   void Send(const SendParams &params, WebClient::ReadFunction sendFun,
             void *sendUserData, WebClient::WriteFunction receiveFun,
-            void *receiveUserData);
+            void *receiveUserData) {
+    webClient_.SetWriteFunction(receiveFun, receiveUserData);
+    webClient_.SetReadFunction(sendFun, sendUserData);
+    Send(params);
+  }
 
 public:
   void GetFileObject(const std::string &fileName, const std::string &bucket,
                      const std::string &key, size_t offset = 0,
                      size_t begin = 0, size_t end = 0, Headers = {{}});
 
-  ETag PutFileObject(const std::string &fileName, size_t offset, size_t size,
-                     const std::string &bucket, const std::string &key,
+  ETag PutFileObject(const std::string &fileName, const std::string &bucket,
+                     const std::string &key, size_t offset = 0, size_t size = 0,
                      Headers = {{}});
 
   ETag UploadFilePart(const std::string &file, size_t offset, size_t size,
@@ -235,11 +222,19 @@ public:
   ETag UploadPart(const std::string &bucket, const std::string &key,
                   const UploadId &uid, int partNum, const char *data,
                   size_t size, int maxRetries = 1, Headers headers = {{}});
+
+public:
   const std::string &Access() const { return access_; }
   const std::string &Secret() const { return secret_; }
   const std::string &Endpoint() const { return endpoint_; }
   const std::string &SigningEndpoint() const { return signingEndpoint_; }
   WebClient &GetWebClient() { return webClient_; }
+  const std::vector<char> &GetResponseBody() const {
+    return webClient_.GetResponseBody();
+  }
+  Headers GetResponseHeaders() const {
+    return HTTPHeaders(webClient_.GetHeaderText());
+  }
 
 private:
   sss::WebClient webClient_;

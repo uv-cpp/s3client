@@ -8,7 +8,7 @@
  * modification, are permitted provided that the following conditions are met:
  *
  * 1. Redistributions of source code must retain the above copyright notice,
- *this list of conditions and the following disclaimer.
+ *    this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
@@ -21,17 +21,15 @@
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- *ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
- *LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- *CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- *SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- *INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- *CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- *ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- *POSSIBILITY OF SUCH DAMAGE.
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
-
-// Upload files
 
 #include "aws_sign.h"
 #include "common.h"
@@ -90,6 +88,17 @@ ETag S3Client::PutObject(const std::string &bucket, const std::string &key,
 }
 
 //------------------------------------------------------------------------------
+ETag S3Client::PutFileObject(const std::string &fileName,
+                             const std::string &bucket, const std::string &key,
+                             size_t offset, size_t size, Headers headers) {
+  Config({.method = "PUT", .bucket = bucket, .key = key, .headers = headers});
+  if (!webClient_.UploadFile(fileName, offset, size)) {
+    throw runtime_error("Error uploading file - " + webClient_.ErrorMsg());
+  }
+  return XMLTag(webClient_.GetContentText(), "ETag");
+}
+
+//------------------------------------------------------------------------------
 const ByteArray &S3Client::GetObject(const std::string &bucket,
                                      const std::string &key, size_t begin,
                                      size_t end, Headers headers) {
@@ -136,6 +145,28 @@ void S3Client::GetObject(const std::string &bucket, const std::string &key,
 }
 
 //------------------------------------------------------------------------------
+void S3Client::GetFileObject(const std::string &fileName,
+                             const std::string &bucket, const std::string &key,
+                             size_t offset, size_t begin, size_t end,
+                             Headers headers) {
+
+  FILE *out = fopen(fileName.c_str(), "wb");
+  if (!out) {
+    throw runtime_error("Cannot open file " + fileName + " for writing");
+  }
+  fseek(out, offset, SEEK_SET);
+
+  if (end > 0) {
+    headers.insert(
+        {"Range", "bytes=" + to_string(begin) + "-" + to_string(end)});
+  }
+  Config({.method = "PUT", .bucket = bucket, .key = key, .headers = headers});
+  webClient_.SetWriteFunction(NULL, out);
+  webClient_.Send();
+  HandleError(webClient_);
+}
+
+//------------------------------------------------------------------------------
 void S3Client::DeleteObject(const std::string &bucket, const std::string &key,
                             const Headers &headers) {
   Send({.method = "DELETE", .bucket = bucket, .key = key, .headers = headers});
@@ -164,7 +195,6 @@ S3Client::ListObjectV2Result
 S3Client::ListObjectsV2(const std::string &bucket,
                         const ListObjectV2Config &config,
                         const Headers &headers) {
-
   Map params;
   params["continuation_token"] = config.continuationToken;
   params["delimiter"] = config.delimiter;

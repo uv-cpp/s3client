@@ -32,7 +32,7 @@
 find_package(Threads)
 
 if(API)
-set(S3_API_SRCS src/api/multipart_upload.cpp
+set(S3_API_SRCS src/api/s3-api.cpp src/api/multipart_upload.cpp
     src/api/bucket.cpp src/api/object.cpp src/api/error.cpp)
 set(S3_API_SRCS ${S3_API_SRCS} src/api/xml_parser.cpp ${TINYXML2_DIR}/tinyxml2.cpp)
 endif(API)

@@ -149,8 +149,8 @@ vector<string> UploadParts(const S3FileTransferConfig &args, const string &path,
   }
   return etags;
 }
-/*ETag*/ string UploadFile(const S3FileTransferConfig &config,
-                           const MetaDataMap &metaData) {
+string UploadFile(const S3FileTransferConfig &config,
+                  const MetaDataMap &metaData) {
   retriesG = 0;
   FILE *inputFile = fopen(config.file.c_str(), "rb");
   if (!inputFile) {

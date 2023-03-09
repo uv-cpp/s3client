@@ -68,6 +68,39 @@ atomic<int> retriesG;
 int GetUploadRetries() { return retriesG; }
 
 //-----------------------------------------------------------------------------
+ETag DoUploadFilePart(S3Client &s3, const string &fileName, size_t offset,
+                      size_t size, const string &bucket, const string &key,
+                      const string &uploadId, int i, int tryNum,
+                      int maxRetries = 1, Headers headers = {}) {
+
+  try {
+    headers.insert({"content-length", to_string(size)});
+    auto &wc = s3.Config({.method = "PUT",
+                          .bucket = bucket,
+                          .key = key,
+                          .params = {{"UploadId", uploadId}}});
+    wc.UploadFile(fileName, offset, size);
+    HandleError(wc);
+    string etag = HTTPHeader(wc.GetHeaderText(), "Etag");
+    if (etag.empty()) {
+      throw(runtime_error("No ETag found in HTTP header"));
+    } else {
+      return TrimETag(etag);
+    }
+  } catch (const exception &e) {
+    if (tryNum == maxRetries) {
+
+      throw(runtime_error("Cannot upload chunk " + to_string(i + 1) + " - " +
+                          e.what()));
+    } else {
+      retriesG++;
+      return DoUploadFilePart(s3, fileName, offset, size, bucket, key, uploadId,
+                              i, ++tryNum, maxRetries);
+    }
+  }
+}
+
+//-----------------------------------------------------------------------------
 ETag DoUploadPart(S3Client &s3, const string &bucket, const string &key,
                   const char *data, const string &uploadId, int i, size_t size,
                   int tryNum, int maxRetries = 1, Headers headers = {}) {
@@ -87,13 +120,7 @@ ETag DoUploadPart(S3Client &s3, const string &bucket, const string &key,
     if (etag.empty()) {
       throw(runtime_error("No ETag found in HTTP header"));
     } else {
-      if (etag[0] == '"') {
-        etag = etag.substr(1, etag.size() - 2);
-      } else if (etag.substr(0, string("&#34;").size()) == "&#34;") {
-        const size_t quotes = string("&#34;").size();
-        etag = etag.substr(quotes, etag.size() - 2 * quotes);
-      }
-      return etag;
+      return TrimETag(etag);
     }
 
   } catch (const exception &e) {
@@ -153,8 +180,7 @@ UploadId S3Client::CreateMultipartUpload(const std::string &bucket,
                          .params = {{"uploads", ""}},
                          .headers = headers});
   retriesG = 0;
-  const vector<char> &resp = webClient_.GetResponseBody();
-  const string xml(begin(resp), end(resp));
+  const string xml = webClient_.GetContentText();
   return XMLTag(xml, "uploadId");
 }
 
@@ -166,6 +192,14 @@ ETag S3Client::UploadPart(const std::string &bucket, const std::string &key,
                       maxRetries, headers);
 }
 
+//-----------------------------------------------------------------------------
+ETag S3Client::UploadFilePart(const std::string &file, size_t offset,
+                              size_t size, const std::string &bucket,
+                              const std::string &key, const UploadId &uid,
+                              int partNum, int maxRetries, Headers headers) {
+  return DoUploadFilePart(*this, file, offset, size, bucket, key, uid, partNum,
+                          1, maxRetries, headers);
+}
 //-----------------------------------------------------------------------------
 void S3Client::AbortMultipartUpload(const string &bucket, const string &key,
                                     const UploadId &uid) {

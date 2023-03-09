@@ -78,4 +78,10 @@ Headers HTTPHeaders(const std::string &headers);
 /// \return \c std::map<std::string, std::string> of {header name, header
 /// value} tuples
 MetaDataMap MetaDataHeaders(const std::string &headers);
+
+/// Extract ETag string from returned etag text.
+/// \param etag etag text
+/// \return etag string without quotes
+std::string TrimETag(const std::string &etag);
+
 } // namespace sss
