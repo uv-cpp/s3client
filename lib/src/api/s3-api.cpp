@@ -33,7 +33,7 @@
  ******************************************************************************/
 
 #include "s3-api.h"
-
+#include <stdio.h>
 namespace sss {
 namespace api {
 WebClient &S3Client::Config(const SendParams &p) {

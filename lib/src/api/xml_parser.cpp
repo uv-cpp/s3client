@@ -10,10 +10,16 @@ namespace api {
 
 //------------------------------------------------------------------------------
 std::vector<BucketInfo> ParseBuckets(const std::string &xml) {
+  if (xml.empty())
+    return {};
   XMLDocument doc;
-  assert(doc.Parse(xml.c_str()) == XML_SUCCESS);
+  if (doc.Parse(xml.c_str()) != XML_SUCCESS) {
+    throw logic_error("Failed to parse ListBucketV2 response");
+  }
   //<xml...>
   const XMLNode *pRoot = doc.FirstChild();
+  if (!pRoot)
+    return {};
   //<ListAllMyBucketsResult>
   pRoot = pRoot->NextSibling();
   if (!pRoot)
@@ -22,7 +28,7 @@ std::vector<BucketInfo> ParseBuckets(const std::string &xml) {
   if (!pBuckets)
     return {};
   const XMLElement *pElement = pBuckets->FirstChildElement("Bucket");
-  if (!pBuckets)
+  if (!pElement)
     return {};
   vector<BucketInfo> bi;
   do {
@@ -37,8 +43,12 @@ std::vector<BucketInfo> ParseBuckets(const std::string &xml) {
 
 //------------------------------------------------------------------------------
 S3Client::ListObjectV2Result ParseObjects(const std::string &xml) {
+  if (xml.empty())
+    return {};
   XMLDocument doc;
-  doc.Parse(xml.c_str());
+  if (doc.Parse(xml.c_str()) != XML_SUCCESS) {
+    throw logic_error("Failed to parse ListObjects response");
+  }
   //<xml...>
   const XMLNode *pRoot = doc.FirstChild();
   //<ListBucketResult>
