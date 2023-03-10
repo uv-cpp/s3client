@@ -116,6 +116,7 @@ public:
     webClient_.SetPostData("");
     webClient_.SetUploadData({});
     webClient_.ClearBuffers();
+    webClient_.ResetRWFunctions();
   }
   const WebClient &Send(const SendParams &p) {
     Config(p);

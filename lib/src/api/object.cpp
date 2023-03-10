@@ -39,6 +39,7 @@
 #include "s3-client.h"
 
 #include <algorithm>
+#include <filesystem>
 #include <fstream>
 #include <future>
 #include <set>
@@ -80,7 +81,7 @@ ETag S3Client::PutObject(const std::string &bucket, const std::string &key,
   webClient_.SetHeaders(headers);
   webClient_.UploadDataFromBuffer(buffer, size, offset);
   HandleError(webClient_);
-  const string etag = XMLTag(webClient_.GetContentText(), "ETag");
+  const string etag = HTTPHeader(webClient_.GetHeaderText(), "ETag");
   if (etag.empty()) {
     throw runtime_error("Missing ETag");
   }
@@ -91,11 +92,14 @@ ETag S3Client::PutObject(const std::string &bucket, const std::string &key,
 ETag S3Client::PutFileObject(const std::string &fileName,
                              const std::string &bucket, const std::string &key,
                              size_t offset, size_t size, Headers headers) {
+  const size_t fsize = size ? size : filesystem::file_size(fileName);
+  headers.insert({"content-length", to_string(fsize)});
   Config({.method = "PUT", .bucket = bucket, .key = key, .headers = headers});
-  if (!webClient_.UploadFile(fileName, offset, size)) {
+  if (!webClient_.UploadFile(fileName, offset, fsize)) {
     throw runtime_error("Error uploading file - " + webClient_.ErrorMsg());
   }
-  return XMLTag(webClient_.GetContentText(), "ETag");
+  HandleError(webClient_);
+  return HTTPHeader(webClient_.GetHeaderText(), "ETag");
 }
 
 //------------------------------------------------------------------------------
@@ -160,9 +164,10 @@ void S3Client::GetFileObject(const std::string &fileName,
     headers.insert(
         {"Range", "bytes=" + to_string(begin) + "-" + to_string(end)});
   }
-  Config({.method = "PUT", .bucket = bucket, .key = key, .headers = headers});
+  Config({.method = "GET", .bucket = bucket, .key = key, .headers = headers});
   webClient_.SetWriteFunction(NULL, out);
   webClient_.Send();
+  fclose(out);
   HandleError(webClient_);
 }
 

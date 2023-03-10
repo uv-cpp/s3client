@@ -218,6 +218,13 @@ public:
     writeBuffer_.offset = 0;
     headerBuffer_.clear();
   }
+  /// Reset read/write functions
+  void ResetRWFunctions() {
+    SetReadFunction((size_t(*)(void *, size_t, size_t, void *))Reader,
+                    &readBuffer_);
+    SetWriteFunction((size_t(*)(char *, size_t, size_t, void *))Writer,
+                     &writeBuffer_);
+  }
 
 private:
   /**

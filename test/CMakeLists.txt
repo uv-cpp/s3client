@@ -46,11 +46,13 @@ link_directories(${LINK_DIRS})
 
 add_executable("bucket-test" api/bucket-test.cpp api/utility.cpp)
 add_executable("object-test" api/object-test.cpp api/utility.cpp)
+add_executable("fileobject-test" api/fileobject-test.cpp api/utility.cpp)
 add_executable("multipart-upload-test" api/multipart-upload-test.cpp api/utility.cpp)
 add_executable("abort-multipart-upload-test" api/abort-multipart-upload-test.cpp api/utility.cpp)
 
 target_link_libraries("bucket-test" s3client hash_lib curl) 
 target_link_libraries("object-test" s3client hash_lib curl) 
+target_link_libraries("fileobject-test" s3client hash_lib curl) 
 target_link_libraries("multipart-upload-test" s3client hash_lib curl) 
 target_link_libraries("abort-multipart-upload-test" s3client hash_lib curl) 
 

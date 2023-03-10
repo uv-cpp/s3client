@@ -37,7 +37,6 @@
 namespace sss {
 namespace api {
 WebClient &S3Client::Config(const SendParams &p) {
-
   // if credentials empty send regular unsigned request
   auto sh =
       Access().empty()
