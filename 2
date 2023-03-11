@@ -135,6 +135,7 @@ WebClient::~WebClient() {
 }
 // Send request
 bool WebClient::Send() {
+  std::cout << method_ << std::endl;
   const bool ret = Status(curl_easy_perform(curl_));
   curl_easy_getinfo(curl_, CURLINFO_RESPONSE_CODE, &responseCode_);
   return ret;
@@ -212,9 +213,7 @@ void WebClient::SetMethod(const std::string &method, size_t size) {
   } else if (method_ == "PUT") {
     curl_easy_setopt(curl_, CURLOPT_UPLOAD, 1L);
     curl_easy_setopt(curl_, CURLOPT_INFILESIZE_LARGE, size);
-    //@warining: never set method to "PUT" when specifying CURLOPT_UPLOAD
-    //because it will trigger an additional PUT request
-    // curl_easy_setopt(curl_, CURLOPT_CUSTOMREQUEST, "PUT");
+    curl_easy_setopt(curl_, CURLOPT_CUSTOMREQUEST, "PUT");
   }
 }
 // Url-encode and store data be posted from {key,value} map

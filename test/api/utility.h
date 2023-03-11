@@ -48,4 +48,11 @@ void TestS3Access(const Params &config);
 std::string Timestamp();
 
 void TestOutput(const std::string &name, bool success,
-                const std::string &msg = "", bool last = false);
+                const std::string &prefix = "", const std::string &msg = "",
+                bool eol = true);
+
+struct TempFile {
+  int fileDesc;
+  std::string &name;
+};
+std::string TempFilenName(const std::string &prefix = "");

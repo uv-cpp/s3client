@@ -71,17 +71,16 @@ ETag S3Client::PutObject(const std::string &bucket, const std::string &key,
 
 //------------------------------------------------------------------------------
 ETag S3Client::PutObject(const std::string &bucket, const std::string &key,
-                         const char *buffer, size_t size, size_t offset,
-                         Headers headers) {
+                         const char *buffer, size_t size, Headers headers) {
 
   headers.insert({"content-length", to_string(size)});
-  Clear();
-  webClient_.SetMethod("PUT");
-  webClient_.SetPath(bucket + "/" + key);
-  webClient_.SetHeaders(headers);
-  webClient_.UploadDataFromBuffer(buffer, size, offset);
-  HandleError(webClient_);
-  const string etag = HTTPHeader(webClient_.GetHeaderText(), "ETag");
+  const auto &wc = Send({.method = "PUT",
+                         .bucket = bucket,
+                         .key = key,
+                         .headers = headers,
+                         .uploadData = buffer,
+                         .uploadDataSize = size});
+  const string etag = HTTPHeader(wc.GetHeaderText(), "ETag");
   if (etag.empty()) {
     throw runtime_error("Missing ETag");
   }
@@ -95,7 +94,7 @@ ETag S3Client::PutFileObject(const std::string &fileName,
   const size_t fsize = size ? size : filesystem::file_size(fileName);
   headers.insert({"content-length", to_string(fsize)});
   Config({.method = "PUT", .bucket = bucket, .key = key, .headers = headers});
-  if (!webClient_.UploadFile(fileName, offset, fsize)) {
+  if (!webClient_.UploadFile(fileName, fsize)) {
     throw runtime_error("Error uploading file - " + webClient_.ErrorMsg());
   }
   HandleError(webClient_);
@@ -162,10 +161,10 @@ void S3Client::GetFileObject(const std::string &fileName,
 
   if (end > 0) {
     headers.insert(
-        {"Range", "bytes=" + to_string(begin) + "-" + to_string(end)});
+        {"range", "bytes=" + to_string(begin) + "-" + to_string(end)});
   }
   Config({.method = "GET", .bucket = bucket, .key = key, .headers = headers});
-  webClient_.SetWriteFunction(NULL, out);
+  webClient_.SetWriteFunction(nullptr, out);
   webClient_.Send();
   fclose(out);
   HandleError(webClient_);

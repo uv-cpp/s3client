@@ -42,6 +42,7 @@ using namespace api;
 int main(int argc, char **argv) {
   const Params cfg = ParseCmdLine(argc, argv);
   TestS3Access(cfg);
+  const string TEST_PREFIX = "AbortMultipartUpload";
   const size_t SIZE = 19000000;
   // Check the default configuration for the minimum part size.
   // Om AWS the minimum size is 5MiB.
@@ -49,7 +50,7 @@ int main(int argc, char **argv) {
   const size_t NUM_CHUNKS = 3;
   const size_t CHUNK_SIZE = (SIZE + NUM_CHUNKS - 1) / NUM_CHUNKS;
   const vector<char> data(SIZE);
-  const string prefix = "sss-api-test-";
+  const string prefix = "sss-api-test-abort";
   const string bucket = prefix + ToLower(Timestamp());
   const string key = prefix + "obj-" + ToLower(Timestamp());
 
@@ -68,9 +69,9 @@ int main(int argc, char **argv) {
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
     uid = s3.CreateMultipartUpload(bucket, key);
-    TestOutput(action, true);
+    TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
-    TestOutput(action, false, e.what());
+    TestOutput(action, false, TEST_PREFIX, e.what());
   }
   ///
   action = "UploadPart";
@@ -83,18 +84,18 @@ int main(int argc, char **argv) {
           s3.UploadPart(bucket, key, uid, i, &data[i * CHUNK_SIZE], size);
       etags.push_back(etag);
     }
-    TestOutput(action, true);
+    TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
-    TestOutput(action, false, e.what());
+    TestOutput(action, false, TEST_PREFIX, e.what());
   }
   ///
   action = "AbortMultipartUpload";
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
     s3.AbortMultipartUpload(bucket, key, uid);
-    TestOutput(action, true);
+    TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
-    TestOutput(action, false, e.what());
+    TestOutput(action, false, TEST_PREFIX, e.what());
   }
   return 0;
 }

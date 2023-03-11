@@ -218,7 +218,7 @@ public:
                  const ByteArray &buffer, Headers = {{}});
 
   ETag PutObject(const std::string &bucket, const std::string &key,
-                 const char *, size_t size, size_t offset = 0, Headers = {{}});
+                 const char *, size_t size, Headers = {{}});
 
   ETag UploadPart(const std::string &bucket, const std::string &key,
                   const UploadId &uid, int partNum, const char *data,

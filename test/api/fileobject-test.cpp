@@ -47,7 +47,8 @@ using namespace api;
 int main(int argc, char **argv) {
   const Params cfg = ParseCmdLine(argc, argv);
   TestS3Access(cfg);
-  const string prefix = "sss-api-test-";
+  const string TEST_PREFIX = "File transfer";
+  const string prefix = "sss-api-test-file";
   const string bucketName = prefix + ToLower(Timestamp());
   {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
@@ -80,9 +81,9 @@ int main(int argc, char **argv) {
     const ByteArray &obj = s3.GetObject(bucketName, objName);
     if (obj != data)
       throw logic_error("Data mismatch");
-    TestOutput(action, true);
+    TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
-    TestOutput(action, false, e.what());
+    TestOutput(action, false, TEST_PREFIX, e.what());
   }
   filesystem::remove(tmpFile);
   ////
@@ -98,17 +99,17 @@ int main(int argc, char **argv) {
     filesystem::remove(tmpFile);
     if (data != tmp)
       throw logic_error("Data mismatch");
-    TestOutput(action, true);
+    TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
-    TestOutput(action, false, e.what());
+    TestOutput(action, false, TEST_PREFIX, e.what());
   }
   ////
   action = "DeleteObject";
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
     s3.DeleteObject(bucketName, objName);
-    TestOutput(action, true);
+    TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
-    TestOutput(action, false, e.what());
+    TestOutput(action, false, TEST_PREFIX, e.what());
   }
 }

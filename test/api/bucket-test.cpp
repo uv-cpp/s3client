@@ -45,7 +45,8 @@ using namespace api;
 int main(int argc, char **argv) {
   const Params cfg = ParseCmdLine(argc, argv);
   TestS3Access(cfg);
-  const string prefix = "sss-api-test-";
+  const string TEST_PREFIX = "Bucket";
+  const string prefix = "sss-api-test-bucket";
   string bucketName;
   ////
   string action = "CreateBucket";
@@ -53,18 +54,18 @@ int main(int argc, char **argv) {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
     bucketName = prefix + ToLower(Timestamp());
     s3.CreateBucket(bucketName);
-    TestOutput(action, true);
+    TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
-    TestOutput(action, false, e.what());
+    TestOutput(action, false, TEST_PREFIX, e.what());
   }
   ////
   action = "HeadBucket";
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
     s3.HeadBucket(bucketName);
-    TestOutput(action, true);
+    TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
-    TestOutput(action, false, e.what());
+    TestOutput(action, false, TEST_PREFIX, e.what());
   }
   ////
   action = "ListBuckets";
@@ -74,17 +75,17 @@ int main(int argc, char **argv) {
     if (buckets.empty()) {
       throw runtime_error("Empty bucket list");
     }
-    TestOutput(action, true);
+    TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
-    TestOutput(action, false, e.what());
+    TestOutput(action, false, TEST_PREFIX, e.what());
   }
   ////
   action = "DeleteBucket";
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
     s3.DeleteBucket(bucketName);
-    TestOutput(action, true);
+    TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
-    TestOutput(action, false, e.what());
+    TestOutput(action, false, TEST_PREFIX, e.what());
   }
 }

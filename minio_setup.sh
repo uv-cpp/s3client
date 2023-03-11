@@ -68,3 +68,4 @@ if [ $? -ne 0 ]; then
 fi
 echo export S3CLIENT_TEST_ACCESS=$ACCESS
 echo export S3CLIENT_TEST_SECRET=$SECRET
+echo export S3CLIENT_TEST_URL="http://localhost:$PORT"

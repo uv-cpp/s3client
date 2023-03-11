@@ -33,6 +33,7 @@
 #include "utility.h"
 #include <algorithm>
 #include <chrono>
+#include <filesystem>
 #include <stdexcept>
 using namespace std;
 using namespace sss;
@@ -83,10 +84,13 @@ void TestS3Access(const Params &config) {
 }
 
 //----------------------------------------------------------------------------
-void TestOutput(const std::string &name, bool success, const std::string &msg,
-                bool last) {
+void TestOutput(const std::string &name, bool success,
+                const std::string &prefix, const std::string &msg, bool eol) {
+  if (!prefix.empty()) {
+    cout << prefix << ",";
+  }
   cout << name << "," << (success ? 1 : 0) << "," << (msg.empty() ? " " : msg);
-  if (!last)
+  if (eol)
     cout << endl;
 }
 
@@ -101,4 +105,12 @@ string Timestamp() {
   vector<char> buf1(BUFSIZE, '\0');
   strftime(buf1.data(), BUFSIZE, "%Y%m%dT%H%M%SZ", ts);
   return string(buf1.data());
+}
+
+//------------------------------------------------------------------------------
+string TempFilenName(const std::string &prefix) {
+  char buf[] = "XXXXXX";
+  mkstemp(buf);
+  string tmp(buf, buf + 6);
+  return filesystem::temp_directory_path().string() + "/" + prefix + tmp;
 }

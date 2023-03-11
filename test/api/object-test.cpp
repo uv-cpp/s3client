@@ -45,7 +45,8 @@ using namespace api;
 int main(int argc, char **argv) {
   const Params cfg = ParseCmdLine(argc, argv);
   TestS3Access(cfg);
-  const string prefix = "sss-api-test-";
+  const string TEST_PREFIX = "Object";
+  const string prefix = "sss-api-test-object";
   const string bucketName = prefix + ToLower(Timestamp());
   {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
@@ -58,18 +59,18 @@ int main(int argc, char **argv) {
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
     s3.PutObject(bucketName, objName, data);
-    TestOutput(action, true);
+    TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
-    TestOutput(action, false, e.what());
+    TestOutput(action, false, TEST_PREFIX, e.what());
   }
   ////
   action = "HeadObject";
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
     s3.HeadObject(bucketName, objName);
-    TestOutput(action, true);
+    TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
-    TestOutput(action, false, e.what());
+    TestOutput(action, false, TEST_PREFIX, e.what());
   }
   ////
   action = "ListObjectsV2";
@@ -89,9 +90,9 @@ int main(int argc, char **argv) {
         throw logic_error("Object not found");
       }
     }
-    TestOutput(action, true);
+    TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
-    TestOutput(action, false, e.what());
+    TestOutput(action, false, TEST_PREFIX, e.what());
   }
   ////
   action = "GetObject";
@@ -101,17 +102,17 @@ int main(int argc, char **argv) {
     if (obj.size() != data.size()) {
       throw logic_error("Data size mismatch");
     }
-    TestOutput(action, true);
+    TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
-    TestOutput(action, false, e.what());
+    TestOutput(action, false, TEST_PREFIX, e.what());
   }
   ////
   action = "DeleteObject";
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
     s3.DeleteObject(bucketName, objName);
-    TestOutput(action, true);
+    TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
-    TestOutput(action, false, e.what());
+    TestOutput(action, false, TEST_PREFIX, e.what());
   }
 }
