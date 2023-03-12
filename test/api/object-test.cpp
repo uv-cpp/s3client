@@ -60,7 +60,7 @@ int main(int argc, char **argv) {
   string action = "PutObject";
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
-    s3.PutObject(bucketName, objName, data);
+    const ETag etag = s3.PutObject(bucketName, objName, data);
     TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());

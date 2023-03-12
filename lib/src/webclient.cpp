@@ -72,6 +72,14 @@ struct CloseFileN {
   CloseFileN(int f) : f_(f) {}
   ~CloseFileN() { close(f_); }
 };
+
+struct FileInfo {
+  FILE *f = nullptr;
+  size_t size = 0;
+  size_t offset = 0;
+  FileInfo(FILE *pf, size_t sz) : f(pf), size(sz), offset(0) {}
+  ~FileInfo() { fclose(f); }
+};
 } // namespace
 
 // Track number of instances created.
@@ -87,10 +95,16 @@ std::mutex WebClient::cleanupMutex_;
  */
 /// Read from file
 size_t ReadFile(void *ptr, size_t size, size_t nmemb, void *userdata) {
-  FILE *f = static_cast<FILE *>(userdata);
-  if (ferror(f))
+  FileInfo &fi = *(static_cast<FileInfo *>(userdata));
+  if (ferror(fi.f))
     return CURL_READFUNC_ABORT;
-  return fread(ptr, size, nmemb, f) * size;
+  const size_t bytes = min(nmemb * size, fi.size - fi.offset);
+  const size_t read = fread(ptr, bytes, 1, fi.f) * bytes;
+  fi.offset += read;
+  if (fi.offset >= fi.size) {
+    delete static_cast<FileInfo *>(userdata);
+  }
+  return read;
 }
 /// Read from file using unbuffered I/O
 size_t ReadFileUnbuffered(void *ptr, size_t size, size_t nmemb,
@@ -213,7 +227,7 @@ void WebClient::SetMethod(const std::string &method, size_t size) {
     curl_easy_setopt(curl_, CURLOPT_UPLOAD, 1L);
     curl_easy_setopt(curl_, CURLOPT_INFILESIZE_LARGE, size);
     //@warining: never set method to "PUT" when specifying CURLOPT_UPLOAD
-    //because it will trigger an additional PUT request
+    // because it will trigger an additional PUT request
     // curl_easy_setopt(curl_, CURLOPT_CUSTOMREQUEST, "PUT");
   }
 }
@@ -311,11 +325,12 @@ bool WebClient::UploadFile(const std::string &fname, size_t offset,
   if (!file) {
     throw std::runtime_error("Cannot open file " + fname);
   }
-  auto _ = CloseFile(file);
   if (fseek(file, offset, SEEK_SET)) {
     throw std::runtime_error("Cannot move file pointer");
   }
-  if (!SetReadFunction(ReadFile, file)) {
+
+  FileInfo *fi = new FileInfo(file, size);
+  if (!SetReadFunction(ReadFile, fi)) {
     throw std::runtime_error("Cannot set read function");
   }
   SetMethod("PUT", size);

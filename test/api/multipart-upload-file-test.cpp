@@ -41,8 +41,6 @@ using namespace sss;
 using namespace api;
 
 int main(int argc, char **argv) {
-  cerr << "NOT IMPLEMENTED" << endl;
-  exit(EXIT_FAILURE);
   const Params cfg = ParseCmdLine(argc, argv);
   TestS3Access(cfg);
   const string TEST_PREFIX = "Multipart upload file";
@@ -58,15 +56,15 @@ int main(int argc, char **argv) {
   const string bucket = prefix + ToLower(Timestamp());
   const string key = prefix + "obj-" + ToLower(Timestamp());
 
-  const string tmpName = TempFilePath(prefix);
-  FILE *file = fopen(tmpName.c_str(), "wb");
+  TempFile tmp = OpenTempFile("wb", prefix);
+  FILE *file = tmp.pFile;
   if (!file) {
-    cerr << "Cannot open file " << tmpName << " for writing" << endl;
+    cerr << "Cannot open file " << tmp.path << " for writing" << endl;
     exit(EXIT_FAILURE);
   }
   if (fwrite(data.data(), SIZE, 1, file) != 1) {
     fclose(file);
-    cerr << "Cannot write to file " << tmpName << endl;
+    cerr << "Cannot write to file " << tmp.path << endl;
     exit(EXIT_FAILURE);
   }
   fclose(file);
@@ -91,12 +89,17 @@ int main(int argc, char **argv) {
   ///
   action = "UploadPart";
   vector<ETag> etags;
+  // FILE *ff = fopen(tmp.path.c_str(), "rb");
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
     for (size_t i = 0; i != 3; ++i) {
       const size_t size = min(CHUNK_SIZE, SIZE - CHUNK_SIZE * i);
-      const auto etag = "";
-      // s3.UploadFilePart(bucket, key, uid, i, file, i * CHUNK_SIZE, size);
+      // ByteArray b(size);
+      // fread(b.data(), size, 1, ff);
+      // const auto etag = s3.UploadPart(bucket, key, uid, i, b.data(),
+      // b.size());
+      const auto etag = s3.UploadFilePart(tmp.path, i * CHUNK_SIZE, size,
+                                          bucket, key, uid, i);
       etags.push_back(etag);
     }
     TestOutput(action, true, TEST_PREFIX);

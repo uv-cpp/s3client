@@ -94,7 +94,7 @@ ETag S3Client::PutFileObject(const std::string &fileName,
   const size_t fsize = size ? size : filesystem::file_size(fileName);
   headers.insert({"content-length", to_string(fsize)});
   Config({.method = "PUT", .bucket = bucket, .key = key, .headers = headers});
-  if (!webClient_.UploadFile(fileName, fsize)) {
+  if (!webClient_.UploadFile(fileName, 0, fsize)) {
     throw runtime_error("Error uploading file - " + webClient_.ErrorMsg());
   }
   HandleError(webClient_);

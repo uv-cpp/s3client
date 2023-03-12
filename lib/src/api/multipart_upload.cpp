@@ -59,6 +59,7 @@ string BuildEndUploadXML(const vector<ETag> &etags) {
     ++globalIndex;
   }
   xml += "</CompleteMultipartUpload>";
+  cout << xml << endl;
   return xml;
 }
 
@@ -153,7 +154,7 @@ ETag S3Client::CompleteMultipartUpload(const UploadId &uid,
                          .postData = postData});
   string etag = XMLTag(wc.GetContentText(), "ETag");
   if (etag.empty()) {
-    throw runtime_error("Empty ETag");
+    throw logic_error("Empty ETag");
   }
   if (etag[0] == '"') {
     etag = etag.substr(1, etag.size() - 2);
