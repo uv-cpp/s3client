@@ -33,6 +33,7 @@
 #include "s3-api.h"
 #include "utility.h"
 #include <iostream>
+#include <numeric>
 #include <string>
 #include <vector>
 using namespace std;
@@ -40,20 +41,35 @@ using namespace sss;
 using namespace api;
 
 int main(int argc, char **argv) {
+  cerr << "NOT IMPLEMENTED" << endl;
+  exit(EXIT_FAILURE);
   const Params cfg = ParseCmdLine(argc, argv);
   TestS3Access(cfg);
-  const string TEST_PREFIX = "Multipart upload";
+  const string TEST_PREFIX = "Multipart upload file";
   const size_t SIZE = 19000000;
   // Check the default configuration for the minimum part size.
   // Om AWS the minimum size is 5MiB.
   // An "EntityTooSmall" error is returned when the part size is too small.
   const size_t NUM_CHUNKS = 3;
   const size_t CHUNK_SIZE = (SIZE + NUM_CHUNKS - 1) / NUM_CHUNKS;
-  const vector<char> data(SIZE);
+  vector<char> data(SIZE);
+  iota(begin(data), end(data), 0);
   const string prefix = "sss-api-test-multi";
   const string bucket = prefix + ToLower(Timestamp());
   const string key = prefix + "obj-" + ToLower(Timestamp());
 
+  const string tmpName = TempFilePath(prefix);
+  FILE *file = fopen(tmpName.c_str(), "wb");
+  if (!file) {
+    cerr << "Cannot open file " << tmpName << " for writing" << endl;
+    exit(EXIT_FAILURE);
+  }
+  if (fwrite(data.data(), SIZE, 1, file) != 1) {
+    fclose(file);
+    cerr << "Cannot write to file " << tmpName << endl;
+    exit(EXIT_FAILURE);
+  }
+  fclose(file);
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
     // create bucket
@@ -62,7 +78,6 @@ int main(int argc, char **argv) {
     cerr << "Error creating bucket " << bucket << endl;
     exit(EXIT_FAILURE);
   }
-
   ///
   string action = "CreateMultipartUpload";
   UploadId uid;
@@ -80,8 +95,8 @@ int main(int argc, char **argv) {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
     for (size_t i = 0; i != 3; ++i) {
       const size_t size = min(CHUNK_SIZE, SIZE - CHUNK_SIZE * i);
-      const auto etag =
-          s3.UploadPart(bucket, key, uid, i, &data[i * CHUNK_SIZE], size);
+      const auto etag = "";
+      // s3.UploadFilePart(bucket, key, uid, i, file, i * CHUNK_SIZE, size);
       etags.push_back(etag);
     }
     TestOutput(action, true, TEST_PREFIX);
@@ -97,7 +112,19 @@ int main(int argc, char **argv) {
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
-
+  ////
+  action = "GetObject";
+  try {
+    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    const auto &obj = s3.GetObject(bucket, key);
+    if (obj != data) {
+      throw logic_error("Data mismatch");
+    }
+    TestOutput(action, true, TEST_PREFIX);
+  } catch (const exception &e) {
+    TestOutput(action, false, TEST_PREFIX, e.what());
+  }
+  ///
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
     // delete object

@@ -35,6 +35,7 @@
 #include <algorithm>
 #include <chrono>
 #include <iostream>
+#include <numeric>
 #include <stdexcept>
 #include <string>
 
@@ -54,6 +55,7 @@ int main(int argc, char **argv) {
   }
   string objName = prefix + "obj-" + ToLower(Timestamp());
   ByteArray data = ByteArray(1024);
+  iota(begin(data), end(data), 0);
   ////
   string action = "PutObject";
   try {
@@ -99,8 +101,8 @@ int main(int argc, char **argv) {
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
     const auto &obj = s3.GetObject(bucketName, objName);
-    if (obj.size() != data.size()) {
-      throw logic_error("Data size mismatch");
+    if (obj != data) {
+      throw logic_error("Data mismatch");
     }
     TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {

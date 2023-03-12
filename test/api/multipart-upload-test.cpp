@@ -33,6 +33,7 @@
 #include "s3-api.h"
 #include "utility.h"
 #include <iostream>
+#include <numeric>
 #include <string>
 #include <vector>
 using namespace std;
@@ -49,7 +50,8 @@ int main(int argc, char **argv) {
   // An "EntityTooSmall" error is returned when the part size is too small.
   const size_t NUM_CHUNKS = 3;
   const size_t CHUNK_SIZE = (SIZE + NUM_CHUNKS - 1) / NUM_CHUNKS;
-  const vector<char> data(SIZE);
+  vector<char> data(SIZE);
+  iota(begin(data), end(data), 0);
   const string prefix = "sss-api-test-multi";
   const string bucket = prefix + ToLower(Timestamp());
   const string key = prefix + "obj-" + ToLower(Timestamp());
@@ -93,6 +95,18 @@ int main(int argc, char **argv) {
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
     s3.CompleteMultipartUpload(uid, bucket, key, etags);
+    TestOutput(action, true, TEST_PREFIX);
+  } catch (const exception &e) {
+    TestOutput(action, false, TEST_PREFIX, e.what());
+  }
+  ////
+  action = "GetObject";
+  try {
+    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    const auto &obj = s3.GetObject(bucket, key);
+    if (obj != data) {
+      throw logic_error("Data mismatch");
+    }
     TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());

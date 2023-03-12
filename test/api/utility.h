@@ -51,8 +51,11 @@ void TestOutput(const std::string &name, bool success,
                 const std::string &prefix = "", const std::string &msg = "",
                 bool eol = true);
 
+std::string TempFilePath(const std::string &prefix = "");
+
 struct TempFile {
-  int fileDesc;
-  std::string &name;
+  FILE *pFile;
+  std::string path;
 };
-std::string TempFilenName(const std::string &prefix = "");
+
+TempFile OpenTempFile(const std::string &mode, const std::string &prefix = "");

@@ -8,7 +8,7 @@
  * modification, are permitted provided that the following conditions are met:
  *
  * 1. Redistributions of source code must retain the above copyright notice,
- *this list of conditions and the following disclaimer.
+ *    this list of conditions and the following disclaimer.
  *
  * 2. Redistributions in binary form must reproduce the above copyright notice,
  *    this list of conditions and the following disclaimer in the documentation
@@ -21,14 +21,14 @@
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- *ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
- *LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
- *CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
- *SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
- *INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
- *CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- *ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
- *POSSIBILITY OF SUCH DAMAGE.
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 /**
  * \file aws_sigh.h
@@ -38,29 +38,28 @@
 
 #pragma once
 #include "common.h"
+#include "url_utility.h"
 #include <string>
 
 namespace sss {
 
 /// Generate presigned URL
-std::string SignedURL(const std::string &accessKey,
-                      const std::string &secretKey, int expiration,
-                      const std::string &endpoint, const std::string &method,
-                      const std::string &bucketName = "",
-                      const std::string &keyName = "",
-                      const Parameters &params = Map(),
-                      const std::string &region = "us-east-1");
+std::string
+SignedURL(const std::string &accessKey, const std::string &secretKey,
+          int expiration, const std::string &endpoint,
+          const std::string &method, const std::string &bucketName = "",
+          const std::string &keyName = "", const Parameters &params = Map(),
+          const std::string &region = "us-east-1", const Time &dates = Time{});
 
 /// Sign headers
-Headers SignHeaders(const std::string &accessKey, const std::string &secretKey,
-                    const std::string &endpoint, const std::string &method,
-                    const std::string &bucketName = "",
-                    const std::string &keyName = "",
-                    std::string payloadHash = "",
-                    const Parameters &parameters = Map(),
-                    const Headers &additionalHeaders = Map(),
-                    const std::string &region = "us-east-1",
-                    const std::string &service = "s3");
+Headers
+SignHeaders(const std::string &accessKey, const std::string &secretKey,
+            const std::string &endpoint, const std::string &method,
+            const std::string &bucketName = "", const std::string &keyName = "",
+            std::string payloadHash = "", const Parameters &parameters = Map(),
+            const Headers &additionalHeaders = Map(),
+            const std::string &region = "us-east-1",
+            const std::string &service = "s3", const Time &dates = Time{});
 
 /// Struct
 struct SignHeadersInfo {

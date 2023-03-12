@@ -108,9 +108,20 @@ string Timestamp() {
 }
 
 //------------------------------------------------------------------------------
-string TempFilenName(const std::string &prefix) {
+string TempFilePath(const std::string &prefix) {
   char buf[] = "XXXXXX";
-  mkstemp(buf);
-  string tmp(buf, buf + 6);
+  mktemp(buf);
+  string tmp(buf, buf + size(buf) / sizeof(char));
   return filesystem::temp_directory_path().string() + "/" + prefix + tmp;
+}
+
+//------------------------------------------------------------------------------
+TempFile OpenTempFile(const string &mode, const std::string &prefix) {
+  const string path =
+      filesystem::temp_directory_path().string() + "/" + prefix + "XXXXXX";
+  vector<char> buf(begin(path), end(path));
+  buf.push_back('\0');
+  const int fd = mkstemp(buf.data());
+  const string tmpPath(begin(buf), end(buf));
+  return {fdopen(fd, mode.c_str()), tmpPath};
 }

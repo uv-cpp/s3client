@@ -48,7 +48,7 @@ int main(int argc, char **argv) {
   const Params cfg = ParseCmdLine(argc, argv);
   TestS3Access(cfg);
   const string TEST_PREFIX = "File transfer";
-  const string prefix = "sss-api-test-file";
+  const string prefix = "sss-api-test-file-";
   const string bucketName = prefix + ToLower(Timestamp());
   {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
@@ -57,16 +57,16 @@ int main(int argc, char **argv) {
   string objName = prefix + "obj-" + ToLower(Timestamp());
   ByteArray data = ByteArray(1024);
   iota(begin(data), end(data), 0);
-  string tmpFile = tmpnam(nullptr);
-  FILE *f = fopen(tmpFile.c_str(), "wb");
+  TempFile tmp = OpenTempFile("wb", prefix);
+  FILE *f = tmp.pFile;
   if (!f) {
-    cerr << "Cannot open file " << tmpFile << " for writing" << endl;
+    cerr << "Cannot open file " << tmp.path << " for writing" << endl;
     exit(EXIT_FAILURE);
   }
   if (fwrite(data.data(), data.size(), 1, f) != 1) {
-    cerr << "Error writing to file " << tmpFile << endl;
+    cerr << "Error writing to file " << tmp.path << endl;
     fclose(f);
-    filesystem::remove(tmpFile);
+    filesystem::remove(tmp.path);
     exit(EXIT_FAILURE);
   }
   fclose(f);
@@ -74,7 +74,7 @@ int main(int argc, char **argv) {
   string action = "PutFileObject";
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
-    const ETag etag = s3.PutFileObject(tmpFile, bucketName, objName);
+    const ETag etag = s3.PutFileObject(tmp.path, bucketName, objName);
     if (etag.empty())
       throw runtime_error("Empty etag");
     // S3Client s32(cfg.access, cfg.secret, cfg.url);
@@ -85,24 +85,28 @@ int main(int argc, char **argv) {
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
-  filesystem::remove(tmpFile);
+  filesystem::remove(tmp.path);
   ////
-  tmpFile = tmpnam(nullptr);
+  tmp = OpenTempFile("wb", prefix);
+  fclose(tmp.pFile);
   action = "GetFileObject";
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
-    s3.GetFileObject(tmpFile, bucketName, objName);
-    ByteArray tmp(data.size());
-    FILE *f = fopen(tmpFile.c_str(), "rb");
-    fread(tmp.data(), tmp.size(), 1, f);
+    s3.GetFileObject(tmp.path, bucketName, objName);
+    ByteArray tmpData(data.size());
+    FILE *f = fopen(tmp.path.c_str(), "rb");
+    if (fread(tmpData.data(), tmpData.size(), 1, f) != 1) {
+      fclose(f);
+      throw logic_error("Failed to read from " + tmp.path);
+    }
     fclose(f);
-    filesystem::remove(tmpFile);
-    if (data != tmp)
+    if (data != tmpData)
       throw logic_error("Data mismatch");
     TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
+  filesystem::remove(tmp.path);
   ////
   action = "DeleteObject";
   try {

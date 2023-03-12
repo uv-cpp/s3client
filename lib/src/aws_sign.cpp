@@ -163,11 +163,12 @@ string Hex(const Bytes &b) {
 string SignedURL(const string &accessKey, const string &secretKey,
                  int expiration, const string &endpoint, const string &method,
                  const string &bucketName, const string &keyName,
-                 const Parameters &params, const string &region) {
+                 const Parameters &params, const string &region,
+                 const Time &dates) {
   const URL url = ParseURL(endpoint);
   const string host =
       url.port <= 0 ? url.host : url.host + ":" + to_string(url.port);
-  Time t = GetDates();
+  Time t = dates.dateStamp.empty() ? GetDates() : dates;
   const string credentials =
       accessKey + "/" + t.dateStamp + "/" + region + "/s3/aws4_request";
 
@@ -236,7 +237,7 @@ Headers SignHeaders(const string &accessKey, const string &secretKey,
                     const string &bucketName, const string &keyName,
                     string payloadHash, const Parameters &parameters,
                     const Headers &additionalHeaders, const string &region,
-                    const string &service) {
+                    const string &service, const Time &dates) {
 #ifndef NDEBUG
   // do not want to waste time converting to lowercase
   for (auto kv : additionalHeaders) {
@@ -251,7 +252,7 @@ Headers SignHeaders(const string &accessKey, const string &secretKey,
   const URL url = ParseURL(endpoint);
   const string host =
       url.port <= 0 ? url.host : url.host + ":" + to_string(url.port);
-  Time t = GetDates();
+  Time t = dates.dateStamp.empty() ? GetDates() : dates;
   const string reqParameters = parameters.empty() ? "" : UrlEncode(parameters);
   string canonicalURI = "/";
 

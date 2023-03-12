@@ -106,7 +106,10 @@ struct BucketValidation {
 };
 /// Validate bucket name.
 BucketValidation ValidateBucket(const std::string name);
-
+/// Translate metadata (key,value) pairs to \c amz- format and return
+/// header map which can be merged with other headers using the
+/// \c std::map::merge method, since C++17.
+Headers ToMeta(const std::map<std::string, std::string> &metaData);
 /// Validate S3 client request parameters.
 void Validate(const S3ClientConfig &s);
 /// Send S3 request to endpoint.
