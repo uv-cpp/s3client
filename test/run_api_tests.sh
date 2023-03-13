@@ -21,4 +21,5 @@ $TEST_PATH/object-test $ACCESS_VAR $SECRET_VAR $URL_VAR
 $TEST_PATH/multipart-upload-test $ACCESS_VAR $SECRET_VAR $URL_VAR
 $TEST_PATH/abort-multipart-upload-test $ACCESS_VAR $SECRET_VAR $URL_VAR
 $TEST_PATH/fileobject-test $ACCESS_VAR $SECRET_VAR $URL_VAR
+$TEST_PATH/multipart-upload-file-test $ACCESS_VAR $SECRET_VAR $URL_VAR
 

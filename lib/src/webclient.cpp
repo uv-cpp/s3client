@@ -66,11 +66,11 @@ struct CloseFile {
   CloseFile(FILE *f) : f_(f) {}
   ~CloseFile() { fclose(f_); }
 };
-struct CloseFileN {
+struct CloseFileDesc {
   int f_;
-  CloseFileN() = delete;
-  CloseFileN(int f) : f_(f) {}
-  ~CloseFileN() { close(f_); }
+  CloseFileDesc() = delete;
+  CloseFileDesc(int f) : f_(f) {}
+  ~CloseFileDesc() { close(f_); }
 };
 
 struct FileInfo {
@@ -79,6 +79,14 @@ struct FileInfo {
   size_t offset = 0;
   FileInfo(FILE *pf, size_t sz) : f(pf), size(sz), offset(0) {}
   ~FileInfo() { fclose(f); }
+};
+
+struct FileDescInfo {
+  int f = 0;
+  size_t size = 0;
+  size_t offset = 0;
+  FileDescInfo(int fd, size_t sz) : f(fd), size(sz), offset(0) {}
+  ~FileDescInfo() { close(f); }
 };
 } // namespace
 
@@ -95,29 +103,35 @@ std::mutex WebClient::cleanupMutex_;
  */
 /// Read from file
 size_t ReadFile(void *ptr, size_t size, size_t nmemb, void *userdata) {
-  FileInfo &fi = *(static_cast<FileInfo *>(userdata));
-  if (ferror(fi.f))
+  if (!userdata)
     return CURL_READFUNC_ABORT;
-  const size_t bytes = min(nmemb * size, fi.size - fi.offset);
-  const size_t read = fread(ptr, bytes, 1, fi.f) * bytes;
-  fi.offset += read;
-  if (fi.offset >= fi.size) {
-    delete static_cast<FileInfo *>(userdata);
+  FileInfo &fi = *(static_cast<FileInfo *>(userdata));
+  if (ferror(fi.f)) {
+    return CURL_READFUNC_ABORT;
   }
+  const size_t bytes = min(nmemb * size, fi.size - fi.offset);
+  const size_t read = fread(ptr, 1, bytes, fi.f);
+  fi.offset += read;
   return read;
 }
-/// Read from file using unbuffered I/O
 size_t ReadFileUnbuffered(void *ptr, size_t size, size_t nmemb,
                           void *userdata) {
-  const int fd = *static_cast<int *>(userdata);
-  return max(ssize_t(0), read(fd, ptr, size * nmemb));
+  if (!userdata)
+    return CURL_READFUNC_ABORT;
+  FileDescInfo &fi = *(static_cast<FileDescInfo *>(userdata));
+  if (fi.f <= 0) {
+    return CURL_READFUNC_ABORT;
+  }
+  const size_t bytes = min(nmemb * size, fi.size - fi.offset);
+  const size_t bytesRead = max(ssize_t(0), read(fi.f, ptr, bytes));
+  fi.offset += bytesRead;
+  return bytesRead;
 }
 /// Write to file
 size_t WriteFile(char *ptr, size_t size, size_t nmemb, void *userdata) {
   FILE *writehere = static_cast<FILE *>(userdata);
-  size = size * nmemb;
   fwrite(ptr, size, nmemb, writehere);
-  return size;
+  return size * nmemb;
 }
 /// Write to file using unbuffered I/O
 size_t WriteFileUnbuffered(char *ptr, size_t size, size_t nmemb,
@@ -226,9 +240,9 @@ void WebClient::SetMethod(const std::string &method, size_t size) {
   } else if (method_ == "PUT") {
     curl_easy_setopt(curl_, CURLOPT_UPLOAD, 1L);
     curl_easy_setopt(curl_, CURLOPT_INFILESIZE_LARGE, size);
+
     //@warining: never set method to "PUT" when specifying CURLOPT_UPLOAD
     // because it will trigger an additional PUT request
-    // curl_easy_setopt(curl_, CURLOPT_CUSTOMREQUEST, "PUT");
   }
 }
 // Url-encode and store data be posted from {key,value} map
@@ -329,8 +343,8 @@ bool WebClient::UploadFile(const std::string &fname, size_t offset,
     throw std::runtime_error("Cannot move file pointer");
   }
 
-  FileInfo *fi = new FileInfo(file, size);
-  if (!SetReadFunction(ReadFile, fi)) {
+  FileInfo fi{file, size};
+  if (!SetReadFunction(ReadFile, &fi)) {
     throw std::runtime_error("Cannot set read function");
   }
   SetMethod("PUT", size);
@@ -351,11 +365,12 @@ bool WebClient::UploadFileUnbuffered(const std::string &fname, size_t offset,
   if (file < 0) {
     throw std::runtime_error(strerror(errno));
   }
-  auto _ = CloseFileN(file);
+  auto _ = CloseFileDesc(file);
   if (lseek(file, offset, SEEK_SET) < 0) {
     throw std::runtime_error(strerror(errno));
   }
-  if (!SetReadFunction(ReadFileUnbuffered, &file)) {
+  FileDescInfo fi{file, size};
+  if (!SetReadFunction(ReadFileUnbuffered, &fi)) {
     throw std::runtime_error("Cannot set read function");
   }
   SetMethod("PUT", size);
@@ -380,7 +395,7 @@ bool WebClient::UploadFileMM(const std::string &fname, size_t offset,
                              std::string(strerror(errno)));
     exit(EXIT_FAILURE);
   }
-  auto _ = CloseFileN(fd);
+  auto _ = CloseFileDesc(fd);
   char *src = (char *)mmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, offset);
   if (src == MAP_FAILED) { // mmap returns (void *) -1 == MAP_FAILED
     throw std::runtime_error("Error mapping memory: " +

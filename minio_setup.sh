@@ -18,7 +18,8 @@ then
   echo "S3CLIENT_TEST_SECRET and S3CLIENT_TEST_ACCESS env variables contain generated access and secret"
   echo "An entry is added into $HOME/.mc/config.json"
   echo "Use 'podman ps' to view and 'podman kill' to kill running containers"
-  echo "To remove entry from mc configuration run 'mc alias remove <alias name>'"
+  echo "Before running the script ensure that no alias with the same name exists."
+  echo "To remove entry from the mc configuration run 'mc alias remove <alias name>'"
   echo "Access and secret keys are the username and password for the minio console"
   exit 0
 fi

@@ -154,6 +154,7 @@ public:
   }
 
 public:
+  enum FileIOMode { BUFFERED, UNBUFFERED, MEMORY_MAPPED };
   void GetFileObject(const std::string &fileName, const std::string &bucket,
                      const std::string &key, size_t offset = 0,
                      size_t begin = 0, size_t end = 0, Headers = {{}});
@@ -164,7 +165,8 @@ public:
 
   ETag UploadFilePart(const std::string &file, size_t offset, size_t size,
                       const std::string &bucket, const std::string &key,
-                      const UploadId &uid, int partNum, int maxRetries = 1,
+                      const UploadId &uid, int partNum,
+                      FileIOMode iomode = BUFFERED, int maxRetries = 1,
                       Headers headers = {{}});
 
 public:
