@@ -37,10 +37,6 @@
 #include "s3-api.h"
 #include "s3-client.h"
 
-#include <fstream>
-#include <future>
-#include <set>
-#include <thread>
 using namespace std;
 
 namespace sss {
