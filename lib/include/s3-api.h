@@ -155,19 +155,39 @@ public:
 
 public:
   enum FileIOMode { BUFFERED, UNBUFFERED, MEMORY_MAPPED };
+  struct DataTransferConfig {
+    std::string bucket;
+    std::string key;
+    std::string file;
+    FileIOMode mode = BUFFERED;
+    const char *data = nullptr;
+    size_t offset = 0;
+    size_t size = 0; //< if offset and size zero use file size
+    int maxRetries =
+        1; //< mximum number of retries per chunk, only implementd for upload
+    int jobs = 1;            //< number of parallel threads of execution
+    size_t chunksPerJob = 1; //< number of chunks per job
+  };
   void GetFileObject(const std::string &fileName, const std::string &bucket,
                      const std::string &key, size_t offset = 0,
                      size_t begin = 0, size_t end = 0, Headers = {{}});
 
   ETag PutFileObject(const std::string &fileName, const std::string &bucket,
                      const std::string &key, size_t offset = 0, size_t size = 0,
-                     Headers = {{}});
+                     Headers = {{}}, const std::string &payloadHash = {});
 
   ETag UploadFilePart(const std::string &file, size_t offset, size_t size,
                       const std::string &bucket, const std::string &key,
                       const UploadId &uid, int partNum,
                       FileIOMode iomode = BUFFERED, int maxRetries = 1,
-                      Headers headers = {{}});
+                      Headers headers = {{}},
+                      const std::string &payloadHash = {});
+  /// @todo
+  ETag UploadObject(const DataTransferConfig &cfg, Headers headers,
+                    const std::string &payloadHash);
+  /// @todo
+  void DownloadObject(const DataTransferConfig &cfg, Headers headers,
+                      size_t begin = 0, size_t end = 0);
 
 public:
   void AbortMultipartUpload(const std::string &bucket, const std::string &key,
@@ -189,7 +209,7 @@ public:
                     const Headers & = {{}});
   // @todo
   // bool DeleteObjects(const std::string &bucket,
-  //                   const std::vector<std::string> &objects);
+  //                    const std::vector<std::string> &objects);
   const ByteArray &GetObject(const std::string &bucket, const std::string &key,
                              size_t begin = 0, size_t end = 0, Headers = {{}});
 
@@ -217,14 +237,17 @@ public:
   //                                 &uid, int max_parts);
 
   ETag PutObject(const std::string &bucket, const std::string &key,
-                 const ByteArray &buffer, Headers = {{}});
+                 const ByteArray &buffer, Headers = {{}},
+                 const std::string &payloadHash = {});
 
   ETag PutObject(const std::string &bucket, const std::string &key,
-                 const char *, size_t size, Headers = {{}});
+                 const char *, size_t size, Headers = {{}},
+                 const std::string &payloadHash = {});
 
   ETag UploadPart(const std::string &bucket, const std::string &key,
                   const UploadId &uid, int partNum, const char *data,
-                  size_t size, int maxRetries = 1, Headers headers = {{}});
+                  size_t size, int maxRetries = 1, Headers headers = {{}},
+                  const std::string &payloadHash = {});
 
 public:
   const std::string &Access() const { return access_; }

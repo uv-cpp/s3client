@@ -49,13 +49,15 @@ S3Client::ListObjectV2Result ParseObjects(const std::string &xml);
 
 //------------------------------------------------------------------------------
 ETag S3Client::PutObject(const std::string &bucket, const std::string &key,
-                         const ByteArray &buffer, Headers headers) {
+                         const ByteArray &buffer, Headers headers,
+                         const string &payloadHash) {
 
   headers.insert({"content-length", to_string(buffer.size())});
   const auto &wc = Send({.method = "PUT",
                          .bucket = bucket,
                          .key = key,
                          .headers = headers,
+                         .payloadHash = payloadHash,
                          .uploadData = buffer.data(),
                          .uploadDataSize = buffer.size()});
   const string etag = HTTPHeader(wc.GetHeaderText(), "ETag");
@@ -67,13 +69,15 @@ ETag S3Client::PutObject(const std::string &bucket, const std::string &key,
 
 //------------------------------------------------------------------------------
 ETag S3Client::PutObject(const std::string &bucket, const std::string &key,
-                         const char *buffer, size_t size, Headers headers) {
+                         const char *buffer, size_t size, Headers headers,
+                         const string &payloadHash) {
 
   headers.insert({"content-length", to_string(size)});
   const auto &wc = Send({.method = "PUT",
                          .bucket = bucket,
                          .key = key,
                          .headers = headers,
+                         .payloadHash = payloadHash,
                          .uploadData = buffer,
                          .uploadDataSize = size});
   const string etag = HTTPHeader(wc.GetHeaderText(), "ETag");
@@ -86,10 +90,15 @@ ETag S3Client::PutObject(const std::string &bucket, const std::string &key,
 //------------------------------------------------------------------------------
 ETag S3Client::PutFileObject(const std::string &fileName,
                              const std::string &bucket, const std::string &key,
-                             size_t offset, size_t size, Headers headers) {
+                             size_t offset, size_t size, Headers headers,
+                             const std::string &payloadHash) {
   const size_t fsize = size ? size : filesystem::file_size(fileName);
   headers.insert({"content-length", to_string(fsize)});
-  Config({.method = "PUT", .bucket = bucket, .key = key, .headers = headers});
+  Config({.method = "PUT",
+          .bucket = bucket,
+          .key = key,
+          .headers = headers,
+          .payloadHash = payloadHash});
   if (!webClient_.UploadFile(fileName, 0, fsize)) {
     throw runtime_error("Error uploading file - " + webClient_.ErrorMsg());
   }
