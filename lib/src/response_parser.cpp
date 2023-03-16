@@ -34,6 +34,8 @@
 #include <algorithm>
 #include <iostream>
 #include <regex>
+#include <sstream>
+#include <string>
 
 using namespace std;
 

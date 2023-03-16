@@ -108,14 +108,6 @@ string Timestamp() {
 }
 
 //------------------------------------------------------------------------------
-string TempFilePath(const std::string &prefix) {
-  char buf[] = "XXXXXX";
-  mktemp(buf);
-  string tmp(buf, buf + size(buf) / sizeof(char));
-  return filesystem::temp_directory_path().string() + "/" + prefix + tmp;
-}
-
-//------------------------------------------------------------------------------
 TempFile OpenTempFile(const string &mode, const std::string &prefix) {
   const string path =
       filesystem::temp_directory_path().string() + "/" + prefix + "XXXXXX";
