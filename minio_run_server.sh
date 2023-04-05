@@ -29,26 +29,23 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#Run minio on localhost through podman and configures alias with
+#Run minio minio server on localhost through and configures alias with
 #secret and access keys
-#usage: ./minio_setup.sh <alias name> <data directory path>
+#usage: ./minio_run_server.sh <alias name> <data directory path>
 #The data directory is created if it does not exist
 #Usind default ports 9000 (API) and 9090 (admin)
 #Requires s3-gen-credentials to be built and accessible through PATH variable 
 
-#Access and secret keys are stored into environmnt variables
-
 #check command line parameters
 if (($# == 0))
 then
-  echo "Run minio with podman and update mc configuration with new credentials"
+  echo "Run minio server and store credentials"
   echo "usage: $0 <minio alias name> <data path>"
   echo
   echo "Data path is created if it does not exist"
   echo "S3CLIENT_TEST_SECRET and S3CLIENT_TEST_ACCESS env variables contain generated access and secret"
   echo "An entry is added into $HOME/.mc/config.json"
-  echo "Use 'podman ps' to view and 'podman kill' to kill running containers"
-  echo "Running the script overwrites the alias in config.json."
+  echo "Running the script overwrites the etry in config.json."
   echo "Access and secret keys are the username and password for the minio console"
   exit 0
 fi
@@ -67,35 +64,22 @@ fi
 PORT=9000
 ADMIN_PORT=9090
 DATA_PATH=$2
+URL="http://127.0.0.1:$PORT"
 ACCESS=`s3-gen-credentials access`
 SECRET=`s3-gen-credentials secret`
-#download and run minio server in container
-podman run \
-  -p $PORT:9000 \
-  -p $ADMIN_PORT:9090 \
-  -v "$DATA_PATH:/data" \
-  -e "MINIO_ROOT_USER=$ACCESS" \
-  -e "MINIO_ROOT_PASSWORD=$SECRET" \
-  quay.io/minio/minio server /data --console-address ":$ADMIN_PORT" &
-if [ $? -ne 0 ]; then
-  echo "Error running podman"
-  exit 2
-fi
-#wait for service to be available
-while ! podman ps -f status=running | grep minio >> /dev/null;
+export MINIO_ROOT_USER=$ACCESS 
+export MINIO_ROOT_PASSWORD=$SECRET 
+minio server $DATA_PATH &
+while ! ps aux | grep minio >> /dev/null;
 do
   sleep 0.5s
 done
-#there is a delay between the time the service is up
-#and the endpoint is accessible
-sleep 5
-URL="http://127.0.0.1:$PORT"
-#create alias using default credentials set above
 mc alias set $1 $URL $ACCESS $SECRET
+#create alias using default credentials set above
 if [ $? -ne 0 ]; then
   echo "Error running 'mc alias set'"
   exit 2
 fi
 echo export S3CLIENT_TEST_ACCESS=$ACCESS
 echo export S3CLIENT_TEST_SECRET=$SECRET
-echo export S3CLIENT_TEST_URL=$URL
+echo export S3CLIENT_TEST_URL="http://localhost:$PORT"
