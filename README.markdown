@@ -79,7 +79,7 @@ The access and secret keys for *play.min.io* are stored inside the
 `~/.mc/config.json` files configured after installing the the
 [minio client](https://min.io/docs/minio/linux/reference/minio-mc.html).
 
-The script `minio_setup.sh` downloads configures and runs a minio server instance
+The script `minio_podman_setup.sh` downloads configures and runs a minio server instance
 inside a contatiner using *podman*.
 
 Run the script after building all the applications and making sure that
@@ -87,12 +87,12 @@ the `s3-gen-credentials` executable is findable through the `PATH` variable.
 
 Usage
 ```sh
-./minio_setup.sh <minio alias> <data path>
+./minio_podman_setup.sh <minio alias> <data path>
 ```
 Run
 ```sh
-chmod u+x ./minio_setup.sh
-./minio_setup.sh myalias ~/tmp/minio_data
+chmod u+x ./minio_podman_setup.sh
+./minio_podman_setup.sh myalias ~/tmp/minio_data
 ```
 
 
