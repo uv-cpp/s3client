@@ -48,13 +48,16 @@ using namespace sss;
 int main(int argc, char const *argv[]) {
   // The parser with the multiple option arguments and help option.
   S3SignUrlConfig args;
+  string headers;
+  string params;
+  string dateTime;
   bool showHelp = false;
   auto cli =
       lyra::help(showHelp).description("Pre-sign S3 URLs") |
-      lyra::opt(args.accessKey,
+      lyra::opt(args.access,
                 "awsAccessKey")["-a"]["--access_key"]("AWS access key")
           .required() |
-      lyra::opt(args.secretKey,
+      lyra::opt(args.secret,
                 "awsSecretKey")["-s"]["--secret_key"]("AWS secret key")
           .required() |
       lyra::opt(args.endpoint, "endpoint")["-e"]["--endpoint"]("Endpoint URL")
@@ -62,8 +65,14 @@ int main(int argc, char const *argv[]) {
       lyra::opt(args.method, "method")["-m"]["--method"](
           "HTTP method: get | put | post | delete")
           .required() |
-      lyra::opt(args.params, "params")["-p"]["--params"](
+      lyra::opt(params, "params")["-p"]["--params"](
           "URL request parameters. key1=value1;key2=...")
+          .optional() |
+      lyra::opt(dateTime, "datetime")["-t"]["--date_time"](
+          "date time formatted as \"%Y%m%dT%H%M%SZ\"")
+          .optional() |
+      lyra::opt(headers, "headers")["-H"]["--headers"](
+          "URL request headers. header1:value1;header2:...")
           .optional() |
       lyra::opt(args.bucket, "bucket")["-b"]["--bucket"]("Bucket name") |
       lyra::opt(args.expiration, "expiration")["-t"]["--expiration"](
@@ -82,7 +91,13 @@ int main(int argc, char const *argv[]) {
     cout << cli;
     return 0;
   }
-  const string signedURL = SignS3URL(args);
+  args.headers = ParseHeaders(headers);
+  args.params = ParseParams(params);
+  if (!dateTime.empty()) {
+    const string date = dateTime.substr(8); // 20230905
+    args.dates = {dateTime, date};
+  }
+  const string signedURL = SignedURL(args);
   cout << signedURL; // << endl;
   return 0;
 }

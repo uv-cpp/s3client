@@ -137,13 +137,10 @@ public:
     } else {
       webClient_.Send();
     }
-    if (ToLower(p.method) == "head") {
-      Handle400Error(webClient_);
-    } else {
-      HandleError(webClient_);
-    }
+    HandleError(webClient_);
     return webClient_;
   }
+
   WebClient &Config(const SendParams &);
   void Send(const SendParams &params, WebClient::ReadFunction sendFun,
             void *sendUserData, WebClient::WriteFunction receiveFun,
@@ -153,6 +150,7 @@ public:
     Send(params);
   }
 
+  // Higher level API
 public:
   enum FileIOMode { BUFFERED, UNBUFFERED, MEMORY_MAPPED };
   struct DataTransferConfig {
@@ -165,7 +163,7 @@ public:
     size_t size = 0; //< if offset and size zero use file size
     int maxRetries =
         1; //< mximum number of retries per chunk, only implementd for upload
-    int jobs = 1;            //< number of parallel threads of execution
+    int jobs = 1; //< number of parallel tasks (currently == number of threads)
     size_t chunksPerJob = 1; //< number of chunks per job
   };
   void GetFileObject(const std::string &fileName, const std::string &bucket,
@@ -182,6 +180,7 @@ public:
                       FileIOMode iomode = BUFFERED, int maxRetries = 1,
                       Headers headers = {{}},
                       const std::string &payloadHash = {});
+
   /// @todo
   ETag UploadObject(const DataTransferConfig &cfg, Headers headers,
                     const std::string &payloadHash);
@@ -189,6 +188,7 @@ public:
   void DownloadObject(const DataTransferConfig &cfg, Headers headers,
                       size_t begin = 0, size_t end = 0);
 
+  // API
 public:
   void AbortMultipartUpload(const std::string &bucket, const std::string &key,
                             const UploadId &);

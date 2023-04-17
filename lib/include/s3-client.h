@@ -36,6 +36,7 @@
  * signing URLs and downloading and uploading files.
  */
 #pragma once
+#include "aws_sign.h"
 #include "common.h"
 #include "webclient.h"
 #include <string>
@@ -85,19 +86,6 @@ struct S3FileTransferConfig {
   size_t chunksPerJob = 1; //< number of chunks per job
 };
 
-/// Parameters for calls to SignS3URL function.
-struct S3SignUrlConfig {
-  std::string accessKey;
-  std::string secretKey;
-  std::string endpoint;
-  int expiration; //< expiration time in seconds  @todo Unsigned!
-  std::string method;
-  std::string bucket;
-  std::string key;
-  std::string params; //< URL parameters: "param1=val1;param2=var2"
-  std::string region = "us-east";
-};
-
 //------------------------------------------------------------------------------
 struct BucketValidation {
   bool valid = false;
@@ -119,8 +107,6 @@ void DownloadFile(S3FileTransferConfig);
 /// Parallel upload of file to object, @see S3FileTransferConfig
 std::string UploadFile(const S3FileTransferConfig &,
                        const MetaDataMap & = MetaDataMap{});
-/// Sign S3 request.
-std::string SignS3URL(const S3SignUrlConfig &);
 /// Read S3 credentials from file. Whn reading from .aws folder an aws profile
 /// can be selected.
 S3Credentials GetS3Credentials(const std::string &fileName,

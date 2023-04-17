@@ -97,5 +97,13 @@ int main(int argc, char **argv) {
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
+  try {
+    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    // delete bucket
+    s3.DeleteBucket(bucket);
+  } catch (...) {
+    cerr << "Error deleting bucket " << bucket << endl;
+    exit(EXIT_FAILURE);
+  }
   return 0;
 }

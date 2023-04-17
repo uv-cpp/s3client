@@ -44,7 +44,7 @@ Params ParseCmdLine(int argc, char **argv) {
 
   auto printUsage = [](char **argv, ostream &os) {
     cerr << "Usage: " << argv[0] << " <Access environment variable> "
-         << "Secret environment variable> <URL environment variable>" << endl;
+         << "<Secret environment variable> <URL environment variable>" << endl;
   };
   if (argc != 4) {
     cerr << "Wrong number of arguments" << endl;

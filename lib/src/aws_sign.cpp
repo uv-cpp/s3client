@@ -46,6 +46,7 @@
 #include <string>
 #include <vector>
 
+#include "aws_sign.h"
 #include "common.h"
 #include "url_utility.h"
 
@@ -160,35 +161,134 @@ string Hex(const Bytes &b) {
 
 //------------------------------------------------------------------------------
 /// Presign url, 'expiration' time must be specified in seconds
-string SignedURL(const string &accessKey, const string &secretKey,
-                 int expiration, const string &endpoint, const string &method,
-                 const string &bucketName, const string &keyName,
-                 const Parameters &params, const string &region,
-                 const Time &dates) {
-  const URL url = ParseURL(endpoint);
+string SignedURL(const S3SignUrlConfig &cfg) {
+
+  // const string &accessKey, const string &secretKey,
+  //              int expiration, const string &endpoint, const string &method,
+  //              const string &bucketName, const string &keyName,
+  //              const Parameters &params, const string &region,
+  //              const Time &dates) {
+  const URL url = ParseURL(cfg.endpoint);
   const string host =
       url.port <= 0 ? url.host : url.host + ":" + to_string(url.port);
-  Time t = dates.dateStamp.empty() ? GetDates() : dates;
+  Time t = cfg.dates.dateStamp.empty() ? GetDates() : cfg.dates;
+
   const string credentials =
-      accessKey + "/" + t.dateStamp + "/" + region + "/s3/aws4_request";
+      cfg.access + "/" + t.dateStamp + "/" + cfg.region + "/s3/aws4_request";
+
+  // headers: add x-amz headers to singned headers
+  Headers signHeaders = {{"host", host}};
+  for (auto kv : cfg.headers) {
+    if (kv.first.find("x-amz-")) {
+      signHeaders.insert(kv);
+    }
+  }
+  string signedHeadersStr;
+  for (auto kv : signHeaders) {
+    signedHeadersStr += kv.first + ';';
+  }
+  signedHeadersStr.pop_back(); // remove last ';'
+
+  Headers headers = cfg.headers;
+  headers.insert({"host", host});
+
+  ostringstream os;
+  for (auto kv : headers) {
+    os << kv.first << ':' << kv.second << '\n';
+  }
+
+  const string canonicalHeaders = os.str();
+  ////
 
   Parameters parameters = {{"X-Amz-Algorithm", "AWS4-HMAC-SHA256"},
                            {"X-Amz-Credential", credentials},
                            {"X-Amz-Date", t.timeStamp},
-                           {"X-Amz-Expires", to_string(expiration)},
-                           {"X-Amz-SignedHeaders", "host"}};
+                           {"X-Amz-Expires", to_string(cfg.expiration)},
+                           {"X-Amz-SignedHeaders", signedHeadersStr}};
 
-  if (!params.empty()) {
-    parameters.insert(begin(params), end(params));
+  if (!cfg.params.empty()) {
+    parameters.insert(begin(cfg.params), end(cfg.params));
   }
   const string canonicalQueryStringUrlEncoded = UrlEncode(parameters);
 
   string canonicalResource = "/";
 
-  if (!bucketName.empty()) {
-    canonicalResource += bucketName;
-    if (!keyName.empty()) {
-      canonicalResource += "/" + keyName;
+  if (!cfg.bucket.empty()) {
+    canonicalResource += cfg.bucket;
+    if (!cfg.key.empty()) {
+      canonicalResource += "/" + cfg.key;
+    }
+  }
+
+  const string payloadHash = "UNSIGNED-PAYLOAD";
+
+  const string canonical_request = cfg.method + "\n" + canonicalResource +
+                                   "\n" + canonicalQueryStringUrlEncoded +
+                                   "\n" + canonicalHeaders + "\n" +
+                                   signedHeadersStr + "\n" + payloadHash;
+
+  // text to sign
+  const string hashingAlgorithm = "AWS4-HMAC-SHA256";
+  const string credentialCtx =
+      t.dateStamp + "/" + cfg.region + "/" + "s3" + "/" + "aws4_request";
+  SHA256 sha256;
+  const string stringToSign = hashingAlgorithm + "\n" + t.timeStamp + "\n" +
+                              credentialCtx + "\n" + sha256(canonical_request);
+
+  // generate the signature
+  const Bytes signatureKey =
+      CreateSignatureKey(cfg.secret, t.dateStamp, cfg.region, "s3");
+
+  const string signature = Hex(hmacb<SHA256>(
+      Bytes(begin(stringToSign), end(stringToSign)), signatureKey));
+
+  string requestUrl = cfg.endpoint;
+  if (!cfg.bucket.empty()) {
+    requestUrl += "/" + cfg.bucket;
+    if (!cfg.key.empty()) {
+      requestUrl += "/" + cfg.key;
+    }
+  }
+  requestUrl +=
+      "?" + canonicalQueryStringUrlEncoded + "&X-Amz-Signature=" + signature;
+
+  return requestUrl;
+}
+
+//------------------------------------------------------------------------------
+/// Presign url, 'expiration' time must be specified in seconds
+string SignedURL_Original(const S3SignUrlConfig &cfg) {
+
+  // const string &accessKey, const string &secretKey,
+  //              int expiration, const string &endpoint, const string &method,
+  //              const string &bucketName, const string &keyName,
+  //              const Parameters &params, const string &region,
+  //              const Time &dates) {
+  const URL url = ParseURL(cfg.endpoint);
+  const string host =
+      url.port <= 0 ? url.host : url.host + ":" + to_string(url.port);
+  Time t = cfg.dates.dateStamp.empty() ? GetDates() : cfg.dates;
+
+  const string credentials =
+      cfg.access + "/" + t.dateStamp + "/" + cfg.region + "/s3/aws4_request";
+
+  Parameters parameters = {{"X-Amz-Algorithm", "AWS4-HMAC-SHA256"},
+                           {"X-Amz-Credential", credentials},
+                           {"X-Amz-Date", t.timeStamp},
+                           {"X-Amz-Expires", to_string(cfg.expiration)},
+                           {"X-Amz-SignedHeaders", "host"}};
+
+  if (!cfg.params.empty()) {
+    parameters.insert(begin(cfg.params), end(cfg.params));
+  }
+  const string canonicalQueryStringUrlEncoded = UrlEncode(parameters);
+
+  string canonicalResource = "/";
+
+  if (!cfg.bucket.empty()) {
+    canonicalResource += cfg.bucket;
+    if (!cfg.key.empty()) {
+      canonicalResource += "/" + cfg.key;
     }
   }
 
@@ -196,31 +296,31 @@ string SignedURL(const string &accessKey, const string &secretKey,
   const string canonicalHeaders = "host:" + host;
   const string signedHeaders = "host";
 
-  const string canonical_request = method + "\n" + canonicalResource + "\n" +
-                                   canonicalQueryStringUrlEncoded + "\n" +
-                                   canonicalHeaders + "\n" + "\n" +
+  const string canonical_request = cfg.method + "\n" + canonicalResource +
+                                   "\n" + canonicalQueryStringUrlEncoded +
+                                   "\n" + canonicalHeaders + "\n" + "\n" +
                                    signedHeaders + "\n" + payloadHash;
 
   // text to sign
   const string hashingAlgorithm = "AWS4-HMAC-SHA256";
   const string credentialCtx =
-      t.dateStamp + "/" + region + "/" + "s3" + "/" + "aws4_request";
+      t.dateStamp + "/" + cfg.region + "/" + "s3" + "/" + "aws4_request";
   SHA256 sha256;
   const string stringToSign = hashingAlgorithm + "\n" + t.timeStamp + "\n" +
                               credentialCtx + "\n" + sha256(canonical_request);
 
   // generate the signature
   const Bytes signatureKey =
-      CreateSignatureKey(secretKey, t.dateStamp, region, "s3");
+      CreateSignatureKey(cfg.secret, t.dateStamp, cfg.region, "s3");
 
   const string signature = Hex(hmacb<SHA256>(
       Bytes(begin(stringToSign), end(stringToSign)), signatureKey));
 
-  string requestUrl = endpoint;
-  if (!bucketName.empty()) {
-    requestUrl += "/" + bucketName;
-    if (!keyName.empty()) {
-      requestUrl += "/" + keyName;
+  string requestUrl = cfg.endpoint;
+  if (!cfg.bucket.empty()) {
+    requestUrl += "/" + cfg.bucket;
+    if (!cfg.key.empty()) {
+      requestUrl += "/" + cfg.key;
     }
   }
   requestUrl +=

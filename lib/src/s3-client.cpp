@@ -156,14 +156,6 @@ S3Credentials GetS3Credentials(const string &fileName, string awsProfile) {
           toml[awsProfile]["aws_secret_access_key"]};
 }
 
-//------------------------------------------------------------------------------
-// extern std::map<std::string, std::string> ParseParams(const std::string &);
-std::string SignS3URL(const S3SignUrlConfig &config) {
-  return SignedURL(config.accessKey, config.secretKey, config.expiration,
-                   config.endpoint, config.method, config.bucket, config.key,
-                   ParseParams(config.params), config.region);
-}
-
 //-----------------------------------------------------------------------------
 // Validate bucket name according to:
 // https://docs.aws.amazon.com/AmazonS3/latest/userguide/bucketnamingrules.html

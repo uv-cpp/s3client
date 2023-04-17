@@ -43,13 +43,29 @@
 
 namespace sss {
 
+/// Parameters for calls to SignS3URL function.
+struct S3SignUrlConfig {
+  std::string access;
+  std::string secret;
+  std::string endpoint;
+  int expiration = 0; //< expiration time in seconds  @todo Unsigned!
+  std::string method;
+  std::string bucket;
+  std::string key;
+  Parameters params; //< URL parameters: "param1=val1;param2=var2"
+  Headers headers;   //< Headers: "header1:content1;header2:content2..."
+  std::string region = "us-east";
+  Time dates;
+};
+
 /// Generate presigned URL
-std::string
-SignedURL(const std::string &accessKey, const std::string &secretKey,
-          int expiration, const std::string &endpoint,
-          const std::string &method, const std::string &bucketName = "",
-          const std::string &keyName = "", const Parameters &params = Map(),
-          const std::string &region = "us-east-1", const Time &dates = Time{});
+std::string SignedURL(const S3SignUrlConfig &);
+
+// const std::string &accessKey, const std::string &secretKey,
+//       int expiration, const std::string &endpoint,
+//       const std::string &method, const std::string &bucketName = "",
+//       const std::string &keyName = "", const Parameters &params = Map(),
+//       const std::string &region = "us-east-1", const Time &dates = Time{});
 
 /// Sign headers
 Headers
@@ -63,12 +79,12 @@ SignHeaders(const std::string &accessKey, const std::string &secretKey,
 
 /// Struct
 struct SignHeadersInfo {
-  std::string key;
+  std::string access;
   std::string secret;
   std::string endpoint;
   std::string method;
   std::string bucket;
-  std::string bucketKey;
+  std::string key;
   std::string payloadHash;
   Parameters parameters;
   Headers additionalHeaders;
