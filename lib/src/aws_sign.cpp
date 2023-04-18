@@ -161,6 +161,8 @@ string Hex(const Bytes &b) {
 
 //------------------------------------------------------------------------------
 /// Presign url, 'expiration' time must be specified in seconds
+/// @warnihg: x-amz- fields seem not to be required to sign, metatdata
+/// x-amz-meta work without adding to signed headers
 string SignedURL(const S3SignUrlConfig &cfg) {
 
   // const string &accessKey, const string &secretKey,
@@ -256,110 +258,33 @@ string SignedURL(const S3SignUrlConfig &cfg) {
 }
 
 //------------------------------------------------------------------------------
-/// Presign url, 'expiration' time must be specified in seconds
-string SignedURL_Original(const S3SignUrlConfig &cfg) {
-
-  // const string &accessKey, const string &secretKey,
-  //              int expiration, const string &endpoint, const string &method,
-  //              const string &bucketName, const string &keyName,
-  //              const Parameters &params, const string &region,
-  //              const Time &dates) {
-  const URL url = ParseURL(cfg.endpoint);
-  const string host =
-      url.port <= 0 ? url.host : url.host + ":" + to_string(url.port);
-  Time t = cfg.dates.dateStamp.empty() ? GetDates() : cfg.dates;
-
-  const string credentials =
-      cfg.access + "/" + t.dateStamp + "/" + cfg.region + "/s3/aws4_request";
-
-  Parameters parameters = {{"X-Amz-Algorithm", "AWS4-HMAC-SHA256"},
-                           {"X-Amz-Credential", credentials},
-                           {"X-Amz-Date", t.timeStamp},
-                           {"X-Amz-Expires", to_string(cfg.expiration)},
-                           {"X-Amz-SignedHeaders", "host"}};
-
-  if (!cfg.params.empty()) {
-    parameters.insert(begin(cfg.params), end(cfg.params));
-  }
-  const string canonicalQueryStringUrlEncoded = UrlEncode(parameters);
-
-  string canonicalResource = "/";
-
-  if (!cfg.bucket.empty()) {
-    canonicalResource += cfg.bucket;
-    if (!cfg.key.empty()) {
-      canonicalResource += "/" + cfg.key;
-    }
-  }
-
-  const string payloadHash = "UNSIGNED-PAYLOAD";
-  const string canonicalHeaders = "host:" + host;
-  const string signedHeaders = "host";
-
-  const string canonical_request = cfg.method + "\n" + canonicalResource +
-                                   "\n" + canonicalQueryStringUrlEncoded +
-                                   "\n" + canonicalHeaders + "\n" + "\n" +
-                                   signedHeaders + "\n" + payloadHash;
-
-  // text to sign
-  const string hashingAlgorithm = "AWS4-HMAC-SHA256";
-  const string credentialCtx =
-      t.dateStamp + "/" + cfg.region + "/" + "s3" + "/" + "aws4_request";
-  SHA256 sha256;
-  const string stringToSign = hashingAlgorithm + "\n" + t.timeStamp + "\n" +
-                              credentialCtx + "\n" + sha256(canonical_request);
-
-  // generate the signature
-  const Bytes signatureKey =
-      CreateSignatureKey(cfg.secret, t.dateStamp, cfg.region, "s3");
-
-  const string signature = Hex(hmacb<SHA256>(
-      Bytes(begin(stringToSign), end(stringToSign)), signatureKey));
-
-  string requestUrl = cfg.endpoint;
-  if (!cfg.bucket.empty()) {
-    requestUrl += "/" + cfg.bucket;
-    if (!cfg.key.empty()) {
-      requestUrl += "/" + cfg.key;
-    }
-  }
-  requestUrl +=
-      "?" + canonicalQueryStringUrlEncoded + "&X-Amz-Signature=" + signature;
-
-  return requestUrl;
-}
-//------------------------------------------------------------------------------
 /// Sign HTTP headers: return dictionary with {key, value} pairs containing
 /// per-header information.
 /// @TODO: replace arguments with struct.
-Headers SignHeaders(const string &accessKey, const string &secretKey,
-                    const string &endpoint, const string &method,
-                    const string &bucketName, const string &keyName,
-                    string payloadHash, const Parameters &parameters,
-                    const Headers &additionalHeaders, const string &region,
-                    const string &service, const Time &dates) {
+Signature ComputeSignature(const ComputeSignatureConfig &cfg) {
+
 #ifndef NDEBUG
   // do not want to waste time converting to lowercase
-  for (auto kv : additionalHeaders) {
+  for (auto kv : cfg.headers) {
     if (kv.first != ToLower(kv.first)) {
       throw invalid_argument("Header keys must be lowecase");
     }
   }
 #endif
-  if (payloadHash.empty()) {
-    payloadHash = "UNSIGNED-PAYLOAD";
-  }
-  const URL url = ParseURL(endpoint);
+  const string payloadHash =
+      cfg.payloadHash.empty() ? "UNSIGNED-PAYLOAD" : cfg.payloadHash;
+  const URL url = ParseURL(cfg.endpoint);
   const string host =
       url.port <= 0 ? url.host : url.host + ":" + to_string(url.port);
-  Time t = dates.dateStamp.empty() ? GetDates() : dates;
-  const string reqParameters = parameters.empty() ? "" : UrlEncode(parameters);
+  Time t = cfg.dates.dateStamp.empty() ? GetDates() : cfg.dates;
+  const string reqParameters =
+      cfg.parameters.empty() ? "" : UrlEncode(cfg.parameters);
   string canonicalURI = "/";
 
-  if (!bucketName.empty()) {
-    canonicalURI += bucketName;
-    if (!keyName.empty()) {
-      canonicalURI += "/" + keyName;
+  if (!cfg.bucket.empty()) {
+    canonicalURI += cfg.bucket;
+    if (!cfg.key.empty()) {
+      canonicalURI += "/" + cfg.key;
     }
   }
 
@@ -376,7 +301,7 @@ Headers SignHeaders(const string &accessKey, const string &secretKey,
     sortedSignedHeadersKeys.insert(kv.first);
   }
   // add x-amz headers
-  for (auto kv : additionalHeaders) {
+  for (auto kv : cfg.headers) {
     if (kv.first.find("x-amz-") == 0 || kv.first.find("content-length") == 0) {
       canonicalHeaders.insert(kv);
       sortedSignedHeadersKeys.insert(kv.first);
@@ -401,33 +326,40 @@ Headers SignHeaders(const string &accessKey, const string &secretKey,
 
   // canonical request
   const string canonicalRequest =
-      ToUpper(method) + '\n' + canonicalURI + '\n' + canonicalQueryString +
+      ToUpper(cfg.method) + '\n' + canonicalURI + '\n' + canonicalQueryString +
       '\n' + canonicalHeadersStr + '\n' + signedHeadersStr + '\n' + payloadHash;
 
   const string algorithm = "AWS4-HMAC-SHA256";
   const string credentialScope =
-      t.dateStamp + '/' + region + '/' + service + '/' + "aws4_request";
+      t.dateStamp + '/' + cfg.region + '/' + cfg.service + '/' + "aws4_request";
 
   SHA256 sha256;
   const string stringToSign = algorithm + '\n' + t.timeStamp + '\n' +
                               credentialScope + '\n' + sha256(canonicalRequest);
   // generate the signature
   const Bytes signatureKey =
-      CreateSignatureKey(secretKey, t.dateStamp, region, service);
+      CreateSignatureKey(cfg.secret, t.dateStamp, cfg.region, cfg.service);
 
-  const string signature = Hex(hmacb<SHA256>(
+  const auto s = Hex(hmacb<SHA256>(
       Bytes(begin(stringToSign), end(stringToSign)), signatureKey));
+  const string signature(begin(s), end(s));
+  return {signature, credentialScope, signedHeadersStr, defaultHeaders};
+}
 
+//------------------------------------------------------------------------------
+/// Sign HTTP headers: return dictionary with {key, value} pairs containing
+/// per-header information.
+Headers SignHeaders(const ComputeSignatureConfig &cfg) {
+  const auto s = ComputeSignature(cfg);
+  const string algorithm = "AWS4-HMAC-SHA256";
   // build authorisaton header
   const string authorizationHeader =
-      algorithm + ' ' + string("Credential=") + accessKey + '/' +
-      credentialScope + ", " + string("SignedHeaders=") + signedHeadersStr +
-      ", " + string("Signature=") + signature;
-
-  auto allHeaders = defaultHeaders;
-  allHeaders.insert(begin(defaultHeaders), end(defaultHeaders));
+      algorithm + ' ' + string("Credential=") + cfg.access + '/' +
+      s.credentialScope + ", " + string("SignedHeaders=") + s.signedHeadersStr +
+      ", " + string("Signature=") + s.signature;
+  auto allHeaders = s.defaultHeaders;
   allHeaders.insert({"Authorization", authorizationHeader});
-  allHeaders.insert(begin(additionalHeaders), end(additionalHeaders));
+  allHeaders.insert(begin(cfg.headers), end(cfg.headers));
   return allHeaders;
 }
 

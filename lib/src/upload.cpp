@@ -53,9 +53,14 @@ WebClient BuildUploadRequest(const S3FileTransferConfig &config,
   Parameters params = {{"partNumber", to_string(partNum + 1)},
                        {"uploadId", uploadId}};
   const string endpoint = config.endpoints[partNum % config.endpoints.size()];
-  auto signedHeaders =
-      SignHeaders(config.accessKey, config.secretKey, endpoint, "PUT",
-                  config.bucket, config.key, "", params);
+  auto signedHeaders = SignHeaders({.access = config.accessKey,
+                                    .secret = config.secretKey,
+                                    .endpoint = endpoint,
+                                    .method = "PUT",
+                                    .bucket = config.bucket,
+                                    .key = config.key,
+                                    .payloadHash = "",
+                                    .parameters = params});
   Headers headers(begin(signedHeaders), end(signedHeaders));
   WebClient req(endpoint, path, "PUT", params, headers);
   return req;
@@ -91,9 +96,14 @@ WebClient BuildEndUploadRequest(const S3FileTransferConfig &config,
   Parameters params = {{"uploadId", uploadId}};
   const size_t ri = RandomIndex(0, int(config.endpoints.size() - 1));
   const string endpoint = config.endpoints[ri];
-  auto signedHeaders =
-      SignHeaders(config.accessKey, config.secretKey, endpoint, "POST",
-                  config.bucket, config.key, "", params);
+  auto signedHeaders = SignHeaders({.access = config.accessKey,
+                                    .secret = config.secretKey,
+                                    .endpoint = endpoint,
+                                    .method = "POST",
+                                    .bucket = config.bucket,
+                                    .key = config.key,
+                                    .payloadHash = "",
+                                    .parameters = params});
   Headers headers(begin(signedHeaders), end(signedHeaders));
   WebClient req(endpoint, path, "POST", params, headers);
   req.SetPostData(BuildEndUploadXML(etags));
@@ -214,9 +224,15 @@ string UploadFile(const S3FileTransferConfig &config,
     }
     return etag;
   } else {
-    auto signedHeaders =
-        SignHeaders(config.accessKey, config.secretKey, endpoint, "PUT",
-                    config.bucket, config.key, "", {}, metaData);
+    auto signedHeaders = SignHeaders({.access = config.accessKey,
+                                      .secret = config.secretKey,
+                                      .endpoint = endpoint,
+                                      .method = "PUT",
+                                      .bucket = config.bucket,
+                                      .key = config.key,
+                                      .payloadHash = "",
+                                      .parameters = {},
+                                      .headers = metaData});
     Map headers(begin(signedHeaders), end(signedHeaders));
     WebClient req(endpoint, path, "PUT", {}, headers);
     if (!req.UploadFile(config.file)) {

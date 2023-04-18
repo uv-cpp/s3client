@@ -75,7 +75,7 @@ int main(int argc, char const *argv[]) {
           "URL request headers. header1:value1;header2:...")
           .optional() |
       lyra::opt(args.bucket, "bucket")["-b"]["--bucket"]("Bucket name") |
-      lyra::opt(args.expiration, "expiration")["-t"]["--expiration"](
+      lyra::opt(args.expiration, "expiration")["-x"]["--expiration"](
           "expiration time in seconds")
           .optional() |
       lyra::opt(args.key, "key")["-k"]["--key"]("Key name").optional();
@@ -94,8 +94,9 @@ int main(int argc, char const *argv[]) {
   args.headers = ParseHeaders(headers);
   args.params = ParseParams(params);
   if (!dateTime.empty()) {
-    const string date = dateTime.substr(8); // 20230905
+    const string date = dateTime.substr(0, 8); // 20230905
     args.dates = {dateTime, date};
+    cout << dateTime << " " << date << endl;
   }
   const string signedURL = SignedURL(args);
   cout << signedURL; // << endl;

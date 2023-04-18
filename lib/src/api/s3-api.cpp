@@ -38,11 +38,17 @@ namespace sss {
 namespace api {
 WebClient &S3Client::Config(const SendParams &p) {
   // if credentials empty send regular unsigned request
-  auto sh =
-      Access().empty()
-          ? Headers()
-          : SignHeaders(Access(), Secret(), Endpoint(), p.method, p.bucket,
-                        p.key, p.payloadHash, p.params, p.headers, p.region);
+  auto sh = Access().empty() ? Headers()
+                             : SignHeaders({.access = Access(),
+                                            .secret = Secret(),
+                                            .endpoint = Endpoint(),
+                                            .method = p.method,
+                                            .bucket = p.bucket,
+                                            .key = p.key,
+                                            .payloadHash = p.payloadHash,
+                                            .parameters = p.params,
+                                            .headers = p.headers,
+                                            .region = p.region});
   std::string path;
   if (!p.bucket.empty()) {
     path += "/" + p.bucket;

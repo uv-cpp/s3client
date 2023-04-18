@@ -75,8 +75,12 @@ int GetDownloadRetries() { return retriesG; }
 int DownloadPart(const S3FileTransferConfig &args, const string &path, int id,
                  size_t chunkSize, size_t objectSize) {
   const auto endpoint = args.endpoints[RandomIndex(0, args.endpoints.size())];
-  const auto signedHeaders = SignHeaders(
-      args.accessKey, args.secretKey, endpoint, "GET", args.bucket, args.key);
+  const auto signedHeaders = SignHeaders({.access = args.accessKey,
+                                          .secret = args.secretKey,
+                                          .endpoint = endpoint,
+                                          .method = "GET",
+                                          .bucket = args.bucket,
+                                          .key = args.key});
   Headers headers(begin(signedHeaders), end(signedHeaders));
   const size_t sz = min(chunkSize, objectSize - id * chunkSize);
   const bool lastChunk = chunkSize * id + sz == objectSize;

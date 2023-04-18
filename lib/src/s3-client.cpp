@@ -95,9 +95,14 @@ WebClient SendS3Request(S3ClientConfig args) {
   }
   auto headers = args.headers;
   if (!args.accessKey.empty()) {
-    headers =
-        SignHeaders(args.accessKey, args.secretKey, args.signUrl, args.method,
-                    args.bucket, args.key, "", args.params, headers);
+    headers = SignHeaders({.access = args.accessKey,
+                           .secret = args.secretKey,
+                           .endpoint = args.signUrl,
+                           .method = args.method,
+                           .bucket = args.bucket,
+                           .key = args.key,
+                           .parameters = args.params,
+                           .headers = headers});
   }
   WebClient req;
   req.SSLVerify(verifyPeer, verifyHost);

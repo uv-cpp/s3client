@@ -32,7 +32,8 @@
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
 
-set(CMAKE_CXX_FLAGS "-std=c++17 -flto -Ofast" ${CMAKE_CXX_FLAGS})
+set(CMAKE_CXX_FLAGS_RELEASE "-std=c++17 -flto -Ofast" ${CMAKE_CXX_FLAGS_RELEASE})
+set(CMAKE_CXX_FLAGS_DEBUG "-std=c++17" ${CMAKE_CXX_FLAGS_DEBUG})
 
 include_directories(${S3LIB_INCLUDE_DIR}
                     ${HASH_LIB_INCLUDE_DIR}
@@ -58,7 +59,11 @@ target_link_libraries("multipart-upload-test" s3client hash_lib curl)
 target_link_libraries("multipart-upload-file-test" s3client hash_lib curl) 
 target_link_libraries("abort-multipart-upload-test" s3client hash_lib curl) 
 
+add_executable(sign-test sign-test.cpp)
+add_executable(presign-url-test presign-url-test.cpp)
 add_executable("xml-parse-test" xml-parse-test.cpp)
+target_link_libraries(sign-test s3client hash_lib)
+target_link_libraries(presign-url-test s3client hash_lib)
 target_link_libraries(xml-parse-test s3client)
 
 #include(GNUInstallDirs)

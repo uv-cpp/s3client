@@ -43,7 +43,23 @@
 
 namespace sss {
 
-/// Parameters for calls to SignS3URL function.
+/// Parameters for calls to ComputerSignature and SignHeaders function
+struct ComputeSignatureConfig {
+  std::string access;
+  std::string secret;
+  std::string endpoint;
+  std::string method;
+  std::string bucket;
+  std::string key;
+  std::string payloadHash;
+  Parameters parameters;
+  Headers headers;
+  std::string region = "us-east";
+  std::string service = "s3";
+  Time dates;
+};
+
+/// Parameters for calls to SignedURL function.
 struct S3SignUrlConfig {
   std::string access;
   std::string secret;
@@ -58,42 +74,19 @@ struct S3SignUrlConfig {
   Time dates;
 };
 
-/// Generate presigned URL
+struct Signature {
+  std::string signature;
+  std::string credentialScope;
+  std::string signedHeadersStr;
+  Headers defaultHeaders;
+};
+/// Compute signature.
+Signature ComputeSignature(const ComputeSignatureConfig &);
+
+/// Generate presigned URL.
 std::string SignedURL(const S3SignUrlConfig &);
 
-// const std::string &accessKey, const std::string &secretKey,
-//       int expiration, const std::string &endpoint,
-//       const std::string &method, const std::string &bucketName = "",
-//       const std::string &keyName = "", const Parameters &params = Map(),
-//       const std::string &region = "us-east-1", const Time &dates = Time{});
-
 /// Sign headers
-Headers
-SignHeaders(const std::string &accessKey, const std::string &secretKey,
-            const std::string &endpoint, const std::string &method,
-            const std::string &bucketName = "", const std::string &keyName = "",
-            std::string payloadHash = "", const Parameters &parameters = Map(),
-            const Headers &additionalHeaders = Map(),
-            const std::string &region = "us-east-1",
-            const std::string &service = "s3", const Time &dates = Time{});
-
-/// Struct
-struct SignHeadersInfo {
-  std::string access;
-  std::string secret;
-  std::string endpoint;
-  std::string method;
-  std::string bucket;
-  std::string key;
-  std::string payloadHash;
-  Parameters parameters;
-  Headers additionalHeaders;
-  std::string region{"us-east-1"};
-  std::string service{"s3"};
-};
-
-/// Sign headers. Alternative signature using a single \c stuct
-/// instead of multiple parameters
-Map SignHeaders(const SignHeadersInfo &hi);
+Headers SignHeaders(const ComputeSignatureConfig &);
 
 } // namespace sss
