@@ -165,6 +165,7 @@ public:
         1; //< mximum number of retries per chunk, only implementd for upload
     int jobs = 1; //< number of parallel tasks (currently == number of threads)
     size_t chunksPerJob = 1; //< number of chunks per job
+    std::string payloadHash;
   };
   void GetFileObject(const std::string &fileName, const std::string &bucket,
                      const std::string &key, size_t offset = 0,
@@ -180,13 +181,6 @@ public:
                       FileIOMode iomode = BUFFERED, int maxRetries = 1,
                       Headers headers = {{}},
                       const std::string &payloadHash = {});
-
-  /// @todo
-  ETag UploadObject(const DataTransferConfig &cfg, Headers headers,
-                    const std::string &payloadHash);
-  /// @todo
-  void DownloadObject(const DataTransferConfig &cfg, Headers headers,
-                      size_t begin = 0, size_t end = 0);
 
   // API
 public:

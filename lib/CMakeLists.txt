@@ -31,18 +31,17 @@
 #*******************************************************************************
 find_package(Threads)
 
-if(API)
 set(S3_API_SRCS src/api/s3-api.cpp src/api/multipart_upload.cpp
     src/api/bucket.cpp src/api/object.cpp src/api/error.cpp)
 set(S3_API_SRCS ${S3_API_SRCS} src/api/xml_parser.cpp ${TINYXML2_DIR}/tinyxml2.cpp)
-endif(API)
 
 set(S3_CLIENT_LIB_SRCS src/url_utility.cpp src/aws_sign.cpp 
     src/webclient.cpp src/utility.cpp src/s3-client.cpp src/response_parser.cpp
-    src/download.cpp src/upload.cpp
+    src/download.cpp  src/upload-api.cpp
     ${S3_API_SRCS})
 
-set(CMAKE_CXX_FLAGS "-std=c++17 -flto -Ofast" ${CMAKE_CXX_FLAGS})
+set(CMAKE_CXX_FLAGS_RELEASE "-flto -Ofast" ${CMAKE_CXX_FLAGS_RELEASE})
+set(CMAKE_CXX_FLAGS_DEBUG "" ${CMAKE_CXX_FLAGS_DEBUG})
 
 include_directories(include)
 include_directories(${HASHLIB_INCLUDE_DIR})
