@@ -56,5 +56,6 @@ int main(int, char **) {
                             .dates = {"20230418T153022Z", "20230418"}};
   cout << "Sign,"
        << "Presign URL," << (presignedUrl == SignedURL(cfg)) << endl;
+  cout << SignedURL(cfg) << endl;
   return 0;
 }

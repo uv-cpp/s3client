@@ -52,7 +52,7 @@ int main(int, char **) {
                                    .dates = {"20230418T153022Z", "20230418"}};
 
   cout << "Sign,"
-       << "Presign URL," << (signature == ComputeSignature(cfg).signature)
+       << "Sign request," << (signature == ComputeSignature(cfg).signature)
        << endl;
   return 0;
 }

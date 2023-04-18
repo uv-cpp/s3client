@@ -96,7 +96,6 @@ int main(int argc, char const *argv[]) {
   if (!dateTime.empty()) {
     const string date = dateTime.substr(0, 8); // 20230905
     args.dates = {dateTime, date};
-    cout << dateTime << " " << date << endl;
   }
   const string signedURL = SignedURL(args);
   cout << signedURL; // << endl;
