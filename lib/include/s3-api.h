@@ -153,20 +153,20 @@ public:
   // Higher level API
 public:
   enum FileIOMode { BUFFERED, UNBUFFERED, MEMORY_MAPPED };
-  struct DataTransferConfig {
-    std::string bucket;
-    std::string key;
-    std::string file;
-    FileIOMode mode = BUFFERED;
-    const char *data = nullptr;
-    size_t offset = 0;
-    size_t size = 0; //< if offset and size zero use file size
-    int maxRetries =
-        1; //< mximum number of retries per chunk, only implementd for upload
-    int jobs = 1; //< number of parallel tasks (currently == number of threads)
-    size_t chunksPerJob = 1; //< number of chunks per job
-    std::string payloadHash;
-  };
+  // struct DataTransferConfig {
+  //   std::string bucket;
+  //   std::string key;
+  //   std::string file;
+  //   FileIOMode mode = BUFFERED;
+  //   const char *data = nullptr;
+  //   size_t offset = 0;
+  //   size_t size = 0; //< if offset and size zero use file size
+  //   int maxRetries =
+  //       1; //< mximum number of retries per chunk, only implementd for upload
+  //   int jobs = 1; //< number of parallel tasks (currently == number of
+  //   threads) size_t chunksPerJob = 1; //< number of chunks per job
+  //   std::string payloadHash;
+  // };
   void GetFileObject(const std::string &fileName, const std::string &bucket,
                      const std::string &key, size_t offset = 0,
                      size_t begin = 0, size_t end = 0, Headers = {{}});

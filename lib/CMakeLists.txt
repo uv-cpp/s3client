@@ -37,11 +37,11 @@ set(S3_API_SRCS ${S3_API_SRCS} src/api/xml_parser.cpp ${TINYXML2_DIR}/tinyxml2.c
 
 set(S3_CLIENT_LIB_SRCS src/url_utility.cpp src/aws_sign.cpp 
     src/webclient.cpp src/utility.cpp src/s3-client.cpp src/response_parser.cpp
-    src/download.cpp  src/upload-api.cpp
+    src/download-api.cpp  src/upload-api.cpp
     ${S3_API_SRCS})
 
-set(CMAKE_CXX_FLAGS_RELEASE "-flto -Ofast" ${CMAKE_CXX_FLAGS_RELEASE})
-set(CMAKE_CXX_FLAGS_DEBUG "" ${CMAKE_CXX_FLAGS_DEBUG})
+set(CMAKE_CXX_FLAGS_RELEASE "-flto -Ofast")
+set(CMAKE_CXX_FLAGS_DEBUG "-g")
 
 include_directories(include)
 include_directories(${HASHLIB_INCLUDE_DIR})

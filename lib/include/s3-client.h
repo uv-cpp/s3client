@@ -71,19 +71,23 @@ struct S3ClientConfig {
 };
 
 /// Parameters for calls to upload and download file functions.
-struct S3FileTransferConfig {
+struct S3DataTransferConfig {
   std::string accessKey;
   std::string secretKey;
-  std::string signUrl; //< @warning not implemented @todo implement
+  std::string proxyUrl; //< @warning not implemented @todo implement
   std::string bucket;
   std::string key;
   std::string file;
+  const char *data;
+  size_t offset;
+  size_t size;
   std::string awsProfile;
   std::vector<std::string> endpoints;
   int maxRetries =
       1; //< mximum number of retries per chunk, only implementd for upload
   int jobs = 1;            //< number of parallel threads of execution
   size_t chunksPerJob = 1; //< number of chunks per job
+  std::string payloadHash;
 };
 
 //------------------------------------------------------------------------------
@@ -103,9 +107,9 @@ void Validate(const S3ClientConfig &s);
 /// Send S3 request to endpoint.
 WebClient SendS3Request(S3ClientConfig);
 /// Parallel download of object to file, @see S3FileTransferConfig
-void DownloadFile(S3FileTransferConfig);
+void DownloadFile(S3DataTransferConfig);
 /// Parallel upload of file to object, @see S3FileTransferConfig
-std::string UploadFile(const S3FileTransferConfig &,
+std::string UploadFile(const S3DataTransferConfig &,
                        const MetaDataMap & = MetaDataMap{});
 /// Read S3 credentials from file. Whn reading from .aws folder an aws profile
 /// can be selected.

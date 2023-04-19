@@ -33,10 +33,7 @@
 
 // Download objects
 
-#include "aws_sign.h"
-#include "common.h"
-#include "response_parser.h"
-#include "s3-client.h"
+#include "s3-api.h"
 
 #include <algorithm>
 #include <fstream>
@@ -45,84 +42,61 @@
 using namespace std;
 
 namespace sss {
-//-----------------------------------------------------------------------------
-size_t ObjectSize(const string &s3AccessKey, const string &s3SecretKey,
-                  const string &endpoint, const string &bucket,
-                  const string &key, const string &signUrl = "") {
-  S3ClientConfig args;
-  args.accessKey = s3AccessKey;
-  args.secretKey = s3SecretKey;
-  args.endpoint = endpoint;
-  args.signUrl = signUrl;
-  args.bucket = bucket;
-  args.key = key;
-  auto req = SendS3Request(args);
-  const vector<char> h = req.GetResponseHeader();
-  const string hs(begin(h), end(h));
-  const string cl = sss::HTTPHeader(hs, "Content-Length");
-  char *ns;
-  return size_t(strtoull(cl.c_str(), &ns, 10));
-}
+using namespace api;
 
 namespace {
 // Log number or download retries;
 atomic<int> retriesG;
 } // namespace
 
-int GetDownloadRetries() { return retriesG; }
-// Extract bytes from object by specifying range in HTTP header:
-// E.g. "Range: bytes=100-1000"
-int DownloadPart(const S3DataTransferConfig &args, const string &path, int id,
-                 size_t chunkSize, size_t objectSize) {
-  const auto endpoint = args.endpoints[RandomIndex(0, args.endpoints.size())];
-  const auto signedHeaders = SignHeaders({.access = args.accessKey,
-                                          .secret = args.secretKey,
-                                          .endpoint = endpoint,
-                                          .method = "GET",
-                                          .bucket = args.bucket,
-                                          .key = args.key});
-  Headers headers(begin(signedHeaders), end(signedHeaders));
-  const size_t sz = min(chunkSize, objectSize - id * chunkSize);
-  const bool lastChunk = chunkSize * id + sz == objectSize;
-  const string range = "bytes=" + to_string(id * chunkSize) + "-" +
-                       to_string(id * chunkSize + sz - (lastChunk ? 0 : 1));
-  headers.insert({"Range", range});
-  WebClient req(endpoint, path, "GET", {}, headers);
-  FILE *out = fopen(args.file.c_str(), "wb");
-  fseek(out, id * chunkSize, SEEK_SET);
-  req.SetWriteFunction(NULL, out);
-  auto retries = args.maxRetries;
-  while (!req.Send() && retries) {
-    --retries;
-    retriesG++;
-  }
-  return req.StatusCode();
+int GetDownloadRetries() {
+  return retriesG - 1;
+} // if retriesG++, adds one before the last
+
+//-----------------------------------------------------------------------------
+void DoDownloadPart(const S3DataTransferConfig &cfg, int id, size_t chunkSize,
+                    size_t objectSize) {
+  const auto endpoint = cfg.endpoints[RandomIndex(0, cfg.endpoints.size())];
+  const size_t offset = id * chunkSize;
+  const size_t sz = min(chunkSize, objectSize - offset);
+  S3Client s3(cfg.accessKey, cfg.secretKey, endpoint);
+  s3.GetFileObject(cfg.file, cfg.bucket, cfg.key, offset, offset, offset + sz);
 }
 
 //-----------------------------------------------------------------------------
-int DownloadParts(const S3DataTransferConfig &args, const string &path,
-                  size_t chunkSize, int firstPart, int lastPart,
+// Extract bytes from object by specifying range in HTTP header:
+// E.g. "Range: bytes=100-1000"
+void DownloadPart(const S3DataTransferConfig &cfg, int id, size_t chunkSize,
                   size_t objectSize) {
-  vector<int> status;
-  for (int i = firstPart; i != lastPart; ++i) {
-    status.push_back(DownloadPart(args, path, i, chunkSize, objectSize));
+  try {
+    DoDownloadPart(cfg, id, chunkSize, objectSize);
+  } catch (const exception &e) {
+    if (retriesG++ > cfg.maxRetries)
+      throw e;
+    else
+      DoDownloadPart(cfg, id, chunkSize, objectSize);
   }
-  return *max_element(begin(status), end(status));
+}
+
+//-----------------------------------------------------------------------------
+void DownloadParts(const S3DataTransferConfig &args, size_t chunkSize,
+                   int firstPart, int lastPart, size_t objectSize) {
+  for (int i = firstPart; i != lastPart; ++i) {
+    DownloadPart(args, i, chunkSize, objectSize);
+  }
 }
 
 //-----------------------------------------------------------------------------
 void DownloadFile(S3DataTransferConfig config) {
-
   retriesG = 0;
-  vector<future<int>> status(config.jobs);
+  vector<future<void>> dloads(config.jobs);
   if (config.endpoints.empty()) {
     throw std::logic_error("No endpoint specified");
   }
+  S3Client s3(config.accessKey, config.secretKey, config.endpoints[0]);
   // retrieve file size from remote object
   const size_t fileSize =
-      ObjectSize(config.accessKey, config.secretKey, config.endpoints.front(),
-                 config.bucket, config.key, config.signUrl);
-
+      stoull(s3.HeadObject(config.bucket, config.key)["Content-Length"]);
   const size_t numParts = config.jobs * config.chunksPerJob;
   const size_t chunkSize = (fileSize + numParts - 1) / numParts;
   const size_t partsPerJob = (numParts + config.jobs - 1) / config.jobs;
@@ -132,16 +106,13 @@ void DownloadFile(S3DataTransferConfig config) {
   ofs.write("", 1);
   ofs.close();
   // initiate request
-  int chunksPerJob = 2;
-  string path = "/" + config.bucket + "/" + config.key;
   for (size_t i = 0; i != config.jobs; ++i) {
     const size_t parts = min(partsPerJob, numParts - partsPerJob * i);
-    status[i] = async(launch::async, DownloadParts, config, path, chunkSize,
+    dloads[i] = async(launch::async, DownloadParts, config, chunkSize,
                       i * partsPerJob, i * partsPerJob + parts, fileSize);
   }
-  for (auto &i : status) {
-    if (i.get() > 300)
-      throw runtime_error("Error downloading file");
+  for (auto &i : dloads) {
+    i.wait();
   }
 }
 } // namespace sss

@@ -51,7 +51,7 @@ using namespace sss;
 //------------------------------------------------------------------------------
 int main(int argc, char const *argv[]) {
   try {
-    S3FileTransferConfig config;
+    S3DataTransferConfig config;
     bool showHelp = false;
     string credentialsFile;
     string awsProfile;

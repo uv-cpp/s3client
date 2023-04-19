@@ -69,7 +69,7 @@ ETag DoUploadPart(S3Client &s3, const string &file, size_t offset, size_t size,
 }
 
 //-----------------------------------------------------------------------------
-vector<string> UploadParts(const S3FileTransferConfig &cfg,
+vector<string> UploadParts(const S3DataTransferConfig &cfg,
                            const string &uploadId, size_t chunkSize,
                            int firstPart, int lastPart, size_t fileSize) {
 
@@ -86,7 +86,7 @@ vector<string> UploadParts(const S3FileTransferConfig &cfg,
 }
 
 //-----------------------------------------------------------------------------
-string UploadFile(const S3FileTransferConfig &config,
+string UploadFile(const S3DataTransferConfig &config,
                   const MetaDataMap &metaData) {
   retriesG = 0;
   FILE *inputFile = fopen(config.file.c_str(), "rb");
