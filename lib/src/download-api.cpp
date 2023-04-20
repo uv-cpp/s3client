@@ -54,12 +54,9 @@ int GetDownloadRetries() {
 } // if retriesG++, adds one before the last
 
 //-----------------------------------------------------------------------------
-void DoDownloadPart(const S3DataTransferConfig &cfg, int id, size_t chunkSize,
-                    size_t objectSize) {
-  const auto endpoint = cfg.endpoints[RandomIndex(0, cfg.endpoints.size())];
-  const size_t offset = id * chunkSize;
-  const size_t sz = min(chunkSize, objectSize - offset);
-  S3Client s3(cfg.accessKey, cfg.secretKey, endpoint);
+void DoDownloadPart(S3Client &s3, const S3DataTransferConfig &cfg, int id,
+                    size_t chunkSize, size_t objectSize, size_t offset,
+                    size_t sz) {
   s3.GetFileObject(cfg.file, cfg.bucket, cfg.key, offset, offset, offset + sz);
 }
 
@@ -68,19 +65,24 @@ void DoDownloadPart(const S3DataTransferConfig &cfg, int id, size_t chunkSize,
 // E.g. "Range: bytes=100-1000"
 void DownloadPart(const S3DataTransferConfig &cfg, int id, size_t chunkSize,
                   size_t objectSize) {
+  const auto endpoint = cfg.endpoints[RandomIndex(0, cfg.endpoints.size() - 1)];
+  const size_t offset = id * chunkSize;
+  const size_t sz = min(chunkSize, objectSize - offset);
+  S3Client s3(cfg.accessKey, cfg.secretKey, endpoint);
   try {
-    DoDownloadPart(cfg, id, chunkSize, objectSize);
+    DoDownloadPart(s3, cfg, id, chunkSize, objectSize, offset, sz);
   } catch (const exception &e) {
     if (retriesG++ > cfg.maxRetries)
       throw e;
     else
-      DoDownloadPart(cfg, id, chunkSize, objectSize);
+      DoDownloadPart(s3, cfg, id, chunkSize, objectSize, offset, sz);
   }
 }
 
 //-----------------------------------------------------------------------------
 void DownloadParts(const S3DataTransferConfig &args, size_t chunkSize,
                    int firstPart, int lastPart, size_t objectSize) {
+  cout << firstPart << " " << lastPart << endl;
   for (int i = firstPart; i != lastPart; ++i) {
     DownloadPart(args, i, chunkSize, objectSize);
   }
@@ -95,11 +97,12 @@ void DownloadFile(S3DataTransferConfig config) {
   }
   S3Client s3(config.accessKey, config.secretKey, config.endpoints[0]);
   // retrieve file size from remote object
-  const size_t fileSize =
-      stoull(s3.HeadObject(config.bucket, config.key)["Content-Length"]);
+  const bool caseInsensitive = false;
+  const size_t fileSize = s3.GetObjectSize(config.bucket, config.key);
   const size_t numParts = config.jobs * config.chunksPerJob;
   const size_t chunkSize = (fileSize + numParts - 1) / numParts;
   const size_t partsPerJob = (numParts + config.jobs - 1) / config.jobs;
+  cout << "PPJ: " << partsPerJob << endl;
   // create output file
   std::ofstream ofs(config.file, std::ios::binary | std::ios::out);
   ofs.seekp(fileSize);

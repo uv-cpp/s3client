@@ -30,8 +30,8 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
+#include "../utility.h"
 #include "s3-api.h"
-#include "utility.h"
 #include <iostream>
 #include <string>
 #include <vector>

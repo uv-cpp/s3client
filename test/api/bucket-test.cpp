@@ -31,8 +31,8 @@
  * POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/ \
 #include <iostream>
+#include "../utility.h"
 #include "s3-api.h"
-#include "utility.h"
 #include <algorithm>
 #include <chrono>
 #include <stdexcept>

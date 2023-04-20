@@ -84,7 +84,7 @@ struct Time {
   std::string dateStamp; ///< date in \c "%Y%m%d" format
 };
 
-/// Return current time and data in the two formats required to sign AWS S3
+/// Return current time and date in the two formats required to sign AWS S3
 /// requests
 /// \return Time structure filled with both full date-time and date only
 Time GetDates();
@@ -121,6 +121,10 @@ Parameters ParseParams(std::string s);
 /// From \c "key1:value1;key2:value2 to \c {key, value} dictionary
 /// See \c https://www.w3.org/Protocols/rfc2616/rfc2616.html
 Headers ParseHeaders(const std::string &s);
+
+/// Map key to value using regular expression.
+std::string GetValue(const std::map<std::string, std::string> &map,
+                     const std::string &rx, bool caseSensitive = true);
 
 /// Adds \c x-amz-meta- prefix to map keys and checks that total size is less
 /// than maximum metadata header size (currently 2kB).

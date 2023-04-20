@@ -114,7 +114,6 @@ public:
     webClient_.SetHeaders({{}});
     webClient_.SetReqParameters({{}});
     webClient_.SetPostData("");
-    webClient_.SetUploadData({});
     webClient_.ClearBuffers();
     webClient_.ResetRWFunctions();
   }
@@ -181,6 +180,12 @@ public:
                       FileIOMode iomode = BUFFERED, int maxRetries = 1,
                       Headers headers = {{}},
                       const std::string &payloadHash = {});
+
+  ssize_t GetObjectSize(const std::string &bucket, const std::string &key);
+
+  bool ObjectExists(const std::string &bucket, const std::string &key) {
+    return GetObjectSize(bucket, key) >= 0;
+  }
 
   // API
 public:

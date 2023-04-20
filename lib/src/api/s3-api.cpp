@@ -34,6 +34,9 @@
 
 #include "s3-api.h"
 #include <stdio.h>
+
+using namespace std;
+
 namespace sss {
 namespace api {
 WebClient &S3Client::Config(const SendParams &p) {
@@ -63,6 +66,18 @@ WebClient &S3Client::Config(const SendParams &p) {
   webClient_.SetReqParameters(p.params);
   webClient_.SetHeaders(sh);
   return webClient_;
+}
+
+ssize_t S3Client::GetObjectSize(const string &bucket, const string &key) {
+  const bool caseInsensitive = false;
+  try {
+    const string v =
+        GetValue(HeadObject(bucket, key), "length", caseInsensitive);
+    // if object exists header should always be present, but just in case...
+    return v.empty() ? -1 : stoll(v);
+  } catch (...) {
+    return -1;
+  }
 }
 } // namespace api
 } // namespace sss

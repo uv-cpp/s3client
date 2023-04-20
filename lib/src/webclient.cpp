@@ -290,11 +290,6 @@ bool WebClient::SetReadFunction(ReadFunction f, void *ptr) {
     return false;
   return true;
 }
-// Fill buffer with data to be uploaded
-void WebClient::SetUploadData(const std::vector<char> &data) {
-  readBuffer_.data = data;
-  readBuffer_.offset = 0;
-}
 // Upload entire file
 bool WebClient::UploadFile(const std::string &fname, size_t fsize) {
   const size_t size = fsize ? fsize : FileSize(fname);

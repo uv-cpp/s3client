@@ -77,7 +77,6 @@ vector<string> XMLTags(const string &xml, const string &tag) {
   vector<string> tags;
   string::const_iterator searchStart(cbegin(xml));
   while (regex_search(searchStart, cend(xml), sm, rx)) {
-    cout << sm[1] << endl;
     tags.push_back(RTrim(sm[1]));
     searchStart = sm.suffix().first;
   }

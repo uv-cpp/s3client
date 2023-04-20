@@ -78,9 +78,9 @@ struct S3DataTransferConfig {
   std::string bucket;
   std::string key;
   std::string file;
-  const char *data;
-  size_t offset;
-  size_t size;
+  const char *data = nullptr;
+  size_t offset = 0;
+  size_t size = 0;
   std::string awsProfile;
   std::vector<std::string> endpoints;
   int maxRetries =

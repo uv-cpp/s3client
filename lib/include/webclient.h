@@ -160,8 +160,6 @@ public:
   bool SetWriteFunction(WriteFunction f, void *ptr);
   /// Set function libcurl uses to read data to send.
   bool SetReadFunction(ReadFunction f, void *ptr);
-  /// Store data to be sent.
-  void SetUploadData(const std::vector<char> &data);
   /// \brief Upload file
   ///
   /// \param fname file name

@@ -30,8 +30,8 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
+#include "../utility.h"
 #include "s3-api.h"
-#include "utility.h"
 #include <iostream>
 #include <numeric>
 #include <string>
@@ -43,7 +43,7 @@ using namespace api;
 int main(int argc, char **argv) {
   const Params cfg = ParseCmdLine(argc, argv);
   TestS3Access(cfg);
-  const string TEST_PREFIX = "Multipart upload file";
+  const string TEST_PREFIX = "Multipart file upload";
   const size_t SIZE = 19000000;
   // Check the default configuration for the minimum part size.
   // Om AWS the minimum size is 5MiB.

@@ -73,7 +73,9 @@ vector<string> UploadParts(const S3DataTransferConfig &cfg,
                            const string &uploadId, size_t chunkSize,
                            int firstPart, int lastPart, size_t fileSize) {
 
-  S3Client s3(cfg.accessKey, cfg.secretKey, cfg.endpoints[0]);
+  S3Client s3(cfg.accessKey, cfg.secretKey,
+              cfg.endpoints[RandomIndex(0, cfg.endpoints.size() - 1)]);
+
   vector<string> etags;
   size_t offset = firstPart * chunkSize;
   for (int i = firstPart; i != lastPart; ++i) {
@@ -96,14 +98,12 @@ string UploadFile(const S3DataTransferConfig &config,
   fclose(inputFile);
   // retrieve file size
   const size_t fileSize = sss::FileSize(config.file);
-  string path = "/" + config.bucket + "/" + config.key;
   if (config.endpoints.empty())
     throw std::logic_error("Missing endpoint information");
   const string endpoint =
       config.endpoints[RandomIndex(0, config.endpoints.size() - 1)];
   S3Client s3(config.accessKey, config.secretKey, endpoint);
   if (config.jobs > 1) {
-    S3ClientConfig args;
     // begin uplaod request -> get upload id
     const auto uploadId =
         s3.CreateMultipartUpload(config.bucket, config.key, 0, metaData);
@@ -114,8 +114,9 @@ string UploadFile(const S3DataTransferConfig &config,
     vector<future<vector<string>>> etags(config.jobs);
     for (int i = 0; i != config.jobs; ++i) {
       const size_t parts = min(partsPerJob, numParts - partsPerJob * i);
-      etags[i] = async(launch::async, UploadParts, config, uploadId, chunkSize,
-                       i * partsPerJob, i * partsPerJob + parts, fileSize);
+      etags[i] =
+          async(launch::deferred, UploadParts, config, uploadId, chunkSize,
+                i * partsPerJob, i * partsPerJob + parts, fileSize);
     }
     vector<ETag> vetags;
     for (auto &f : etags) {
@@ -124,7 +125,7 @@ string UploadFile(const S3DataTransferConfig &config,
         vetags.push_back(i);
       }
     }
-    return s3.CompleteMultipartUpload(config.bucket, config.key, uploadId,
+    return s3.CompleteMultipartUpload(uploadId, config.bucket, config.key,
                                       vetags);
   } else {
     S3Client s3(config.accessKey, config.secretKey, config.endpoints[0]);

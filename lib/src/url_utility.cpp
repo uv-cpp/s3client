@@ -159,6 +159,7 @@ Headers ParseHeaders(const string &s) {
   return headers;
 }
 
+//------------------------------------------------------------------------------
 /// Adds \c x-amz-meta- prefix to map keys and checks that total size is less
 /// than maximum metadata header size (currently 2kB).
 Map ToMeta(const Map &metadata) {
@@ -175,6 +176,19 @@ Map ToMeta(const Map &metadata) {
     throw std::domain_error("Size of metadata bigger than " +
                             to_string(MAX_META_SIZE) + " bytes");
   return meta;
+}
+
+//------------------------------------------------------------------------------
+/// Map key to value using regular expression.
+string GetValue(const map<string, string> &map, const string &rx,
+                bool caseSensitive) {
+  for (const auto &kv : map) {
+    regex re = caseSensitive ? regex(rx) : regex(rx, regex_constants::icase);
+    if (regex_match(kv.first, re)) {
+      return kv.second;
+    }
+  }
+  return string();
 }
 
 } // namespace sss

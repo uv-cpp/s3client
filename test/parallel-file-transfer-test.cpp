@@ -30,9 +30,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
-#include "../utility.h"
 #include "s3-api.h"
+#include "utility.h"
+#include <fstream>
 #include <iostream>
+#include <iterator>
 #include <numeric>
 #include <string>
 #include <vector>
@@ -43,19 +45,34 @@ using namespace api;
 int main(int argc, char **argv) {
   const Params cfg = ParseCmdLine(argc, argv);
   TestS3Access(cfg);
-  const string TEST_PREFIX = "Multipart upload";
-  const size_t SIZE = 19000000;
+  const string TEST_PREFIX = "Parallel file transfer";
+  const size_t SIZE = 38000000;
   // Check the default configuration for the minimum part size.
   // Om AWS the minimum size is 5MiB.
   // An "EntityTooSmall" error is returned when the part size is too small.
-  const size_t NUM_CHUNKS = 3;
-  const size_t CHUNK_SIZE = (SIZE + NUM_CHUNKS - 1) / NUM_CHUNKS;
-  vector<char> data(SIZE);
-  iota(begin(data), end(data), 0);
-  const string prefix = "sss-api-test-multi";
+  const size_t CHUNKS_PER_JOB = 2;
+  const size_t NUM_JOBS = 3;
+  vector<unsigned char> data(SIZE);
+  for (size_t i = 0; i != data.size(); ++i) {
+    data[i] = (unsigned char)(i % 66 + 65);
+  }
+  const string prefix = "sss-api-test-par";
   const string bucket = prefix + ToLower(Timestamp());
   const string key = prefix + "obj-" + ToLower(Timestamp());
 
+  TempFile tmp = OpenTempFile("wb", prefix);
+  cout << tmp.path << endl;
+  FILE *file = tmp.pFile;
+  if (!file) {
+    cerr << "Cannot open file " << tmp.path << " for writing" << endl;
+    exit(EXIT_FAILURE);
+  }
+  if (fwrite(data.data(), SIZE, 1, file) != 1) {
+    fclose(file);
+    cerr << "Cannot write to file " << tmp.path << endl;
+    exit(EXIT_FAILURE);
+  }
+  fclose(file);
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
     // create bucket
@@ -64,55 +81,62 @@ int main(int argc, char **argv) {
     cerr << "Error creating bucket " << bucket << endl;
     exit(EXIT_FAILURE);
   }
-
-  ///
-  string action = "CreateMultipartUpload";
-  UploadId uid;
+  string action = "Parallel file upload";
+  ////
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
-    uid = s3.CreateMultipartUpload(bucket, key);
+    S3DataTransferConfig c = {.accessKey = cfg.access,
+                              .secretKey = cfg.secret,
+                              .bucket = bucket,
+                              .key = key,
+                              .file = tmp.path,
+                              .endpoints = {cfg.url},
+                              .jobs = NUM_JOBS,
+                              .chunksPerJob = CHUNKS_PER_JOB};
+    UploadFile(c);
     TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
-  ///
-  action = "UploadPart";
-  vector<ETag> etags;
-  try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
-    ByteArray b(CHUNK_SIZE);
-    for (size_t i = 0; i != 3; ++i) {
-      const size_t size = min(CHUNK_SIZE, SIZE - CHUNK_SIZE * i);
-      const auto etag =
-          s3.UploadPart(bucket, key, uid, i, &data[i * CHUNK_SIZE], size);
-      etags.push_back(etag);
-    }
-    TestOutput(action, true, TEST_PREFIX);
-  } catch (const exception &e) {
-    TestOutput(action, false, TEST_PREFIX, e.what());
-  }
-  ///
-  action = "CompleteMultipartUpload";
-  try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
-    s3.CompleteMultipartUpload(uid, bucket, key, etags);
-    TestOutput(action, true, TEST_PREFIX);
-  } catch (const exception &e) {
-    TestOutput(action, false, TEST_PREFIX, e.what());
+  // reset file
+  {
+    ofstream os(tmp.path, ios::binary);
+    os << 0;
   }
   ////
-  action = "GetObject";
+  action = "Parallel file download";
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
-    const auto &obj = s3.GetObject(bucket, key);
-    if (obj != data) {
-      throw logic_error("Data mismatch");
-    }
+    S3DataTransferConfig c = {.accessKey = cfg.access,
+                              .secretKey = cfg.secret,
+                              .bucket = bucket,
+                              .key = key,
+                              .file = "out",
+                              .endpoints = {cfg.url},
+                              .jobs = NUM_JOBS,
+                              .chunksPerJob = CHUNKS_PER_JOB};
+    DownloadFile(c);
     TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
+  ///
+  ifstream is("out", ios::binary);
+  vector<unsigned char> input;
+  input.reserve(SIZE);
+  std::copy(std::istream_iterator<char>(is), std::istream_iterator<char>(),
+            std::back_inserter(input));
 
+  action = "Data verification";
+  if (input == data) {
+    TestOutput(action, true, TEST_PREFIX);
+  } else {
+    TestOutput(action, false, TEST_PREFIX, "Mismatch");
+  }
+  for (size_t i = 0; i != SIZE; ++i) {
+    if (data[i] != input[i]) {
+      cout << i << ": " << int(data[i]) << " " << int(input[i]) << endl;
+    }
+  }
+  ///
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
     // delete object
