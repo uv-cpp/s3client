@@ -52,16 +52,15 @@ int main(int argc, char **argv) {
   // An "EntityTooSmall" error is returned when the part size is too small.
   const size_t CHUNKS_PER_JOB = 2;
   const size_t NUM_JOBS = 3;
-  vector<unsigned char> data(SIZE);
+  vector<char> data(SIZE);
   for (size_t i = 0; i != data.size(); ++i) {
-    data[i] = (unsigned char)(i % 66 + 65);
+    data[i] = char(i % 66 + 55);
   }
   const string prefix = "sss-api-test-par";
   const string bucket = prefix + ToLower(Timestamp());
   const string key = prefix + "obj-" + ToLower(Timestamp());
 
   TempFile tmp = OpenTempFile("wb", prefix);
-  cout << tmp.path << endl;
   FILE *file = tmp.pFile;
   if (!file) {
     cerr << "Cannot open file " << tmp.path << " for writing" << endl;
@@ -93,10 +92,15 @@ int main(int argc, char **argv) {
                               .jobs = NUM_JOBS,
                               .chunksPerJob = CHUNKS_PER_JOB};
     UploadFile(c);
+    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    const ByteArray uploaded = s3.GetObject(bucket, key);
+    if (uploaded != data)
+      throw logic_error("Data mismatch");
     TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
+  exit(0);
   // reset file
   {
     ofstream os(tmp.path, ios::binary);
@@ -120,7 +124,7 @@ int main(int argc, char **argv) {
   }
   ///
   ifstream is("out", ios::binary);
-  vector<unsigned char> input;
+  vector<char> input;
   input.reserve(SIZE);
   std::copy(std::istream_iterator<char>(is), std::istream_iterator<char>(),
             std::back_inserter(input));

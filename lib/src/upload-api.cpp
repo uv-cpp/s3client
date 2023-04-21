@@ -71,18 +71,23 @@ ETag DoUploadPart(S3Client &s3, const string &file, size_t offset, size_t size,
 //-----------------------------------------------------------------------------
 vector<string> UploadParts(const S3DataTransferConfig &cfg,
                            const string &uploadId, size_t chunkSize,
-                           int firstPart, int lastPart, size_t fileSize) {
+                           int firstPart, int lastPart, size_t fileSize,
+                           int jobId) {
 
   S3Client s3(cfg.accessKey, cfg.secretKey,
               cfg.endpoints[RandomIndex(0, cfg.endpoints.size() - 1)]);
 
   vector<string> etags;
-  size_t offset = firstPart * chunkSize;
-  for (int i = firstPart; i != lastPart; ++i) {
-    const size_t size = min(chunkSize, fileSize - offset);
+  size_t offset = jobId * chunkSize;
+  chunkSize = min(chunkSize, fileSize - offset);
+  const int numParts = lastPart - firstPart;
+  const size_t partSize = (chunkSize + numParts - 1) / numParts;
+  for (int i = 0; i != numParts; ++i) {
+    const size_t size = min(partSize, chunkSize - i * partSize);
     etags.push_back(DoUploadPart(s3, cfg.file, offset, size, cfg.bucket,
-                                 cfg.key, uploadId, i, cfg.maxRetries));
-    offset += chunkSize;
+                                 cfg.key, uploadId, firstPart + i,
+                                 cfg.maxRetries));
+    offset += size;
   }
   return etags;
 }
@@ -107,16 +112,17 @@ string UploadFile(const S3DataTransferConfig &config,
     // begin uplaod request -> get upload id
     const auto uploadId =
         s3.CreateMultipartUpload(config.bucket, config.key, 0, metaData);
-    const size_t numParts = config.chunksPerJob * config.jobs;
-    const size_t partsPerJob = (numParts + config.jobs - 1) / config.jobs;
-    const size_t chunkSize = (fileSize + numParts - 1) / numParts;
+
+    // per-job part size
+    const size_t perJobSize = (fileSize + config.jobs - 1) / config.jobs;
+    // temporary @todo rename chunksPerJob to partsPerJob
+    const size_t partsPerJob = config.chunksPerJob;
     // send parts in parallel and store ETags
     vector<future<vector<string>>> etags(config.jobs);
     for (int i = 0; i != config.jobs; ++i) {
-      const size_t parts = min(partsPerJob, numParts - partsPerJob * i);
       etags[i] =
-          async(launch::deferred, UploadParts, config, uploadId, chunkSize,
-                i * partsPerJob, i * partsPerJob + parts, fileSize);
+          async(launch::async, UploadParts, config, uploadId, perJobSize,
+                i * partsPerJob, i * partsPerJob + partsPerJob, fileSize, i);
     }
     vector<ETag> vetags;
     for (auto &f : etags) {
