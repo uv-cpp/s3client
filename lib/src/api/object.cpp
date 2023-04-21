@@ -158,16 +158,14 @@ void S3Client::GetFileObject(const std::string &fileName,
                              size_t offset, size_t begin, size_t end,
                              Headers headers) {
 
-  FILE *out = fopen(fileName.c_str(), "wb");
+  FILE *out = !filesystem::exists(fileName) ? fopen(fileName.c_str(), "wb")
+                                            : fopen(fileName.c_str(), "r+b");
   if (!out) {
     throw runtime_error("Cannot open file " + fileName + " for writing");
   }
   fseek(out, offset, SEEK_SET);
 
-  if (end > 0) {
-    headers.insert(
-        {"range", "bytes=" + to_string(begin) + "-" + to_string(end)});
-  }
+  headers.insert({"range", "bytes=" + to_string(begin) + "-" + to_string(end)});
   Config({.method = "GET", .bucket = bucket, .key = key, .headers = headers});
   webClient_.SetWriteFunction(nullptr, out);
   webClient_.Send();

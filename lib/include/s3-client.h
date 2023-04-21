@@ -107,10 +107,12 @@ void Validate(const S3ClientConfig &s);
 /// Send S3 request to endpoint.
 WebClient SendS3Request(S3ClientConfig);
 /// Parallel download of object to file, @see S3FileTransferConfig
-void DownloadFile(S3DataTransferConfig);
+/// if `sync==true` perform serial transfer
+void DownloadFile(S3DataTransferConfig, bool sync = false);
 /// Parallel upload of file to object, @see S3FileTransferConfig
+/// if `sync==true` perform serial transfer
 std::string UploadFile(const S3DataTransferConfig &,
-                       const MetaDataMap & = MetaDataMap{});
+                       const MetaDataMap & = MetaDataMap{}, bool sync = false);
 /// Read S3 credentials from file. Whn reading from .aws folder an aws profile
 /// can be selected.
 S3Credentials GetS3Credentials(const std::string &fileName,

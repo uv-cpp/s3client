@@ -39,6 +39,8 @@
 #include <fstream>
 #include <future>
 #include <thread>
+
+#include <fstream>
 using namespace std;
 
 namespace sss {
@@ -49,70 +51,62 @@ namespace {
 atomic<int> retriesG;
 } // namespace
 
-int GetDownloadRetries() {
-  return retriesG - 1;
-} // if retriesG++, adds one before the last
+int GetDownloadRetries() { return retriesG; }
 
 //-----------------------------------------------------------------------------
-void DoDownloadPart(S3Client &s3, const S3DataTransferConfig &cfg, int id,
-                    size_t chunkSize, size_t objectSize, size_t offset,
-                    size_t sz) {
-  s3.GetFileObject(cfg.file, cfg.bucket, cfg.key, offset, offset, offset + sz);
-}
-
-//-----------------------------------------------------------------------------
-// Extract bytes from object by specifying range in HTTP header:
-// E.g. "Range: bytes=100-1000"
-void DownloadPart(const S3DataTransferConfig &cfg, int id, size_t chunkSize,
-                  size_t objectSize) {
-  const auto endpoint = cfg.endpoints[RandomIndex(0, cfg.endpoints.size() - 1)];
-  const size_t offset = id * chunkSize;
-  const size_t sz = min(chunkSize, objectSize - offset);
-  S3Client s3(cfg.accessKey, cfg.secretKey, endpoint);
+void DownloadPart(S3Client &s3, const string &file, const string &bucket,
+                  const string &key, size_t offset, size_t partSize,
+                  int maxRetries) {
   try {
-    DoDownloadPart(s3, cfg, id, chunkSize, objectSize, offset, sz);
+    s3.GetFileObject(file, bucket, key, offset, offset, offset + partSize - 1);
   } catch (const exception &e) {
-    if (retriesG++ > cfg.maxRetries)
+    if (retriesG++ > maxRetries)
       throw e;
     else
-      DoDownloadPart(s3, cfg, id, chunkSize, objectSize, offset, sz);
+      DownloadPart(s3, file, bucket, key, offset, partSize, maxRetries);
   }
 }
 
 //-----------------------------------------------------------------------------
-void DownloadParts(const S3DataTransferConfig &args, size_t chunkSize,
-                   int firstPart, int lastPart, size_t objectSize) {
-  cout << firstPart << " " << lastPart << endl;
-  for (int i = firstPart; i != lastPart; ++i) {
-    DownloadPart(args, i, chunkSize, objectSize);
+void DownloadParts(const S3DataTransferConfig &cfg, size_t chunkSize,
+                   int firstPart, int lastPart, size_t objectSize, int jobId) {
+  size_t offset = jobId * chunkSize;
+  chunkSize = min(chunkSize, objectSize - offset);
+  const int numParts = lastPart - firstPart;
+  const size_t partSize = (chunkSize + numParts - 1) / numParts;
+  const auto endpoint = cfg.endpoints[RandomIndex(0, cfg.endpoints.size() - 1)];
+  S3Client s3(cfg.accessKey, cfg.secretKey, endpoint);
+  for (int i = 0; i != numParts; ++i) {
+    const size_t size = min(partSize, chunkSize - i * partSize);
+    DownloadPart(s3, cfg.file, cfg.bucket, cfg.key, offset, size,
+                 cfg.maxRetries);
+    offset += size;
   }
 }
 
 //-----------------------------------------------------------------------------
-void DownloadFile(S3DataTransferConfig config) {
+void DownloadFile(S3DataTransferConfig config, bool sync) {
   retriesG = 0;
-  vector<future<void>> dloads(config.jobs);
   if (config.endpoints.empty()) {
     throw std::logic_error("No endpoint specified");
   }
   S3Client s3(config.accessKey, config.secretKey, config.endpoints[0]);
-  // retrieve file size from remote object
-  const bool caseInsensitive = false;
   const size_t fileSize = s3.GetObjectSize(config.bucket, config.key);
-  const size_t numParts = config.jobs * config.chunksPerJob;
-  const size_t chunkSize = (fileSize + numParts - 1) / numParts;
-  const size_t partsPerJob = (numParts + config.jobs - 1) / config.jobs;
-  cout << "PPJ: " << partsPerJob << endl;
   // create output file
   std::ofstream ofs(config.file, std::ios::binary | std::ios::out);
-  ofs.seekp(fileSize);
+  ofs.seekp(fileSize - 1);
   ofs.write("", 1);
   ofs.close();
   // initiate request
-  for (size_t i = 0; i != config.jobs; ++i) {
-    const size_t parts = min(partsPerJob, numParts - partsPerJob * i);
-    dloads[i] = async(launch::async, DownloadParts, config, chunkSize,
-                      i * partsPerJob, i * partsPerJob + parts, fileSize);
+  const size_t perJobSize = (fileSize + config.jobs - 1) / config.jobs;
+  // temporary @todo rename chunksPerJob to partsPerJob
+  const size_t partsPerJob = config.chunksPerJob;
+  // send parts in parallel and store ETags
+  vector<future<void>> dloads(config.jobs);
+  for (int i = 0; i != config.jobs; ++i) {
+    dloads[i] = async(sync ? launch::deferred : launch::async, DownloadParts,
+                      config, perJobSize, i * partsPerJob,
+                      i * partsPerJob + partsPerJob, fileSize, i);
   }
   for (auto &i : dloads) {
     i.wait();

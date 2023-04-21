@@ -32,6 +32,7 @@
  ******************************************************************************/
 #include "s3-api.h"
 #include "utility.h"
+#include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <iterator>
@@ -46,7 +47,7 @@ int main(int argc, char **argv) {
   const Params cfg = ParseCmdLine(argc, argv);
   TestS3Access(cfg);
   const string TEST_PREFIX = "Parallel file transfer";
-  const size_t SIZE = 38000000;
+  const size_t SIZE = 38000007;
   // Check the default configuration for the minimum part size.
   // Om AWS the minimum size is 5MiB.
   // An "EntityTooSmall" error is returned when the part size is too small.
@@ -54,7 +55,7 @@ int main(int argc, char **argv) {
   const size_t NUM_JOBS = 3;
   vector<char> data(SIZE);
   for (size_t i = 0; i != data.size(); ++i) {
-    data[i] = char(i % 66 + 55);
+    data[i] = char(i % 128);
   }
   const string prefix = "sss-api-test-par";
   const string bucket = prefix + ToLower(Timestamp());
@@ -100,7 +101,6 @@ int main(int argc, char **argv) {
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
-  exit(0);
   // reset file
   {
     ofstream os(tmp.path, ios::binary);
@@ -113,7 +113,7 @@ int main(int argc, char **argv) {
                               .secretKey = cfg.secret,
                               .bucket = bucket,
                               .key = key,
-                              .file = "out",
+                              .file = tmp.path,
                               .endpoints = {cfg.url},
                               .jobs = NUM_JOBS,
                               .chunksPerJob = CHUNKS_PER_JOB};
@@ -123,11 +123,9 @@ int main(int argc, char **argv) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
   ///
-  ifstream is("out", ios::binary);
-  vector<char> input;
-  input.reserve(SIZE);
-  std::copy(std::istream_iterator<char>(is), std::istream_iterator<char>(),
-            std::back_inserter(input));
+  FILE *fi = fopen(tmp.path.c_str(), "rb");
+  vector<char> input(SIZE);
+  fread(input.data(), SIZE, 1, fi); // input.reserve(SIZE);
 
   action = "Data verification";
   if (input == data) {
@@ -135,10 +133,9 @@ int main(int argc, char **argv) {
   } else {
     TestOutput(action, false, TEST_PREFIX, "Mismatch");
   }
-  for (size_t i = 0; i != SIZE; ++i) {
-    if (data[i] != input[i]) {
-      cout << i << ": " << int(data[i]) << " " << int(input[i]) << endl;
-    }
+  if (!filesystem::remove(tmp.path)) {
+    cerr << "Error removing file " << tmp.path << endl;
+    exit(EXIT_FAILURE);
   }
   ///
   try {
