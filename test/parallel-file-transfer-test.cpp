@@ -121,7 +121,6 @@ int main(int argc, char **argv) {
     FILE *fi = fopen(tmp.path.c_str(), "rb");
     vector<char> input(SIZE);
     fread(input.data(), SIZE, 1, fi); // input.reserve(SIZE);
-    action = "Data verification";
     if (input == data) {
       TestOutput(action, true, TEST_PREFIX);
     } else {

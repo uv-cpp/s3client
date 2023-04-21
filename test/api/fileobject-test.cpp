@@ -85,7 +85,10 @@ int main(int argc, char **argv) {
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
-  filesystem::remove(tmp.path);
+  if (!filesystem::remove(tmp.path)) {
+    cerr << "Cannot delete file " << tmp.path << endl;
+    exit(EXIT_FAILURE);
+  }
   ////
   tmp = OpenTempFile("wb", prefix);
   fclose(tmp.pFile);
@@ -106,7 +109,10 @@ int main(int argc, char **argv) {
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
-  filesystem::remove(tmp.path);
+  if (!filesystem::remove(tmp.path)) {
+    cerr << "Cannot delete file " << tmp.path << endl;
+    exit(EXIT_FAILURE);
+  }
   ////
   action = "DeleteObject";
   try {
@@ -116,11 +122,12 @@ int main(int argc, char **argv) {
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
+  action = "DeleteBucket";
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
     s3.DeleteBucket(bucketName);
+    TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
-    cerr << "Error deleting bucket " << e.what() << endl;
-    exit(EXIT_FAILURE);
+    TestOutput(action, false, TEST_PREFIX, e.what());
   }
 }

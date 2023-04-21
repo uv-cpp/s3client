@@ -127,22 +127,21 @@ int main(int argc, char **argv) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
   ///
+  action = "DeleteObject";
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
-    // delete object
     s3.DeleteObject(bucket, key);
-  } catch (...) {
-    cerr << "Error deleting object " << bucket << "/" << key << endl;
-    exit(EXIT_FAILURE);
+    TestOutput(action, true, TEST_PREFIX);
+  } catch (const exception &e) {
+    TestOutput(action, false, TEST_PREFIX, e.what());
   }
-  // delete bucket
+  action = "DeleteBucket";
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
     s3.DeleteBucket(bucket);
-  } catch (...) {
-    cerr << "Error deleting bucket " << bucket;
-
-    exit(EXIT_FAILURE);
+    TestOutput(action, true, TEST_PREFIX);
+  } catch (const exception &e) {
+    TestOutput(action, false, TEST_PREFIX, e.what());
   }
   return 0;
 }

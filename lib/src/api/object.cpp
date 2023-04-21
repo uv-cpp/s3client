@@ -165,7 +165,10 @@ void S3Client::GetFileObject(const std::string &fileName,
   }
   fseek(out, offset, SEEK_SET);
 
-  headers.insert({"range", "bytes=" + to_string(begin) + "-" + to_string(end)});
+  if (end > 0) {
+    headers.insert(
+        {"range", "bytes=" + to_string(begin) + "-" + to_string(end)});
+  }
   Config({.method = "GET", .bucket = bucket, .key = key, .headers = headers});
   webClient_.SetWriteFunction(nullptr, out);
   webClient_.Send();
