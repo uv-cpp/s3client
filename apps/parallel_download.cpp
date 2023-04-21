@@ -86,7 +86,7 @@ int main(int argc, char const *argv[]) {
         lyra::opt(config.jobs,
                   "parallel jobs")["-j"]["--jobs"]("Number of parallel jobs")
             .optional() |
-        lyra::opt(config.chunksPerJob,
+        lyra::opt(config.partsPerJob,
                   "chunks per job")["-n"]["--parts_per_job"](
             "Number of parts per job")
             .optional() |

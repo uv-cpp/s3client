@@ -89,7 +89,6 @@ int main(int argc, char **argv) {
   ///
   action = "UploadPart";
   vector<ETag> etags;
-  // FILE *ff = fopen(tmp.path.c_str(), "rb");
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
     for (size_t i = 0; i != 3; ++i) {

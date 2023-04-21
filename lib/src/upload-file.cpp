@@ -93,35 +93,33 @@ vector<string> UploadParts(const S3DataTransferConfig &cfg,
 }
 
 //-----------------------------------------------------------------------------
-string UploadFile(const S3DataTransferConfig &config,
-                  const MetaDataMap &metaData, bool sync) {
+string UploadFile(const S3DataTransferConfig &cfg, const MetaDataMap &metaData,
+                  bool sync) {
   retriesG = 0;
-  FILE *inputFile = fopen(config.file.c_str(), "rb");
+  FILE *inputFile = fopen(cfg.file.c_str(), "rb");
   if (!inputFile) {
-    throw runtime_error(string("cannot open file ") + config.file);
+    throw runtime_error(string("cannot open file ") + cfg.file);
   }
   fclose(inputFile);
   // retrieve file size
-  const size_t fileSize = sss::FileSize(config.file);
-  if (config.endpoints.empty())
+  const size_t fileSize = sss::FileSize(cfg.file);
+  if (cfg.endpoints.empty())
     throw std::logic_error("Missing endpoint information");
   const string endpoint =
-      config.endpoints[RandomIndex(0, config.endpoints.size() - 1)];
-  S3Client s3(config.accessKey, config.secretKey, endpoint);
+      cfg.endpoints[RandomIndex(0, cfg.endpoints.size() - 1)];
+  S3Client s3(cfg.accessKey, cfg.secretKey, endpoint);
   // begin uplaod request -> get upload id
   const auto uploadId =
-      s3.CreateMultipartUpload(config.bucket, config.key, 0, metaData);
+      s3.CreateMultipartUpload(cfg.bucket, cfg.key, 0, metaData);
 
   // per-job part size
-  const size_t perJobSize = (fileSize + config.jobs - 1) / config.jobs;
-  // temporary @todo rename chunksPerJob to partsPerJob
-  const size_t partsPerJob = config.chunksPerJob;
+  const size_t perJobSize = (fileSize + cfg.jobs - 1) / cfg.jobs;
   // send parts in parallel and store ETags
-  vector<future<vector<string>>> etags(config.jobs);
-  for (int i = 0; i != config.jobs; ++i) {
-    etags[i] = async(sync ? launch::deferred : launch::async, UploadParts,
-                     config, uploadId, perJobSize, i * partsPerJob,
-                     i * partsPerJob + partsPerJob, fileSize, i);
+  vector<future<vector<string>>> etags(cfg.jobs);
+  for (int i = 0; i != cfg.jobs; ++i) {
+    etags[i] = async(sync ? launch::deferred : launch::async, UploadParts, cfg,
+                     uploadId, perJobSize, i * cfg.partsPerJob,
+                     i * cfg.partsPerJob + cfg.partsPerJob, fileSize, i);
   }
   vector<ETag> vetags;
   for (auto &f : etags) {
@@ -130,7 +128,6 @@ string UploadFile(const S3DataTransferConfig &config,
       vetags.push_back(i);
     }
   }
-  return s3.CompleteMultipartUpload(uploadId, config.bucket, config.key,
-                                    vetags);
+  return s3.CompleteMultipartUpload(uploadId, cfg.bucket, cfg.key, vetags);
 }
 } // namespace sss

@@ -91,12 +91,12 @@ int main(int argc, char **argv) {
                               .file = tmp.path,
                               .endpoints = {cfg.url},
                               .jobs = NUM_JOBS,
-                              .chunksPerJob = CHUNKS_PER_JOB};
+                              .partsPerJob = CHUNKS_PER_JOB};
     UploadFile(c);
     S3Client s3(cfg.access, cfg.secret, cfg.url);
-    const ByteArray uploaded = s3.GetObject(bucket, key);
+    const CharArray uploaded = s3.GetObject(bucket, key);
     if (uploaded != data)
-      throw logic_error("Data mismatch");
+      throw logic_error("Data verification failed");
     TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());
@@ -116,23 +116,21 @@ int main(int argc, char **argv) {
                               .file = tmp.path,
                               .endpoints = {cfg.url},
                               .jobs = NUM_JOBS,
-                              .chunksPerJob = CHUNKS_PER_JOB};
+                              .partsPerJob = CHUNKS_PER_JOB};
     DownloadFile(c);
-    TestOutput(action, true, TEST_PREFIX);
+    FILE *fi = fopen(tmp.path.c_str(), "rb");
+    vector<char> input(SIZE);
+    fread(input.data(), SIZE, 1, fi); // input.reserve(SIZE);
+    action = "Data verification";
+    if (input == data) {
+      TestOutput(action, true, TEST_PREFIX);
+    } else {
+      throw logic_error("Data verification failed");
+    }
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
   ///
-  FILE *fi = fopen(tmp.path.c_str(), "rb");
-  vector<char> input(SIZE);
-  fread(input.data(), SIZE, 1, fi); // input.reserve(SIZE);
-
-  action = "Data verification";
-  if (input == data) {
-    TestOutput(action, true, TEST_PREFIX);
-  } else {
-    TestOutput(action, false, TEST_PREFIX, "Mismatch");
-  }
   if (!filesystem::remove(tmp.path)) {
     cerr << "Error removing file " << tmp.path << endl;
     exit(EXIT_FAILURE);

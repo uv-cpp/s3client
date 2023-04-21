@@ -55,7 +55,7 @@ int main(int argc, char **argv) {
     s3.CreateBucket(bucketName);
   }
   string objName = prefix + "obj-" + ToLower(Timestamp());
-  ByteArray data = ByteArray(1024);
+  CharArray data = CharArray(1024);
   iota(begin(data), end(data), 0);
   TempFile tmp = OpenTempFile("wb", prefix);
   FILE *f = tmp.pFile;
@@ -78,7 +78,7 @@ int main(int argc, char **argv) {
     if (etag.empty())
       throw runtime_error("Empty etag");
     // S3Client s32(cfg.access, cfg.secret, cfg.url);
-    const ByteArray &obj = s3.GetObject(bucketName, objName);
+    const CharArray &obj = s3.GetObject(bucketName, objName);
     if (obj != data)
       throw logic_error("Data mismatch");
     TestOutput(action, true, TEST_PREFIX);
@@ -93,7 +93,7 @@ int main(int argc, char **argv) {
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
     s3.GetFileObject(tmp.path, bucketName, objName);
-    ByteArray tmpData(data.size());
+    CharArray tmpData(data.size());
     FILE *f = fopen(tmp.path.c_str(), "rb");
     if (fread(tmpData.data(), tmpData.size(), 1, f) != 1) {
       fclose(f);

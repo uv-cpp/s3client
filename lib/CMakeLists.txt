@@ -37,7 +37,7 @@ set(S3_API_SRCS ${S3_API_SRCS} src/api/xml_parser.cpp ${TINYXML2_DIR}/tinyxml2.c
 
 set(S3_CLIENT_LIB_SRCS src/url_utility.cpp src/aws_sign.cpp 
     src/webclient.cpp src/utility.cpp src/s3-client.cpp src/response_parser.cpp
-    src/download-api.cpp  src/upload-api.cpp
+    src/download-file.cpp  src/upload-file.cpp
     ${S3_API_SRCS})
 
 set(CMAKE_CXX_FLAGS_RELEASE "-flto -Ofast")

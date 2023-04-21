@@ -85,8 +85,8 @@ struct S3DataTransferConfig {
   std::vector<std::string> endpoints;
   int maxRetries =
       1; //< mximum number of retries per chunk, only implementd for upload
-  int jobs = 1;            //< number of parallel threads of execution
-  size_t chunksPerJob = 1; //< number of chunks per job
+  int jobs = 1;           //< number of parallel threads of execution
+  size_t partsPerJob = 1; //< number of chunks per job
   std::string payloadHash;
 };
 
@@ -108,7 +108,7 @@ void Validate(const S3ClientConfig &s);
 WebClient SendS3Request(S3ClientConfig);
 /// Parallel download of object to file, @see S3FileTransferConfig
 /// if `sync==true` perform serial transfer
-void DownloadFile(S3DataTransferConfig, bool sync = false);
+void DownloadFile(const S3DataTransferConfig &, bool sync = false);
 /// Parallel upload of file to object, @see S3FileTransferConfig
 /// if `sync==true` perform serial transfer
 std::string UploadFile(const S3DataTransferConfig &,
@@ -118,7 +118,7 @@ std::string UploadFile(const S3DataTransferConfig &,
 S3Credentials GetS3Credentials(const std::string &fileName,
                                std::string awsProfile);
 
-using ByteArray = std::vector<char>;
+using CharArray = std::vector<char>;
 using StringArray = std::vector<std::string>;
 using ETag = std::string;
 using MetaDataMap = std::map<std::string, std::string>;

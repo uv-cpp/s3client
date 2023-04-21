@@ -49,7 +49,7 @@ S3Client::ListObjectV2Result ParseObjects(const std::string &xml);
 
 //------------------------------------------------------------------------------
 ETag S3Client::PutObject(const std::string &bucket, const std::string &key,
-                         const ByteArray &buffer, Headers headers,
+                         const CharArray &buffer, Headers headers,
                          const string &payloadHash) {
 
   headers.insert({"content-length", to_string(buffer.size())});
@@ -107,7 +107,7 @@ ETag S3Client::PutFileObject(const std::string &fileName,
 }
 
 //------------------------------------------------------------------------------
-const ByteArray &S3Client::GetObject(const std::string &bucket,
+const CharArray &S3Client::GetObject(const std::string &bucket,
                                      const std::string &key, size_t begin,
                                      size_t end, Headers headers) {
 
@@ -122,7 +122,7 @@ const ByteArray &S3Client::GetObject(const std::string &bucket,
 
 //------------------------------------------------------------------------------
 void S3Client::GetObject(const std::string &bucket, const std::string &key,
-                         ByteArray &buffer, size_t offset, size_t begin,
+                         CharArray &buffer, size_t offset, size_t begin,
                          size_t end, Headers headers) {
   if (end > 0) {
     headers.insert(

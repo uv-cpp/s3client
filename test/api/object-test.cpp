@@ -54,7 +54,7 @@ int main(int argc, char **argv) {
     s3.CreateBucket(bucketName);
   }
   string objName = prefix + "obj-" + ToLower(Timestamp());
-  ByteArray data = ByteArray(1024);
+  CharArray data = CharArray(1024);
   iota(begin(data), end(data), 0);
   ////
   string action = "PutObject";

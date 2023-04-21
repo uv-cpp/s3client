@@ -85,28 +85,26 @@ void DownloadParts(const S3DataTransferConfig &cfg, size_t chunkSize,
 }
 
 //-----------------------------------------------------------------------------
-void DownloadFile(S3DataTransferConfig config, bool sync) {
+void DownloadFile(const S3DataTransferConfig &cfg, bool sync) {
   retriesG = 0;
-  if (config.endpoints.empty()) {
+  if (cfg.endpoints.empty()) {
     throw std::logic_error("No endpoint specified");
   }
-  S3Client s3(config.accessKey, config.secretKey, config.endpoints[0]);
-  const size_t fileSize = s3.GetObjectSize(config.bucket, config.key);
+  S3Client s3(cfg.accessKey, cfg.secretKey, cfg.endpoints[0]);
+  const size_t fileSize = s3.GetObjectSize(cfg.bucket, cfg.key);
   // create output file
-  std::ofstream ofs(config.file, std::ios::binary | std::ios::out);
+  std::ofstream ofs(cfg.file, std::ios::binary | std::ios::out);
   ofs.seekp(fileSize - 1);
   ofs.write("", 1);
   ofs.close();
   // initiate request
-  const size_t perJobSize = (fileSize + config.jobs - 1) / config.jobs;
-  // temporary @todo rename chunksPerJob to partsPerJob
-  const size_t partsPerJob = config.chunksPerJob;
+  const size_t perJobSize = (fileSize + cfg.jobs - 1) / cfg.jobs;
   // send parts in parallel and store ETags
-  vector<future<void>> dloads(config.jobs);
-  for (int i = 0; i != config.jobs; ++i) {
+  vector<future<void>> dloads(cfg.jobs);
+  for (int i = 0; i != cfg.jobs; ++i) {
     dloads[i] = async(sync ? launch::deferred : launch::async, DownloadParts,
-                      config, perJobSize, i * partsPerJob,
-                      i * partsPerJob + partsPerJob, fileSize, i);
+                      cfg, perJobSize, i * cfg.partsPerJob,
+                      i * cfg.partsPerJob + cfg.partsPerJob, fileSize, i);
   }
   for (auto &i : dloads) {
     i.wait();

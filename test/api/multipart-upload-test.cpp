@@ -80,7 +80,7 @@ int main(int argc, char **argv) {
   vector<ETag> etags;
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
-    ByteArray b(CHUNK_SIZE);
+    CharArray b(CHUNK_SIZE);
     for (size_t i = 0; i != 3; ++i) {
       const size_t size = min(CHUNK_SIZE, SIZE - CHUNK_SIZE * i);
       const auto etag =

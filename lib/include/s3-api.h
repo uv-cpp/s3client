@@ -209,11 +209,11 @@ public:
   // @todo
   // bool DeleteObjects(const std::string &bucket,
   //                    const std::vector<std::string> &objects);
-  const ByteArray &GetObject(const std::string &bucket, const std::string &key,
+  const CharArray &GetObject(const std::string &bucket, const std::string &key,
                              size_t begin = 0, size_t end = 0, Headers = {{}});
 
   void GetObject(const std::string &bucket, const std::string &key,
-                 ByteArray &buffer, size_t offset, size_t begin = 0,
+                 CharArray &buffer, size_t offset, size_t begin = 0,
                  size_t end = 0, Headers headers = {{}});
 
   void GetObject(const std::string &bucket, const std::string &key,
@@ -236,7 +236,7 @@ public:
   //                                 &uid, int max_parts);
 
   ETag PutObject(const std::string &bucket, const std::string &key,
-                 const ByteArray &buffer, Headers = {{}},
+                 const CharArray &buffer, Headers = {{}},
                  const std::string &payloadHash = {});
 
   ETag PutObject(const std::string &bucket, const std::string &key,

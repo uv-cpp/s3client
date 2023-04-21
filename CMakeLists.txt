@@ -42,7 +42,6 @@ project(s3-client
         DESCRIPTION "Tools to sign and send S3 requests"
         LANGUAGES CXX)
 
-option(API "Build API" ON) 
 option(APPS "Build Apps" ON)
 
 set(HASHLIB_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/dep/hash" CACHE PATH "${PROJECT_SOURCE_DIR}/dep/hash")
