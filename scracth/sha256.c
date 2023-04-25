@@ -4,11 +4,52 @@
 // Testing with non-empty message, refactored code, more similar to Wikipedia
 // version Removed bitshifts on final hash, works on little-endian architectures
 // only
-
+//-----------------------------------------------------------------------------
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
+//-----------------------------------------------------------------------------
+static inline uint64_t to_big_endian(uint64_t n) {
+  const uint64_t b0 = (n & 0x00000000000000ff) << 56u;
+  const uint64_t b1 = (n & 0x000000000000ff00) << 40u;
+  const uint64_t b2 = (n & 0x0000000000ff0000) << 24u;
+  const uint64_t b3 = (n & 0x00000000ff000000) << 8u;
+  const uint64_t b4 = (n & 0x000000ff00000000) >> 8u;
+  const uint64_t b5 = (n & 0x0000ff0000000000) >> 24u;
+  const uint64_t b6 = (n & 0x00ff000000000000) >> 40u;
+  const uint64_t b7 = (n & 0xff00000000000000) >> 56u;
+
+  return b0 | b1 | b2 | b3 | b4 | b5 | b6 | b7;
+}
+static inline uint32_t to_little_endian(uint32_t n) {
+  const uint64_t b0 = (n & 0xff000000) >> 24u;
+  const uint64_t b1 = (n & 0x00ff0000) >> 8u;
+  const uint64_t b2 = (n & 0x0000ff00) << 8u;
+  const uint64_t b3 = (n & 0x000000ff) << 24u;
+  return b0 | b1 | b2 | b3;
+}
+
+static inline void to_little(uint32_t hash[8]) {
+  for (size_t i = 0; i != 8; i++)
+    hash[i] = to_little_endian(hash[i]);
+}
+
+uint64_t next_div_by(uint64_t n, uint64_t d) {
+  for (; n % d; n++)
+    ;
+  return n;
+}
+
+void hash_to_text(uint32_t hash[8], char *text) {
+  const unsigned char *h = (unsigned char *)hash;
+  char hash_text[65];
+  for (size_t i = 0; i != 32; ++i) {
+    snprintf(text + 2 * i, 3, "%02x", h[i]);
+  }
+}
+//-----------------------------------------------------------------------------
 #define RIGHT_ROTATE(x, y) (((x) >> (y)) | ((x) << (32 - (y))))
 #define S0(x)                                                                  \
   (RIGHT_ROTATE((x), 2) ^ RIGHT_ROTATE((x), 13) ^ RIGHT_ROTATE((x), 22))
@@ -55,7 +96,7 @@ void sha256_stream(uint32_t hash[8], const uint8_t data[], uint32_t length) {
   uint32_t tmp1, tmp2;
   uint32_t w[16];
 
-  size_t blocks = length / 64;
+  uint64_t blocks = length / 64;
   while (blocks--) {
     h0 = hash[0];
     h1 = hash[1];
@@ -124,32 +165,80 @@ void sha256_stream(uint32_t hash[8], const uint8_t data[], uint32_t length) {
 void sha256(const uint8_t data[], uint32_t length, uint32_t hash[8]) {
   init_with_square_roots(hash);
   sha256_stream(hash, data, length);
+  to_little(hash);
 }
 
-#if defined(TEST)
+void print_hash(uint32_t hash[8]) {
+  const unsigned char *ph = (unsigned char *)hash;
+  for (size_t i = 0; i != 32; ++i)
+    printf("%02x", ph[i]);
+  printf("\n");
+}
 
+// calculate file SHA256
+void sha256_file(const char *fname, uint32_t hash[8]) {
+  FILE *f = fopen(fname, "rb");
+  if (!f) {
+    fprintf(stderr, "Error opening file %s\n", fname);
+    exit(EXIT_FAILURE);
+  }
+  const size_t BUFSIZE = 0x100000; // 1 MiB
+  char buf[BUFSIZE];
+  memset(buf, 0, BUFSIZE);
+  init_with_square_roots(hash);
+  size_t length = 0;
+  while (1) {
+    size_t bytes = fread(buf, 1, BUFSIZE, f);
+    if (!bytes) {
+      perror("Error reading from file");
+      exit(EXIT_FAILURE);
+    }
+    int eof = 0;
+    if (bytes < BUFSIZE)
+      eof = 1;
+    else {
+      int c = getc(f);
+      ungetc(c, f);
+      if (c == EOF)
+        eof = 1;
+    }
+    if (eof) {
+      const uint64_t message_size = next_div_by(bytes + 1 + 8, 64);
+      // allocate and zero out
+      uint8_t message[message_size];
+      memset(message, 0, message_size);
+      memcpy(message, buf, bytes);
+      // pad with '1' and zeros (array already zeroed out)
+      message[bytes] = 0x80; // 100..
+      // pad with length in big endian format
+      const uint64_t data_bit_size = 8 * (length + bytes);
+      const uint64_t size = to_big_endian(data_bit_size);
+      memcpy(&message[message_size - 8], &size, sizeof(uint64_t));
+      sha256_stream(hash, (uint8_t *)message, message_size);
+      break;
+    } else {
+
+      sha256_stream(hash, (uint8_t *)buf, (uint32_t)BUFSIZE);
+    }
+    memset(buf, 0, BUFSIZE);
+    length += bytes;
+  }
+  to_little(hash);
+}
+
+//-----------------------------------------------------------------------------
+#ifdef TEST
 #include <assert.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
-static inline size_t to_big_endian(size_t n) {
-  const uint64_t b0 = (n & 0x00000000000000ff) << 56u;
-  const uint64_t b1 = (n & 0x000000000000ff00) << 40u;
-  const uint64_t b2 = (n & 0x0000000000ff0000) << 24u;
-  const uint64_t b3 = (n & 0x00000000ff000000) << 8u;
-  const uint64_t b4 = (n & 0x000000ff00000000) >> 8u;
-  const uint64_t b5 = (n & 0x0000ff0000000000) >> 24u;
-  const uint64_t b6 = (n & 0x00ff000000000000) >> 40u;
-  const uint64_t b7 = (n & 0xff00000000000000) >> 56u;
-
-  return b0 | b1 | b2 | b3 | b4 | b5 | b6 | b7;
-}
-
-static const char *sha256sum_generated =
-    "dd7f20ca4910f937c3e560427de36fea7c37eed94899b3a9bf286905860d17ae";
+static const char *file_name = "tmp-input";
 
 // signgle block
 void test1() {
+  static const char *sha256sum_generated =
+      "dd7f20ca4910f937c3e560427de36fea7c37eed94899b3a9bf286905860d17ae";
   // message
   const char c[] = "12345678"
                    "12345678"
@@ -159,40 +248,116 @@ void test1() {
                    "12345678";
   // write to file so that it can be fed to sha256sum or equivalent
   // command to test correctness
-  FILE *out = fopen("input", "wb");
-  const size_t data_size = strlen(c);
+  FILE *out = fopen(file_name, "wb");
+  if (!out) {
+    fprintf(stderr, "Error opening file %s\n", file_name);
+    exit(EXIT_FAILURE);
+  }
+  const uint64_t data_size = strlen(c);
   fwrite(c, data_size, 1, out);
   fclose(out);
   uint8_t m[data_size];
-  // read form file to make sure it's the same input sent to
+  // read from file to make sure it's the same input sent to
   // sha256 hashing application
-  FILE *in = fopen("input", "rb");
-  fread(&m, data_size, 1, in);
-  const size_t message_size = 64; // single 512 block
+  FILE *in = fopen(file_name, "rb");
+  if (!fread(&m, data_size, 1, in)) {
+    fprintf(stderr, "Error reading from file %s\n", file_name);
+    exit(EXIT_FAILURE);
+  }
+  const uint64_t message_size = 64; // single 512 block
   uint8_t message[message_size];
   memset(message, 0, message_size);
   memcpy(message, m, data_size);
   // pad with '1' and zeros (array already zeroed out)
   message[data_size] = 0x80; // 1 + 0 x 63
   // pad with length in big endian format
-  const size_t data_bit_size = 8 * data_size;
+  const uint64_t data_bit_size = 8 * data_size;
   const uint64_t size = to_big_endian(data_bit_size);
   memcpy(&message[56], &size, 8);
 
   uint32_t hash[8];
-  sha256(message, sizeof(message), hash);
+  sha256(message, message_size, hash);
+  const unsigned char *h = (unsigned char *)hash;
   // 64 chars + null terminator
   char hash_text[65];
-  snprintf(hash_text, 65, "%02x%02x%02x%02x%02x%02x%02x%02x", hash[0], hash[1],
-           hash[2], hash[3], hash[4], hash[5], hash[6], hash[7]);
-  printf("%s\n", hash_text);
-  assert(strncmp(hash_text, sha256sum_generated, 65) == 0);
+  for (size_t i = 0; i != 32; ++i) {
+    snprintf(hash_text + 2 * i, 3, "%02x", h[i]);
+  }
+  // printf("%s\n", hash_text);
+  assert(strncmp(hash_text, sha256sum_generated, 65) == 0 && "test 1");
+  printf("Test 1 passed\n");
 }
 
+// multi-block
 void test2() {
-  // message
+  static const char *sha256sum_generated =
+      "0c65765f1b9fff74bb831fa24c63d9ab0513c881fc7b4919b43f72f5487a24fd";
+  // message 14 x 8 + 7 bytes
   const char c[] = "12345678"
                    "12345678"
+                   "12345678"
+                   "12345678"
+                   "12345678"
+                   "12345678"
+                   "12345678"
+                   "12345678"
+                   "12345678"
+                   "12345678"
+                   "12345678"
+                   "12345678"
+                   "12345678"
+                   "12345678"
+                   "1234567";
+  // write to file so that it can be fed to sha256sum or equivalent
+  // command to test correctness
+  FILE *out = fopen(file_name, "wb");
+  if (!out) {
+    fprintf(stderr, "Error opening file %s\n", file_name);
+    exit(EXIT_FAILURE);
+  }
+  const uint64_t data_size = strlen(c);
+  fwrite(c, data_size, 1, out);
+  fclose(out);
+  uint8_t m[data_size];
+  // read from file to make sure it's the same input sent to
+  // sha256 hashing application
+  FILE *in = fopen(file_name, "rb");
+  if (!fread(&m, data_size, 1, in)) {
+    fprintf(stderr, "Error reading from file %s\n", file_name);
+    exit(EXIT_FAILURE);
+  }
+  // message size = next number divisable by 64
+  const uint64_t message_size = next_div_by(data_size + 1 + 8, 64);
+  // allocate and zero out
+  uint8_t message[message_size];
+  memset(message, 0, message_size);
+  memcpy(message, m, data_size);
+  // pad with '1' and zeros (array already zeroed out)
+  message[data_size] = 0x80; // 100..
+  // pad with length in big endian format
+  const uint64_t data_bit_size = 8 * data_size;
+  const uint64_t size = to_big_endian(data_bit_size);
+  memcpy(&message[message_size - 8], &size, sizeof(uint64_t));
+
+  uint32_t hash[8];
+  sha256(message, message_size, hash);
+
+  const unsigned char *h = (unsigned char *)hash;
+  char hash_text[65];
+  for (size_t i = 0; i != 32; ++i) {
+    snprintf(hash_text + 2 * i, 3, "%02x", h[i]);
+  }
+  // printf("%s\n", hash_text);
+  assert(strncmp(hash_text, sha256sum_generated, 64) == 0 && "test 2");
+  printf("Test 2 passed\n");
+}
+
+// multi-block 2
+void test3() {
+  static const char *sha256sum_generated =
+      "979e3016a670a5b1308dba2d715f75201eebcef0adc4a1ac99877fad91ce3ff6";
+  // message 15 x 8 bytes
+  const char c[] = "12345678"
                    "12345678"
                    "12345678"
                    "12345678"
@@ -209,42 +374,69 @@ void test2() {
                    "12345678";
   // write to file so that it can be fed to sha256sum or equivalent
   // command to test correctness
-  FILE *out = fopen("input", "wb");
-  const size_t data_size = strlen(c);
+  FILE *out = fopen(file_name, "wb");
+  if (!out) {
+    fprintf(stderr, "Error opening file %s\n", file_name);
+    exit(EXIT_FAILURE);
+  }
+  const uint64_t data_size = strlen(c);
   fwrite(c, data_size, 1, out);
   fclose(out);
   uint8_t m[data_size];
-  // read form file to make sure it's the same input sent to
+  // read from file to make sure it's the same input sent to
   // sha256 hashing application
-  FILE *in = fopen("input", "rb");
-  fread(&m, data_size, 1, in);
-  // message size = data size +
-  const size_t message_size = 128; // single 512 block
+  FILE *in = fopen(file_name, "rb");
+  if (!fread(&m, data_size, 1, in)) {
+    fprintf(stderr, "Error reading from file %s\n", file_name);
+    exit(EXIT_FAILURE);
+  }
+  // message size = next number divisable by 64
+  // need to always allocate at least 1 byte for 0x80 (1...) padding and 8 bytes
+  // for length data
+  const uint64_t message_size = next_div_by(data_size + 1 + 8, 64);
+  // allocate and zero out
   uint8_t message[message_size];
   memset(message, 0, message_size);
   memcpy(message, m, data_size);
   // pad with '1' and zeros (array already zeroed out)
-  // message[data_size] = 0x80; // 1 + 0 x 63
+  message[data_size] = 0x80; // 100..
   // pad with length in big endian format
-  const size_t data_bit_size = 8 * data_size;
+  const uint64_t data_bit_size = 8 * data_size;
   const uint64_t size = to_big_endian(data_bit_size);
-  // memcpy(&message[56], &size, 8);
+  memcpy(&message[message_size - 8], &size, sizeof(uint64_t));
 
   uint32_t hash[8];
-  sha256(message, sizeof(message), hash);
-  // 64 chars + null terminator
-  char hash_text[64];
-  snprintf(hash_text, 65, "%02x%02x%02x%02x%02x%02x%02x%02x", hash[0], hash[1],
-           hash[2], hash[3], hash[4], hash[5], hash[6], hash[7]);
-  printf("%s\n", hash_text);
-  // assert(strncmp(hash_text, sha256sum_generated, 65) == 0);
-}
-// multi-block
+  sha256(message, message_size, hash);
 
+  const unsigned char *h = (unsigned char *)hash;
+  char hash_text[65];
+  for (size_t i = 0; i != 32; ++i) {
+    snprintf(hash_text + 2 * i, 3, "%02x", h[i]);
+  }
+  // printf("%s\n", hash_text);
+  assert(strncmp(hash_text, sha256sum_generated, 64) == 0 && "test 3");
+  printf("Test 3 passed\n");
+}
+
+void test4(const char *fname, const char *test_hash) {
+  uint32_t hash[8];
+  sha256_file(fname, hash);
+  char hash_text[64];
+  hash_to_text(hash, hash_text);
+  assert(strncmp(hash_text, test_hash, 64) == 0 && "test 4");
+  printf("Test 4 passed\n");
+  // print_hash(hash);
+}
 //
 int main(int argc, char *argv[]) {
+  test1();
   test2();
+  test3();
+  if (argc != 3) {
+    fprintf(stderr, "Usage: %s <test file> <test file hash>\n", argv[0]);
+    exit(EXIT_FAILURE);
+  }
+  test4(argv[1], argv[2]);
   return 0;
 }
-
 #endif
