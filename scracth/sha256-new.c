@@ -1,10 +1,7 @@
-// sha256.c - SHA reference implementation
-// Copied from Jeffrey Walton's version
+// sha256.c - SHA256 reference implementation
 //
-// Testing with non-empty message, refactored code, more similar to Wikipedia
-// version Removed bitshifts on final hash, works on little-endian architectures
-// only
 //-----------------------------------------------------------------------------
+#include <assert.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -50,15 +47,27 @@ void hash_to_text(uint32_t hash[8], char *text) {
   }
 }
 //-----------------------------------------------------------------------------
-#define RIGHT_ROTATE(x, y) (((x) >> (y)) | ((x) << (32 - (y))))
-#define S0(x)                                                                  \
-  (RIGHT_ROTATE((x), 2) ^ RIGHT_ROTATE((x), 13) ^ RIGHT_ROTATE((x), 22))
-#define S1(x)                                                                  \
-  (RIGHT_ROTATE((x), 6) ^ RIGHT_ROTATE((x), 11) ^ RIGHT_ROTATE((x), 25))
+// right rotate
+static inline uint32_t right_rotate(uint32_t x, uint32_t n) {
+  return (x >> n) | (x << (32 - n));
+}
 
-#define CH(x, y, z) (((x) & (y)) ^ ((~(x)) & (z)))
-#define MAJ(x, y, z) (((x) & (y)) ^ ((x) & (z)) ^ ((y) & (z)))
+static inline uint32_t Sigma0(uint32_t x) {
+  return right_rotate(x, 2) ^ right_rotate(x, 13) ^ right_rotate(x, 22);
+}
+static inline uint32_t Sigma1(uint32_t x) {
+  return right_rotate(x, 6) ^ right_rotate(x, 11) ^ right_rotate(x, 25);
+}
 
+// Choose: if c bit == 0 select bit from y else select bit from x
+static inline uint32_t Ch(uint32_t c, uint32_t x, uint32_t y) {
+  return (c & x) ^ ((~c) & y);
+}
+
+// Majority: if at least two zeroes return 0 else return 1
+static inline uint32_t Maj(uint32_t x, uint32_t y, uint32_t z) {
+  return (x & y) ^ (x & z) ^ (y & z);
+}
 // Initialize array of round constants:
 // first 32 bits of the fractional parts of the cube roots of the first 64
 // primes 2..311:
@@ -91,73 +100,64 @@ void init_with_square_roots(uint32_t hash[8]) {
 // sha256 algorithm, streaming version: receives and updates hash
 // data is unsigned byte, all other variables are usigned 32 bit int
 void sha256_stream(uint32_t hash[8], const uint8_t data[], uint32_t length) {
-  uint32_t h0, h1, h2, h3, h4, h5, h6, h7;
-  uint32_t s0, s1;
-  uint32_t tmp1, tmp2;
+  uint32_t a, b, c, d, e, f, g, h;
   uint32_t w[16];
-
   uint64_t blocks = length / 64;
   while (blocks--) {
-    h0 = hash[0];
-    h1 = hash[1];
-    h2 = hash[2];
-    h3 = hash[3];
-    h4 = hash[4];
-    h5 = hash[5];
-    h6 = hash[6];
-    h7 = hash[7];
+    a = hash[0];
+    b = hash[1];
+    c = hash[2];
+    d = hash[3];
+    e = hash[4];
+    f = hash[5];
+    g = hash[6];
+    h = hash[7];
 
     for (int i = 0; i != 16; ++i) {
       w[i] = lshift(data[0], 24) | lshift(data[1], 16) | lshift(data[2], 8) |
              lshift(data[3], 0);
       data += 4;
 
-      tmp1 = h7;
-      tmp1 += S1(h4);
-      tmp1 += CH(h4, h5, h6);
-      tmp1 += K[i];
-      tmp1 += w[i];
-
-      tmp2 = S0(h0);
-      tmp2 += MAJ(h0, h1, h2);
-
-      h7 = h6;
-      h6 = h5;
-      h5 = h4;
-      h4 = h3 + tmp1;
-      h3 = h2;
-      h2 = h1;
-      h1 = h0;
-      h0 = tmp1 + tmp2;
+      const uint32_t tmp1 = h + Sigma1(e) + Ch(e, f, g) + K[i] + w[i];
+      const uint32_t tmp2 = Sigma0(a) + Maj(a, b, c);
+      h = g;
+      g = f;
+      f = e;
+      e = d + tmp1;
+      d = c;
+      c = b;
+      b = a;
+      a = tmp1 + tmp2;
     }
 
     for (int i = 16; i != 64; ++i) {
-      s0 = w[(i + 1) & 0x0f];
-      s0 = RIGHT_ROTATE(s0, 7) ^ RIGHT_ROTATE(s0, 18) ^ ((s0) >> 3);
-      s1 = w[(i + 14) & 0x0f];
-      s1 = RIGHT_ROTATE(s1, 17) ^ RIGHT_ROTATE(s1, 19) ^ (s1 >> 10);
-
-      tmp1 = w[i & 0xf] += s0 + s1 + w[(i + 9) & 0xf];
-      tmp1 += h7 + S1(h4) + CH(h4, h5, h6) + K[i];
-      tmp2 = S0(h0) + MAJ(h0, h1, h2);
-      h7 = h6;
-      h6 = h5;
-      h5 = h4;
-      h4 = h3 + tmp1;
-      h3 = h2;
-      h2 = h1;
-      h1 = h0;
-      h0 = tmp1 + tmp2;
+      const uint32_t s0 = w[(i + 1) & 0x0f];
+      const uint32_t sigma0 =
+          right_rotate(s0, 7) ^ right_rotate(s0, 18) ^ (s0 >> 3);
+      const uint32_t s1 = w[(i + 14) & 0x0f];
+      const uint32_t sigma1 =
+          right_rotate(s1, 17) ^ right_rotate(s1, 19) ^ (s1 >> 10);
+      w[i & 0xf] += sigma0 + sigma1 + w[(i + 9) & 0xf];
+      const uint32_t tmp1 = w[i & 0xf] + h + Sigma1(e) + Ch(e, f, g) + K[i];
+      const uint32_t tmp2 = Sigma0(a) + Maj(a, b, c);
+      h = g;
+      g = f;
+      f = e;
+      e = d + tmp1;
+      d = c;
+      c = b;
+      b = a;
+      a = tmp1 + tmp2;
     }
 
-    hash[0] += h0;
-    hash[1] += h1;
-    hash[2] += h2;
-    hash[3] += h3;
-    hash[4] += h4;
-    hash[5] += h5;
-    hash[6] += h6;
-    hash[7] += h7;
+    hash[0] += a;
+    hash[1] += b;
+    hash[2] += c;
+    hash[3] += d;
+    hash[4] += e;
+    hash[5] += f;
+    hash[6] += g;
+    hash[7] += h;
   }
 }
 
@@ -182,9 +182,9 @@ void sha256_file(const char *fname, uint32_t hash[8]) {
     fprintf(stderr, "Error opening file %s\n", fname);
     exit(EXIT_FAILURE);
   }
-  const size_t BUFSIZE = 0x100000; // 1 MiB
-  char buf[BUFSIZE];
-  memset(buf, 0, BUFSIZE);
+  const size_t BUFSIZE = 0x1000000; // 16 MiB
+  char *buf = (char *)calloc(BUFSIZE, sizeof(char));
+  assert(buf);
   init_with_square_roots(hash);
   size_t length = 0;
   while (1) {
@@ -205,8 +205,8 @@ void sha256_file(const char *fname, uint32_t hash[8]) {
     if (eof) {
       const uint64_t message_size = next_div_by(bytes + 1 + 8, 64);
       // allocate and zero out
-      uint8_t message[message_size];
-      memset(message, 0, message_size);
+      uint8_t *message = (uint8_t *)calloc(message_size, sizeof(char));
+      assert(buf);
       memcpy(message, buf, bytes);
       // pad with '1' and zeros (array already zeroed out)
       message[bytes] = 0x80; // 100..
@@ -215,6 +215,7 @@ void sha256_file(const char *fname, uint32_t hash[8]) {
       const uint64_t size = to_big_endian(data_bit_size);
       memcpy(&message[message_size - 8], &size, sizeof(uint64_t));
       sha256_stream(hash, (uint8_t *)message, message_size);
+      free(message);
       break;
     } else {
 
@@ -224,6 +225,7 @@ void sha256_file(const char *fname, uint32_t hash[8]) {
     length += bytes;
   }
   to_little(hash);
+  free(buf);
 }
 
 //-----------------------------------------------------------------------------
@@ -421,12 +423,12 @@ void test3() {
 void test4(const char *fname, const char *test_hash) {
   uint32_t hash[8];
   sha256_file(fname, hash);
-  char hash_text[64];
+  char hash_text[65];
   hash_to_text(hash, hash_text);
   assert(strncmp(hash_text, test_hash, 64) == 0 && "test 4");
   printf("Test 4 passed\n");
-  // print_hash(hash);
 }
+
 //
 int main(int argc, char *argv[]) {
   test1();
