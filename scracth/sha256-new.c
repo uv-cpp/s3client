@@ -61,7 +61,7 @@ static inline uint32_t Sigma1(uint32_t x) {
 
 // Choose: if c bit == 0 select bit from y else select bit from x
 static inline uint32_t Ch(uint32_t c, uint32_t x, uint32_t y) {
-  return (c & x) ^ ((~c) & y);
+  return (c & x) | ((~c) & y);
 }
 
 // Majority: if at least two zeroes return 0 else return 1
