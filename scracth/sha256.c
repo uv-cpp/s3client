@@ -99,7 +99,7 @@ void init_with_square_roots(uint32_t hash[8]) {
 
 // sha256 algorithm, streaming version: receives and updates hash
 // data is unsigned byte, all other variables are usigned 32 bit int
-void sha256_stream(uint32_t hash[8], const uint8_t data[], uint32_t length) {
+void sha256_stream(uint32_t hash[8], const uint8_t data[], uint64_t length) {
   uint32_t a, b, c, d, e, f, g, h;
   uint32_t w[16];
   uint64_t blocks = length / 64;
@@ -242,30 +242,13 @@ void test1() {
   static const char *sha256sum_generated =
       "dd7f20ca4910f937c3e560427de36fea7c37eed94899b3a9bf286905860d17ae";
   // message
-  const char c[] = "12345678"
+  const char m[] = "12345678"
                    "12345678"
                    "12345678"
                    "12345678"
                    "12345678"
                    "12345678";
-  // write to file so that it can be fed to sha256sum or equivalent
-  // command to test correctness
-  FILE *out = fopen(file_name, "wb");
-  if (!out) {
-    fprintf(stderr, "Error opening file %s\n", file_name);
-    exit(EXIT_FAILURE);
-  }
-  const uint64_t data_size = strlen(c);
-  fwrite(c, data_size, 1, out);
-  fclose(out);
-  uint8_t m[data_size];
-  // read from file to make sure it's the same input sent to
-  // sha256 hashing application
-  FILE *in = fopen(file_name, "rb");
-  if (!fread(&m, data_size, 1, in)) {
-    fprintf(stderr, "Error reading from file %s\n", file_name);
-    exit(EXIT_FAILURE);
-  }
+  const uint64_t data_size = strlen(m);
   const uint64_t message_size = 64; // single 512 block
   uint8_t message[message_size];
   memset(message, 0, message_size);
@@ -295,7 +278,7 @@ void test2() {
   static const char *sha256sum_generated =
       "0c65765f1b9fff74bb831fa24c63d9ab0513c881fc7b4919b43f72f5487a24fd";
   // message 14 x 8 + 7 bytes
-  const char c[] = "12345678"
+  const char m[] = "12345678"
                    "12345678"
                    "12345678"
                    "12345678"
@@ -310,24 +293,7 @@ void test2() {
                    "12345678"
                    "12345678"
                    "1234567";
-  // write to file so that it can be fed to sha256sum or equivalent
-  // command to test correctness
-  FILE *out = fopen(file_name, "wb");
-  if (!out) {
-    fprintf(stderr, "Error opening file %s\n", file_name);
-    exit(EXIT_FAILURE);
-  }
-  const uint64_t data_size = strlen(c);
-  fwrite(c, data_size, 1, out);
-  fclose(out);
-  uint8_t m[data_size];
-  // read from file to make sure it's the same input sent to
-  // sha256 hashing application
-  FILE *in = fopen(file_name, "rb");
-  if (!fread(&m, data_size, 1, in)) {
-    fprintf(stderr, "Error reading from file %s\n", file_name);
-    exit(EXIT_FAILURE);
-  }
+  const uint64_t data_size = strlen(m);
   // message size = next number divisable by 64
   const uint64_t message_size = next_div_by(data_size + 1 + 8, 64);
   // allocate and zero out
@@ -359,7 +325,7 @@ void test3() {
   static const char *sha256sum_generated =
       "979e3016a670a5b1308dba2d715f75201eebcef0adc4a1ac99877fad91ce3ff6";
   // message 15 x 8 bytes
-  const char c[] = "12345678"
+  const char m[] = "12345678"
                    "12345678"
                    "12345678"
                    "12345678"
@@ -374,24 +340,7 @@ void test3() {
                    "12345678"
                    "12345678"
                    "12345678";
-  // write to file so that it can be fed to sha256sum or equivalent
-  // command to test correctness
-  FILE *out = fopen(file_name, "wb");
-  if (!out) {
-    fprintf(stderr, "Error opening file %s\n", file_name);
-    exit(EXIT_FAILURE);
-  }
-  const uint64_t data_size = strlen(c);
-  fwrite(c, data_size, 1, out);
-  fclose(out);
-  uint8_t m[data_size];
-  // read from file to make sure it's the same input sent to
-  // sha256 hashing application
-  FILE *in = fopen(file_name, "rb");
-  if (!fread(&m, data_size, 1, in)) {
-    fprintf(stderr, "Error reading from file %s\n", file_name);
-    exit(EXIT_FAILURE);
-  }
+  const uint64_t data_size = strlen(m);
   // message size = next number divisable by 64
   // need to always allocate at least 1 byte for 0x80 (1...) padding and 8 bytes
   // for length data
