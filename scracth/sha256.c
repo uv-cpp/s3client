@@ -90,7 +90,7 @@ static inline uint32_t lshift(uint8_t n, uint8_t nbits) {
 }
 // First 32 bits of the fractional parts of the square roots of the first 8
 // primes 2..19
-void init_with_square_roots(uint32_t hash[8]) {
+void init_hash(uint32_t hash[8]) {
 
   uint32_t h[8] = {0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
                    0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19};
@@ -179,7 +179,7 @@ uint8_t *alloc_padded(uint64_t size, uint64_t buffer_size, size_t *sz,
 
 // sha256 on single fixed size buffer
 void sha256(const uint8_t data[], uint32_t length, uint32_t hash[8]) {
-  init_with_square_roots(hash);
+  init_hash(hash);
   size_t sz = 0;
   uint8_t *message = alloc_padded(length, length, &sz, NULL);
   sha256_stream(hash, data, length);
@@ -216,7 +216,7 @@ void sha256_file(const char *fname, uint32_t hash[8]) {
   const size_t BUFSIZE = 0x1000000; // 16 MiB
   char *buf = (char *)calloc(BUFSIZE, sizeof(char));
   assert(buf);
-  init_with_square_roots(hash);
+  init_hash(hash);
   size_t length = 0;
   while (1) {
     size_t bytes = fread(buf, 1, BUFSIZE, f);
