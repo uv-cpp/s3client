@@ -34,8 +34,12 @@
 // See:
 // https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html
 // https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-header-based-auth.html
-#include <hmac.h>
-#include <sha256.h>
+// #include <sha256.h>
+
+#include "s3hash/sha256.h"
+
+void hmac256(const uint8_t *data, size_t length, const uint8_t *key,
+             size_t key_length, uint8_t hmac_hash[64]);
 
 #include <ctime>
 #include <iomanip>
@@ -57,56 +61,20 @@ namespace sss {
 //------------------------------------------------------------------------------
 using Bytes = vector<uint8_t>;
 
-//------------------------------------------------------------------------------
-// Compute HMAC hash of data and key using MD5, SHA1 or SHA256
-// using byte arrays instead of strings
-// Code modified from
-// hmac.h
-// Copyright (c) 2015 Stephan Brumme. All rights reserved.
-// see http://create.stephan-brumme.com/disclaimer.html
-template <typename HashMethod> Bytes hmacb(const Bytes &d, const Bytes &k) {
-  const void *data = d.data();
-  const size_t numDataBytes = d.size();
-  const void *key = k.data();
-  const size_t numKeyBytes = k.size();
-  // initialize key with zeros
-  unsigned char usedKey[HashMethod::BlockSize] = {0};
+std::string SHA256(const string &s) {
 
-  // adjust length of key: must contain exactly blockSize bytes
-  if (numKeyBytes <= HashMethod::BlockSize) {
-    // copy key
-    memcpy(usedKey, key, numKeyBytes);
-  } else {
-    // shorten key: usedKey = hashed(key)
-    HashMethod keyHasher;
-    keyHasher.add(key, numKeyBytes);
-    keyHasher.getHash(usedKey);
-  }
-
-  // create initial XOR padding
-  for (size_t i = 0; i < HashMethod::BlockSize; i++)
-    usedKey[i] ^= 0x36;
-
-  // inside = hash((usedKey ^ 0x36) + data)
-  unsigned char inside[HashMethod::HashBytes];
-  HashMethod insideHasher;
-  insideHasher.add(usedKey, HashMethod::BlockSize);
-  insideHasher.add(data, numDataBytes);
-  insideHasher.getHash(inside);
-
-  // undo usedKey's previous 0x36 XORing and apply a XOR by 0x5C
-  for (size_t i = 0; i < HashMethod::BlockSize; i++)
-    usedKey[i] ^= 0x5C ^ 0x36;
-
-  // hash((usedKey ^ 0x5C) + hash((usedKey ^ 0x36) + data))
-  HashMethod finalHasher;
-  finalHasher.add(usedKey, HashMethod::BlockSize);
-  finalHasher.add(inside, HashMethod::HashBytes);
-  std::vector<uint8_t> b(HashMethod::HashBytes);
-  finalHasher.getHash(b.data());
-  return b;
+  uint32_t hash[8];
+  sha256((const uint8_t *)s.c_str(), (uint32_t)s.size(), hash);
+  char h[65];
+  hash_to_text(hash, h);
+  return h;
 }
 
+Bytes HMAC256(const Bytes &d, const Bytes &k) {
+  vector<uint8_t> hash(32);
+  hmac256(d.data(), d.size(), k.data(), k.size(), hash.data());
+  return hash;
+}
 //------------------------------------------------------------------------------
 /// Return time in the two formats required to sign AWS requests:
 /// - full date-time
@@ -129,9 +97,7 @@ Time GetDates() {
 
 //------------------------------------------------------------------------------
 /// HMAC encoding byte arrays --> byte array
-Bytes Hash(const Bytes &key, const Bytes &msg) {
-  return hmacb<SHA256>(msg, key);
-}
+Bytes Hash(const Bytes &key, const Bytes &msg) { return HMAC256(msg, key); }
 
 //------------------------------------------------------------------------------
 /// Create AWS signature key as byte array
@@ -241,8 +207,8 @@ string SignedURL(const S3SignUrlConfig &cfg) {
   const Bytes signatureKey =
       CreateSignatureKey(cfg.secret, t.dateStamp, cfg.region, "s3");
 
-  const string signature = Hex(hmacb<SHA256>(
-      Bytes(begin(stringToSign), end(stringToSign)), signatureKey));
+  const string signature =
+      Hex(HMAC256(Bytes(begin(stringToSign), end(stringToSign)), signatureKey));
 
   string requestUrl = cfg.endpoint;
   if (!cfg.bucket.empty()) {
@@ -333,15 +299,15 @@ Signature ComputeSignature(const ComputeSignatureConfig &cfg) {
   const string credentialScope =
       t.dateStamp + '/' + cfg.region + '/' + cfg.service + '/' + "aws4_request";
 
-  SHA256 sha256;
+  // SHA256 sha256;
   const string stringToSign = algorithm + '\n' + t.timeStamp + '\n' +
-                              credentialScope + '\n' + sha256(canonicalRequest);
+                              credentialScope + '\n' + SHA256(canonicalRequest);
   // generate the signature
   const Bytes signatureKey =
       CreateSignatureKey(cfg.secret, t.dateStamp, cfg.region, cfg.service);
 
-  const auto s = Hex(hmacb<SHA256>(
-      Bytes(begin(stringToSign), end(stringToSign)), signatureKey));
+  const auto s =
+      Hex(HMAC256(Bytes(begin(stringToSign), end(stringToSign)), signatureKey));
   const string signature(begin(s), end(s));
   return {signature, credentialScope, signedHeadersStr, defaultHeaders};
 }

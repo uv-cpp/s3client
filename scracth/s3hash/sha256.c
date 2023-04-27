@@ -28,7 +28,7 @@ static inline uint32_t to_little_endian(uint32_t n) {
   return b0 | b1 | b2 | b3;
 }
 
-void to_little(uint32_t hash[8]) {
+static inline void to_little(uint32_t hash[8]) {
   for (size_t i = 0; i != 8; i++)
     hash[i] = to_little_endian(hash[i]);
 }
@@ -163,7 +163,7 @@ void sha256_stream(uint32_t hash[8], const uint8_t data[], uint64_t length) {
 
 uint8_t *alloc_padded(uint64_t size, uint64_t buffer_size, size_t *sz,
                       uint8_t *tmpbuf) {
-  *sz = next_div_by(size + 1 + 8, 64);
+  *sz = next_div_by(size + 1 + 64, 64);
   uint8_t *buf = NULL;
   if (tmpbuf) {
     memset(tmpbuf, 0, *sz);
@@ -183,7 +183,6 @@ void sha256(const uint8_t data[], uint32_t length, uint32_t hash[8]) {
   size_t sz = 0;
   uint8_t *message = alloc_padded(length, length, &sz, NULL);
   sha256_stream(hash, data, length);
-  free(message);
   to_little(hash);
 }
 
