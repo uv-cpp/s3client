@@ -36,10 +36,7 @@
 // https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-header-based-auth.html
 // #include <sha256.h>
 
-#include "s3hash/sha256.h"
-
-void hmac256(const uint8_t *data, size_t length, const uint8_t *key,
-             size_t key_length, uint8_t hmac_hash[64]);
+// #include "sha256.h"
 
 #include <ctime>
 #include <iomanip>
@@ -52,10 +49,12 @@ void hmac256(const uint8_t *data, size_t length, const uint8_t *key,
 
 #include "aws_sign.h"
 #include "common.h"
+#include "sha256.h"
 #include "url_utility.h"
-
+void hmac256(const uint8_t *data, size_t length, const uint8_t *key,
+             size_t key_length, uint8_t hmac_hash[64]);
 using namespace std;
-
+using namespace sha256;
 namespace sss {
 
 //------------------------------------------------------------------------------
@@ -63,7 +62,7 @@ using Bytes = vector<uint8_t>;
 
 std::string SHA256(const string &s) {
   uint32_t hash[8];
-  sha256((const uint8_t *)s.c_str(), (uint32_t)s.size(), hash);
+  sha256::sha256((const uint8_t *)s.c_str(), (uint32_t)s.size(), hash);
   char h[65];
   hash_to_text(hash, h);
   return h;

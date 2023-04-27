@@ -35,20 +35,22 @@ set(S3_API_SRCS src/api/s3-api.cpp src/api/multipart_upload.cpp
     src/api/bucket.cpp src/api/object.cpp src/api/error.cpp)
 set(S3_API_SRCS ${S3_API_SRCS}  src/api/xml_parser.cpp ${TINYXML2_DIR}/tinyxml2.cpp)
 
+set(HASH_SRCS hash/hmac256.cpp hash/sha256.cpp hash/utility.cpp)
 set(S3_CLIENT_LIB_SRCS src/url_utility.cpp src/aws_sign.cpp 
     src/webclient.cpp src/utility.cpp src/s3-client.cpp src/response_parser.cpp
     src/download-file.cpp  src/upload-file.cpp
-    ${S3_API_SRCS})
+    ${S3_API_SRCS} ${HASH_SRCS}) 
+
 
 set(CMAKE_CXX_FLAGS_RELEASE "-flto -march=native -Ofast")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 
 include_directories(include)
-include_directories(${HASHLIB_INCLUDE_DIR})
+include_directories(hash)
 include_directories(${TINYXML2_DIR})
 
-add_library(s3client src/s3hash/hmac256.cpp src/s3hash/sha256.cpp ${S3_CLIENT_LIB_SRCS})
-target_link_libraries(s3client curl hash_lib)
+add_library(s3client ${HASH_SRCS} ${S3_CLIENT_LIB_SRCS})
+target_link_libraries(s3client curl)
 
 include(GNUInstallDirs)
 install(TARGETS s3client

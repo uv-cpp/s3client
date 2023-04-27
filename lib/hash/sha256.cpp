@@ -1,71 +1,29 @@
 // sha256.c - SHA256 reference implementation
 //
 //-----------------------------------------------------------------------------
+#include "sha256.h"
+#include "utility.h"
 #include <assert.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-//-----------------------------------------------------------------------------
-static inline uint64_t to_big_endian(uint64_t n) {
-  const uint64_t b0 = (n & 0x00000000000000ff) << 56u;
-  const uint64_t b1 = (n & 0x000000000000ff00) << 40u;
-  const uint64_t b2 = (n & 0x0000000000ff0000) << 24u;
-  const uint64_t b3 = (n & 0x00000000ff000000) << 8u;
-  const uint64_t b4 = (n & 0x000000ff00000000) >> 8u;
-  const uint64_t b5 = (n & 0x0000ff0000000000) >> 24u;
-  const uint64_t b6 = (n & 0x00ff000000000000) >> 40u;
-  const uint64_t b7 = (n & 0xff00000000000000) >> 56u;
-
-  return b0 | b1 | b2 | b3 | b4 | b5 | b6 | b7;
-}
-static inline uint32_t to_little_endian(uint32_t n) {
-  const uint64_t b0 = (n & 0xff000000) >> 24u;
-  const uint64_t b1 = (n & 0x00ff0000) >> 8u;
-  const uint64_t b2 = (n & 0x0000ff00) << 8u;
-  const uint64_t b3 = (n & 0x000000ff) << 24u;
-  return b0 | b1 | b2 | b3;
-}
-
-void to_little(uint32_t hash[8]) {
-  for (size_t i = 0; i != 8; i++)
-    hash[i] = to_little_endian(hash[i]);
-}
-
-uint64_t next_div_by(uint64_t n, uint64_t d) {
-  for (; n % d; n++)
-    ;
-  return n;
-}
-
-void hash_to_text(uint32_t hash[8], char *text) {
-  const unsigned char *h = (unsigned char *)hash;
-  char hash_text[65];
-  for (size_t i = 0; i != 32; ++i) {
-    snprintf(text + 2 * i, 3, "%02x", h[i]);
-  }
-}
-//-----------------------------------------------------------------------------
-// right rotate
-static inline uint32_t right_rotate(uint32_t x, uint32_t n) {
-  return (x >> n) | (x << (32 - n));
-}
-
-static inline uint32_t Sigma0(uint32_t x) {
+namespace sha256 {
+inline uint32_t Sigma0(uint32_t x) {
   return right_rotate(x, 2) ^ right_rotate(x, 13) ^ right_rotate(x, 22);
 }
-static inline uint32_t Sigma1(uint32_t x) {
+inline uint32_t Sigma1(uint32_t x) {
   return right_rotate(x, 6) ^ right_rotate(x, 11) ^ right_rotate(x, 25);
 }
 
 // Choose: if c bit == 0 select bit from y else select bit from x
-static inline uint32_t Ch(uint32_t c, uint32_t x, uint32_t y) {
+inline uint32_t Ch(uint32_t c, uint32_t x, uint32_t y) {
   return (c & x) | ((~c) & y);
 }
 
 // Majority: if at least two zeroes return 0 else return 1
-static inline uint32_t Maj(uint32_t x, uint32_t y, uint32_t z) {
+inline uint32_t Maj(uint32_t x, uint32_t y, uint32_t z) {
   return (x & y) ^ (x & z) ^ (y & z);
 }
 // Initialize array of round constants:
@@ -84,10 +42,6 @@ static const uint32_t K[] = {
     0x5B9CCA4F, 0x682E6FF3, 0x748F82EE, 0x78A5636F, 0x84C87814, 0x8CC70208,
     0x90BEFFFA, 0xA4506CEB, 0xBEF9A3F7, 0xC67178F2};
 
-// left shift of unsigned 8 bit int and conversion to 32 bit
-static inline uint32_t lshift(uint8_t n, uint8_t nbits) {
-  return (uint32_t)n << nbits;
-}
 // First 32 bits of the fractional parts of the square roots of the first 8
 // primes 2..19
 void init_hash(uint32_t hash[8]) {
@@ -159,22 +113,6 @@ void sha256_stream(uint32_t hash[8], const uint8_t data[], uint64_t length) {
     hash[6] += g;
     hash[7] += h;
   }
-}
-
-uint8_t *alloc_padded(uint64_t size, uint64_t buffer_size, size_t *sz,
-                      uint8_t *tmpbuf) {
-  *sz = next_div_by(size + 1 + 8, 64);
-  uint8_t *buf = NULL;
-  if (tmpbuf) {
-    memset(tmpbuf, 0, *sz);
-    buf = tmpbuf;
-  } else {
-    buf = (uint8_t *)calloc(*sz, sizeof(uint8_t));
-  }
-  buf[size] = 0x80;
-  const uint64_t bitsize = to_big_endian(8 * size);
-  memcpy(&buf[*sz - 8], &bitsize, sizeof(bitsize));
-  return buf;
 }
 
 // sha256 on single fixed size buffer
@@ -265,13 +203,15 @@ void sha256_file(const char *fname, uint32_t hash[8]) {
   to_little(hash);
   free(buf);
 }
-
+} // namespace sha256
 //-----------------------------------------------------------------------------
 #ifdef TEST
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+using namespace sha256;
 
 static const char *file_name = "tmp-input";
 

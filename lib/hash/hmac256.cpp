@@ -31,21 +31,18 @@
  * POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 #include "sha256.h"
+#include "utility.h"
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 // H((K xor opad) concat H( (K xor ipad ) concat message))
-// if length(message) % 64 == 0
-// == H(K xor opad) concat H'(H(K xor ipat) concat H'(message))
-// where H' == H but with length bytes set to sum of individual items
-// H( a concat b concat c) = H(a) concat H(b) concat H'(c) where H' is the
-// same as H but with length bytes == length(a) + length(b) + length(c)
-//
 // K = K if length(K) <=block size, H(K) otherwise
 // opad = 0x5c times 64
 // ipad = 0x36 times 64
 // H = hash function
+
+using namespace sha256;
 
 void hmac256(const uint8_t *data, size_t length, const uint8_t *key,
              size_t key_length, uint8_t hmac_hash[32]) {
@@ -59,7 +56,7 @@ void hmac256(const uint8_t *data, size_t length, const uint8_t *key,
   if (key_length <= 64) {
     memcpy(K, key, key_length);
   } else {
-    sha256(key, length, (uint32_t *)K);
+    sha256::sha256(key, length, (uint32_t *)K);
   }
   for (int i = 0; i != 64; ++i) {
     opad[i] = K[i] ^ 0x5c;

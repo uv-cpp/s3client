@@ -44,7 +44,6 @@ project(s3-client
 
 option(APPS "Build Apps" ON)
 
-set(HASHLIB_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/dep/hash" CACHE PATH "${PROJECT_SOURCE_DIR}/dep/hash")
 set(S3LIB_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/lib/include" CACHE PATH "${PROJECT_SOURCE_DIR}/lib/include")
 set(LYRA_INCLUDE_DIR "${PROJECT_SOURCE_DIR}/dep/Lyra/include" CACHE PATH "${PROJECT_SOURCE_DIR}/dep/Lyra/include")
 set(TINYXML2_DIR "${PROJECT_SOURCE_DIR}/dep/tinyxml2" CACHE PATH "${PROJECT_SOURCE_DIR}/dep/tinyxml2")
@@ -57,12 +56,11 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/build/release)
 
 if (CMAKE_BUILD_TYPE EQUAL "DEBUG")
     set(LINK_DIRS ${CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG} CACHE PATH "")
-else (CMAKE_BUILD_TYPE EQUAL "DEBUG")
+else (CMAKE_BUILD_TYPE EQUAL "RELEASE")
     set(LINK_DIRS ${CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE} CACHE PATH "")
 endif (CMAKE_BUILD_TYPE EQUAL "DEBUG")
 
 
-add_subdirectory(dep/hash)
 add_subdirectory(lib)
 if(APPS)
 add_subdirectory(apps)
