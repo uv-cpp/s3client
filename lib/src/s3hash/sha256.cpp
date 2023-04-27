@@ -178,12 +178,18 @@ uint8_t *alloc_padded(uint64_t size, uint64_t buffer_size, size_t *sz,
 }
 
 // sha256 on single fixed size buffer
-void sha256(const uint8_t data[], uint32_t length, uint32_t hash[8]) {
+void sha256(const uint8_t data[], size_t length, uint32_t hash[8]) {
   init_hash(hash);
+  const static size_t MAX_BUF_SIZE = 4096;
+  thread_local static uint8_t buf[MAX_BUF_SIZE];
+  int stack_buffer = next_div_by(length + 1 + 8, 64) <= MAX_BUF_SIZE;
   size_t sz = 0;
-  uint8_t *message = alloc_padded(length, length, &sz, NULL);
-  sha256_stream(hash, data, length);
-  free(message);
+  uint8_t *message =
+      alloc_padded(length, length, &sz, stack_buffer ? buf : NULL);
+  memcpy(message, data, length);
+  sha256_stream(hash, message, sz);
+  if (!stack_buffer)
+    free(message);
   to_little(hash);
 }
 

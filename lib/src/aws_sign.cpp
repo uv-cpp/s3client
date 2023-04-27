@@ -62,7 +62,6 @@ namespace sss {
 using Bytes = vector<uint8_t>;
 
 std::string SHA256(const string &s) {
-
   uint32_t hash[8];
   sha256((const uint8_t *)s.c_str(), (uint32_t)s.size(), hash);
   char h[65];
@@ -199,9 +198,8 @@ string SignedURL(const S3SignUrlConfig &cfg) {
   const string hashingAlgorithm = "AWS4-HMAC-SHA256";
   const string credentialCtx =
       t.dateStamp + "/" + cfg.region + "/" + "s3" + "/" + "aws4_request";
-  SHA256 sha256;
   const string stringToSign = hashingAlgorithm + "\n" + t.timeStamp + "\n" +
-                              credentialCtx + "\n" + sha256(canonical_request);
+                              credentialCtx + "\n" + SHA256(canonical_request);
 
   // generate the signature
   const Bytes signatureKey =
@@ -299,7 +297,6 @@ Signature ComputeSignature(const ComputeSignatureConfig &cfg) {
   const string credentialScope =
       t.dateStamp + '/' + cfg.region + '/' + cfg.service + '/' + "aws4_request";
 
-  // SHA256 sha256;
   const string stringToSign = algorithm + '\n' + t.timeStamp + '\n' +
                               credentialScope + '\n' + SHA256(canonicalRequest);
   // generate the signature
