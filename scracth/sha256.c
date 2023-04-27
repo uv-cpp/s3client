@@ -161,13 +161,44 @@ void sha256_stream(uint32_t hash[8], const uint8_t data[], uint64_t length) {
   }
 }
 
+uint8_t *alloc_padded(uint64_t size, uint64_t buffer_size, size_t *sz,
+                      uint8_t *tmpbuf) {
+  *sz = next_div_by(size + 1 + 64, 64);
+  uint8_t *buf = NULL;
+  if (tmpbuf) {
+    memset(tmpbuf, 0, *sz);
+    buf = tmpbuf;
+  } else {
+    buf = (uint8_t *)calloc(*sz, sizeof(uint8_t));
+  }
+  buf[size] = 0x80;
+  const uint64_t bitsize = to_big_endian(8 * size);
+  memcpy(&buf[*sz - 8], &bitsize, sizeof(bitsize));
+  return buf;
+}
+
 // sha256 on single fixed size buffer
 void sha256(const uint8_t data[], uint32_t length, uint32_t hash[8]) {
   init_with_square_roots(hash);
+  size_t sz = 0;
+  uint8_t *message = alloc_padded(length, length, &sz, NULL);
   sha256_stream(hash, data, length);
   to_little(hash);
 }
 
+void sha256_next(const uint8_t data[], uint32_t length, uint32_t hash[8],
+                 size_t total_length, uint8_t *tmpbuf) {
+  if (total_length == 0) {
+    sha256_stream(hash, data, length);
+  } else {
+    size_t sz = 0;
+    uint8_t *message = alloc_padded(length, total_length, &sz, tmpbuf);
+    memcpy(message, data, length);
+    sha256_stream(hash, data, sz);
+    if (message != tmpbuf)
+      free(message);
+  }
+}
 void print_hash(uint32_t hash[8]) {
   const unsigned char *ph = (unsigned char *)hash;
   for (size_t i = 0; i != 32; ++i)
