@@ -1,7 +1,7 @@
 #include "utility.h"
-#include <stdint.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdint>
+#include <cstdlib>
+#include <cstring>
 
 uint8_t *alloc_padded(uint64_t size, uint64_t buffer_size, size_t *sz,
                       uint8_t *tmpbuf) {

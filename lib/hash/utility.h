@@ -1,7 +1,7 @@
 #pragma once
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
+#include <cstdint>
+#include <cstdio>
+#include <cstdlib>
 //-----------------------------------------------------------------------------
 inline uint64_t to_big_endian(uint64_t n) {
   const uint64_t b0 = (n & 0x00000000000000ff) << 56u;
@@ -15,6 +15,7 @@ inline uint64_t to_big_endian(uint64_t n) {
 
   return b0 | b1 | b2 | b3 | b4 | b5 | b6 | b7;
 }
+
 inline uint32_t to_little_endian(uint32_t n) {
   const uint64_t b0 = (n & 0xff000000) >> 24u;
   const uint64_t b1 = (n & 0x00ff0000) >> 8u;
@@ -30,9 +31,12 @@ inline uint64_t next_div_by(uint64_t n, uint64_t d) {
 }
 
 //-----------------------------------------------------------------------------
-// right rotate
 inline uint32_t right_rotate(uint32_t x, uint32_t n) {
   return (x >> n) | (x << (32 - n));
+}
+
+inline uint32_t left_rotate(uint32_t x, uint32_t n) {
+  return (x << n) | (x >> (32 - n));
 }
 
 // left shift of unsigned 8 bit int and conversion to 32 bit

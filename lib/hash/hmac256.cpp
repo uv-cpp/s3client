@@ -32,10 +32,10 @@
  ******************************************************************************/
 #include "sha256.h"
 #include "utility.h"
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdint>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 // H((K xor opad) concat H( (K xor ipad ) concat message))
 // K = K if length(K) <=block size, H(K) otherwise
 // opad = 0x5c times 64

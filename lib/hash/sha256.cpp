@@ -3,11 +3,11 @@
 //-----------------------------------------------------------------------------
 #include "sha256.h"
 #include "utility.h"
-#include <assert.h>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cassert>
+#include <cstdint>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
 namespace sha256 {
 inline uint32_t Sigma0(uint32_t x) {
@@ -42,14 +42,6 @@ static const uint32_t K[] = {
     0x5B9CCA4F, 0x682E6FF3, 0x748F82EE, 0x78A5636F, 0x84C87814, 0x8CC70208,
     0x90BEFFFA, 0xA4506CEB, 0xBEF9A3F7, 0xC67178F2};
 
-// First 32 bits of the fractional parts of the square roots of the first 8
-// primes 2..19
-void init_hash(uint32_t hash[8]) {
-
-  uint32_t h[8] = {0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
-                   0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19};
-  memcpy(hash, h, 8 * sizeof(uint32_t));
-}
 
 // sha256 algorithm, streaming version: receives and updates hash
 // data is unsigned byte, all other variables are usigned 32 bit int
@@ -206,10 +198,10 @@ void sha256_file(const char *fname, uint32_t hash[8]) {
 } // namespace sha256
 //-----------------------------------------------------------------------------
 #ifdef TEST
-#include <assert.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cassert>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
 using namespace sha256;
 
