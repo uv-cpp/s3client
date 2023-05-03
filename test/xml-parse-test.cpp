@@ -31,6 +31,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  *******************************************************************************/
 #include "response_parser.h"
+#include "xml_path.h"
 #include <cassert>
 #include <iostream>
 
@@ -72,6 +73,14 @@ void ParseXMLTagPath() {
   cout << res << endl;
 }
 
+void ParseXMLPath(const string &xml, const string &path) {
+  tinyxml2::XMLDocument doc;
+  // auto t = GetElementText(doc, xml, path);
+  // cout << t << endl;
+  cout << GetElementsText(doc, xml, "listallmybucketsresult/buckets").size()
+       << endl;
+}
+
 static const char *listBuckets = R"(
 <?xml version="1.0" encoding="utf-8"?>
 <listallmybucketsresult xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
@@ -96,13 +105,14 @@ static const char *listBuckets = R"(
 </listallmybucketsresult>
 )";
 int main(int, char **) {
-  ParseXMLTag();
-  ParseXMLTags();
-  ParseXMLTagPath();
-  auto res = XMLTags(listBuckets, "bucket");
-  for (auto i : res) {
-    cout << i << endl;
-    // cout << XMLTag(i, "name") << " " << XMLTag(i, "creationdate") << endl;
-  }
+  // ParseXMLTag();
+  // ParseXMLTags();
+  // ParseXMLTagPath();
+  // auto res = XMLTags(listBuckets, "bucket");
+  // for (auto i : res) {
+  //   cout << i << endl;
+  //   // cout << XMLTag(i, "name") << " " << XMLTag(i, "creationdate") << endl;
+  // }
+  ParseXMLPath(listBuckets, "listallmybucketsresult/owner/displayname");
   return 0;
 }

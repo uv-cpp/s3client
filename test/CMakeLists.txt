@@ -37,6 +37,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "-g" )
 
 include_directories(${S3LIB_INCLUDE_DIR}
                     ${HASH_LIB_INCLUDE_DIR}
+                    ${TINYXML2_DIR}
                     )
 
 

@@ -38,7 +38,7 @@ set(S3_API_SRCS ${S3_API_SRCS}  src/api/xml_parser.cpp ${TINYXML2_DIR}/tinyxml2.
 set(HASH_SRCS hash/hmac256.cpp hash/sha256.cpp hash/utility.cpp hash/md5.cpp)
 set(S3_CLIENT_LIB_SRCS src/url_utility.cpp src/aws_sign.cpp 
     src/webclient.cpp src/utility.cpp src/s3-client.cpp src/response_parser.cpp
-    src/download-file.cpp  src/upload-file.cpp
+    src/download-file.cpp  src/upload-file.cpp src/xml_path.cpp
     ${S3_API_SRCS} ${HASH_SRCS}) 
 
 

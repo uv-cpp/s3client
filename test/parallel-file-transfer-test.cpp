@@ -120,7 +120,10 @@ int main(int argc, char **argv) {
     DownloadFile(c);
     FILE *fi = fopen(tmp.path.c_str(), "rb");
     vector<char> input(SIZE);
-    fread(input.data(), SIZE, 1, fi); // input.reserve(SIZE);
+    if (fread(input.data(), SIZE, 1, fi) != 1) {
+      throw std::runtime_error("Cannot open file for reading");
+    }
+    //
     if (input == data) {
       TestOutput(action, true, TEST_PREFIX);
     } else {
