@@ -1,5 +1,6 @@
 // Implementation of Result<Result,Error> type a la Rust.
 // author: Ugo Varetto
+// License: Zero-clause BSD
 // SPDX identifier: 0BSD
 
 #include <functional>
@@ -192,7 +193,7 @@ int main(int, char **) {
     // Exit or exception thrown when accessing result
     // in the presence of error
     // when DISABLE_ERROR_HANDLING NOT #defined
-    std::cout << int(i) << std::endl;
+    // std::cout << int(i) << std::endl;
     std::cerr << Error(i) << std::endl;
   }
   return 0;
