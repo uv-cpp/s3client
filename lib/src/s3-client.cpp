@@ -167,6 +167,10 @@ S3Credentials GetS3Credentials(const string &fileName, string awsProfile) {
 BucketValidation ValidateBucket(const string &name) {
   if (name.empty())
     return {false, "Empty"};
+  // if (name.size() < 3) {//Minio has this constraint does it also apply to
+  // Ceph and/or AWS?
+  //   return {false, "Size < 3"};
+  // }
   if (name.size() > 63) {
     return {false, "Size > 63"};
   }
