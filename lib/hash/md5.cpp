@@ -1,13 +1,13 @@
-// md5.c MD5 reference implementation 
+// md5.c MD5 reference implementation
 //
 //-----------------------------------------------------------------------------
+#include "md5.h"
+#include "utility.h"
 #include <cassert>
 #include <cstdint>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
-#include "md5.h"
-#include "utility.h"
 
 namespace md5 {
 //-----------------------------------------------------------------------------
@@ -30,7 +30,6 @@ uint32_t k[] = {
     0xf4292244, 0x432aff97, 0xab9423a7, 0xfc93a039, 0x655b59c3, 0x8f0ccc92,
     0xffeff47d, 0x85845dd1, 0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1,
     0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391};
-
 
 void md5_stream(uint32_t hash[4], const uint8_t data[], size_t length) {
   for (size_t offset = 0; offset < length; offset += 64) {
@@ -80,7 +79,7 @@ void md5_stream(uint32_t hash[4], const uint8_t data[], size_t length) {
 }
 
 // MD5 on single fixed size buffer
-void md5(const uint8_t data[], uint32_t length, uint32_t hash[4]) {
+void md5(const uint8_t data[], size_t length, uint32_t hash[4]) {
   init_hash(hash);
   md5_stream(hash, data, length);
 }
@@ -135,14 +134,14 @@ void md5_file(const char *fname, uint32_t hash[4]) {
       free(message);
       break;
     } else {
-      md5_stream(hash, (uint8_t *)buf, (uint32_t)BUFSIZE);
+      md5_stream(hash, (uint8_t *)buf, BUFSIZE);
     }
     memset(buf, 0, BUFSIZE);
     length += bytes;
   }
   free(buf);
 }
-}
+} // namespace md5
 
 //-----------------------------------------------------------------------------
 #ifdef TEST
