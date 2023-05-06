@@ -64,7 +64,7 @@ static const char *listBuckets = R"(
 </listallmybucketsresult>
 )";
 
-void ParseXMLTag() {
+void ParseXMLTagTest() {
   const char *xml = R"(
     <tag1>
       <tag1_1> tag1_1 </tag1_1>
@@ -74,7 +74,7 @@ void ParseXMLTag() {
   assert(XMLTag(xml, "tag1_2") == "tag1_2");
 }
 
-void ParseXMLTagPath() {
+void ParseXMLTagPathTest() {
   const char *xml = R"(
   <tag1>
     <tag1_1> 1_1 </tag1_1>
@@ -98,15 +98,13 @@ void ParseXMLMultiPathTest() {
   assert(el[0] == "2023-03-03t08:03:54.000z");
   assert(el[1] == "2023-03-01t08:47:15.843z");
   assert(el[2] == "2023-03-01t08:47:15.843z");
-
-  // copy(begin(el), end(el), ostream_iterator<string>(cout, ", "));
 }
 
 int main(int, char **) {
   cout << "XMLTag" << endl;
-  ParseXMLTag();
+  ParseXMLTagTest();
   cout << "XMLTagPath" << endl;
-  ParseXMLTagPath();
+  ParseXMLTagPathTest();
   cout << "ParseXMLTagPathTest" << endl;
   ParseXMLPathTest();
   cout << "ParseXMLTagMultiPathTest" << endl;
