@@ -42,7 +42,7 @@ set(S3_CLIENT_LIB_SRCS src/url_utility.cpp src/aws_sign.cpp
     ${S3_API_SRCS} ${HASH_SRCS}) 
 
 
-set(CMAKE_CXX_FLAGS_RELEASE "-flto -march=native -Ofast")
+set(CMAKE_CXX_FLAGS_RELEASE "-flto -march=native -Ofast -DNDEBUG")
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 
 include_directories(include)
