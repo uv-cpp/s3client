@@ -38,49 +38,6 @@
 using namespace sss;
 using namespace std;
 
-void ParseXMLTag() {
-  const char *xml = R"(
-  <tag1>
-    <tag1_1> tag1_1 </tag1_1>
-    <tag1_2> tag1_2 </tag1_2>
-  </tag1)
-  )";
-  assert(XMLTag(xml, "tag1_2") == "tag1_2");
-}
-
-void ParseXMLTags() {
-  const char *xml = R"(
-  <tag1>
-    <tag1_1> 1_1 </tag1_1>
-    <tag1_2> 1_2_1</tag1_2>
-    <tag1_2> <tag1_2_2> abc </tag1_2_2></tag1_2>
-  </tag1)
-  )";
-  auto res = XMLTags(xml, "tag1_2");
-  assert(res[0] == "1_2_1");
-  assert(res[1] == "<tag1_2_2> abc </tag1_2_2>");
-}
-
-void ParseXMLTagPath() {
-  const char *xml = R"(
-  <tag1>
-    <tag1_1> 1_1 </tag1_1>
-    <tag1_2> 1_2_1</tag1_2>
-    <tag1_2> <tag1_2_2> abc </tag1_2_2></tag1_2>
-  </tag1)
-  )";
-  auto res = XMLTagPath(xml, "tag1/tag1_2/tag_1_2_2");
-  cout << res << endl;
-}
-
-void ParseXMLPath(const string &xml, const string &path) {
-  tinyxml2::XMLDocument doc;
-  // auto t = GetElementText(doc, xml, path);
-  // cout << t << endl;
-  cout << GetElementsText(doc, xml, "listallmybucketsresult/buckets").size()
-       << endl;
-}
-
 static const char *listBuckets = R"(
 <?xml version="1.0" encoding="utf-8"?>
 <listallmybucketsresult xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
@@ -104,15 +61,64 @@ static const char *listBuckets = R"(
   </buckets>
 </listallmybucketsresult>
 )";
+
+void ParseXMLTag() {
+  const char *xml = R"(
+    <tag1>
+      <tag1_1> tag1_1 </tag1_1>
+      <tag1_2> tag1_2 </tag1_2>
+    </tag1>
+    )";
+  assert(XMLTag(xml, "tag1/tag1_2") == "tag1_2");
+}
+
+void ParseXMLTags() {
+  const char *xml = R"(
+  <tag1>
+    <tag1_1> 1_1 </tag1_1>
+    <tag1_2> 1_2_1</tag1_2>
+    <tag1_2> <tag1_2_2> abc </tag1_2_2></tag1_2>
+  </tag1>
+  )";
+  auto res = XMLTags(xml, "tag1_2");
+  assert(res[0] == "1_2_1");
+  assert(res[1] == "<tag1_2_2> abc </tag1_2_2>");
+}
+
+void ParseXMLTagPath() {
+  const char *xml = R"(
+  <tag1>
+    <tag1_1> 1_1 </tag1_1>
+    <tag1_0> 1_2_1</tag1_2>
+    <tag1_2><tag1_2_2>abc</tag1_2_2></tag1_2>
+  </tag1>
+  )";
+  auto res = XMLTagPath(xml, "tag1/tag1_2/tag_1_2_2");
+  cout << res << endl; // assert(res == "abc");
+}
+
+void ParseXMLPathTest() {
+  assert(ParseXMLPath(listBuckets,
+                      "listallmybucketsresult/owner/displayname") == "minio");
+}
+void ParseXMLMultiPathTest() {
+  // serch for <bucket> under <listallmybucketsresult>/<buckets> and return
+  //<bucket>/<cretiondata> text elements
+  auto el = ParseXMLMultiPathText(listBuckets, "listallmybucketsresult/buckets",
+                                  "bucket/creationdate");
+  assert(el.size() >= 1);
+  cout << el[0] << " " << el[1] << " " << el[2] << endl;
+}
+
 int main(int, char **) {
+  // cout << "XMLTag" << endl;
   // ParseXMLTag();
+  // cout << "XMLTags" << endl;
   // ParseXMLTags();
+  // cout << "XMLTagPath" << endl;
   // ParseXMLTagPath();
-  // auto res = XMLTags(listBuckets, "bucket");
-  // for (auto i : res) {
-  //   cout << i << endl;
-  //   // cout << XMLTag(i, "name") << " " << XMLTag(i, "creationdate") << endl;
-  // }
-  ParseXMLPath(listBuckets, "listallmybucketsresult/owner/displayname");
-  return 0;
+  cout << "XMLTagPathTest" << endl;
+  ParseXMLPathTest();
+  cout << "XMLTagMultiPathTest" << endl;
+  ParseXMLMultiPathTest();
 }

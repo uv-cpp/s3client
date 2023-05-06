@@ -36,6 +36,10 @@
 #include <variant>
 #include <vector>
 
+std::string ParseXMLPath(const std::string &xml, const std::string &path);
+std::vector<std::string> ParseXMLMultiPathText(const std::string &xml,
+                                               const std::string &path,
+                                               const std::string &childPath);
 const tinyxml2::XMLElement *GetElement(tinyxml2::XMLDocument &doc,
                                        const std::string &xml,
                                        std::string path);
@@ -45,8 +49,7 @@ const tinyxml2::XMLElement *GetElement(const tinyxml2::XMLElement *element,
 std::vector<const tinyxml2::XMLElement *>
 GetElements(tinyxml2::XMLDocument &doc, const std::string &xml,
             const std::string &path);
-std::string GetElementText(tinyxml2::XMLDocument &doc, const std::string &xml,
-                           const std::string &path);
+std::string GetElementText(tinyxml2::XMLDocument &doc, const std::string &path);
 
 std::vector<std::pair<std::string, std::string>>
 GetElementsText(tinyxml2::XMLDocument &doc, const std::string &xml,

@@ -33,99 +33,135 @@
 #include "xml_path.h"
 #include <iostream>
 #include <sstream>
+#include <vector>
 using namespace std;
 using namespace tinyxml2;
+
 //-----------------------------------------------------------------------------
-const XMLElement *GetElement(XMLDocument &doc, const string &xml, string path) {
-  if (doc.Parse(xml.c_str()) != XML_SUCCESS) {
-    return nullptr;
-  }
-  const XMLElement *e = nullptr;
-  string n;
-  istringstream is(path);
-  while (getline(is, n, '/')) {
-    if (n.empty())
-      continue;
-    if (!e) {
-      e = doc.FirstChildElement(n.c_str()); //->FirstChildElement(path.c_str());
-    } else {
-      e = e->FirstChildElement(n.c_str());
-    }
-    if (!e)
-      return nullptr;
-  }
-  return e->DeepClone(&doc)->ToElement();
+const char *cbegin(const char *pc) { return pc; }
+const char *cend(const char *pc) {
+  while (*pc++ != '\0')
+    ;
+  return --pc;
+}
+
+string Trim(const string &text) {
+  auto b = cbegin(text);
+  while (isspace(*b) && (b++ != cend(text)))
+    ;
+  auto e = --cend(text);
+  while (isspace(*e) && (e-- != cbegin(text)))
+    ;
+  return string(b, ++e);
 }
 
 //-----------------------------------------------------------------------------
-const XMLElement *GetElement(const XMLElement *pe, string path) {
-  if (!pe)
-    return nullptr;
-  const XMLElement *e = nullptr;
-  string n;
+vector<string> ParsePath(const string &path) {
   istringstream is(path);
-  while (getline(is, n, '/')) {
-    if (n.empty())
+  vector<string> ret;
+  for (string s; getline(is, s, '/');) {
+    if (s.empty())
       continue;
-    if (!e) {
-      if (pe->Name() == n) {
-        return pe;
-      } else {
-        e = pe->FirstChildElement(n.c_str());
+    ret.push_back(s);
+  }
+  return ret;
+}
+
+//-----------------------------------------------------------------------------
+class PathVisitor : public XMLVisitor {
+public:
+  bool VisitEnter(const XMLDocument &) { return true; }
+  bool VisitExit(const XMLDocument &) { return true; }
+  bool VisitEnter(const XMLElement &e, const XMLAttribute *) {
+    curPath_.push_back(e.Name());
+    if (curPath_ == path_) {
+      if (e.GetText()) {
+        text_ = e.GetText();
       }
-    } else {
-      e = e->FirstChildElement(n.c_str());
+      found_ = true;
+      return false;
     }
-    if (!e)
-      return nullptr;
+    return true;
   }
-  return e;
-}
+  bool VisitExit(const XMLElement &) {
+    if (found_)
+      return false;
+    curPath_.pop_back();
+    return true;
+  }
+  bool Visit(const XMLDeclaration &) { return true; }
+  bool Visit(const XMLText &) { return true; }
+  bool Visit(const XMLComment &) { return true; }
+  bool Visit(const XMLUnknown &) { return true; }
+
+  const string &GetText() const { return text_; }
+  PathVisitor(const vector<string> &path) : path_(path) {}
+  PathVisitor(const string &path) : path_(ParsePath(path)) {}
+
+private:
+  vector<string> path_;
+  vector<string> curPath_;
+  string text_;
+  bool found_ = false;
+};
 //-----------------------------------------------------------------------------
-vector<const XMLElement *> GetElements(XMLDocument &doc, const string &xml,
-                                       const string &path) {
-  vector<const XMLElement *> els;
-  auto e = GetElement(doc, xml, path);
-  if (!e) {
-    return els;
+class MultiPathVisitor : public XMLVisitor {
+public:
+  bool VisitEnter(const XMLDocument &) { return true; }
+  bool VisitExit(const XMLDocument &) { return true; }
+  bool VisitEnter(const XMLElement &e, const XMLAttribute *) {
+    curPath_.push_back(e.Name());
+    if (curPath_ == path_) {
+      // iterate over children with name == element_
+      auto pe = e.FirstChildElement(element_.c_str());
+      if (!pe) {
+        terminate_ = true;
+        return false;
+      }
+      elements_.push_back(pe);
+      while ((pe = pe->NextSiblingElement(element_.c_str()))) {
+        elements_.push_back(pe);
+      }
+      return false;
+    }
+    return true;
   }
-  auto c = e->FirstChildElement();
-  if (!c) {
-    return els;
+  bool VisitExit(const XMLElement &) {
+    if (terminate_)
+      return false;
+    curPath_.pop_back();
+    return true;
   }
-  els.push_back(c);
-  while ((c = c->NextSiblingElement())) {
-    els.push_back(c);
-  }
-  return els;
+  bool Visit(const XMLDeclaration &) { return true; }
+  bool Visit(const XMLText &) { return true; }
+  bool Visit(const XMLComment &) { return true; }
+  bool Visit(const XMLUnknown &) { return true; }
+
+  const vector<const XMLElement *> &GetElements() const { return elements_; }
+  MultiPathVisitor(const string &path,
+                   const string &element /*child element below path*/)
+      : path_(ParsePath(path)), element_(element) {}
+
+private:
+  vector<string> path_;
+  vector<string> curPath_;
+  vector<const XMLElement *> elements_;
+  bool terminate_ = false;
+  string element_;
+};
+
+//-----------------------------------------------------------------------------
+string GetElementText(XMLDocument &doc, const string &path) {
+  PathVisitor p(path);
+  doc.Accept(&p);
+  return p.GetText();
 }
 
 //-----------------------------------------------------------------------------
-string GetElementText(XMLDocument &doc, const string &xml, const string &path) {
-  auto e = GetElement(doc, xml, path);
-  if (!e) {
-    return "";
-  }
-  return e->GetText() ? e->GetText() : "";
-}
-
-//-----------------------------------------------------------------------------
-vector<pair<string, string>>
-GetElementsText(XMLDocument &doc, const string &xml, const string &path) {
-  vector<pair<string, string>> els;
-  auto e = GetElement(doc, xml, path);
-  if (!e) {
-    return els;
-  }
-  auto c = e->FirstChildElement();
-  if (!c) {
-    return els;
-  }
-  els.push_back({c->Name(), c->GetText() ? c->GetText() : ""});
-  while ((c = c->NextSiblingElement())) {
-    els.push_back({c->Name(), c->GetText() ? c->GetText() : ""});
-  }
-  return els;
+string GetElementText(XMLElement &element, const string &path) {
+  PathVisitor p(path);
+  element.Accept(&p);
+  return p.GetText();
 }
 
 //-----------------------------------------------------------------------------
@@ -154,4 +190,49 @@ vector<pair<string, string>> GetAttributesText(const XMLElement *e) {
     as.push_back({a->Name(), a->Value()});
   }
   return as;
+}
+
+//-----------------------------------------------------------------------------
+string ParseXMLPath(const string &xml, const string &path) {
+  tinyxml2::XMLDocument doc;
+  if (doc.Parse(xml.c_str()) != tinyxml2::XML_SUCCESS) {
+    cerr << "Error parsing XML text" << endl;
+    exit(EXIT_FAILURE);
+  }
+  return Trim(GetElementText(doc, path));
+}
+
+//-----------------------------------------------------------------------------
+vector<const XMLElement *> ParseXMLMultiPath(const string &xml,
+                                             const string &path,
+                                             const string &childEement) {
+  tinyxml2::XMLDocument doc;
+  if (doc.Parse(xml.c_str()) != tinyxml2::XML_SUCCESS) {
+    cerr << "Error parsing XML text" << endl;
+    exit(EXIT_FAILURE);
+  }
+  MultiPathVisitor v(path, childEement);
+  doc.Accept(&v);
+  return v.GetElements();
+}
+//-----------------------------------------------------------------------------
+vector<string> ParseXMLMultiPathText(const string &xml, const string &path,
+                                     const string &childPath) {
+  tinyxml2::XMLDocument doc;
+  if (doc.Parse(xml.c_str()) != tinyxml2::XML_SUCCESS) {
+    cerr << "Error parsing XML text" << endl;
+    exit(EXIT_FAILURE);
+  }
+  auto p = ParsePath(path);
+  auto head = p.front();
+  vector<string> tail(++p.begin(), p.end());
+  MultiPathVisitor v(path, head);
+  doc.Accept(&v);
+  vector<string> ret;
+  for (auto i : v.GetElements()) {
+    PathVisitor vc(tail);
+    i->Accept(&vc);
+    ret.push_back(Trim(i->GetText()));
+  }
+  return ret;
 }

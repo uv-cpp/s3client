@@ -31,6 +31,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 #include "response_parser.h"
+#include "xml_path.h"
 #include <algorithm>
 #include <iostream>
 #include <regex>
@@ -61,6 +62,7 @@ string TrimETag(const string &etag) {
 }
 
 string XMLTag(const string &xml, const string &tag) {
+  // return ParseXMLPath(xml, tag);
   const regex rx{tag + "[^>]*>\\s*(.+)\\s*<\\s*/\\s*" + tag + "\\s*>",
                  regex_constants::icase};
   smatch sm;
@@ -84,11 +86,14 @@ vector<string> XMLTags(const string &xml, const string &tag) {
 }
 
 string XMLTagPath(const string &xml, const string &path) {
+  return ParseXMLPath(xml, path);
   const char split_char = '/';
-  istringstream split(xml);
+  istringstream split(path);
   std::vector<std::string> tokens;
   string curTag;
   for (std::string each; std::getline(split, each, split_char);) {
+    if (each.empty())
+      continue;
     curTag = XMLTag(curTag, each);
     if (curTag.empty())
       return "";
