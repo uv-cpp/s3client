@@ -34,8 +34,23 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+//
+#include <algorithm>
+#include <iterator>
 using namespace std;
 using namespace tinyxml2;
+
+template <typename T> void Print(const vector<T> &v) {
+  copy(begin(v), end(v), ostream_iterator<T>(cout, ", "));
+}
+
+string ToLower(const string &s) {
+  string ret;
+  for (auto c : s) {
+    ret += string::value_type(tolower(c));
+  }
+  return ret;
+}
 
 //-----------------------------------------------------------------------------
 const char *cbegin(const char *pc) { return pc; }
@@ -68,16 +83,48 @@ vector<string> ParsePath(const string &path) {
 }
 
 //-----------------------------------------------------------------------------
+class FindVisitor : public XMLVisitor {
+public:
+  bool VisitEnter(const XMLDocument &) { return true; }
+  bool VisitExit(const XMLDocument &) { return true; }
+  bool VisitEnter(const XMLElement &e, const XMLAttribute *) {
+    bool match =
+        caseInsesitive_ ? ToLower(e.Name()) == element_ : e.Name() == element_;
+    if (match) {
+      pElement_ = &e;
+      return false;
+    }
+    return true;
+  }
+  bool VisitExit(const XMLElement &) {
+    if (pElement_)
+      return false;
+    return true;
+  }
+  bool Visit(const XMLDeclaration &) { return true; }
+  bool Visit(const XMLText &) { return true; }
+  bool Visit(const XMLComment &) { return true; }
+  bool Visit(const XMLUnknown &) { return true; }
+
+  const XMLElement *GetElement() const { return pElement_; }
+  FindVisitor(const string &element, bool caseInsesitive = true)
+      : element_(caseInsesitive ? ToLower(element) : element),
+        caseInsesitive_(caseInsesitive) {}
+
+private:
+  string element_;
+  const XMLElement *pElement_ = nullptr;
+  bool caseInsesitive_ = true;
+};
+//-----------------------------------------------------------------------------
 class PathVisitor : public XMLVisitor {
 public:
   bool VisitEnter(const XMLDocument &) { return true; }
   bool VisitExit(const XMLDocument &) { return true; }
   bool VisitEnter(const XMLElement &e, const XMLAttribute *) {
-    curPath_.push_back(e.Name());
+    curPath_.push_back(caseInsesitive_ ? ToLower(e.Name()) : e.Name());
     if (curPath_ == path_) {
-      if (e.GetText()) {
-        text_ = e.GetText();
-      }
+      pElement_ = &e;
       found_ = true;
       return false;
     }
@@ -94,15 +141,27 @@ public:
   bool Visit(const XMLComment &) { return true; }
   bool Visit(const XMLUnknown &) { return true; }
 
-  const string &GetText() const { return text_; }
-  PathVisitor(const vector<string> &path) : path_(path) {}
-  PathVisitor(const string &path) : path_(ParsePath(path)) {}
+  const XMLElement *GetElement() const { return pElement_; }
+  PathVisitor(const string &path, bool caseInsesitive = true)
+      : path_(ParsePath(caseInsesitive ? ToLower(path) : path)),
+        caseInsesitive_(caseInsesitive) {}
+  PathVisitor(const vector<string> &path, bool caseInsesitive = true)
+      : caseInsesitive_(caseInsesitive) {
+    if (caseInsesitive_) {
+      for (const auto &i : path) {
+        path_.push_back(ToLower(i));
+      }
+    } else {
+      path_ = path;
+    }
+  }
 
 private:
   vector<string> path_;
   vector<string> curPath_;
-  string text_;
+  const XMLElement *pElement_ = nullptr;
   bool found_ = false;
+  bool caseInsesitive_ = true;
 };
 //-----------------------------------------------------------------------------
 class MultiPathVisitor : public XMLVisitor {
@@ -110,7 +169,7 @@ public:
   bool VisitEnter(const XMLDocument &) { return true; }
   bool VisitExit(const XMLDocument &) { return true; }
   bool VisitEnter(const XMLElement &e, const XMLAttribute *) {
-    curPath_.push_back(e.Name());
+    curPath_.push_back(caseInsensitive_ ? ToLower(e.Name()) : e.Name());
     if (curPath_ == path_) {
       // iterate over children with name == element_
       auto pe = e.FirstChildElement(element_.c_str());
@@ -139,8 +198,12 @@ public:
 
   const vector<const XMLElement *> &GetElements() const { return elements_; }
   MultiPathVisitor(const string &path,
-                   const string &element /*child element below path*/)
-      : path_(ParsePath(path)), element_(element) {}
+                   const string &element /*child element below path*/,
+                   bool caseInsensitive = true)
+      : path_(ParsePath(caseInsensitive ? ToLower(path) : path)),
+        element_(caseInsensitive ? ToLower(element) : element),
+        caseInsensitive_(caseInsensitive) {}
+  const XMLElement *operator[](size_t i) { return elements_[i]; }
 
 private:
   vector<string> path_;
@@ -148,20 +211,42 @@ private:
   vector<const XMLElement *> elements_;
   bool terminate_ = false;
   string element_;
+  bool caseInsensitive_ = true;
 };
 
 //-----------------------------------------------------------------------------
-string GetElementText(XMLDocument &doc, const string &path) {
+string GetElementText(const XMLDocument &doc, const string &path) {
   PathVisitor p(path);
   doc.Accept(&p);
-  return p.GetText();
+  auto e = p.GetElement();
+  if (e && e->GetText()) {
+    return Trim(e->GetText());
+  } else {
+    return "";
+  }
 }
 
 //-----------------------------------------------------------------------------
-string GetElementText(XMLElement &element, const string &path) {
+string FindElementText(const XMLDocument &doc, const string &element) {
+  FindVisitor p(element);
+  doc.Accept(&p);
+  auto e = p.GetElement();
+  if (e && e->GetText()) {
+    return Trim(e->GetText());
+  } else {
+    return "";
+  }
+}
+//-----------------------------------------------------------------------------
+string GetElementText(const XMLElement &element, const string &path) {
   PathVisitor p(path);
   element.Accept(&p);
-  return p.GetText();
+  auto e = p.GetElement();
+  if (e && e->GetText()) {
+    return Trim(e->GetText());
+  } else {
+    return "";
+  }
 }
 
 //-----------------------------------------------------------------------------
@@ -193,6 +278,15 @@ vector<pair<string, string>> GetAttributesText(const XMLElement *e) {
 }
 
 //-----------------------------------------------------------------------------
+string FindElementText(const string &xml, const string &element) {
+  tinyxml2::XMLDocument doc;
+  if (doc.Parse(xml.c_str()) != tinyxml2::XML_SUCCESS) {
+    cerr << "Error parsing XML text" << endl;
+    exit(EXIT_FAILURE);
+  }
+  return Trim(FindElementText(doc, element));
+}
+//-----------------------------------------------------------------------------
 string ParseXMLPath(const string &xml, const string &path) {
   tinyxml2::XMLDocument doc;
   if (doc.Parse(xml.c_str()) != tinyxml2::XML_SUCCESS) {
@@ -223,16 +317,14 @@ vector<string> ParseXMLMultiPathText(const string &xml, const string &path,
     cerr << "Error parsing XML text" << endl;
     exit(EXIT_FAILURE);
   }
-  auto p = ParsePath(path);
+  auto p = ParsePath(childPath);
   auto head = p.front();
   vector<string> tail(++p.begin(), p.end());
   MultiPathVisitor v(path, head);
   doc.Accept(&v);
   vector<string> ret;
   for (auto i : v.GetElements()) {
-    PathVisitor vc(tail);
-    i->Accept(&vc);
-    ret.push_back(Trim(i->GetText()));
+    ret.push_back(GetElementText(*i, childPath));
   }
   return ret;
 }

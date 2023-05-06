@@ -32,8 +32,10 @@
  *******************************************************************************/
 #include "response_parser.h"
 #include "xml_path.h"
+#include <algorithm>
 #include <cassert>
 #include <iostream>
+#include <iterator>
 
 using namespace sss;
 using namespace std;
@@ -69,32 +71,18 @@ void ParseXMLTag() {
       <tag1_2> tag1_2 </tag1_2>
     </tag1>
     )";
-  assert(XMLTag(xml, "tag1/tag1_2") == "tag1_2");
-}
-
-void ParseXMLTags() {
-  const char *xml = R"(
-  <tag1>
-    <tag1_1> 1_1 </tag1_1>
-    <tag1_2> 1_2_1</tag1_2>
-    <tag1_2> <tag1_2_2> abc </tag1_2_2></tag1_2>
-  </tag1>
-  )";
-  auto res = XMLTags(xml, "tag1_2");
-  assert(res[0] == "1_2_1");
-  assert(res[1] == "<tag1_2_2> abc </tag1_2_2>");
+  assert(XMLTag(xml, "tag1_2") == "tag1_2");
 }
 
 void ParseXMLTagPath() {
   const char *xml = R"(
   <tag1>
     <tag1_1> 1_1 </tag1_1>
-    <tag1_0> 1_2_1</tag1_2>
+    <tag1_2> 1_2_1</tag1_2>
     <tag1_2><tag1_2_2>abc</tag1_2_2></tag1_2>
   </tag1>
   )";
-  auto res = XMLTagPath(xml, "tag1/tag1_2/tag_1_2_2");
-  cout << res << endl; // assert(res == "abc");
+  assert(XMLTagPath(xml, "tag1/tag1_2/tag1_2_2") == "abc");
 }
 
 void ParseXMLPathTest() {
@@ -106,19 +94,22 @@ void ParseXMLMultiPathTest() {
   //<bucket>/<cretiondata> text elements
   auto el = ParseXMLMultiPathText(listBuckets, "listallmybucketsresult/buckets",
                                   "bucket/creationdate");
-  assert(el.size() >= 1);
-  cout << el[0] << " " << el[1] << " " << el[2] << endl;
+  assert(el.size() == 3);
+  assert(el[0] == "2023-03-03t08:03:54.000z");
+  assert(el[1] == "2023-03-01t08:47:15.843z");
+  assert(el[2] == "2023-03-01t08:47:15.843z");
+
+  // copy(begin(el), end(el), ostream_iterator<string>(cout, ", "));
 }
 
 int main(int, char **) {
-  // cout << "XMLTag" << endl;
-  // ParseXMLTag();
-  // cout << "XMLTags" << endl;
-  // ParseXMLTags();
-  // cout << "XMLTagPath" << endl;
-  // ParseXMLTagPath();
-  cout << "XMLTagPathTest" << endl;
+  cout << "XMLTag" << endl;
+  ParseXMLTag();
+  cout << "XMLTagPath" << endl;
+  ParseXMLTagPath();
+  cout << "ParseXMLTagPathTest" << endl;
   ParseXMLPathTest();
-  cout << "XMLTagMultiPathTest" << endl;
+  cout << "ParseXMLTagMultiPathTest" << endl;
   ParseXMLMultiPathTest();
+  return 0;
 }
