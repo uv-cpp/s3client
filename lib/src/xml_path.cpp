@@ -31,9 +31,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 #include "xml_path.h"
+#include "utility.h"
 #include <iostream>
-#include <map>
 #include <sstream>
+#include <unordered_map>
 #include <vector>
 //
 #include <algorithm>
@@ -41,27 +42,24 @@
 using namespace std;
 using namespace tinyxml2;
 
-template <typename T> void Print(const vector<T> &v) {
-  copy(begin(v), end(v), ostream_iterator<T>(cout, ", "));
-}
-
+//-----------------------------------------------------------------------------
 string ToLower(const string &s) {
-  string ret;
+  string r;
   for (auto c : s) {
-    ret += string::value_type(tolower(c));
+    r += tolower(c);
   }
-  return ret;
+  return r;
 }
 
 //-----------------------------------------------------------------------------
-// trim anything including c strings
-const char *cbegin(const char *pc) { return pc; }
-const char *cend(const char *pc) {
+// trim anything including c std::strings
+inline const char *cbegin(const char *pc) { return pc; }
+inline const char *cend(const char *pc) {
   while (*pc++ != '\0')
     ;
   return --pc;
 }
-template <typename IterT> pair<IterT, IterT> Trim(IterT begin, IterT end) {
+template <typename IterT> std::pair<IterT, IterT> Trim(IterT begin, IterT end) {
   auto b = begin;
   while (isspace(*b) && (b++ != end))
     ;
@@ -71,15 +69,55 @@ template <typename IterT> pair<IterT, IterT> Trim(IterT begin, IterT end) {
   return {b, ++e};
 }
 
-// trim c++ string
-string Trim(const string &text) {
+// trim c++ std::string
+std::string Trim(const std::string &text) {
   auto b = cbegin(text);
   while (isspace(*b) && (b++ != cend(text)))
     ;
   auto e = --cend(text);
   while (isspace(*e) && (e-- != cbegin(text)))
     ;
-  return string(b, ++e);
+  return std::string(b, ++e);
+}
+
+//-----------------------------------------------------------------------------
+unordered_map<string, vector<string>>
+ExtractRecord(const string &prefix,
+              const unordered_map<string, vector<string>> &d) {
+  unordered_map<string, vector<string>> ret;
+  for (const auto &kv : d) {
+    if (kv.first.substr(0, prefix.size()) == prefix) {
+      auto &v = ret[kv.first.substr(prefix.size())];
+      v.insert(v.end(), kv.second.begin(), kv.second.end());
+    }
+  }
+  return ret;
+}
+
+//-----------------------------------------------------------------------------
+vector<unordered_map<string, string>>
+RecordList(const string &prefix,
+           const unordered_map<string, vector<string>> &d) {
+  auto r = ExtractRecord(prefix, d);
+  if (r.empty())
+    return {};
+  size_t maxElements = 0;
+  vector<unordered_map<string, string>> ret;
+  for (const auto &kv : r) {
+    maxElements = max(maxElements, kv.second.size());
+  }
+  for (size_t i = 0; i != maxElements; ++i) {
+    unordered_map<string, string> e;
+    for (const auto &kv : r) {
+      e.insert({kv.first, i < kv.second.size() ? kv.second[i] : ""});
+    }
+    ret.push_back(e);
+  }
+  return ret;
+}
+
+template <typename T> void Print(const vector<T> &v) {
+  copy(begin(v), end(v), ostream_iterator<T>(cout, ", "));
 }
 
 //-----------------------------------------------------------------------------
@@ -238,8 +276,8 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// build path -> element text map where the keys are the full path to text
-// each maps to one or more elments
+// build path -> element text unordered_map where the keys are the full path to
+// text each unordered_maps to one or more elments
 class DOMToDictVisitor : public XMLVisitor {
 public:
   bool VisitEnter(const XMLDocument &) { return true; }
@@ -263,12 +301,12 @@ public:
   DOMToDictVisitor(bool caseInsensitive = true)
       : caseInsensitive_(caseInsensitive) {}
 
-  const map<string, vector<string>> &GetDict() const { return dict_; }
+  const unordered_map<string, vector<string>> &GetDict() const { return dict_; }
 
 private:
   vector<string> curPath_;
   bool caseInsensitive_ = true;
-  map<string, vector<string>> dict_;
+  unordered_map<string, vector<string>> dict_;
 };
 //-----------------------------------------------------------------------------
 // return all children of path
@@ -434,15 +472,15 @@ vector<string> ParseXMLMultiPathText(const string &xml, const string &path,
 
 //-----------------------------------------------------------------------------
 // return all elements at location grouped by element name
-map<string, vector<string>> ParseXMLPathElementsText(const string &xml,
-                                                     const string &path) {
+unordered_map<string, vector<string>>
+ParseXMLPathElementsText(const string &xml, const string &path) {
   tinyxml2::XMLDocument doc;
   if (doc.Parse(xml.c_str()) != tinyxml2::XML_SUCCESS) {
     throw std::logic_error("Error parsing XML text");
   }
   MultiVisitor v(path);
   doc.Accept(&v);
-  map<string, vector<string>> ret;
+  unordered_map<string, vector<string>> ret;
   for (auto i : v.GetElements()) {
     string text = i->GetText() ? i->GetText() : "";
     if (!text.empty()) {
@@ -453,7 +491,7 @@ map<string, vector<string>> ParseXMLPathElementsText(const string &xml,
 }
 
 //-----------------------------------------------------------------------------
-map<string, vector<string>> DOMToDict(const string &xml) {
+unordered_map<string, vector<string>> DOMToDict(const string &xml) {
   tinyxml2::XMLDocument doc;
   if (doc.Parse(xml.c_str()) != tinyxml2::XML_SUCCESS) {
     throw std::logic_error("Error parsing XML text");

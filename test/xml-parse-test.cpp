@@ -102,8 +102,16 @@ void ParseXMLMultiPathTest() {
 
 //@todo turn into test using shorter xml text
 void PrintDOMToDict() {
-  map<string, vector<string>> d = DOMToDict(listBuckets);
+  unordered_map<string, vector<string>> d = DOMToDict(listBuckets);
   for (auto kv : d) {
+    cout << kv.first << endl;
+    for (auto i : kv.second) {
+      cout << "    " << i << endl;
+    }
+  }
+  // extract buckets information
+  auto r = ExtractRecord("/listallmybucketsresult/buckets", d);
+  for (auto kv : r) {
     cout << kv.first << endl;
     for (auto i : kv.second) {
       cout << "    " << i << endl;
@@ -120,6 +128,7 @@ int main(int, char **) {
   ParseXMLPathTest();
   cout << "ParseXMLTagMultiPathTest" << endl;
   ParseXMLMultiPathTest();
+  PrintDOMToDict();
 
   return 0;
 }

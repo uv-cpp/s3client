@@ -1,5 +1,6 @@
 #include "s3-api.h"
 #include "tinyxml2.h"
+#include "xml_path.h"
 #include <cassert>
 
 using namespace std;
@@ -12,80 +13,78 @@ namespace api {
 std::vector<BucketInfo> ParseBuckets(const std::string &xml) {
   if (xml.empty())
     return {};
-  XMLDocument doc;
-  if (doc.Parse(xml.c_str()) != XML_SUCCESS) {
-    throw logic_error("Failed to parse ListBucketV2 response");
+  auto d = DOMToDict(xml);
+  if (d.empty()) {
+    return {};
   }
-  //<xml...>
-  const XMLNode *pRoot = doc.FirstChild();
-  if (!pRoot)
+  // always use lowercase when case insensitive (default) enabled
+  auto r = ExtractRecord("/listallmybucketsresult/buckets", d);
+  if (r.empty()) {
     return {};
-  //<ListAllMyBucketsResult>
-  pRoot = pRoot->NextSibling();
-  if (!pRoot)
+  }
+  vector<BucketInfo> ret;
+  auto numBuckets = r["/bucket/creationdate"].size();
+  if (numBuckets != r["/bucket/name"].size()) {
+    throw std::logic_error("Malformed response: number of creation dates does "
+                           "not match number of buckets");
     return {};
-  const XMLElement *pBuckets = pRoot->FirstChildElement("Buckets");
-  if (!pBuckets)
-    return {};
-  const XMLElement *pElement = pBuckets->FirstChildElement("Bucket");
-  if (!pElement)
-    return {};
-  vector<BucketInfo> bi;
-  do {
-    const XMLElement *pDate = pElement->FirstChildElement("CreationDate");
-    const string creationDate = pDate ? pDate->GetText() : "";
-    const XMLElement *pName = pElement->FirstChildElement("Name");
-    const string name = pName ? pName->GetText() : "";
-    bi.push_back({.name = name, .creationDate = creationDate});
-  } while ((pElement = pElement->NextSiblingElement()));
-  return bi;
+  }
+  for (size_t i = 0; i != numBuckets; ++i) {
+    ret.push_back({.name = r["/bucket/name"][i],
+                   .creationDate = r["/bucket/creationdate"][i]});
+  }
+  return ret;
+}
+
+std::string Trim(const std::string &text) {
+  auto b = cbegin(text);
+  while (isspace(*b) && (b++ != cend(text)))
+    ;
+  auto e = --cend(text);
+  while (isspace(*e) && (e-- != cbegin(text)))
+    ;
+  return std::string(b, ++e);
+}
+
+bool ParseBool(const string &s) {
+  if (s.empty())
+    return false;
+  return ToLower(Trim(s)) == "true";
 }
 
 //------------------------------------------------------------------------------
 S3Client::ListObjectV2Result ParseObjects(const std::string &xml) {
   if (xml.empty())
     return {};
-  XMLDocument doc;
-  if (doc.Parse(xml.c_str()) != XML_SUCCESS) {
-    throw logic_error("Failed to parse ListObjects response");
+  auto d = DOMToDict(xml);
+  if (d.empty()) {
+    return {};
   }
-  //<xml...>
-  const XMLNode *pRoot = doc.FirstChild();
-  //<ListBucketResult>
-  pRoot = pRoot->NextSibling();
-  if (!pRoot)
-    return {};
-  const XMLElement *pTrunc = pRoot->FirstChildElement("IsTruncated");
-  bool truncated = false;
-  if (pTrunc)
-    pTrunc->QueryBoolText(&truncated);
-  const XMLElement *pElement = pRoot->FirstChildElement("Contents");
-  if (!pElement)
-    return {};
   S3Client::ListObjectV2Result res;
-  res.truncated = truncated;
-  do {
-    ObjectInfo obj;
-    const XMLElement *e = pElement->FirstChildElement("ChecksumAlgorithm");
-    obj.checksumAlgo = e ? e->GetText() : "";
-    e = pElement->FirstChildElement("ETag");
-    obj.etag = e ? e->GetText() : "";
-    e = pElement->FirstChildElement("Key");
-    obj.key = e ? e->GetText() : "";
-    e = pElement->FirstChildElement("LastModified");
-    obj.lastModified = e ? e->GetText() : "";
-    e = pElement->FirstChildElement("Size");
-    obj.size = e ? stoul(e->GetText()) : 0;
-    e = pElement->FirstChildElement("Owner");
-    if (e) {
-      e = pElement->FirstChildElement("DisplayName");
-      obj.ownerDisplayName = e ? e->GetText() : "";
-      e = pElement->FirstChildElement("ID");
-      obj.ownerID = e ? e->GetText() : "";
-    }
-    res.keys.push_back(obj);
-  } while ((pElement = pElement->NextSiblingElement()));
-
+  auto truncated = FindElementText(xml, "istruncated");
+  res.truncated = ParseBool(truncated);
+  const string prefix = "/listbucketresult/contents";
+  auto r = RecordList(prefix, d);
+  vector<ObjectInfo> v;
+  for (const auto &i : r) {
+    auto select = [&](const string &s) {
+      const auto pre = "/" + s;
+      const auto &it = i.find(pre);
+      if (it == i.cend()) {
+        return string("");
+      }
+      return it->second;
+    };
+    res.keys.push_back(
+        {.checksumAlgo = select("checksumalgo"),
+         .key = select("key"),
+         .lastModified = select("lastmodified"),
+         .etag = select("etag"),
+         .size = select("size").empty() ? 0 : stoul(select("size")),
+         .storageClass = select("storageclass"),
+         .ownerDisplayName = select("owner/displayname"),
+         .ownerID = select("owner/id")});
+  }
   return res;
 }
 } // namespace api

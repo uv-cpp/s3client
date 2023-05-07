@@ -32,8 +32,8 @@
  ******************************************************************************/
 #pragma once
 #include "tinyxml2.h"
-#include <map>
 #include <string>
+#include <unordered_map>
 #include <variant>
 #include <vector>
 
@@ -42,7 +42,15 @@ std::string ParseXMLPath(const std::string &xml, const std::string &path);
 std::vector<std::string> ParseXMLMultiPathText(const std::string &xml,
                                                const std::string &path,
                                                const std::string &childPath);
-std::map<std::string, std::vector<std::string>>
+
+std::vector<std::unordered_map<std::string, std::string>>
+RecordList(const std::string &prefix,
+           const std::unordered_map<std::string, std::vector<std::string>> &d);
+std::unordered_map<std::string, std::vector<std::string>>
 ParseXMLPathElementsText(const std::string &xml, const std::string &path);
-std::map<std::string, std::vector<std::string>>
+std::unordered_map<std::string, std::vector<std::string>>
 DOMToDict(const std::string &xml);
+
+std::unordered_map<std::string, std::vector<std::string>> ExtractRecord(
+    const std::string &prefix,
+    const std::unordered_map<std::string, std::vector<std::string>> &d);
