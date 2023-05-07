@@ -8,15 +8,31 @@ Result<int, std::string> Foo(int i) {
   if (i == 0) {
     return Err(std::string("Error"));
   } else {
-    return Ok(i);
+    return i;
   }
+}
+
+const int I = 0;
+int J = 0;
+
+Result<const int &, std::string> FooCRef(int i) {
+  if (i <= 0)
+    return Err(std::string("Error"));
+  // I = i;
+  return I;
+}
+Result<int &, std::string> FooRef(int i) {
+  if (i <= 0)
+    return Err(std::string("Error"));
+  J = i;
+  return J;
 }
 
 Result<std::reference_wrapper<int>, std::string> FooR(int &i) {
   if (i == 0) {
     return Err(std::string("Error"));
   } else {
-    return Ok(std::ref(i));
+    return std::ref(i);
   }
 }
 int main(int, char **) {
@@ -41,5 +57,9 @@ int main(int, char **) {
     // std::cout << int(i) << std::endl;
     std::cerr << Error(i) << std::endl;
   }
+  int &r = FooRef(5);
+  std::cout << r << std::endl;
+  const int &cr = FooCRef(5);
+  std::cout << cr << std::endl;
   return 0;
 }

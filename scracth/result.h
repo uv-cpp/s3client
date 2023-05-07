@@ -21,9 +21,23 @@ template <typename T> struct OkType {
   OkType(T &&r) : r(std::move(r)) {}
 };
 
+template <typename T> struct OkType<const T &> {
+  const T &r;
+  OkType() = delete;
+  OkType(const T &r) : r(r) {}
+};
+template <typename T> struct OkType<T &> {
+  T &r;
+  OkType() = delete;
+  OkType(T &r) : r(r) {}
+};
 template <typename T> auto Err(T &&e) { return std::move(ErrorType(e)); }
 
+// template <typename T> auto Ok(T &&r) { return OkType(r); }
+template <typename T> auto Ok(const T &r) { return OkType<const T &>(r); }
+// template <typename T> auto Ok(T &r) { return OkType<T &>(r); }
 template <typename T> auto Ok(T r) { return OkType(r); }
+
 //-----------------------------------------------------------------------------
 // A union can have member functions (including constructors and destructors),
 // but not virtual (10.3) functions. A union shall not have base classes. A
@@ -52,8 +66,7 @@ template <typename R, typename ErrT> class Result {
   friend Result<R2, E2> ResultCast(Result<R, ErrT> &&);
   friend const ErrT &Error(const Result &r) {
 #ifndef DISABLE_ERROR_HANDLING
-    r.HandleError(false,
-                  "Valid result, error undefined"); // if ok != false segfaults
+    r.HandleError(false); // if ok != false segfaults
 #endif
     return r.error_;
   }
@@ -156,7 +169,205 @@ Result<R1, E2> ResultCast(Result<R1, E1> &&r1) {
     return {std::move(r1.error_)};
   }
 }
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+template <typename R, typename ErrT> class Result<const R &, ErrT> {
+  template <typename R2, typename E2>
+  friend Result<R2, E2> ResultCast(const Result<R, ErrT> &);
+  template <typename R2, typename E2>
+  friend Result<R2, E2> ResultCast(Result<R, ErrT> &&);
+  friend const ErrT &Error(const Result &r) {
+#ifndef DISABLE_ERROR_HANDLING
+    r.HandleError(false); // if ok != false segfaults
+#endif
+    return r.error_;
+  }
+  friend const R &Value(const Result &r) {
+#ifndef DISABLE_ERROR_HANDLING
+    r.HandleError(); // if ok != false segfaults
+#endif
+    return r.result_;
+  }
 
+private:
+  bool ok_ = false;
+  // union cannot have rerence type, either replace with
+  // struct increasing the size or wrap references
+  // with ref/cref; note: when using struct reference_wrapper
+  // cannot be used anymore
+  union {
+    std::reference_wrapper<const R> result_;
+    ErrT error_;
+  };
+#ifndef DISABLE_ERROR_HANDLING
+  void ExitIfError(bool ok, const std::string &msg) const {
+    if (ok_ != ok) {
+      std::cerr << msg << std::endl;
+      exit(EXIT_FAILURE);
+    }
+  }
+
+  void ThrowIfError(bool ok, const std::string &msg) const {
+    if (ok_ != ok) {
+      throw std::logic_error(msg);
+    }
+  }
+
+  void HandleError(bool ok = true,
+                   const std::string &msg = "Unchecked error condition") const {
+#ifdef THROW_IF_ERROR
+    ThrowIfError(ok, msg);
+
+#else
+    ExitIfError(ok, msg);
+#endif
+  }
+#endif
+
+public:
+  Result(Result &&r) : ok_(r.ok_) {
+    if (r.ok_) {
+      result_ = std::move(r.result_);
+    } else {
+      error_ = std::move(r.error_);
+    }
+  }
+  Result(const Result &r) : ok_(r.ok_) {
+    if (r.ok_) {
+      result_ = r.result_;
+    } else {
+      error_ = r.error_;
+    }
+  }
+  ~Result() {
+    if (ok_) {
+      if constexpr (!std::is_trivially_destructible<R>::value) {
+        result_.~R();
+      }
+    } else {
+      if constexpr (!std::is_trivially_destructible<ErrT>::value) {
+        error_.~ErrT();
+      }
+    }
+  }
+  Result() = delete;
+  Result(ErrorType<ErrT> &&err) : ok_(false), error_(std::move(err.err)) {}
+  Result(const OkType<const R &> &v) : ok_(true), result_(v.r) {}
+  Result(const R &r) : ok_(true), result_(r) {}
+  Result(R &&r) : ok_(true), result_(std::move(r)) {}
+  operator bool() const { return ok_; }
+  operator const R &() const {
+#ifndef DISABLE_ERROR_HANDLING
+    HandleError();
+#endif
+    return result_;
+  }
+};
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+template <typename R, typename ErrT> class Result<R &, ErrT> {
+  template <typename R2, typename E2>
+  friend Result<R2, E2> ResultCast(const Result<R, ErrT> &);
+  template <typename R2, typename E2>
+  friend Result<R2, E2> ResultCast(Result<R, ErrT> &&);
+  friend const ErrT &Error(const Result &r) {
+#ifndef DISABLE_ERROR_HANDLING
+    r.HandleError(false); // if ok != false segfaults
+#endif
+    return r.error_;
+  }
+  friend R &Value(const Result &r) {
+#ifndef DISABLE_ERROR_HANDLING
+    r.HandleError();
+#endif
+    return r.result_;
+  }
+
+private:
+  bool ok_ = false;
+  // union cannot have rerence type, either replace with
+  // struct increasing the size or wrap references
+  // with ref/cref; note: when using struct reference_wrapper
+  // cannot be used anymore
+  union {
+    std::reference_wrapper<R> result_;
+    ErrT error_;
+  };
+#ifndef DISABLE_ERROR_HANDLING
+  void ExitIfError(bool ok, const std::string &msg) const {
+    if (ok_ != ok) {
+      std::cerr << msg << std::endl;
+      exit(EXIT_FAILURE);
+    }
+  }
+
+  void ThrowIfError(bool ok, const std::string &msg) const {
+    if (ok_ != ok) {
+      throw std::logic_error(msg);
+    }
+  }
+
+  void HandleError(bool ok = true,
+                   const std::string &msg = "Unchecked error condition") const {
+#ifdef THROW_IF_ERROR
+    ThrowIfError(ok, msg);
+
+#else
+    ExitIfError(ok, msg);
+#endif
+  }
+#endif
+
+public:
+  Result(Result &&r) : ok_(r.ok_) {
+    if (r.ok_) {
+      result_ = std::move(r.result_);
+    } else {
+      error_ = std::move(r.error_);
+    }
+  }
+  Result(const Result &r) : ok_(r.ok_) {
+    if (r.ok_) {
+      result_ = r.result_;
+    } else {
+      error_ = r.error_;
+    }
+  }
+  ~Result() {
+    if (ok_) {
+      if constexpr (!std::is_trivially_destructible<R>::value) {
+        result_.~R();
+      }
+    } else {
+      if constexpr (!std::is_trivially_destructible<ErrT>::value) {
+        error_.~ErrT();
+      }
+    }
+  }
+  Result() = delete;
+  Result(ErrorType<ErrT> &&err) : ok_(false), error_(std::move(err.err)) {}
+  Result(const OkType<R &> &v) : ok_(true), result_(v.r) {}
+  Result(R &r) : ok_(true), result_(r) {}
+  operator bool() const { return ok_; }
+  operator R &() {
+#ifndef DISABLE_ERROR_HANDLING
+    HandleError();
+#endif
+    return result_;
+  }
+};
 #ifdef TEST
 //-----------------------------------------------------------------------------
 Result<int, std::string> Foo(int i) {
