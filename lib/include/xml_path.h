@@ -32,6 +32,7 @@
  ******************************************************************************/
 #pragma once
 #include "tinyxml2.h"
+#include <map>
 #include <string>
 #include <variant>
 #include <vector>
@@ -41,9 +42,7 @@ std::string ParseXMLPath(const std::string &xml, const std::string &path);
 std::vector<std::string> ParseXMLMultiPathText(const std::string &xml,
                                                const std::string &path,
                                                const std::string &childPath);
-
-std::vector<const tinyxml2::XMLAttribute *>
-GetAttributes(const tinyxml2::XMLElement *e);
-
-std::vector<std::pair<std::string, std::string>>
-GetAttributesText(const tinyxml2::XMLElement *e);
+std::map<std::string, std::vector<std::string>>
+ParseXMLPathElementsText(const std::string &xml, const std::string &path);
+std::map<std::string, std::vector<std::string>>
+DOMToDict(const std::string &xml);

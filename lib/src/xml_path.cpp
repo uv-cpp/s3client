@@ -32,6 +32,7 @@
  ******************************************************************************/
 #include "xml_path.h"
 #include <iostream>
+#include <map>
 #include <sstream>
 #include <vector>
 //
@@ -53,13 +54,24 @@ string ToLower(const string &s) {
 }
 
 //-----------------------------------------------------------------------------
+// trim anything including c strings
 const char *cbegin(const char *pc) { return pc; }
 const char *cend(const char *pc) {
   while (*pc++ != '\0')
     ;
   return --pc;
 }
+template <typename IterT> pair<IterT, IterT> Trim(IterT begin, IterT end) {
+  auto b = begin;
+  while (isspace(*b) && (b++ != end))
+    ;
+  auto e = --end;
+  while (isspace(*e) && (e-- != begin))
+    ;
+  return {b, ++e};
+}
 
+// trim c++ string
 string Trim(const string &text) {
   auto b = cbegin(text);
   while (isspace(*b) && (b++ != cend(text)))
@@ -82,7 +94,15 @@ vector<string> ParsePath(const string &path) {
   return ret;
 }
 
+string ToPath(const vector<string> &v) {
+  string path;
+  for (const auto &i : v) {
+    path += "/" + i;
+  }
+  return path;
+}
 //-----------------------------------------------------------------------------
+// Find first element
 class FindVisitor : public XMLVisitor {
 public:
   bool VisitEnter(const XMLDocument &) { return true; }
@@ -116,7 +136,9 @@ private:
   const XMLElement *pElement_ = nullptr;
   bool caseInsesitive_ = true;
 };
+
 //-----------------------------------------------------------------------------
+// return element at specific location
 class PathVisitor : public XMLVisitor {
 public:
   bool VisitEnter(const XMLDocument &) { return true; }
@@ -164,6 +186,7 @@ private:
   bool caseInsesitive_ = true;
 };
 //-----------------------------------------------------------------------------
+// return all children of path with specific name
 class MultiPathVisitor : public XMLVisitor {
 public:
   bool VisitEnter(const XMLDocument &) { return true; }
@@ -211,6 +234,86 @@ private:
   vector<const XMLElement *> elements_;
   bool terminate_ = false;
   string element_;
+  bool caseInsensitive_ = true;
+};
+
+//-----------------------------------------------------------------------------
+// build path -> element text map where the keys are the full path to text
+// each maps to one or more elments
+class DOMToDictVisitor : public XMLVisitor {
+public:
+  bool VisitEnter(const XMLDocument &) { return true; }
+  bool VisitExit(const XMLDocument &) { return true; }
+  bool VisitEnter(const XMLElement &e, const XMLAttribute *) {
+    curPath_.push_back(caseInsensitive_ ? ToLower(e.Name()) : e.Name());
+    return true;
+  }
+  bool VisitExit(const XMLElement &) {
+    curPath_.pop_back();
+    return true;
+  }
+  bool Visit(const XMLDeclaration &) { return true; }
+  bool Visit(const XMLText &t) {
+    dict_[ToPath(curPath_)].push_back(t.Value());
+    return true;
+  }
+  bool Visit(const XMLComment &) { return true; }
+  bool Visit(const XMLUnknown &) { return true; }
+
+  DOMToDictVisitor(bool caseInsensitive = true)
+      : caseInsensitive_(caseInsensitive) {}
+
+  const map<string, vector<string>> &GetDict() const { return dict_; }
+
+private:
+  vector<string> curPath_;
+  bool caseInsensitive_ = true;
+  map<string, vector<string>> dict_;
+};
+//-----------------------------------------------------------------------------
+// return all children of path
+class MultiVisitor : public XMLVisitor {
+public:
+  bool VisitEnter(const XMLDocument &) { return true; }
+  bool VisitExit(const XMLDocument &) { return true; }
+  bool VisitEnter(const XMLElement &e, const XMLAttribute *) {
+    curPath_.push_back(caseInsensitive_ ? ToLower(e.Name()) : e.Name());
+    if (curPath_ == path_) {
+      // iterate over children with name == element_
+      auto pe = e.FirstChildElement();
+      if (!pe) {
+        terminate_ = true;
+        return false;
+      }
+      elements_.push_back(pe);
+      while ((pe = pe->NextSiblingElement())) {
+        elements_.push_back(pe);
+      }
+      return false;
+    }
+    return true;
+  }
+  bool VisitExit(const XMLElement &) {
+    if (terminate_)
+      return false;
+    curPath_.pop_back();
+    return true;
+  }
+  bool Visit(const XMLDeclaration &) { return true; }
+  bool Visit(const XMLText &) { return true; }
+  bool Visit(const XMLComment &) { return true; }
+  bool Visit(const XMLUnknown &) { return true; }
+
+  const vector<const XMLElement *> &GetElements() const { return elements_; }
+  MultiVisitor(const string &path, bool caseInsensitive = true)
+      : path_(ParsePath(caseInsensitive ? ToLower(path) : path)),
+        caseInsensitive_(caseInsensitive) {}
+
+private:
+  vector<string> path_;
+  vector<string> curPath_;
+  vector<const XMLElement *> elements_;
+  bool terminate_ = false;
   bool caseInsensitive_ = true;
 };
 
@@ -281,17 +384,16 @@ vector<pair<string, string>> GetAttributesText(const XMLElement *e) {
 string FindElementText(const string &xml, const string &element) {
   tinyxml2::XMLDocument doc;
   if (doc.Parse(xml.c_str()) != tinyxml2::XML_SUCCESS) {
-    cerr << "Error parsing XML text" << endl;
-    exit(EXIT_FAILURE);
+    throw std::logic_error("Error parsing XML text");
   }
   return Trim(FindElementText(doc, element));
 }
 //-----------------------------------------------------------------------------
+// return element text at location
 string ParseXMLPath(const string &xml, const string &path) {
   tinyxml2::XMLDocument doc;
   if (doc.Parse(xml.c_str()) != tinyxml2::XML_SUCCESS) {
-    cerr << "Error parsing XML text" << endl;
-    exit(EXIT_FAILURE);
+    throw std::logic_error("Error parsing XML text");
   }
   return Trim(GetElementText(doc, path));
 }
@@ -302,20 +404,21 @@ vector<const XMLElement *> ParseXMLMultiPath(const string &xml,
                                              const string &childEement) {
   tinyxml2::XMLDocument doc;
   if (doc.Parse(xml.c_str()) != tinyxml2::XML_SUCCESS) {
-    cerr << "Error parsing XML text" << endl;
-    exit(EXIT_FAILURE);
+    throw std::logic_error("Error parsing XML text");
   }
   MultiPathVisitor v(path, childEement);
   doc.Accept(&v);
   return v.GetElements();
 }
+
 //-----------------------------------------------------------------------------
+// return text at specific location under prefixr e.g. <tag1>/<tag2> under
+// <parent1>/<parent2>
 vector<string> ParseXMLMultiPathText(const string &xml, const string &path,
                                      const string &childPath) {
   tinyxml2::XMLDocument doc;
   if (doc.Parse(xml.c_str()) != tinyxml2::XML_SUCCESS) {
-    cerr << "Error parsing XML text" << endl;
-    exit(EXIT_FAILURE);
+    throw std::logic_error("Error parsing XML text");
   }
   auto p = ParsePath(childPath);
   auto head = p.front();
@@ -327,4 +430,35 @@ vector<string> ParseXMLMultiPathText(const string &xml, const string &path,
     ret.push_back(GetElementText(*i, childPath));
   }
   return ret;
+}
+
+//-----------------------------------------------------------------------------
+// return all elements at location grouped by element name
+map<string, vector<string>> ParseXMLPathElementsText(const string &xml,
+                                                     const string &path) {
+  tinyxml2::XMLDocument doc;
+  if (doc.Parse(xml.c_str()) != tinyxml2::XML_SUCCESS) {
+    throw std::logic_error("Error parsing XML text");
+  }
+  MultiVisitor v(path);
+  doc.Accept(&v);
+  map<string, vector<string>> ret;
+  for (auto i : v.GetElements()) {
+    string text = i->GetText() ? i->GetText() : "";
+    if (!text.empty()) {
+      ret[i->Name()].push_back(text);
+    }
+  }
+  return ret;
+}
+
+//-----------------------------------------------------------------------------
+map<string, vector<string>> DOMToDict(const string &xml) {
+  tinyxml2::XMLDocument doc;
+  if (doc.Parse(xml.c_str()) != tinyxml2::XML_SUCCESS) {
+    throw std::logic_error("Error parsing XML text");
+  }
+  DOMToDictVisitor v;
+  doc.Accept(&v);
+  return v.GetDict();
 }

@@ -100,6 +100,17 @@ void ParseXMLMultiPathTest() {
   assert(el[2] == "2023-03-01t08:47:15.843z");
 }
 
+//@todo turn into test using shorter xml text
+void PrintDOMToDict() {
+  map<string, vector<string>> d = DOMToDict(listBuckets);
+  for (auto kv : d) {
+    cout << kv.first << endl;
+    for (auto i : kv.second) {
+      cout << "    " << i << endl;
+    }
+  }
+}
+
 int main(int, char **) {
   cout << "XMLTag" << endl;
   ParseXMLTagTest();
@@ -109,5 +120,6 @@ int main(int, char **) {
   ParseXMLPathTest();
   cout << "ParseXMLTagMultiPathTest" << endl;
   ParseXMLMultiPathTest();
+
   return 0;
 }
