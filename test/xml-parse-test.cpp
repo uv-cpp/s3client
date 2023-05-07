@@ -128,7 +128,7 @@ int main(int, char **) {
   ParseXMLPathTest();
   cout << "ParseXMLTagMultiPathTest" << endl;
   ParseXMLMultiPathTest();
-  PrintDOMToDict();
+  // PrintDOMToDict();
 
   return 0;
 }
