@@ -20,6 +20,14 @@ template <typename T> auto Err(T &&e) { return std::move(ErrorType(e)); }
 // Error type requires to_string overload
 inline std::string to_string(const std::string &s) { return s; }
 
+/// @todo specialize, only supported for non ref types
+template <typename T> struct OkType {
+  T t_;
+  OkType(T t) : t_(t) {}
+};
+
+template <typename T> OkType<T> Ok(T t) { return OkType(t); }
+
 //-----------------------------------------------------------------------------
 // A union can have member functions (including constructors and destructors),
 // but not virtual (10.3) functions. A union shall not have base classes. A
@@ -141,6 +149,7 @@ public:
     }
   }
   Result() = delete;
+  Result(OkType<R> t) : Base(true, error_), result_(t.t_) {}
   Result(ErrorType<ErrT> &&err)
       : Base(false, error_), error_(std::move(err.err)) {}
   Result(const R &r) : Base(true, error_), result_(r) {}

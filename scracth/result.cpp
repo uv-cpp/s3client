@@ -8,7 +8,7 @@ Result<int, std::string> Foo(int i) {
   if (i == 0) {
     return Err(std::string("Error"));
   } else {
-    return i;
+    return Ok(i);
   }
 }
 
