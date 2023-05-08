@@ -4,6 +4,8 @@
 // SPDX identifier: 0BSD
 #include "result.h"
 //-----------------------------------------------------------------------------
+// to support r-value references return values that are moved must be
+// explicitly declared as &&
 Result<int, std::string> Foo(int i) {
   if (i == 0) {
     return Err(std::string("Error"));
@@ -12,18 +14,26 @@ Result<int, std::string> Foo(int i) {
   }
 }
 
+// Result<int &&, std::string> FooRR(int i) {
+//   if (i == 0) {
+//     return Err(std::string("Error"));
+//   } else {
+//     return i;
+//   }
+// }
 const int I = 0;
 int J = 0;
 
+#define MAKE_ERROR(msg) (string(msg) + __LINE__)
+
 Result<const int &, std::string> FooCRef(int i) {
   if (i <= 0)
-    return Err(std::string("Error"));
-  // I = i;
+    return Err(std::string("Error: value <= 0"));
   return I;
 }
 Result<int &, std::string> FooRef(int i) {
   if (i <= 0)
-    return Err(std::string("Error"));
+    return Err(std::string("Error: value <= 0"));
   J = i;
   return J;
 }
@@ -35,6 +45,11 @@ Result<std::reference_wrapper<int>, std::string> FooR(int &i) {
     return std::ref(i);
   }
 }
+
+void ReceiveFoo(int x) { std::cout << x << std::endl; }
+void ReceiveFooR(int &x) { std::cout << x << std::endl; }
+void ReceiveFooCR(const int &x) { std::cout << x << std::endl; }
+void ReceiveRRef(int &&x) { std::cout << x << std::endl; }
 int main(int, char **) {
   int n = 0;
   if (auto r = FooR(n)) {
@@ -61,5 +76,10 @@ int main(int, char **) {
   std::cout << r << std::endl;
   const int &cr = FooCRef(5);
   std::cout << cr << std::endl;
+  ReceiveFoo((const int &)Foo(4));
+  ReceiveFooR(FooRef(5));
+  ReceiveFooCR(FooCRef(-7));
+  ReceiveRRef(Foo(3));
+
   return 0;
 }

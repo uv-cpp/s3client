@@ -14,29 +14,10 @@ template <typename T> struct ErrorType {
   ErrorType(const T &e) : err(e) {}
   ErrorType(T &&e) : err(std::move(e)) {}
 };
-template <typename T> struct OkType {
-  T r;
-  OkType() = delete;
-  OkType(const T &r) : r(r) {}
-  OkType(T &&r) : r(std::move(r)) {}
-};
-
-template <typename T> struct OkType<const T &> {
-  const T &r;
-  OkType() = delete;
-  OkType(const T &r) : r(r) {}
-};
-template <typename T> struct OkType<T &> {
-  T &r;
-  OkType() = delete;
-  OkType(T &r) : r(r) {}
-};
 template <typename T> auto Err(T &&e) { return std::move(ErrorType(e)); }
 
-// template <typename T> auto Ok(T &&r) { return OkType(r); }
-template <typename T> auto Ok(const T &r) { return OkType<const T &>(r); }
-// template <typename T> auto Ok(T &r) { return OkType<T &>(r); }
-template <typename T> auto Ok(T r) { return OkType(r); }
+// Error type requires to_string overload
+inline std::string to_string(const std::string &s) { return s; }
 
 //-----------------------------------------------------------------------------
 // A union can have member functions (including constructors and destructors),
@@ -56,45 +37,28 @@ template <typename T> auto Ok(T r) { return OkType(r); }
 // not be std::in_place_t or std::unexpect_t i.e. C++23 DOES NOT SUPPORT
 // expected WITH REFERENCES!
 //
-// When DISABLE_ERROR_HANDLING is NOT #defined the default behaviour in case of
-// access to result in the presence of error is exiting; can throw exception
-// instead.
-template <typename R, typename ErrT> class Result {
-  template <typename R2, typename E2>
-  friend Result<R2, E2> ResultCast(const Result<R, ErrT> &);
-  template <typename R2, typename E2>
-  friend Result<R2, E2> ResultCast(Result<R, ErrT> &&);
-  friend const ErrT &Error(const Result &r) {
-#ifndef DISABLE_ERROR_HANDLING
-    r.HandleError(false); // if ok != false segfaults
-#endif
-    return r.error_;
-  }
+// This implementation attempts at supporting references by using
+// reference_wrappers in unions.
+// When DISABLE_ERROR_HANDLING is NOT #defined the
+// default behaviour in case of access to result in the presence of error is
+// exiting; can throw exception instead.
 
-private:
+/// @todo use for const T& and T& specilization
+template <typename ErrT> struct ErrorHandler {
   bool ok_ = false;
-  // union cannot have rerence type, either replace with
-  // struct increasing the size or wrap references
-  // with ref/cref; note: when using struct reference_wrapper
-  // cannot be used anymore
-  union {
-    R result_;
-    ErrT error_;
-  };
+  const ErrT &error_;
 #ifndef DISABLE_ERROR_HANDLING
   void ExitIfError(bool ok, const std::string &msg) const {
     if (ok_ != ok) {
-      std::cerr << msg << std::endl;
+      std::cerr << msg << " - " << to_string(error_) << std::endl;
       exit(EXIT_FAILURE);
     }
   }
-
   void ThrowIfError(bool ok, const std::string &msg) const {
     if (ok_ != ok) {
-      throw std::logic_error(msg);
+      throw std::logic_error(msg + " - " + to_string(error_));
     }
   }
-
   void HandleError(bool ok = true,
                    const std::string &msg = "Unchecked error condition") const {
 #ifdef THROW_IF_ERROR
@@ -105,24 +69,65 @@ private:
 #endif
   }
 #endif
+  ErrorHandler(bool ok, const ErrT &err) : ok_(ok), error_(err) {}
+  bool Ok() const { return ok_; }
+};
+
+// Result implementation
+template <typename R, typename ErrT> class Result : private ErrorHandler<ErrT> {
+  using Base = ErrorHandler<ErrT>;
+  friend const ErrT &Error(const Result &r) {
+#ifndef DISABLE_ERROR_HANDLING
+    r.HandleError(false); // if ok != false segfaults
+#endif
+    return r.error_;
+  }
+  friend const R &Value(const Result &r) {
+#ifndef DISABLE_ERROR_HANDLING
+    r.HandleError(); // if ok != false segfaults
+#endif
+    return r.result_;
+  }
+  friend R &Value(Result &r) {
+#ifndef DISABLE_ERROR_HANDLING
+    r.HandleError(); // if ok != false segfaults
+#endif
+    return r.result_;
+  }
+  friend R &&Value(Result &&r) {
+#ifndef DISABLE_ERROR_HANDLING
+    r.HandleError(); // if ok != false segfaults
+#endif
+    return std::move(r.result_);
+  }
+
+private:
+  //  union cannot have rerence type, either replace with
+  //  struct increasing the size or wrap references
+  //  with ref/cref; note: when using struct reference_wrapper
+  //  cannot be used anymore
+  union {
+    R result_;
+    ErrT error_;
+  };
 
 public:
-  Result(Result &&r) : ok_(r.ok_) {
-    if (r.ok_) {
+  Result(Result &&r) : Base(r.ok_, error_) {
+    if (r.Ok()) {
       result_ = std::move(r.result_);
     } else {
       error_ = std::move(r.error_);
     }
   }
-  Result(const Result &r) : ok_(r.ok_) {
-    if (r.ok_) {
+  Result(const Result &r) : Base(r.ok_, error_) {
+    if (r.Ok()) {
       result_ = r.result_;
     } else {
       error_ = r.error_;
     }
   }
   ~Result() {
-    if (ok_) {
+    if (Base::Ok()) {
       if constexpr (!std::is_trivially_destructible<R>::value) {
         result_.~R();
       }
@@ -133,55 +138,28 @@ public:
     }
   }
   Result() = delete;
-  Result(ErrorType<ErrT> &&err) : ok_(false), error_(std::move(err.err)) {}
-  Result(OkType<R> &&res) : ok_(true), result_(std::move(res.r)) {}
-  Result(const R &r) : ok_(true), result_(r) {}
-  Result(R &&r) : ok_(true), result_(std::move(r)) {}
-  operator bool() const { return ok_; }
+  Result(ErrorType<ErrT> &&err)
+      : Base(false, error_), error_(std::move(err.err)) {}
+  Result(const R &r) : Base(true, error_), result_(r) {}
+  Result(R &&r) : Base(true, error_), result_(std::move(r)) {}
+  operator bool() const { return Base::Ok(); }
   operator const R &() const {
 #ifndef DISABLE_ERROR_HANDLING
-    HandleError();
+    Base::HandleError();
 #endif
     return result_;
   }
-  operator R &() {
+  operator R &&() {
 #ifndef DISABLE_ERROR_HANDLING
-    HandleError();
+    Base::HandleError();
 #endif
-    return result_;
+    return std::move(result_);
   }
 };
-
-template <typename R1, typename E1, typename R2, typename E2>
-Result<R1, E2> ResultCast(const Result<R1, E1> &r1) {
-  if (r1) {
-    return {r1.result_};
-  } else {
-    return {r1.error_};
-  }
-}
-
-template <typename R1, typename E1, typename R2, typename E2>
-Result<R1, E2> ResultCast(Result<R1, E1> &&r1) {
-  if (r1) {
-    return {std::move(r1.result_)};
-  } else {
-    return {std::move(r1.error_)};
-  }
-}
+//=============================================================================
 //-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
+// Specialization for const reference -> reference_wrapper<const T>
 template <typename R, typename ErrT> class Result<const R &, ErrT> {
-  template <typename R2, typename E2>
-  friend Result<R2, E2> ResultCast(const Result<R, ErrT> &);
-  template <typename R2, typename E2>
-  friend Result<R2, E2> ResultCast(Result<R, ErrT> &&);
   friend const ErrT &Error(const Result &r) {
 #ifndef DISABLE_ERROR_HANDLING
     r.HandleError(false); // if ok != false segfaults
@@ -208,14 +186,14 @@ private:
 #ifndef DISABLE_ERROR_HANDLING
   void ExitIfError(bool ok, const std::string &msg) const {
     if (ok_ != ok) {
-      std::cerr << msg << std::endl;
+      std::cerr << msg << " - " << to_string(error_) << std::endl;
       exit(EXIT_FAILURE);
     }
   }
 
   void ThrowIfError(bool ok, const std::string &msg) const {
     if (ok_ != ok) {
-      throw std::logic_error(msg);
+      throw std::logic_error(msg + " - " + to_string(error_));
     }
   }
 
@@ -258,25 +236,26 @@ public:
   }
   Result() = delete;
   Result(ErrorType<ErrT> &&err) : ok_(false), error_(std::move(err.err)) {}
-  Result(const OkType<const R &> &v) : ok_(true), result_(v.r) {}
   Result(const R &r) : ok_(true), result_(r) {}
   Result(R &&r) : ok_(true), result_(std::move(r)) {}
-  operator bool() const { return ok_; }
+  bool Ok() const { return ok_; }
+  operator bool() const { return Ok(); }
   operator const R &() const {
 #ifndef DISABLE_ERROR_HANDLING
     HandleError();
 #endif
     return result_;
   }
+  operator const R &() {
+#ifndef DISABLE_ERROR_HANDLING
+    HandleError();
+#endif
+    return result_;
+  }
 };
+//=============================================================================
 //-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
+// specialization for reference -> reference_wrapper<T>
 template <typename R, typename ErrT> class Result<R &, ErrT> {
   template <typename R2, typename E2>
   friend Result<R2, E2> ResultCast(const Result<R, ErrT> &);
@@ -290,7 +269,7 @@ template <typename R, typename ErrT> class Result<R &, ErrT> {
   }
   friend R &Value(const Result &r) {
 #ifndef DISABLE_ERROR_HANDLING
-    r.HandleError();
+    r.HandleError(); // if ok != false segfaults
 #endif
     return r.result_;
   }
@@ -308,14 +287,14 @@ private:
 #ifndef DISABLE_ERROR_HANDLING
   void ExitIfError(bool ok, const std::string &msg) const {
     if (ok_ != ok) {
-      std::cerr << msg << std::endl;
+      std::cerr << msg << " - " << to_string(error_) << std::endl;
       exit(EXIT_FAILURE);
     }
   }
 
   void ThrowIfError(bool ok, const std::string &msg) const {
     if (ok_ != ok) {
-      throw std::logic_error(msg);
+      throw std::logic_error(msg + " - " + to_string(error_));
     }
   }
 
@@ -358,9 +337,15 @@ public:
   }
   Result() = delete;
   Result(ErrorType<ErrT> &&err) : ok_(false), error_(std::move(err.err)) {}
-  Result(const OkType<R &> &v) : ok_(true), result_(v.r) {}
   Result(R &r) : ok_(true), result_(r) {}
-  operator bool() const { return ok_; }
+  bool Ok() const { return ok_; }
+  operator bool() const { return Ok(); }
+  operator const R &() const {
+#ifndef DISABLE_ERROR_HANDLING
+    HandleError();
+#endif
+    return result_;
+  }
   operator R &() {
 #ifndef DISABLE_ERROR_HANDLING
     HandleError();
@@ -368,45 +353,3 @@ public:
     return result_;
   }
 };
-#ifdef TEST
-//-----------------------------------------------------------------------------
-Result<int, std::string> Foo(int i) {
-  if (i == 0) {
-    return Err(std::string("Error"));
-  } else {
-    return Ok(i);
-  }
-}
-
-Result<std::reference_wrapper<int>, std::string> FooR(int &i) {
-  if (i == 0) {
-    return Err(std::string("Error"));
-  } else {
-    return Ok(std::ref(i));
-  }
-}
-int main(int, char **) {
-  int n = 0;
-  if (auto r = FooR(n)) {
-    // int &rf = (int &)(r);
-    std::cout << r << std::endl;
-  } else {
-    std::cout << Error(r) << std::endl;
-  }
-
-  if (auto i = Foo(8)) {
-    std::cout << i << std::endl;
-    // Exit or exception thrown when accessing error
-    // in the presence of a valid result
-    // when DISABLE_ERROR_HANDLING NOT #defined
-    // stc::cout << Error(i) << std::endl;
-  } else {
-    // Exit or exception thrown when accessing result
-    // in the presence of error
-    // when DISABLE_ERROR_HANDLING NOT #defined
-    std::cout << int(i) << std::endl;
-    std::cerr << Error(i) << std::endl;
-  }
-  return 0;
-}
-#endif
