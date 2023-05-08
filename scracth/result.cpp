@@ -4,8 +4,6 @@
 // SPDX identifier: 0BSD
 #include "result.h"
 //-----------------------------------------------------------------------------
-// to support r-value references return values that are moved must be
-// explicitly declared as &&
 Result<int, std::string> Foo(int i) {
   if (i == 0) {
     return Err(std::string("Error"));
@@ -14,13 +12,6 @@ Result<int, std::string> Foo(int i) {
   }
 }
 
-// Result<int &&, std::string> FooRR(int i) {
-//   if (i == 0) {
-//     return Err(std::string("Error"));
-//   } else {
-//     return i;
-//   }
-// }
 const int I = 0;
 int J = 0;
 

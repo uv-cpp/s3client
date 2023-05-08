@@ -1,5 +1,6 @@
 // Implementation of Result<Result,Error> type a la Rust.
 // author: Ugo Varetto
+// License: Zero-clause BSD
 // SPDX identifier: 0BSD
 
 #include <functional>
@@ -37,10 +38,12 @@ inline std::string to_string(const std::string &s) { return s; }
 // not be std::in_place_t or std::unexpect_t i.e. C++23 DOES NOT SUPPORT
 // expected WITH REFERENCES!
 //
-// This implementation attempts at supporting references by using
-// reference_wrappers in unions.
-// When DISABLE_ERROR_HANDLING is NOT #defined the
-// default behaviour in case of access to result in the presence of error is
+// This toy implementation attempts supports references by using
+// reference_wrapper<> in unions.
+// const &, & and && are all supported for basic cases. volatile not handled
+// explicitly.
+// When DISABLE_ERROR_HANDLING is NOT #defined
+// the default behaviour in case of access to result in the presence of error is
 // exiting; can throw exception instead.
 
 /// @todo use for const T& and T& specilization
@@ -104,8 +107,7 @@ template <typename R, typename ErrT> class Result : private ErrorHandler<ErrT> {
 private:
   //  union cannot have rerence type, either replace with
   //  struct increasing the size or wrap references
-  //  with ref/cref; note: when using struct reference_wrapper
-  //  cannot be used anymore
+  //  with ref/cref
   union {
     R result_;
     ErrT error_;
