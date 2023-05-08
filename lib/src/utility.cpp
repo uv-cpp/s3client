@@ -77,7 +77,7 @@ std::string GetHomeDir() {
 
 using namespace std;
 
-void Trim(string &s) {
+void TrimLine(string &s) {
   auto i = s.find("#");
   if (i != string::npos)
     s.erase(i);
@@ -116,7 +116,7 @@ Toml ParseTomlFile(const string &filename) {
       smatch sm;
       if (regex_search(line, sm, regex{"\\s*(\\w+)\\s*=\\s*(.*)"})) {
         string value = sm[2];
-        Trim(value);
+        TrimLine(value);
         string keyPrefix = "";
         if (!lastKey.empty() && curSectionData[lastKey].empty()) {
           keyPrefix = lastKey + "/";
@@ -130,7 +130,7 @@ Toml ParseTomlFile(const string &filename) {
         }
         if (line.size() == 0)
           continue;
-        Trim(line);
+        TrimLine(line);
         curSectionData[lastKey] += line;
       }
     }

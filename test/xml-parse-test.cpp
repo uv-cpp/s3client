@@ -120,15 +120,14 @@ void PrintDOMToDict() {
 }
 
 int main(int, char **) {
-  cout << "XMLTag" << endl;
   ParseXMLTagTest();
-  cout << "XMLTagPath" << endl;
+  cout << "XMLTagTest: Pass" << endl;
   ParseXMLTagPathTest();
-  cout << "ParseXMLTagPathTest" << endl;
+  cout << "XMLTagPathTest: Pass" << endl;
   ParseXMLPathTest();
-  cout << "ParseXMLTagMultiPathTest" << endl;
+  cout << "ParseXMLTagPathTest: Pass" << endl;
   ParseXMLMultiPathTest();
+  cout << "ParseXMLTagMultiPathTest: Pass" << endl;
   // PrintDOMToDict();
-
   return 0;
 }

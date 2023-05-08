@@ -124,7 +124,7 @@ int main(int argc, char const *argv[]) {
       }
       string line;
       while (getline(is, line)) {
-        Trim(line);
+        TrimLine(line);
         if (line.empty() || line[0] == '#')
           continue;
         config.endpoints.push_back(line);

@@ -185,8 +185,8 @@ Toml ParseTomlFile(const std::string &filename);
 /// \return home directory path
 std::string GetHomeDir();
 
-/// Remove leading and trailing blanks in place
-void Trim(std::string &s);
+/// Remove leading '#' and leading and trailing blanks in place
+void TrimLine(std::string &s);
 
 /// Convert to uppercase text
 /// \param s text
