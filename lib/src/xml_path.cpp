@@ -34,6 +34,7 @@
 #include "utility.h"
 #include <deque>
 #include <iostream>
+#include <map>
 #include <sstream>
 #include <unordered_map>
 #include <vector>
@@ -237,7 +238,8 @@ private:
   bool caseInsesitive_ = true;
 };
 //-----------------------------------------------------------------------------
-// return element at specific location
+// print xml text and replace template keyword with provided map values e.g.
+// <tag1>$1</tag1> -> <tag1>Replaced value</tag1>
 class ToTextVisitor : public XMLVisitor {
 public:
   bool VisitEnter(const XMLDocument &) {
@@ -249,7 +251,15 @@ public:
   bool VisitExit(const XMLDocument &) { return true; }
   bool VisitEnter(const XMLElement &e, const XMLAttribute *) {
     indent_ += indentIncrement_;
-    os_ << string(indent_, ' ') << '<' << e.Name() << '>' << '\n';
+    os_ << string(indent_, ' ') << '<' << e.Name();
+    if (const XMLAttribute *a = e.FirstAttribute()) {
+      os_ << ' ' << a->Name() << '=' << '"' << Map(a->Value()) << '"';
+      while ((a = a->Next())) {
+        os_ << ' ' << a->Name() << '=' << '"' << Map(a->Value()) << '"';
+      }
+      os_ << ' ';
+    }
+    os_ << '>' << '\n';
     return true;
   }
   bool VisitExit(const XMLElement &e) {
@@ -260,7 +270,7 @@ public:
   bool Visit(const XMLDeclaration &) { return true; }
   bool Visit(const XMLText &t) {
     indent_ += indentIncrement_;
-    os_ << string(indent_, ' ') << '<' << t.Value() << '>' << '\n';
+    os_ << string(indent_, ' ') << '<' << Map(t.Value()) << '>' << '\n';
     indent_ -= indentIncrement_;
     return true;
   }
@@ -270,7 +280,15 @@ public:
   ToTextVisitor(bool header = true, int indentIncrement = 2)
       : header_(header), indentIncrement_(indentIncrement) {}
 
+  ToTextVisitor(unordered_map<string, string> keys, bool header = true,
+                int indentIncrement = 2)
+      : map_(keys), header_(header), indentIncrement_(indentIncrement) {}
+
 private:
+  const string &Map(const string &k) { return map_.empty() ? k : map_.at(k); }
+
+private:
+  unordered_map<string, string> map_;
   bool header_ = true;
   int indentIncrement_ = 2;
   int indent_ = 0;
@@ -568,13 +586,14 @@ XMLElement *CreatePath(XMLElement *n, deque<string> path,
   }
   return n;
 }
-XMLElement *CreatePath(XMLElement *n, const string &path,
-                       const string &text = "") {
+
+XMLElement *CreatePath(XMLElement *n, const string &path, const string &text) {
   auto p = ParsePathQueue(path);
   return CreatePath(n, p, text);
 }
+
 XMLElement *CreatePath(XMLDocument &doc, const string &path,
-                       const string &text = "") {
+                       const string &text) {
   auto p = ParsePathQueue(path);
   XMLElement *n = doc.NewElement(p.front().c_str());
   p.pop_front();
@@ -599,8 +618,9 @@ XMLElement *CreatePaths(XMLDocument &doc, const string &path,
   return e;
 }
 
-string XMLToText(const XMLDocument &doc, bool header, int indent) {
-  ToTextVisitor v(header, indent);
+string XMLToText(const XMLDocument &doc, bool header, int indent,
+                 unordered_map<string, string> kv) {
+  ToTextVisitor v(std::move(kv), header, indent);
   doc.Accept(&v);
   return v.Text();
 }

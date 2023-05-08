@@ -55,5 +55,18 @@ std::unordered_map<std::string, std::vector<std::string>> ExtractRecord(
     const std::string &prefix,
     const std::unordered_map<std::string, std::vector<std::string>> &d);
 
-std::string XMLToText(const tinyxml2::XMLDocument &doc, bool header = true,
-                      int indent = 2);
+std::string XMLToText(const tinyxml2::XMLDocument &doc,
+                      std::unordered_map<std::string, std::string> kv = {},
+                      bool header = true, int indent = 2);
+tinyxml2::XMLElement *CreatePath(tinyxml2::XMLElement *n,
+                                 const std::string &path,
+                                 const std::string &text = "");
+tinyxml2::XMLElement *CreatePath(tinyxml2::XMLDocument &doc,
+                                 const std::string &path,
+                                 const std::string &text = "");
+tinyxml2::XMLElement *
+CreatePaths(tinyxml2::XMLElement *n, const std::string &path,
+            const std::vector<std::pair<std::string, std::string>> &paths);
+tinyxml2::XMLElement *
+CreatePaths(tinyxml2::XMLDocument &doc, const std::string &path,
+            const std::vector<std::pair<std::string, std::string>> &paths);
