@@ -3,7 +3,7 @@
 All requests can be issued through standard web clients such as `curl` specifying a pre-signed url on
 the command line.
 
-## Exanple: Upload object
+## Example: Upload object
 
 ### Presign URL
 Specify method, bucket name and key and expiration time of 10k seconds.
