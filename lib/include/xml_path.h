@@ -54,3 +54,6 @@ DOMToDict(const std::string &xml);
 std::unordered_map<std::string, std::vector<std::string>> ExtractRecord(
     const std::string &prefix,
     const std::unordered_map<std::string, std::vector<std::string>> &d);
+
+std::string XMLToText(const tinyxml2::XMLDocument &doc, bool header = true,
+                      int indent = 2);

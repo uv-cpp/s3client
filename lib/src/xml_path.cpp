@@ -32,6 +32,7 @@
  ******************************************************************************/
 #include "xml_path.h"
 #include "utility.h"
+#include <deque>
 #include <iostream>
 #include <sstream>
 #include <unordered_map>
@@ -132,6 +133,18 @@ vector<string> ParsePath(const string &path) {
   return ret;
 }
 
+//-----------------------------------------------------------------------------
+deque<string> ParsePathQueue(const string &path) {
+  istringstream is(path);
+  deque<string> ret;
+  for (string s; getline(is, s, '/');) {
+    if (s.empty())
+      continue;
+    ret.push_back(s);
+  }
+  return ret;
+}
+
 string ToPath(const vector<string> &v) {
   string path;
   for (const auto &i : v) {
@@ -221,6 +234,47 @@ private:
   vector<string> curPath_;
   const XMLElement *pElement_ = nullptr;
   bool found_ = false;
+  bool caseInsesitive_ = true;
+};
+//-----------------------------------------------------------------------------
+// return element at specific location
+class ToTextVisitor : public XMLVisitor {
+public:
+  bool VisitEnter(const XMLDocument &) {
+    if (header_) {
+      os_ << "<?xml version=\"1.0\" encoding=\"utf-8\"?>" << '\n';
+    }
+    return true;
+  }
+  bool VisitExit(const XMLDocument &) { return true; }
+  bool VisitEnter(const XMLElement &e, const XMLAttribute *) {
+    indent_ += indentIncrement_;
+    os_ << string(indent_, ' ') << '<' << e.Name() << '>' << '\n';
+    return true;
+  }
+  bool VisitExit(const XMLElement &e) {
+    indent_ -= indentIncrement_;
+    os_ << string(indent_, ' ') << "</" << e.Name() << '>' << '\n';
+    return true;
+  }
+  bool Visit(const XMLDeclaration &) { return true; }
+  bool Visit(const XMLText &t) {
+    indent_ += indentIncrement_;
+    os_ << string(indent_, ' ') << '<' << t.Value() << '>' << '\n';
+    indent_ -= indentIncrement_;
+    return true;
+  }
+  bool Visit(const XMLComment &) { return true; }
+  bool Visit(const XMLUnknown &) { return true; }
+  string Text() const { return os_.str(); }
+  ToTextVisitor(bool header = true, int indentIncrement = 2)
+      : header_(header), indentIncrement_(indentIncrement) {}
+
+private:
+  bool header_ = true;
+  int indentIncrement_ = 2;
+  int indent_ = 0;
+  ostringstream os_;
   bool caseInsesitive_ = true;
 };
 //-----------------------------------------------------------------------------
@@ -499,4 +553,54 @@ unordered_map<string, vector<string>> DOMToDict(const string &xml) {
   DOMToDictVisitor v;
   doc.Accept(&v);
   return v.GetDict();
+}
+
+//-----------------------------------------------------------------------------
+// XML Generation
+XMLElement *CreatePath(XMLElement *n, deque<string> path,
+                       const string &text = "") {
+  while (!path.empty()) {
+    n = n->InsertNewChildElement(path.front().c_str());
+    path.pop_front();
+  }
+  if (!text.empty()) {
+    n->SetText(text.c_str());
+  }
+  return n;
+}
+XMLElement *CreatePath(XMLElement *n, const string &path,
+                       const string &text = "") {
+  auto p = ParsePathQueue(path);
+  return CreatePath(n, p, text);
+}
+XMLElement *CreatePath(XMLDocument &doc, const string &path,
+                       const string &text = "") {
+  auto p = ParsePathQueue(path);
+  XMLElement *n = doc.NewElement(p.front().c_str());
+  p.pop_front();
+  return CreatePath(n, p, text);
+}
+
+XMLElement *CreatePaths(XMLElement *n, const string &path,
+                        const vector<pair<string, string>> &paths) {
+  auto e = CreatePath(n, path);
+  for (const auto &i : paths) {
+    CreatePath(e, i.first, i.second);
+  }
+  return e;
+}
+
+XMLElement *CreatePaths(XMLDocument &doc, const string &path,
+                        const vector<pair<string, string>> &paths) {
+  auto e = CreatePath(doc, path);
+  for (const auto &i : paths) {
+    CreatePath(e, i.first, i.second);
+  }
+  return e;
+}
+
+string XMLToText(const XMLDocument &doc, bool header, int indent) {
+  ToTextVisitor v(header, indent);
+  doc.Accept(&v);
+  return v.Text();
 }

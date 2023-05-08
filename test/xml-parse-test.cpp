@@ -98,6 +98,9 @@ void ParseXMLMultiPathTest() {
   assert(el[0] == "2023-03-03t08:03:54.000z");
   assert(el[1] == "2023-03-01t08:47:15.843z");
   assert(el[2] == "2023-03-01t08:47:15.843z");
+  // tinyxml2::XMLDocument doc;
+  // doc.Parse(listBuckets);
+  // cout << XMLToText(doc, true, 0) << endl;
 }
 
 //@todo turn into test using shorter xml text
