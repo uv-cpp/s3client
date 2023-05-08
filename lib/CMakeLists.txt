@@ -48,7 +48,6 @@ set(CMAKE_CXX_FLAGS_DEBUG "-g")
 include_directories(include)
 include_directories(hash)
 include_directories(${TINYXML2_DIR})
-
 add_library(s3client ${HASH_SRCS} ${S3_CLIENT_LIB_SRCS})
 target_link_libraries(s3client curl)
 
