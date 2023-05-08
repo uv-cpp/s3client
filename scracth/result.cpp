@@ -15,13 +15,12 @@ Result<int, std::string> Foo(int i) {
 const int I = 0;
 int J = 0;
 
-#define MAKE_ERROR(msg) (string(msg) + __LINE__)
-
 Result<const int &, std::string> FooCRef(int i) {
   if (i <= 0)
     return Err(std::string("Error: value <= 0"));
   return I;
 }
+
 Result<int &, std::string> FooRef(int i) {
   if (i <= 0)
     return Err(std::string("Error: value <= 0"));
@@ -41,6 +40,7 @@ void ReceiveFoo(int x) { std::cout << x << std::endl; }
 void ReceiveFooR(int &x) { std::cout << x << std::endl; }
 void ReceiveFooCR(const int &x) { std::cout << x << std::endl; }
 void ReceiveRRef(int &&x) { std::cout << x << std::endl; }
+
 int main(int, char **) {
   int n = 0;
   if (auto r = FooR(n)) {
