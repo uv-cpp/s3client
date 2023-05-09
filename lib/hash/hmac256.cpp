@@ -36,14 +36,27 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+/**
+ * \file hmac256.cpp
+ * \brief implementation of HMAC hashing algorithm.
+ */
 // H((K xor opad) concat H( (K xor ipad ) concat message))
-// K = K if length(K) <=block size, H(K) otherwise
+// K = K if length(K) <= block size, H(K) otherwise
 // opad = 0x5c times 64
 // ipad = 0x36 times 64
 // H = hash function
 
 using namespace sha256;
 
+/** \brief Implement HMAC algorithm
+ * \ingroup Hash
+ * \param[in] data pointer to data to sign
+ * \param[in] length size of \c data buffer
+ * \param[in] key key
+ * \param[in] key_length key size, if smaller than 64 then a new 64 byte key is
+ * generated
+ * \param[out] HMAC hash
+ */
 void hmac256(const uint8_t *data, size_t length, const uint8_t *key,
              size_t key_length, uint8_t hmac_hash[32]) {
   uint32_t outer_hash[8];

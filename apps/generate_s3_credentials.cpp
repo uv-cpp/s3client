@@ -31,10 +31,14 @@
  * POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 /**
- * \file generate_s3_credentials.h
- * \brief Generates S3 access and secret keys
+ * \addtogroup Applications
+ * \brief Command line applications.
+ * @{
  */
-// requires c++17 or newer
+/**
+ * \file generate_s3_credentials.cpp
+ * \brief Generates S3 access and secret keys.
+ */
 #include <iostream>
 #include <random>
 #include <string>
@@ -97,3 +101,6 @@ int main(int argc, char **argv) {
   }
   return 0;
 }
+/**
+ * @}
+ */

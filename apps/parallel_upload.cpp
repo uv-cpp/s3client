@@ -30,7 +30,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
-
+/**
+ * \addtogroup Applications
+ * @{
+ */
 /**
  * \file parallel_upload.cpp
  * \brief Parallel file upload to S3 service
@@ -162,3 +165,6 @@ int main(int argc, char const *argv[]) {
     return 1;
   }
 }
+/**
+ * @}
+ */

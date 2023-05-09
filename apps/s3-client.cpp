@@ -30,10 +30,13 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
-
+/**
+ * \addtogroup Applications
+ * @{
+ */
 /**
  * \file s3-client.cpp
- * \brief Send requests to S3 andpoint and pring raw responses.
+ * \brief Send S3v4-signed requests to S3 andpoint and print raw responses.
  */
 // Send S3v4 signed REST requests
 
@@ -132,6 +135,9 @@ int main(int argc, char const *argv[]) {
     return 1;
   }
 }
+/**
+ * @}
+ */
 
 // to use a tunnel:
 // ssh -f -i ~/.ssh/id_rsa -L 127.0.0.1:8080:<final endpoint>:8080 \

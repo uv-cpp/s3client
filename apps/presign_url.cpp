@@ -31,6 +31,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 /**
+ * \addtogroup Applications
+ * @{
+ */
+/**
  * \file presign_url.cpp
  * \brief Presign URL.
  */
@@ -101,3 +105,6 @@ int main(int argc, char const *argv[]) {
   cout << signedURL; // << endl;
   return 0;
 }
+/**
+ * @}
+ */

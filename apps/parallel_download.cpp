@@ -30,6 +30,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
+/**
+ * \addtogroup Applications
+ * @{
+ */
 
 /**
  * \file parallel_download.cpp
@@ -147,3 +151,6 @@ int main(int argc, char const *argv[]) {
     return 1;
   }
 }
+/**
+ * @}
+ */
