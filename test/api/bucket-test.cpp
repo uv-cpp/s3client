@@ -29,26 +29,39 @@
  * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
- ******************************************************************************/ \
-#include <iostream>
+ ******************************************************************************/
+
+/**
+ * \file bucket-test.cpp
+ * \brief bucket tests
+ */
+
 #include "../utility.h"
 #include "s3-api.h"
 #include <algorithm>
 #include <chrono>
+#include <iostream>
 #include <stdexcept>
 #include <string>
 
 using namespace std;
 using namespace sss;
 using namespace api;
-
-int main(int argc, char **argv) {
+/**
+ * \addtogroup Tests
+ * \bief test/sample code
+ * @{
+ */
+/**
+ * \brief Bucket tests
+ */
+void BucketTest(int argc, char **argv) {
   const Params cfg = ParseCmdLine(argc, argv);
   TestS3Access(cfg);
   const string TEST_PREFIX = "Bucket";
   const string prefix = "sss-api-test-bucket";
   string bucketName;
-  ////
+  /// [CreateBucket]
   string action = "CreateBucket";
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
@@ -58,7 +71,7 @@ int main(int argc, char **argv) {
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
-  ////
+  /// [CreateBucket]
   action = "HeadBucket";
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
@@ -67,19 +80,25 @@ int main(int argc, char **argv) {
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
-  ////
+  /// [ListBuckets]
   action = "ListBuckets";
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
     auto buckets = s3.ListBuckets();
     if (buckets.empty()) {
-      throw runtime_error("Empty bucket list");
+      throw logic_error("Empty bucket list");
+    }
+    if (end(buckets) ==
+        find_if(begin(buckets), end(buckets),
+                [&](const auto &b) { return b.name == bucketName; })) {
+      throw logic_error("Missing bucket");
     }
     TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
-  ////
+  /// [ListBuckets]
+  /// [DeleteBucket]
   action = "DeleteBucket";
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
@@ -88,4 +107,13 @@ int main(int argc, char **argv) {
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
+  /// [DeleteBucket]
+}
+/**
+ * @}
+ */
+
+int main(int argc, char **argv) {
+  BucketTest(argc, argv);
+  return 0;
 }

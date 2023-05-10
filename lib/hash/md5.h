@@ -68,7 +68,7 @@ void md5_stream(uint32_t hash[4], const uint8_t data[], uint64_t length);
 /**
  * \brief Print hash code to text.
  * \param[in] hash hash code
- * \param[out] null-terminated out buffer
+ * \param[out] text null-terminated out buffer
  */
 inline void hash_to_text(uint32_t hash[4], char *text) {
   const unsigned char *h = (unsigned char *)hash;
@@ -78,10 +78,10 @@ inline void hash_to_text(uint32_t hash[4], char *text) {
 }
 /**
  * \brief Print hash code to stdout
- * \parameter[in] hash hash code
+ * \param[in] hash hash code
  */
 void print_hash(uint32_t hash[4]);
-} // namespace md5
 /**
  * @}
  */
+} // namespace md5

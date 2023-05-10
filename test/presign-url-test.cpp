@@ -7,6 +7,7 @@ using namespace std;
 using namespace sss;
 
 int main(int, char **) {
+  /// [Pre-sign example]
   const string presignedUrl =
       "http://127.0.0.1:9000/bucket1/"
       "key1?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=7PJRLUIHCX%2B%"
@@ -24,5 +25,6 @@ int main(int, char **) {
                             .dates = {"20230418T153022Z", "20230418"}};
   cout << "Sign,"
        << "Presign URL," << (presignedUrl == SignedURL(cfg)) << endl;
+  /// [Pre-sign example]
   return 0;
 }

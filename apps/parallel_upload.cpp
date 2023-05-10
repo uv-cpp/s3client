@@ -32,14 +32,14 @@
  ******************************************************************************/
 /**
  * \addtogroup Applications
+ * \brief Command line tools to interact with an S3 service.
  * @{
  */
 /**
  * \file parallel_upload.cpp
- * \brief Parallel file upload to S3 service
+ * \brief Parallel upload to S3 service
  */
-// Parallel file upload to S3 servers
-
+/// [Parallel upload to to S3 object]
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -165,6 +165,7 @@ int main(int argc, char const *argv[]) {
     return 1;
   }
 }
+/// [Parallel upload to to S3 object]
 /**
  * @}
  */

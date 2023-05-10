@@ -38,8 +38,7 @@
  * \file s3-client.cpp
  * \brief Send S3v4-signed requests to S3 andpoint and print raw responses.
  */
-// Send S3v4 signed REST requests
-
+/// [Generic S3 Client]
 #include <algorithm>
 #include <iostream>
 #include <vector>
@@ -135,6 +134,7 @@ int main(int argc, char const *argv[]) {
     return 1;
   }
 }
+/// [Generic S3 Client]
 /**
  * @}
  */

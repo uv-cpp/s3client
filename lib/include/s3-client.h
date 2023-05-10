@@ -31,7 +31,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 /**
- * \file s3-cliant.h
+ * \file s3-client.h
  * \brief declaration of functions and data types for sending S3 requests,
  * signing URLs and downloading and uploading files.
  */

@@ -56,7 +56,7 @@ int main(int argc, char **argv) {
   string objName = prefix + "obj-" + ToLower(Timestamp());
   CharArray data = CharArray(1024);
   iota(begin(data), end(data), 0);
-  ////
+  /// [PutObject]
   string action = "PutObject";
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
@@ -65,7 +65,8 @@ int main(int argc, char **argv) {
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
-  ////
+  /// [PutObject]
+  /// [HedObject]
   action = "HeadObject";
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
@@ -74,7 +75,8 @@ int main(int argc, char **argv) {
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
-  ////
+  /// [HedObject]
+  /// [ListObjectsV2]
   action = "ListObjectsV2";
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
@@ -96,7 +98,8 @@ int main(int argc, char **argv) {
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
-  ////
+  /// [ListObjectsV2]
+  /// [GetObject]
   action = "GetObject";
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
@@ -108,7 +111,8 @@ int main(int argc, char **argv) {
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
-  ////
+  /// [GetObject]
+  /// [DeleteOject]
   action = "DeleteObject";
   try {
     S3Client s3(cfg.access, cfg.secret, cfg.url);
@@ -124,4 +128,15 @@ int main(int argc, char **argv) {
     cerr << "Error deleting bucket " << e.what() << endl;
     exit(EXIT_FAILURE);
   }
+  /// [DeleteOject]
+  /// [DeleteBucket]
+  action = "DeleteBucket";
+  try {
+    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    s3.DeleteBucket(bucketName);
+    TestOutput(action, true, TEST_PREFIX);
+  } catch (const exception &e) {
+    TestOutput(action, false, TEST_PREFIX, e.what());
+  }
+  /// [DeleteBucket]
 }

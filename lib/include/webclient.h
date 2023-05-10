@@ -103,7 +103,7 @@ public:
   /// Constructor initializing only URL
   WebClient(const std::string &url) : url_(url), method_("GET") { InitEnv(); }
   /// Constructor
-  /// \param endPoint endpoint in the format <proto>://<server>:port
+  /// \param endPoint endpoint in the format \c <proto>://<server>:port
   /// \param path path to be added to endPoint to compete URL: /.../...
   /// \param method HTTP method
   /// \param params key,value map of parameters k1=value1&k2=value2&...
@@ -122,12 +122,12 @@ public:
   /// recovered by invoking ErrorMsg method.
   bool Send();
   /// Set SSL verification options: peer and/or host
-  /// It is useful to disable everything when sending https requests through
-  /// e.g. httos tunnel
+  /// Verification should be disabled when sending https requests through
+  /// SSH tunnels.
   bool SSLVerify(bool verifyPeer, bool verifyHost = true);
   /// Set full URL
   bool SetUrl(const std::string &url);
-  /// Set endpoint: <proto>://<server>:<port>
+  /// Set endpoint: \c <proto>://<server>:<port>
   void SetEndpoint(const std::string &ep);
   /// Set URL path /.../.
   void SetPath(const std::string &path);
@@ -163,7 +163,7 @@ public:
   /// \brief Upload file
   ///
   /// \param fname file name
-  /// \param fsize file size, if zero it will compute file size on its ow
+  /// \param fsize file size, if zero file size will be computed
   /// \return \c true if successful, \c false otherwise
   bool UploadFile(const std::string &fname, size_t fsize = 0);
   /// \brief Upload file starting from offset.

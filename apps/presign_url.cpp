@@ -38,6 +38,7 @@
  * \file presign_url.cpp
  * \brief Presign URL.
  */
+/// [Presign URL]
 #include <iostream>
 #include <string>
 
@@ -105,6 +106,7 @@ int main(int argc, char const *argv[]) {
   cout << signedURL; // << endl;
   return 0;
 }
+/// [Presign URL]
 /**
  * @}
  */

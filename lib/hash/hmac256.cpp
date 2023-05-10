@@ -55,7 +55,7 @@ using namespace sha256;
  * \param[in] key key
  * \param[in] key_length key size, if smaller than 64 then a new 64 byte key is
  * generated
- * \param[out] HMAC hash
+ * \param[out] hmac_hash computed HMAC hash
  */
 void hmac256(const uint8_t *data, size_t length, const uint8_t *key,
              size_t key_length, uint8_t hmac_hash[32]) {

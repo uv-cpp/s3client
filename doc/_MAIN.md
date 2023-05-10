@@ -1,4 +1,4 @@
-# S3 client tools
+# S3 client tools {#mainpage}
 
 C++ client library and tools.
 Originally developed to test *Ceph* object storage and learn the S3 API.

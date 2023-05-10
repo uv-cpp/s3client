@@ -51,10 +51,9 @@ int main(int, char **) {
                                    .key = "key1",
                                    .headers = {{"x-amz-meta-mymeta", "123"}},
                                    .dates = {"20230418T153022Z", "20230418"}};
-
   cout << "Sign,"
        << "Sign request," << (signature == ComputeSignature(cfg).signature)
-       << ',' << endl;
+       << endl;
   /// [Create signature example]
   return 0;
 }

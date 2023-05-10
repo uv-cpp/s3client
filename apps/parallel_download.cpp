@@ -37,10 +37,9 @@
 
 /**
  * \file parallel_download.cpp
- * \brief Parallel file download from S3 service
+ * \brief Parallel object download download from S3 service
  */
-// Parallel file download from S3 servers
-
+/// [Parallel object download]
 #include "lyra/lyra.hpp"
 #include "s3-client.h"
 #include <filesystem>
@@ -151,6 +150,7 @@ int main(int argc, char const *argv[]) {
     return 1;
   }
 }
+/// [Parallel object download]
 /**
  * @}
  */

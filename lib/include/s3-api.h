@@ -30,6 +30,11 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
+/**
+ * \file s3-api.h
+ * \brief declarations of \c S3Client class;
+ */
+
 #pragma once
 
 #include "aws_sign.h"
@@ -37,9 +42,15 @@
 #include "response_parser.h"
 #include "s3-client.h"
 #include "webclient.h"
+
 namespace sss {
 
 namespace api {
+/**
+ * \addtogroup S3_API
+ * \brief S3 API
+ * @{
+ */
 struct BucketInfo {
   std::string name;
   std::string creationDate; //@todo replace with std::tm
@@ -59,7 +70,12 @@ struct ObjectInfo {
 //@todo
 // struct PartInfo {};
 
-// https://docs.aws.amazon.com/AmazonS3/latest/API/API_Operations_Amazon_Simple_Storage_Service.html
+/**
+ * \brief S3 Client inteface.
+ *
+ * Implements:
+ * https://docs.aws.amazon.com/AmazonS3/latest/API/API_Operations_Amazon_Simple_Storage_Service.html
+ */
 class S3Client {
 public:
   struct ListObjectV2Config {
@@ -153,19 +169,6 @@ public:
 public:
   enum FileIOMode { BUFFERED, UNBUFFERED, MEMORY_MAPPED };
   // struct DataTransferConfig {
-  //   std::string bucket;
-  //   std::string key;
-  //   std::string file;
-  //   FileIOMode mode = BUFFERED;
-  //   const char *data = nullptr;
-  //   size_t offset = 0;
-  //   size_t size = 0; //< if offset and size zero use file size
-  //   int maxRetries =
-  //       1; //< mximum number of retries per chunk, only implementd for upload
-  //   int jobs = 1; //< number of parallel tasks (currently == number of
-  //   threads) size_t chunksPerJob = 1; //< number of chunks per job
-  //   std::string payloadHash;
-  // };
   void GetFileObject(const std::string &fileName, const std::string &bucket,
                      const std::string &key, size_t offset = 0,
                      size_t begin = 0, size_t end = 0, Headers = {{}});
@@ -212,6 +215,9 @@ public:
   const CharArray &GetObject(const std::string &bucket, const std::string &key,
                              size_t begin = 0, size_t end = 0, Headers = {{}});
 
+  /// GetObject action.
+  /// \section ex1 Example
+  /// \snippet api/object-test.cpp GetObject
   void GetObject(const std::string &bucket, const std::string &key,
                  CharArray &buffer, size_t offset, size_t begin = 0,
                  size_t end = 0, Headers headers = {{}});
@@ -268,5 +274,8 @@ private:
   std::string endpoint_;
   std::string signingEndpoint_;
 };
+/**
+ * @}
+ */
 } // namespace api
 } // namespace sss

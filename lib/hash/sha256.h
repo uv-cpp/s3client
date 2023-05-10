@@ -90,7 +90,7 @@ void sha256_next(const uint8_t data[], uint32_t length, uint32_t hash[8],
 /**
  * \brief Compute SHA256 hash, updating hash value at every invocation.
  *
- * \param[in.out] hash SH256 hash
+ * \param[in,out] hash SH256 hash
  * \param[in] data data to hash
  * \param[in] length size of data buffer
  */
@@ -98,7 +98,7 @@ void sha256_stream(uint32_t hash[8], const uint8_t data[], uint64_t length);
 /**
  * \brief Convert hash value to little endian.
  *
- * \param[in,out] hahs SHA256 hash
+ * \param[in,out] hash SHA256 hash
  */
 inline void to_little(uint32_t hash[8]) {
   for (size_t i = 0; i != 8; i++)
@@ -118,12 +118,10 @@ inline void hash_to_text(uint32_t hash[8], char *text) {
   }
 }
 /**
- * \brief Print SHA256 to standard output.
+ * \brief Print SHA256 hash to standard output.
  *
  * \param[in] hash SHA256 hash
  */
 void print_hash(uint32_t hash[8]);
+/** @} */
 } // namespace sha256
-/**
- * @}
- */

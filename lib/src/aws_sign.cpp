@@ -221,9 +221,8 @@ string SignedURL(const S3SignUrlConfig &cfg) {
 }
 
 //------------------------------------------------------------------------------
-/// Sign HTTP headers: return dictionary with {key, value} pairs containing
-/// per-header information.
-/// @TODO: replace arguments with struct.
+// Sign HTTP headers: return dictionary with {key, value} pairs containing
+// per-header information.
 Signature ComputeSignature(const ComputeSignatureConfig &cfg) {
 
 #ifndef NDEBUG

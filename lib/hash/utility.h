@@ -34,14 +34,15 @@
  * \file utility.h
  * \brief Declaration of utility functions for SHA256 hashing.
  */
-/**
- * \addtogroup Hash utility functions.
- * @{
- */
 #pragma once
 #include <cstdint>
 #include <cstdio>
 #include <cstdlib>
+/**
+ * \addtogroup Hash_Utility
+ * \brief Utility function called from hashing functions.
+ * @{
+ */
 //-----------------------------------------------------------------------------
 /**
  * \brief Convert number from little endian to big endian.
