@@ -111,7 +111,7 @@ void BucketTest(int argc, char **argv) {
 /**
  * @}
  */
-
+/// \ingroup Internal
 int main(int argc, char **argv) {
   BucketTest(argc, argv);
   return 0;

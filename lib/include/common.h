@@ -43,11 +43,18 @@
 
 namespace sss {
 
+/**
+ * \addtogroup Types
+ * \brief Redefinition of map types.
+ * @{
+ */
 ///@todo review and use unordered_map when parameters do not need to be in
 /// alphabetical order
 using Map = std::map<std::string, std::string>;
 using Headers = Map;
 using Parameters = Map;
 using MetaDataMap = Map;
-
+/**
+ * @}
+ */
 } // namespace sss

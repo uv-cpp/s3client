@@ -43,7 +43,11 @@
 #include "common.h"
 
 namespace sss {
-
+/**
+ * \addtogroup Parsing
+ * \brief Response parset function for XML body and HTTP headers.
+ * @{
+ */
 /// Extract and return content of XML tag
 /// \param xml XML text
 /// \param tag \c <tag> name
@@ -83,5 +87,8 @@ MetaDataMap MetaDataHeaders(const std::string &headers);
 /// \param etag etag text
 /// \return etag string without quotes
 std::string TrimETag(const std::string &etag);
+/**
+ * @}
+ */
 
 } // namespace sss

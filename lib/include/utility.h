@@ -45,17 +45,17 @@
 #include <unordered_map>
 
 /**
- * \addtogroup internal
+ * \addtogroup Internal
  * @{
  */
 
 namespace sss {
 
-/// Split string and puts substrings into container
-/// \param str input text
+/// Split string and put substrings into container
+/// \param[in] str input text
 /// \param[out] cont container with \c push_back() method
-/// \param delims delimiter
-/// \param count number of delimiters to parse
+/// \param[in] delims delimiter
+/// \param[in] count number of delimiters to parse
 template <class ContainerT>
 void Split(const std::string &str, ContainerT &cont,
            const std::string &delims = " ",
@@ -76,13 +76,16 @@ void Split(const std::string &str, ContainerT &cont,
   }
 }
 
-/// Ranges *are broken* in Clang 15, need to implement my own splitter.
-/// https://stackoverflow.com/questions/72716894/how-to-use-stdviewstransform-on-a-vector/72718016
+/**
+ * \addtogroup Ranges
+ * \brief Implementation of rages functions (ranges are broken in CLang 14-15)
+ * https://stackoverflow.com/questions/72716894/how-to-use-stdviewstransform-on-a-vector/72718016
+ * @{
+ */
 
-/// Iterate over splits.
+/// \brief Iterator over splits.
 ///
 /// A constanst reference to the parsed string is kept internally.
-/// The delimiter is copied to allow for
 class SplitIterator {
   friend class SplitRange;
 
@@ -133,12 +136,17 @@ private:
   std::string sub_;
 };
 
-// const std::string x = "meta1:value1;meta2:value2";
-// for (auto i : SplitRange(x, ";")) {
-//   auto s = begin(SplitRange(i, ":"));
-//   cout << *s++ << ": " << *s << endl;
-// }
-
+/**
+ * \brief Range over splits.
+ *
+ * \code{c++}
+ * const std::string x = "meta1:value1;meta2:value2";
+ * for (auto i : SplitRange(x, ";")) {
+ *   auto s = begin(SplitRange(i, ":"));
+ *   cout << *s++ << ": " << *s << endl;
+ * }
+ * \endcode
+ */
 class SplitRange {
 public:
   SplitRange(const std::string &str, const std::string &delims)
@@ -156,9 +164,13 @@ private:
   const std::string delims_;
 };
 
+/// \brief return iterator at start position
 inline auto begin(const SplitRange &sr) { return sr.begin(); }
-
+/// \brief return iterator at end position
 inline auto end(const SplitRange &sr) { return sr.end(); }
+/**
+ * @}
+ */
 /// Return integer in [low,high] range
 /// \param lowerBound lower bound
 /// \param upperBound upper bound
@@ -170,11 +182,18 @@ int RandomIndex(int lowerBound, int upperBound);
 /// \return file size in number of bytes
 size_t FileSize(const std::string &filename);
 
+/**
+ *  \addtogroup Types
+ *  @{
+ */
 using Dict = std::unordered_map<std::string, std::string>;
 using Toml = std::unordered_map<std::string, Dict>;
+/**
+ * @}
+ */
 
 /// Parse \e Toml file in AWS format and return tree as map of maps
-///
+/// \ingroup Parse
 /// Works with AWS format (nested s'=')
 /// Parent key is added added to child key: <parent key>/<child_key>'
 /// \param filename location of configuration file
@@ -186,14 +205,17 @@ Toml ParseTomlFile(const std::string &filename);
 std::string GetHomeDir();
 
 /// Remove leading '#' and leading and trailing blanks in place
+/// \ingroup Utility
 void TrimLine(std::string &s);
 
 /// Convert to uppercase text
+/// \ingroup Utility
 /// \param s text
 /// \return uppercase text
 std::string ToUpper(std::string s);
 
 /// Convert to lowercase
+/// \ingroup Utility
 /// \param s text
 /// \return lowercase text
 std::string ToLower(std::string s);

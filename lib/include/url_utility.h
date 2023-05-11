@@ -49,7 +49,7 @@
 #include "common.h"
 #include "utility.h"
 
-/** \addtogroup internal
+/** \addtogroup Internal
  *  @{
  */
 

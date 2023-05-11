@@ -34,6 +34,19 @@
 #include "webclient.h"
 #include <string>
 namespace sss {
-void Handle400Error(const WebClient &wc, const std::string &prefix = "");
+/**
+ * \addtogroup ErrorHandling
+ * \brief Error handling
+ * @{
+ */
+
+/// Handle 400 by throwing \c std::logic_error or \c std::runtime_error
+/// \throws std::runtime_error if request not sent
+/// \throws std::logic_error if return code >= 400
+/// \param wc reference to WebClient instance
+/// \param prefix string to pre-pend to error message
 void HandleError(const WebClient &wc, const std::string &prefix = "");
+/**
+ * @}
+ */
 } // namespace sss

@@ -43,7 +43,11 @@
 #include <vector>
 
 namespace sss {
-
+/**
+ * \addtogroup S3Client
+ * \brief S3 client
+ * @{
+ */
 //------------------------------------------------------------------------------
 /// S3 Credentials in AWS format
 struct S3Credentials {
@@ -55,26 +59,27 @@ struct S3Credentials {
 struct S3ClientConfig {
   std::string accessKey;
   std::string secretKey;
-  std::string endpoint; //< actual endpoint where requests are sent
+  std::string endpoint; ///< actual endpoint where requests are sent
   std::string
-      signUrl; //< url used to sign, allows requests to work across tunnels
+      signUrl; ///< url used to sign, allows requests to work across tunnels
   std::string bucket;
   std::string key;
   Parameters params;
   std::string method = "GET";
   Headers headers;
-  std::string outfile; // if not empty stores returned response body into file
-  /// if dataIsFileName == true  assume filename, if
-  /// not send 'data' bytes
+  std::string outfile; ///< if not empty stores returned response body into file
+  /// container for data or file name
   std::vector<char> data;
-  bool dataIsFileName = false; //< if true interpret 'data' as file name
+  /// if dataIsFileName == true read interpret content of \c data field as file
+  /// name else interpret as data source
+  bool dataIsFileName = false;
 };
 
 /// Parameters for calls to upload and download file functions.
 struct S3DataTransferConfig {
   std::string accessKey;
   std::string secretKey;
-  std::string proxyUrl; //< @warning not implemented @todo implement
+  std::string proxyUrl; ///< @warning not implemented @todo implement
   std::string bucket;
   std::string key;
   std::string file;
@@ -82,18 +87,21 @@ struct S3DataTransferConfig {
   size_t offset = 0;
   size_t size = 0;
   std::string awsProfile;
-  std::vector<std::string> endpoints;
-  int maxRetries =
-      1; //< mximum number of retries per chunk, only implementd for upload
-  int jobs = 1;           //< number of parallel threads of execution
-  size_t partsPerJob = 1; //< number of chunks per job
-  std::string payloadHash;
+  std::vector<std::string>
+      endpoints;           ///< list of endpoints for client-side load balancing
+  int maxRetries = 1;      ///< maximum number of retries
+  int jobs = 1;            ///< number of parallel upload/download tasks
+  size_t partsPerJob = 1;  ///< number of parts per job
+  std::string payloadHash; ///< payload hash if empty the literal \c
+                           ///< "UNSIGNED-PAYLOAD" is used instead of the SHA256
+                           ///< hash code
 };
 
 //------------------------------------------------------------------------------
+/// Returned from ValidateBucket function.
 struct BucketValidation {
-  bool valid = false;
-  std::string error;
+  bool valid = false; ///< \c true if bucket name valid, \c false otherwise
+  std::string error;  ///< error message if not valid
   operator bool() const { return valid; }
 };
 /// Validate bucket name.
@@ -117,11 +125,20 @@ std::string UploadFile(const S3DataTransferConfig &,
 /// can be selected.
 S3Credentials GetS3Credentials(const std::string &fileName,
                                std::string awsProfile);
+/**
+ * @}
+ */
 
+/**
+ * \addtogroup Types
+ * @{
+ */
 using CharArray = std::vector<char>;
 using StringArray = std::vector<std::string>;
 using ETag = std::string;
 using MetaDataMap = std::map<std::string, std::string>;
 using UploadId = std::string;
-
+/**
+ * @}
+ */
 } // namespace sss

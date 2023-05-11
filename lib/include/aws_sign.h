@@ -114,6 +114,7 @@ Signature ComputeSignature(const ComputeSignatureConfig &);
 
 /// \brief Generate presigned URL.
 /// \see S3SignUrlConfig
+/// \return signed URL.
 std::string SignedURL(const S3SignUrlConfig &);
 
 /** \brief Sign headers.
