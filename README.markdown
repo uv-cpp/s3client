@@ -337,5 +337,4 @@ X-Content-Type-Options: nosniff
 X-Xss-Protection: 1; mode=block
 Date: Mon, 05 Dec 2022 08:22:55 GMT
 ```
-The variable type can e.g. be stored into the metadata by sending an `x-amz-meta-type:IntArray` header together with the request.
 

@@ -31,11 +31,6 @@
  * POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 
-/**
- * \file bucket-test.cpp
- * \brief bucket tests
- */
-
 #include "../utility.h"
 #include "s3-api.h"
 #include <algorithm>
@@ -48,9 +43,13 @@ using namespace std;
 using namespace sss;
 using namespace api;
 /**
- * \addtogroup Tests
- * \bief test/sample code
+ * \addtogroup Tests Examples
+ * \brief test/sample code
  * @{
+ */
+/**
+ * \file bucket-test.cpp
+ * \brief bucket tests
  */
 /**
  * \brief Bucket tests
