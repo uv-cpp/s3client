@@ -1,13 +1,11 @@
-# S3 client tools {#mainpage}
+# S3 Toolkit {#mainpage}
 
 C++ client library and tools.
 Originally developed to test *Ceph* object storage and learn the S3 API.
-All the code is tested on MacOS (x86 and ARM) and Linux (x86 - SuSE and Ubuntu) only. 
+All the code is tested on MacOS (x86 and ARM) and Linux SuSE and Ubuntu, x86 only. 
 
-* `libs3client`: high level functions to sign and send requests and perform parallel uploads/downloads
-* S3 API accessible through the `libs3client` library, see `s3-api.h` include. 
 
-The following tools simple wrappers around library functions:
+The following applications are available:
 
 * `s3-client`: send raw requests
 * `s3-presign`: generate pre-signed `URL`
@@ -16,6 +14,19 @@ The following tools simple wrappers around library functions:
 * `s3-gen-credentials`: generate access and secret keys
 
 Launch without arguments to see options.
+
+The *libs3client* library includes a high level and an S3 API implementing a small subset
+of the S3 Actions, however, every single action can be executed by invoking the
+`Send` methods and functions and passing body, url parameters and headers.
+
+All data transfer opeations are parallelised, and very soon an additional async interface
+will be available, where each thead will move individual chunks of data by invoking async I/O operations.
+
+When disabling S3v4 signing the library can be used as a generic HTTP client library.
+
+A high level XML parsing library based on *Tinyxml2* is provided for simplifying
+request generation and response parsing.
+
 
 ## Build and install
 
@@ -42,20 +53,15 @@ The library is found under `${CMAKE_INSTALL_PREFIX}/lib` and the executables
 under `${CMAKE_INSTALL_PREFIX}/bin`.
 
 The `s3-client` tool is a low level interface which can log all the XML/JSON
-requests and responses. All the requests is supported by passing *URL*
-parameters and headers on the command line and data either through the command line 
+requests and responses.  
+
+Specify *URL* parameters and headers on the command line and data either through the command line 
 or external files.
 
 The upload/download tools work best when reading/writing from SSDs or RAID &
 parallel file-systems with `stripe size = chunk size`.
 
 The code is `C++17` compliant.
-
-The *Portable Hashing Library* code is copied to a local path (`dep/hash`) because the original
-version does not compile on *MacOS* and the pull requests were not accepted.
-The plan is to replace the current hash library with:
- *  https://github.com/h5p9sl/hmac_sha256
- *  https://github.com/amosnier/sha-2
 
 Requests are sent through a `WebClient` class which wraps `libcurl` and *XML*
 responses are parsed using the standard regex library provided by the C++
@@ -103,9 +109,8 @@ dependencies on the following software libraries:
 
 * *libcurl* - distributed unded the curl license, derived from MIT/X
 * *Lyra*, by Rene Rivera - distributed under the Boost license version 1.0
-* *Portable Hashing Library*, by Stephan Brumme - distributed under the
-  zlib license
-* Tinyxml2 - zlib (included in source tree)
+* *Tinyxml2* - zlib (included in source tree)
+* *Doxygen Awesome* - MIT 
 
 ## Sending S3 requests
 
@@ -337,3 +342,4 @@ X-Content-Type-Options: nosniff
 X-Xss-Protection: 1; mode=block
 Date: Mon, 05 Dec 2022 08:22:55 GMT
 ```
+
