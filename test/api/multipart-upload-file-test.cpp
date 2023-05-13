@@ -69,7 +69,7 @@ int main(int argc, char **argv) {
   }
   fclose(file);
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     // create bucket
     s3.CreateBucket(bucket);
   } catch (...) {
@@ -80,7 +80,7 @@ int main(int argc, char **argv) {
   string action = "CreateMultipartUpload";
   UploadId uid;
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     uid = s3.CreateMultipartUpload(bucket, key);
     TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
@@ -90,7 +90,7 @@ int main(int argc, char **argv) {
   action = "UploadPart";
   vector<ETag> etags;
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     for (size_t i = 0; i != 3; ++i) {
       const size_t size = min(CHUNK_SIZE, SIZE - CHUNK_SIZE * i);
       // ByteArray b(size);
@@ -108,7 +108,7 @@ int main(int argc, char **argv) {
   ///
   action = "CompleteMultipartUpload";
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     s3.CompleteMultipartUpload(uid, bucket, key, etags);
     TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
@@ -117,7 +117,7 @@ int main(int argc, char **argv) {
   ////
   action = "GetObject";
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     const auto &obj = s3.GetObject(bucket, key);
     if (obj != data) {
       throw logic_error("Data mismatch");
@@ -129,7 +129,7 @@ int main(int argc, char **argv) {
   ///
   action = "DeleteObject";
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     s3.DeleteObject(bucket, key);
     TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
@@ -137,7 +137,7 @@ int main(int argc, char **argv) {
   }
   action = "DeleteBucket";
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     s3.DeleteBucket(bucket);
     TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {

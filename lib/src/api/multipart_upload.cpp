@@ -68,11 +68,11 @@ atomic<int> retriesG;
 int GetUploadRetries() { return retriesG; }
 
 //-----------------------------------------------------------------------------
-ETag DoUploadFilePart(S3Client &s3, const string &fileName, size_t offset,
+ETag DoUploadFilePart(S3Api &s3, const string &fileName, size_t offset,
                       size_t size, const string &bucket, const string &key,
                       const string &uploadId, int i, int tryNum,
-                      S3Client::FileIOMode mode, int maxRetries,
-                      Headers headers, const std::string &payloadHash) {
+                      S3Api::FileIOMode mode, int maxRetries, Headers headers,
+                      const std::string &payloadHash) {
 
   try {
     headers.insert({"content-length", to_string(size)});
@@ -84,13 +84,13 @@ ETag DoUploadFilePart(S3Client &s3, const string &fileName, size_t offset,
                           .params = params,
                           .payloadHash = payloadHash});
     switch (mode) {
-    case S3Client::BUFFERED:
+    case S3Api::BUFFERED:
       wc.UploadFile(fileName, offset, size);
       break;
-    case S3Client::UNBUFFERED:
+    case S3Api::UNBUFFERED:
       wc.UploadFileUnbuffered(fileName, offset, size);
       break;
-    case S3Client::MEMORY_MAPPED:
+    case S3Api::MEMORY_MAPPED:
       wc.UploadFileMM(fileName, offset, size);
       break;
     default:
@@ -118,7 +118,7 @@ ETag DoUploadFilePart(S3Client &s3, const string &fileName, size_t offset,
 }
 
 //-----------------------------------------------------------------------------
-ETag DoUploadPart(S3Client &s3, const string &bucket, const string &key,
+ETag DoUploadPart(S3Api &s3, const string &bucket, const string &key,
                   const char *data, const string &uploadId, int i, size_t size,
                   int tryNum, int maxRetries, Headers headers,
                   const string &payloadHash) {
@@ -158,9 +158,9 @@ ETag DoUploadPart(S3Client &s3, const string &bucket, const string &key,
 // Class implementation
 //=============================================================================
 
-ETag S3Client::CompleteMultipartUpload(const UploadId &uid,
-                                       const string &bucket, const string &key,
-                                       const vector<ETag> &etags) {
+ETag S3Api::CompleteMultipartUpload(const UploadId &uid, const string &bucket,
+                                    const string &key,
+                                    const vector<ETag> &etags) {
 
   Parameters params = {{"uploadId", uid}};
   const string postData = BuildEndUploadXML(etags);
@@ -187,9 +187,9 @@ ETag S3Client::CompleteMultipartUpload(const UploadId &uid,
 // The part size must be a megabyte (1024 KB) multiplied by a power of 2
 // for example, 1048576 (1 MB), 2097152 (2 MB), 4194304 (4 MB), 8388608 (8 MB),
 // and so on. The minimum allowable part size is 1 MB, and the maximum is 4 GB.
-UploadId S3Client::CreateMultipartUpload(const std::string &bucket,
-                                         const std::string &key,
-                                         size_t partSize, Headers headers) {
+UploadId S3Api::CreateMultipartUpload(const std::string &bucket,
+                                      const std::string &key, size_t partSize,
+                                      Headers headers) {
   if (partSize > 0)
     headers.insert({"x-amz-part-size", to_string(partSize)});
   const auto &wc = Send({.method = "POST",
@@ -203,26 +203,26 @@ UploadId S3Client::CreateMultipartUpload(const std::string &bucket,
 }
 
 //-----------------------------------------------------------------------------
-ETag S3Client::UploadPart(const std::string &bucket, const std::string &key,
-                          const UploadId &uid, int partNum, const char *data,
-                          size_t size, int maxRetries, Headers headers,
-                          const string &payloadHash) {
+ETag S3Api::UploadPart(const std::string &bucket, const std::string &key,
+                       const UploadId &uid, int partNum, const char *data,
+                       size_t size, int maxRetries, Headers headers,
+                       const string &payloadHash) {
   return DoUploadPart(*this, bucket, key, data, uid, partNum, size, 1,
                       maxRetries, headers, payloadHash);
 }
 
 //-----------------------------------------------------------------------------
-ETag S3Client::UploadFilePart(const std::string &file, size_t offset,
-                              size_t size, const std::string &bucket,
-                              const std::string &key, const UploadId &uid,
-                              int partNum, FileIOMode mode, int maxRetries,
-                              Headers headers, const string &payloadHash) {
+ETag S3Api::UploadFilePart(const std::string &file, size_t offset, size_t size,
+                           const std::string &bucket, const std::string &key,
+                           const UploadId &uid, int partNum, FileIOMode mode,
+                           int maxRetries, Headers headers,
+                           const string &payloadHash) {
   return DoUploadFilePart(*this, file, offset, size, bucket, key, uid, partNum,
                           1, mode, maxRetries, headers, payloadHash);
 }
 //-----------------------------------------------------------------------------
-void S3Client::AbortMultipartUpload(const string &bucket, const string &key,
-                                    const UploadId &uid) {
+void S3Api::AbortMultipartUpload(const string &bucket, const string &key,
+                                 const UploadId &uid) {
   Send({.method = "DELETE",
         .bucket = bucket,
         .key = key,

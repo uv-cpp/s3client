@@ -143,7 +143,7 @@ int main(int argc, char const *argv[]) {
       config.accessKey = c.accessKey;
       config.secretKey = c.secretKey;
     }
-    DownloadFile(config);
+    Download(config);
     return 0;
   } catch (const exception &e) {
     cerr << e.what() << endl;

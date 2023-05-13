@@ -63,7 +63,7 @@ void BucketTest(int argc, char **argv) {
   /// [CreateBucket]
   string action = "CreateBucket";
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     bucketName = prefix + ToLower(Timestamp());
     s3.CreateBucket(bucketName);
     TestOutput(action, true, TEST_PREFIX);
@@ -73,7 +73,7 @@ void BucketTest(int argc, char **argv) {
   /// [CreateBucket]
   action = "HeadBucket";
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     s3.HeadBucket(bucketName);
     TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
@@ -82,7 +82,7 @@ void BucketTest(int argc, char **argv) {
   /// [ListBuckets]
   action = "ListBuckets";
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     auto buckets = s3.ListBuckets();
     if (buckets.empty()) {
       throw logic_error("Empty bucket list");
@@ -100,7 +100,7 @@ void BucketTest(int argc, char **argv) {
   /// [DeleteBucket]
   action = "DeleteBucket";
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     s3.DeleteBucket(bucketName);
     TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {

@@ -34,7 +34,7 @@
  * \file webclient.h
  * \brief declaration of WebClient class wrapping libcurl to send web requests.
  *
- * Workflow:
+ * Data upload Workflow:
  * - Create WebClient instance
  * - Set headers and/or post data and/or request parameters and invoke Send() OR
  * - Upload file OR
@@ -59,19 +59,81 @@
 
 namespace sss {
 
-/// Sends web requests through libcurl.
-///
-/// Error handling is managed by having libcurl log errors into a char buffer.
-/// When a method fails returning \c false, you can extract the error message
-/// by invoking the ErrorMsg() method.
+/**
+ * \brief Send web requests through libcurl.
+ * \ingroup WebClient
+ *
+ * Configure state then invoke WebClient::Send to send request.
+ *
+ * Retrieve data through:
+ *   - GetResponseBody()
+ *   - GetResponseHeader()
+ *   - GetContentText()
+ *   - GetHeaderText()
+ *
+ * Error handling is managed by having libcurl log errors into a char buffer.
+ * When a method fails returning \c false, you can extract the error message
+ * by invoking the WebClient::ErrorMsg() method.
+ *
+ * \section usage Usage
+ *
+ * \code
+ * WebClient req;
+ * req.SSLVerify(verifyPeer, verifyHost);
+ * req.SetEndpoint(args.endpoint);
+ * req.SetPath(path);
+ * req.SetMethod(args.method);
+ * req.SetReqParameters(args.params);
+ * req.SetHeaders(headers);
+ * FILE *of = NULL;
+ * if (!args.outfile.empty()) {
+ *   of = fopen(args.outfile.c_str(), "wb");
+ *   req.SetWriteFunction(NULL, of); // default is to write to file
+ * }
+ * if (!args.data.empty()) {
+ *   if (!args.dataIsFileName) {
+ *     if (ToLower(args.method) == "post") {
+ *       req.SetUrlEncodedPostData(ParseParams(args.data.data()));
+ *       req.SetMethod("POST");
+ *       req.Send();
+ *     } else { // "put"
+ *       req.UploadDataFromBuffer(args.data.data(), 0, args.data.size());
+ *     }
+ *   } else {
+ *     if (ToLower(args.method) == "put") {
+ *       req.UploadFile(args.data.data());
+ *     } else if (args.method == "post") {
+ *       ifstream t(args.data.data());
+ *       const string str((istreambuf_iterator<char>(t)),
+ *                        istreambuf_iterator<char>());
+ *       req.SetMethod("POST");
+ *       req.SetPostData(str);
+ *       req.Send();
+ *     } else {
+ *       throw domain_error("Wrong method " + args.method);
+ *     }
+ *   }
+ * } else
+ *   req.Send();
+ * if (of)
+ *   fclose(of);
+ * return req;
+ *
+ * \endcode
+ *
+ */
 class WebClient {
 public:
   /// Function type invoked by \e libcurl to write received data
+  /// \param[in]  nmemb number of blocks of size \c size
+  /// \param[in] writerData user data passed to write function
   using WriteFunction = size_t (*)(char *data, size_t size, size_t nmemb,
                                    void *writerData);
   /// Function type invoked by \e libcurl to read data to send
+  /// \param[in] nmemb number of blocks of size \c size
+  /// \param[in] readerData user data passed to reade function
   using ReadFunction = size_t (*)(void *ptr, size_t size, size_t nmemb,
-                                  void *userdata);
+                                  void *readerData);
 
 private:
   /// Buffer keeping track of end of last read operation.
@@ -88,7 +150,7 @@ private:
   };
 
 public:
-  /// Disable copy constructor: only one libcurl handle per thread
+  /// Disable copy constructor: only one libcurl handle per thread allwed
   WebClient(const WebClient &) = delete;
   /// Move constructor
   WebClient(WebClient &&other)
@@ -103,10 +165,10 @@ public:
   /// Constructor initializing only URL
   WebClient(const std::string &url) : url_(url), method_("GET") { InitEnv(); }
   /// Constructor
-  /// \param endPoint endpoint in the format \c <proto>://<server>:port
-  /// \param path path to be added to endPoint to compete URL: /.../...
-  /// \param method HTTP method
-  /// \param params key,value map of parameters k1=value1&k2=value2&...
+  /// \param[in] endPoint endpoint in the format \c <proto>://<server>:port
+  /// \param[in] path path to be added to endPoint to compete URL: /.../...
+  /// \param[in] method HTTP method
+  /// \param[in] params key,value map of parameters \c k1=value1&k2=value2&...
   WebClient(const std::string &endPoint, const std::string &path,
             const std::string &method = "GET", const Map &params = Map(),
             const Map headers = Map())
@@ -116,93 +178,117 @@ public:
   }
   /// Destructor. Last instance cleans up libcurl.
   ~WebClient();
-  /// \brief Send request.
+  /// Send request.
   ///
-  /// Returns false if unsuccessful, error message can be
-  /// recovered by invoking ErrorMsg method.
+  /// \return \c false if error, retrieve error message through
+  /// WebClient::ErroMsg
   bool Send();
   /// Set SSL verification options: peer and/or host
   /// Verification should be disabled when sending https requests through
   /// SSH tunnels.
+  /// \param[in] verifyPeer verify the authenticity of the peer's certificate
+  /// \param[in] verifyHost verify the identity of the server
   bool SSLVerify(bool verifyPeer, bool verifyHost = true);
   /// Set full URL
+  /// \param[in] url endpoint + paramters URL
   bool SetUrl(const std::string &url);
   /// Set endpoint: \c <proto>://<server>:<port>
   void SetEndpoint(const std::string &ep);
-  /// Set URL path /.../.
+  /// Set URL path.
+  /// \param[in] path URL with endpoint part removed.
   void SetPath(const std::string &path);
-  /// Store headers into internall buffer.
+  /// Store headers into internal buffer.
+  /// \param[in] headers HTTP headers
   void SetHeaders(const Map &headers);
-  /// Storerequest parameters into internal buffer.
+  /// Store request parameters into internal buffer.
+  /// \param[in] params URL parameters: key=value&...
   void SetReqParameters(const Map &params);
   /// Set HTTP method.
+  /// \param[in] method \c "GET", \c "POST", \c "PUT", \c "DELETE", \c "HEAD"
   void SetMethod(const std::string &method, size_t size = 0);
   /// Url-encode and store data to be posted from {key,value} map.
+  /// \param[in] postData {key, value} map of URL paramters.
   void SetUrlEncodedPostData(const Map &postData);
   /// Url-encode and store data to be posted from string in the standard
-  /// key=value&key2=value2... format.
+  /// \c key=value&key2=value2... format.
+  /// \param[in] postData \c "key1=value1&key2=value2..."
   void SetUrlEncodedPostData(const std::string &postData);
   /// Store data to be posted.
+  /// \param[in] data text to be posted.
   void SetPostData(const std::string &data);
   /// Return status code from last executed request.
+  /// \return HTTP status (20*, 30*, 40*, 50*).
   long StatusCode() const;
   /// Return full URL.
+  /// \return endpoint + url parameters
   const std::string &GetUrl() const;
   /// Get response content.
+  /// \return response bytes (\c char used because it's the type used within \a
+  /// libcurl)
   const std::vector<char> &GetResponseBody() const;
   /// Get reponse header.
+  /// \return raw response headers as a single byte array.
   const std::vector<char> &GetResponseHeader() const;
   /// Get response body as text.
   std::string GetContentText() const;
   /// Get headers as text.
+  /// \return response headers as a single string.
   std::string GetHeaderText() const;
   /// Set function libcurl uses to store response data.
-  bool SetWriteFunction(WriteFunction f, void *ptr);
+  /// \param[in] f pointer to function called by \a libcurl to consume returned
+  /// data.
+  /// \param[in] userData pointer to user data.
+  bool SetWriteFunction(WriteFunction f, void *userData);
   /// Set function libcurl uses to read data to send.
-  bool SetReadFunction(ReadFunction f, void *ptr);
+  /// \param[in] f pointer to function called by \a libcurl to read data to
+  /// send; set to \c NULL to read from file.
+  /// \param[in] userData pointer to user data.
+  bool SetReadFunction(ReadFunction f, void *userData);
   /// \brief Upload file
   ///
-  /// \param fname file name
-  /// \param fsize file size, if zero file size will be computed
+  /// \param[in] fname file name
+  /// \param[in] fsize file size, if zero file size will be computed
   /// \return \c true if successful, \c false otherwise
   bool UploadFile(const std::string &fname, size_t fsize = 0);
   /// \brief Upload file starting from offset.
   ///
-  /// \param fname file name
-  /// \param offset offset
-  /// \param size file size, if zero it will compute file size on its ow
+  /// \param[in] fname file name
+  /// \param[in] offset offset
+  /// \param[in] size file size, if zero size is computed from file.
   /// \return \c true if successful, \c false otherwise
   bool UploadFile(const std::string &fname, size_t offset, size_t size);
   /// \brief Upload file starting from offset using unbuffered I/O read.
   ///
-  /// \param fname file name
-  /// \param offset offset
-  /// \param size file size, if zero it will compute file size on its ow
-  /// \return \c true if successful, \c false otherwise
+  /// \param[in] fname file name
+  /// \param[in] offset offset
+  /// \param[in] size file size, if zero size will be computer as `(file size) -
+  /// offset`. \return \c true if successful, \c false otherwise
   bool UploadFileUnbuffered(const std::string &fname, size_t offset,
                             size_t size);
   /// \brief Upload file starting from offset using unbuffered memory mapping of
   /// file.
   ///
-  /// \param fname file name
-  /// \param offset offset
-  /// \param size file size, if zero it will compute file size on its ow
+  /// \param[in] fname file name
+  /// \param[in] offset offset
+  /// \param[in] size file size, if zero it will compute file size on its ow
   /// \return \c true if successful, \c false otherwise
   bool UploadFileMM(const std::string &fname, size_t offset, size_t size);
   /// \brief Upload data from memory buffer.
   ///
-  /// \param data pointer to data
-  /// \param offset offset
-  /// \param size data size
+  /// \param[in] data pointer to data
+  /// \param[in] offset offset
+  /// \param[in] size data size
   /// \return \c true if successful, \c false otherwise
   bool UploadDataFromBuffer(const char *data, size_t offset, size_t size);
   /// Return curl error.
+  /// \return \a libcurl error as returned by \c curl_easy_strerror or \c
+  /// curl_multi_strerror.
   std::string ErrorMsg() const;
-  /// \brief Passthrough to curl_easy_setopt
+  /// \brief Passthrough to \c curl_easy_setopt
   ///
   /// https://curl.se/libcurl/c/curl_easy_setopt.html
   CURLcode SetOpt(CURLoption option, va_list argp);
-  /// \brief Passthrough method to curl_easy_getinfo
+  /// \brief Passthrough method to \c curl_easy_getinfo
   ///
   /// https://curl.se/libcurl/c/curl_easy_getinfo.html
   CURLcode GetInfo(CURLINFO info, va_list argp);
@@ -210,13 +296,13 @@ public:
   void SetVerbose(bool verbose);
   /// Redirect stderr to file. Returns \c false when it fails.
   bool RedirectSTDErr(FILE *f);
-  /// Clear inernal buffers
+  /// Clear internal buffers
   void ClearBuffers() {
     writeBuffer_.data.clear();
     writeBuffer_.offset = 0;
     headerBuffer_.clear();
   }
-  /// Reset read/write functions
+  /// Reset read/write functions to default.
   void ResetRWFunctions() {
     SetReadFunction((size_t(*)(void *, size_t, size_t, void *))Reader,
                     &readBuffer_);
@@ -226,7 +312,7 @@ public:
 
 private:
   /**
-   * \addtogroup internal
+   * \addtogroup Internal
    * @{
    */
   bool Status(CURLcode cc) const;

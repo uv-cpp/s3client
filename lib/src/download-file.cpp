@@ -54,7 +54,7 @@ atomic<int> retriesG;
 int GetDownloadRetries() { return retriesG; }
 
 //-----------------------------------------------------------------------------
-void DownloadPart(S3Client &s3, const string &file, const string &bucket,
+void DownloadPart(S3Api &s3, const string &file, const string &bucket,
                   const string &key, size_t offset, size_t partSize,
                   int maxRetries) {
   try {
@@ -68,6 +68,19 @@ void DownloadPart(S3Client &s3, const string &file, const string &bucket,
 }
 
 //-----------------------------------------------------------------------------
+void DownloadPart(S3Api &s3, char *data, const string &bucket,
+                  const string &key, size_t offset, size_t partSize,
+                  int maxRetries) {
+  try {
+    s3.GetObject(bucket, key, data, offset, offset, offset + partSize - 1);
+  } catch (const exception &e) {
+    if (retriesG++ > maxRetries)
+      throw e;
+    else
+      DownloadPart(s3, data, bucket, key, offset, partSize, maxRetries);
+  }
+}
+//-----------------------------------------------------------------------------
 void DownloadParts(const S3DataTransferConfig &cfg, size_t chunkSize,
                    int firstPart, int lastPart, size_t objectSize, int jobId) {
   size_t offset = jobId * chunkSize;
@@ -75,11 +88,11 @@ void DownloadParts(const S3DataTransferConfig &cfg, size_t chunkSize,
   const int numParts = lastPart - firstPart;
   const size_t partSize = (chunkSize + numParts - 1) / numParts;
   const auto endpoint = cfg.endpoints[RandomIndex(0, cfg.endpoints.size() - 1)];
-  S3Client s3(cfg.accessKey, cfg.secretKey, endpoint);
+  S3Api s3(cfg.accessKey, cfg.secretKey, endpoint);
   for (int i = 0; i != numParts; ++i) {
     const size_t size = min(partSize, chunkSize - i * partSize);
-    DownloadPart(s3, cfg.file, cfg.bucket, cfg.key, offset, size,
-                 cfg.maxRetries);
+    DownloadPart(s3, cfg.data ? cfg.data : cfg.file, cfg.bucket, cfg.key,
+                 offset, size, cfg.maxRetries);
     offset += size;
   }
 }
@@ -90,7 +103,7 @@ void DownloadFile(const S3DataTransferConfig &cfg, bool sync) {
   if (cfg.endpoints.empty()) {
     throw std::logic_error("No endpoint specified");
   }
-  S3Client s3(cfg.accessKey, cfg.secretKey, cfg.endpoints[0]);
+  S3Api s3(cfg.accessKey, cfg.secretKey, cfg.endpoints[0]);
   const size_t fileSize = s3.GetObjectSize(cfg.bucket, cfg.key);
   // create output file
   std::ofstream ofs(cfg.file, std::ios::binary | std::ios::out);
@@ -108,6 +121,45 @@ void DownloadFile(const S3DataTransferConfig &cfg, bool sync) {
   }
   for (auto &i : dloads) {
     i.wait();
+  }
+}
+
+//-----------------------------------------------------------------------------
+void DownloadData(const S3DataTransferConfig &cfg, bool sync) {
+  retriesG = 0;
+  if (!cfg.data) {
+    throw logic_error("NULL data buffer");
+  }
+  if (cfg.endpoints.empty()) {
+    throw std::logic_error("No endpoint specified");
+  }
+  S3Api s3(cfg.accessKey, cfg.secretKey, cfg.endpoints[0]);
+  // initiate request
+  const size_t perJobSize = (cfg.size + cfg.jobs - 1) / cfg.jobs;
+  // send parts in parallel and store ETags
+  vector<future<void>> dloads(cfg.jobs);
+  for (int i = 0; i != cfg.jobs; ++i) {
+    dloads[i] = async(sync ? launch::deferred : launch::async, DownloadParts,
+                      cfg, perJobSize, i * cfg.partsPerJob,
+                      i * cfg.partsPerJob + cfg.partsPerJob, cfg.size, i);
+  }
+  for (auto &i : dloads) {
+    i.wait();
+  }
+}
+
+//-----------------------------------------------------------------------------
+void Download(const S3DataTransferConfig &cfg, bool sync) {
+  if (!cfg.size) {
+    throw logic_error("Zero data size");
+  }
+  if (!cfg.data && cfg.file.empty()) {
+    throw logic_error("File name and data buffer pointer are both NULL");
+  }
+  if (cfg.data) {
+    DownloadData(cfg, sync);
+  } else {
+    DownloadFile(cfg, sync);
   }
 }
 } // namespace sss

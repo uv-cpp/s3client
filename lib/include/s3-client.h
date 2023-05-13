@@ -44,8 +44,22 @@
 
 namespace sss {
 /**
+ * \addtogroup Types
+ * @{
+ */
+using CharArray = std::vector<char>;
+using StringArray = std::vector<std::string>;
+using ETag = std::string;
+using MetaDataMap = std::map<std::string, std::string>;
+using UploadId = std::string;
+/**
+ * @}
+ */
+/**
  * \addtogroup S3Client
  * \brief S3 client
+ * Functions to send S3 requests, and perform parallel uploading and downloading
+ * data from memory and files.
  * @{
  */
 //------------------------------------------------------------------------------
@@ -56,6 +70,7 @@ struct S3Credentials {
 };
 
 /// Parameters for SendS3Request calls.
+/// \see SendS3Request
 struct S3ClientConfig {
   std::string accessKey;
   std::string secretKey;
@@ -75,7 +90,7 @@ struct S3ClientConfig {
   bool dataIsFileName = false;
 };
 
-/// Parameters for calls to upload and download file functions.
+/// Parameters for calls to upload and download functions.
 struct S3DataTransferConfig {
   std::string accessKey;
   std::string secretKey;
@@ -83,7 +98,7 @@ struct S3DataTransferConfig {
   std::string bucket;
   std::string key;
   std::string file;
-  const char *data = nullptr;
+  char *data = nullptr; ///< input for upload and output for download
   size_t offset = 0;
   size_t size = 0;
   std::string awsProfile;
@@ -114,31 +129,26 @@ Headers ToMeta(const std::map<std::string, std::string> &metaData);
 void Validate(const S3ClientConfig &s);
 /// Send S3 request to endpoint.
 WebClient SendS3Request(S3ClientConfig);
-/// Parallel download of object to file, @see S3FileTransferConfig
-/// if `sync==true` perform serial transfer
-void DownloadFile(const S3DataTransferConfig &, bool sync = false);
-/// Parallel upload of file to object, @see S3FileTransferConfig
-/// if `sync==true` perform serial transfer
-std::string UploadFile(const S3DataTransferConfig &,
-                       const MetaDataMap & = MetaDataMap{}, bool sync = false);
-/// Read S3 credentials from file. Whn reading from .aws folder an aws profile
-/// can be selected.
+/// Parallel upload
+/// If \c cfg.data not \c NULL data is read from memory, from file
+/// specified in \c cfg.file instead.
+/// \param[in] cfg data transfer configuration, \see S3DataTransferConfig
+/// \param[in] sync if `sync==true` perform serial transfer
+ETag Upload(const S3DataTransferConfig &cfg, const MetaDataMap &mm = {},
+            bool sync = false);
+/// Parallel upload
+/// If \c cfg.data not \c NULL data is written into \c cfg.data buffer,
+/// to file specified in \c cfg.file instead.
+/// \param[in] cfg data transfer configuration, \see S3DataTransferConfig
+/// \param[in] sync if `sync==true` perform serial transfer
+void Download(const S3DataTransferConfig &cfg, bool sync = false);
+/// Read S3 credentials from file.
+/// \param[in] fileName name of configuration file in AWS TOML format
+/// \param[in] awsProfile profile
 S3Credentials GetS3Credentials(const std::string &fileName,
                                std::string awsProfile);
 /**
  * @}
  */
 
-/**
- * \addtogroup Types
- * @{
- */
-using CharArray = std::vector<char>;
-using StringArray = std::vector<std::string>;
-using ETag = std::string;
-using MetaDataMap = std::map<std::string, std::string>;
-using UploadId = std::string;
-/**
- * @}
- */
 } // namespace sss

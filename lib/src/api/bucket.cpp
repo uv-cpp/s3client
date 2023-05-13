@@ -45,7 +45,7 @@ namespace api {
 std::vector<BucketInfo> ParseBuckets(const std::string &xml);
 
 //------------------------------------------------------------------------------
-bool S3Client::TestBucket(const string &bucket) {
+bool S3Api::TestBucket(const string &bucket) {
   try {
     Send({.method = "GET", .bucket = bucket, .signUrl = SigningEndpoint()});
     return true;
@@ -55,24 +55,24 @@ bool S3Client::TestBucket(const string &bucket) {
 }
 
 //------------------------------------------------------------------------------
-void S3Client::CreateBucket(const std::string &bucket, const Headers &headers) {
+void S3Api::CreateBucket(const std::string &bucket, const Headers &headers) {
   Send({.method = "PUT", .bucket = bucket, .headers = headers});
 }
 
 //------------------------------------------------------------------------------
-void S3Client::DeleteBucket(const std::string &bucket, const Headers &headers) {
+void S3Api::DeleteBucket(const std::string &bucket, const Headers &headers) {
   Send({.method = "DELETE", .bucket = bucket, .headers = headers});
 }
 
 //------------------------------------------------------------------------------
-Headers S3Client::HeadBucket(const string &bucket, const Headers &headers) {
+Headers S3Api::HeadBucket(const string &bucket, const Headers &headers) {
   const auto &wc =
       Send({.method = "HEAD", .bucket = bucket, .headers = headers});
   return HTTPHeaders(wc.GetContentText());
 }
 
 //------------------------------------------------------------------------------
-vector<BucketInfo> S3Client::ListBuckets(const Headers &headers) {
+vector<BucketInfo> S3Api::ListBuckets(const Headers &headers) {
   const auto &wc = Send({.method = "GET", .headers = headers});
   const string &c = wc.GetContentText();
   return ParseBuckets(wc.GetContentText());

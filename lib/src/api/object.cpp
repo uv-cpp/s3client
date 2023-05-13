@@ -45,12 +45,12 @@ using namespace std;
 namespace sss {
 namespace api {
 
-S3Client::ListObjectV2Result ParseObjects(const std::string &xml);
+S3Api::ListObjectV2Result ParseObjects(const std::string &xml);
 
 //------------------------------------------------------------------------------
-ETag S3Client::PutObject(const std::string &bucket, const std::string &key,
-                         const CharArray &buffer, Headers headers,
-                         const string &payloadHash) {
+ETag S3Api::PutObject(const std::string &bucket, const std::string &key,
+                      const CharArray &buffer, Headers headers,
+                      const string &payloadHash) {
 
   headers.insert({"content-length", to_string(buffer.size())});
   const auto &wc = Send({.method = "PUT",
@@ -68,9 +68,9 @@ ETag S3Client::PutObject(const std::string &bucket, const std::string &key,
 }
 
 //------------------------------------------------------------------------------
-ETag S3Client::PutObject(const std::string &bucket, const std::string &key,
-                         const char *buffer, size_t size, Headers headers,
-                         const string &payloadHash) {
+ETag S3Api::PutObject(const std::string &bucket, const std::string &key,
+                      const char *buffer, size_t size, Headers headers,
+                      const string &payloadHash) {
 
   headers.insert({"content-length", to_string(size)});
   const auto &wc = Send({.method = "PUT",
@@ -88,10 +88,10 @@ ETag S3Client::PutObject(const std::string &bucket, const std::string &key,
 }
 
 //------------------------------------------------------------------------------
-ETag S3Client::PutFileObject(const std::string &fileName,
-                             const std::string &bucket, const std::string &key,
-                             size_t offset, size_t size, Headers headers,
-                             const std::string &payloadHash) {
+ETag S3Api::PutFileObject(const std::string &fileName,
+                          const std::string &bucket, const std::string &key,
+                          size_t offset, size_t size, Headers headers,
+                          const std::string &payloadHash) {
   const size_t fsize = size ? size : filesystem::file_size(fileName);
   headers.insert({"content-length", to_string(fsize)});
   Config({.method = "PUT",
@@ -107,9 +107,9 @@ ETag S3Client::PutFileObject(const std::string &fileName,
 }
 
 //------------------------------------------------------------------------------
-const CharArray &S3Client::GetObject(const std::string &bucket,
-                                     const std::string &key, size_t begin,
-                                     size_t end, Headers headers) {
+const CharArray &S3Api::GetObject(const std::string &bucket,
+                                  const std::string &key, size_t begin,
+                                  size_t end, Headers headers) {
 
   if (end > 0) {
     headers.insert(
@@ -121,9 +121,9 @@ const CharArray &S3Client::GetObject(const std::string &bucket,
 }
 
 //------------------------------------------------------------------------------
-void S3Client::GetObject(const std::string &bucket, const std::string &key,
-                         CharArray &buffer, size_t offset, size_t begin,
-                         size_t end, Headers headers) {
+void S3Api::GetObject(const std::string &bucket, const std::string &key,
+                      CharArray &buffer, size_t offset, size_t begin,
+                      size_t end, Headers headers) {
   if (end > 0) {
     headers.insert(
         {"Range", "bytes=" + to_string(begin) + "-" + to_string(end)});
@@ -138,9 +138,9 @@ void S3Client::GetObject(const std::string &bucket, const std::string &key,
 }
 
 //------------------------------------------------------------------------------
-void S3Client::GetObject(const std::string &bucket, const std::string &key,
-                         char *buffer, size_t offset, size_t begin, size_t end,
-                         Headers headers) {
+void S3Api::GetObject(const std::string &bucket, const std::string &key,
+                      char *buffer, size_t offset, size_t begin, size_t end,
+                      Headers headers) {
 
   if (end > 0) {
     headers.insert(
@@ -153,10 +153,10 @@ void S3Client::GetObject(const std::string &bucket, const std::string &key,
 }
 
 //------------------------------------------------------------------------------
-void S3Client::GetFileObject(const std::string &fileName,
-                             const std::string &bucket, const std::string &key,
-                             size_t offset, size_t begin, size_t end,
-                             Headers headers) {
+void S3Api::GetFileObject(const std::string &fileName,
+                          const std::string &bucket, const std::string &key,
+                          size_t offset, size_t begin, size_t end,
+                          Headers headers) {
 
   FILE *out = !filesystem::exists(fileName) ? fopen(fileName.c_str(), "wb")
                                             : fopen(fileName.c_str(), "r+b");
@@ -177,21 +177,21 @@ void S3Client::GetFileObject(const std::string &fileName,
 }
 
 //------------------------------------------------------------------------------
-void S3Client::DeleteObject(const std::string &bucket, const std::string &key,
-                            const Headers &headers) {
+void S3Api::DeleteObject(const std::string &bucket, const std::string &key,
+                         const Headers &headers) {
   Send({.method = "DELETE", .bucket = bucket, .key = key, .headers = headers});
 }
 
 //------------------------------------------------------------------------------
-Headers S3Client::HeadObject(const std::string &bucket, const std::string &key,
-                             const Headers &headers) {
+Headers S3Api::HeadObject(const std::string &bucket, const std::string &key,
+                          const Headers &headers) {
   const auto &wc = Send(
       {.method = "HEAD", .bucket = bucket, .key = key, .headers = headers});
   return HTTPHeaders(wc.GetHeaderText());
 }
 
 //------------------------------------------------------------------------------
-bool S3Client::TestObject(const std::string &bucket, const std::string &key) {
+bool S3Api::TestObject(const std::string &bucket, const std::string &key) {
   try {
     HeadObject(bucket, key);
     return true;
@@ -201,10 +201,9 @@ bool S3Client::TestObject(const std::string &bucket, const std::string &key) {
 }
 
 //------------------------------------------------------------------------------
-S3Client::ListObjectV2Result
-S3Client::ListObjectsV2(const std::string &bucket,
-                        const ListObjectV2Config &config,
-                        const Headers &headers) {
+S3Api::ListObjectV2Result S3Api::ListObjectsV2(const std::string &bucket,
+                                               const ListObjectV2Config &config,
+                                               const Headers &headers) {
   Map params;
   params["continuation_token"] = config.continuationToken;
   params["delimiter"] = config.delimiter;

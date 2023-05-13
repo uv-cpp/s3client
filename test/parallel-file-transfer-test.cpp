@@ -74,7 +74,7 @@ int main(int argc, char **argv) {
   }
   fclose(file);
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     // create bucket
     s3.CreateBucket(bucket);
   } catch (...) {
@@ -92,8 +92,8 @@ int main(int argc, char **argv) {
                               .endpoints = {cfg.url},
                               .jobs = NUM_JOBS,
                               .partsPerJob = CHUNKS_PER_JOB};
-    UploadFile(c);
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    Upload(c);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     const CharArray uploaded = s3.GetObject(bucket, key);
     if (uploaded != data)
       throw logic_error("Data verification failed");
@@ -117,7 +117,7 @@ int main(int argc, char **argv) {
                               .endpoints = {cfg.url},
                               .jobs = NUM_JOBS,
                               .partsPerJob = CHUNKS_PER_JOB};
-    DownloadFile(c);
+    Download(c);
     FILE *fi = fopen(tmp.path.c_str(), "rb");
     vector<char> input(SIZE);
     if (fread(input.data(), SIZE, 1, fi) != 1) {
@@ -139,7 +139,7 @@ int main(int argc, char **argv) {
   }
   ///
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     // delete object
     s3.DeleteObject(bucket, key);
   } catch (...) {
@@ -148,7 +148,7 @@ int main(int argc, char **argv) {
   }
   // delete bucket
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     s3.DeleteBucket(bucket);
   } catch (...) {
     cerr << "Error deleting bucket " << bucket;

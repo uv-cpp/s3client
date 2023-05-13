@@ -52,7 +52,7 @@ atomic<int> retriesG;
 int GetUploadRetries() { return retriesG; }
 
 //-----------------------------------------------------------------------------
-ETag DoUploadPart(S3Client &s3, const string &file, size_t offset, size_t size,
+ETag DoUploadPart(S3Api &s3, const string &file, size_t offset, size_t size,
                   const string &bucket, const string &key, UploadId uid,
                   int part, int maxRetries) {
 
@@ -69,13 +69,30 @@ ETag DoUploadPart(S3Client &s3, const string &file, size_t offset, size_t size,
 }
 
 //-----------------------------------------------------------------------------
+ETag DoUploadPart(S3Api &s3, const char *data, size_t offset, size_t size,
+                  const string &bucket, const string &key, UploadId uid,
+                  int part, int maxRetries) {
+
+  try {
+    return s3.UploadPart(bucket, key, uid, part, data + offset, size,
+                         maxRetries);
+  } catch (const exception &e) {
+    if (retriesG++ < maxRetries) {
+      return DoUploadPart(s3, data, offset, size, bucket, key, uid, part,
+                          maxRetries);
+    } else {
+      throw e;
+    }
+  }
+}
+//-----------------------------------------------------------------------------
 vector<string> UploadParts(const S3DataTransferConfig &cfg,
                            const string &uploadId, size_t chunkSize,
                            int firstPart, int lastPart, size_t fileSize,
                            int jobId) {
 
-  S3Client s3(cfg.accessKey, cfg.secretKey,
-              cfg.endpoints[RandomIndex(0, cfg.endpoints.size() - 1)]);
+  S3Api s3(cfg.accessKey, cfg.secretKey,
+           cfg.endpoints[RandomIndex(0, cfg.endpoints.size() - 1)]);
 
   vector<string> etags;
   size_t offset = jobId * chunkSize;
@@ -84,9 +101,9 @@ vector<string> UploadParts(const S3DataTransferConfig &cfg,
   const size_t partSize = (chunkSize + numParts - 1) / numParts;
   for (int i = 0; i != numParts; ++i) {
     const size_t size = min(partSize, chunkSize - i * partSize);
-    etags.push_back(DoUploadPart(s3, cfg.file, offset, size, cfg.bucket,
-                                 cfg.key, uploadId, firstPart + i,
-                                 cfg.maxRetries));
+    etags.push_back(DoUploadPart(s3, cfg.data ? cfg.data : cfg.file, offset,
+                                 size, cfg.bucket, cfg.key, uploadId,
+                                 firstPart + i, cfg.maxRetries));
     offset += size;
   }
   return etags;
@@ -107,7 +124,7 @@ string UploadFile(const S3DataTransferConfig &cfg, const MetaDataMap &metaData,
     throw std::logic_error("Missing endpoint information");
   const string endpoint =
       cfg.endpoints[RandomIndex(0, cfg.endpoints.size() - 1)];
-  S3Client s3(cfg.accessKey, cfg.secretKey, endpoint);
+  S3Api s3(cfg.accessKey, cfg.secretKey, endpoint);
   // begin uplaod request -> get upload id
   const auto uploadId =
       s3.CreateMultipartUpload(cfg.bucket, cfg.key, 0, metaData);
@@ -129,5 +146,57 @@ string UploadFile(const S3DataTransferConfig &cfg, const MetaDataMap &metaData,
     }
   }
   return s3.CompleteMultipartUpload(uploadId, cfg.bucket, cfg.key, vetags);
+}
+
+//-----------------------------------------------------------------------------
+string UploadData(const S3DataTransferConfig &cfg, const MetaDataMap &metaData,
+                  bool sync) {
+  retriesG = 0;
+  if (!cfg.data) {
+    throw logic_error("NULL data buffer");
+  }
+  if (cfg.endpoints.empty())
+    throw std::logic_error("Missing endpoint information");
+  const string endpoint =
+      cfg.endpoints[RandomIndex(0, cfg.endpoints.size() - 1)];
+  S3Api s3(cfg.accessKey, cfg.secretKey, endpoint);
+  // begin uplaod request -> get upload id
+  const auto uploadId =
+      s3.CreateMultipartUpload(cfg.bucket, cfg.key, 0, metaData);
+
+  // per-job part size
+  const size_t perJobSize = (cfg.size + cfg.jobs - 1) / cfg.jobs;
+  // send parts in parallel and store ETags
+  vector<future<vector<string>>> etags(cfg.jobs);
+  for (int i = 0; i != cfg.jobs; ++i) {
+    etags[i] = async(sync ? launch::deferred : launch::async, UploadParts, cfg,
+                     uploadId, perJobSize, i * cfg.partsPerJob,
+                     i * cfg.partsPerJob + cfg.partsPerJob, cfg.size, i);
+  }
+  vector<ETag> vetags;
+  for (auto &f : etags) {
+    const auto &w = f.get();
+    for (const auto &i : w) {
+      vetags.push_back(i);
+    }
+  }
+  return s3.CompleteMultipartUpload(uploadId, cfg.bucket, cfg.key, vetags);
+}
+
+//-----------------------------------------------------------------------------
+string Upload(const S3DataTransferConfig &cfg, const MetaDataMap &metaData,
+              bool sync) {
+
+  if (cfg.data) {
+    if (!cfg.size) {
+      throw logic_error("Zero size for upload data buffer");
+    }
+    return UploadData(cfg, metaData, sync);
+  } else {
+    if (cfg.file.empty()) {
+      throw logic_error("Empty file name");
+    }
+    return UploadFile(cfg, metaData, sync);
+  }
 }
 } // namespace sss

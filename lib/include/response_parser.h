@@ -45,46 +45,46 @@
 namespace sss {
 /**
  * \addtogroup Parsing
- * \brief Response parset function for XML body and HTTP headers.
+ * \brief Response parser function for XML body and HTTP headers.
  * @{
  */
 /// Extract and return content of XML tag
-/// \param xml XML text
-/// \param tag \c <tag> name
+/// \param[in] xml XML text
+/// \param[in] tag \c <tag> name
 /// \return \c <tag> content
 std::string XMLTag(const std::string &xml, const std::string &tag);
 
 /// Extract and return content of all XML tags matching word
-/// \param xml XML text
-/// \param tag \c <tag> name
+/// \param[in] xml XML text
+/// \param[in] tag \c <tag> name
 /// \return \c content of each tag matching name
 std::vector<std::string> XMLTags(const std::string &xml,
                                  const std::string &tag);
 /// Extract and return content of XML tag matching hierchical path.
-/// \param xml XML text
-/// \param path \c tag path separated by \c '/' character
+/// \param[in] xml XML text
+/// \param[in] path \c tag path separated by \c '/' character
 /// \return content of tag if found, empty string otherwise
 std::string XMLTagPath(const std::string &xml, const std::string &path);
 
 /// Extract and return HTTP header
-/// \param headers text containing the header section of an HTTP payload
-/// \param header header name
+/// \param[in] headers text containing the header section of an HTTP payload
+/// \param[in] header header name
 std::string HTTPHeader(const std::string &headers, const std::string &header);
 
 /// Extract and return HTTP headers as key-value pairs
-/// \param headers text containing the header section of an HTTP payload
+/// \param[in] headers text containing the header section of an HTTP payload
 /// \return \c std::map<std::string, std::string> of {header name, header
 /// value} tuples
 Headers HTTPHeaders(const std::string &headers);
 
 /// Extract and return \c x-amz-meta-* headers
-/// \param headers text containing the header section of an HTTP payload
+/// \param[in] headers text containing the header section of an HTTP payload
 /// \return \c std::map<std::string, std::string> of {header name, header
 /// value} tuples
 MetaDataMap MetaDataHeaders(const std::string &headers);
 
 /// Extract ETag string from returned etag text.
-/// \param etag etag text
+/// \param[in] etag etag text
 /// \return etag string without quotes
 std::string TrimETag(const std::string &etag);
 /**

@@ -73,10 +73,24 @@ struct ObjectInfo {
 /**
  * \brief S3 Client inteface.
  *
- * Implements:
+ * Implements some of the S3 actions documented here:
  * https://docs.aws.amazon.com/AmazonS3/latest/API/API_Operations_Amazon_Simple_Storage_Service.html
+ * Also includes higher level methods to simplify access to API.
+ *
+ * \section ex1 Examples
+ * From test cases printing results in \c CSV format.
+ *
+ * \b Bucket
+ * \snippet api/bucket-test.cpp CreateBucket
+ * \snippet api/bucket-test.cpp ListBuckets
+ * \snippet api/bucket-test.cpp DeleteBucket
+ * \b Object
+ * \snippet api/object-test.cpp PutObject
+ * \snippet api/object-test.cpp GetObject
+ * \snippet api/object-test.cpp ListObjectsV2
+ * \snippet api/object-test.cpp DeleteObject
  */
-class S3Client {
+class S3Api {
 public:
   struct ListObjectV2Config {
     std::string continuationToken;
@@ -108,16 +122,16 @@ public:
   };
 
 public:
-  S3Client(const std::string &access, const std::string &secret,
-           const std::string &endpoint, const std::string &signingEndpoint = "")
+  S3Api(const std::string &access, const std::string &secret,
+        const std::string &endpoint, const std::string &signingEndpoint = "")
       : access_(access), secret_(secret), endpoint_(endpoint),
         signingEndpoint_(signingEndpoint) {
     if (signingEndpoint_.empty())
       signingEndpoint_ = endpoint_;
   }
-  S3Client() = delete;
-  S3Client(const S3Client &) = delete;
-  S3Client(S3Client &&other)
+  S3Api() = delete;
+  S3Api(const S3Api &) = delete;
+  S3Api(S3Api &&other)
       : access_(other.access_), secret_(other.secret_),
         endpoint_(other.endpoint_), signingEndpoint_(other.signingEndpoint_),
         webClient_(std::move(other.webClient_)) {}
@@ -134,6 +148,7 @@ public:
     webClient_.ResetRWFunctions();
   }
   const WebClient &Send(const SendParams &p) {
+    /// [WebClient::Send]
     Config(p);
     if (ToLower(p.method) == "put") {
       if (p.uploadData)
@@ -154,6 +169,7 @@ public:
     }
     HandleError(webClient_);
     return webClient_;
+    /// [WebClient::Send]
   }
 
   WebClient &Config(const SendParams &);

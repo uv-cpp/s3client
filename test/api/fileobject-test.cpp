@@ -51,7 +51,7 @@ int main(int argc, char **argv) {
   const string prefix = "sss-api-test-file-";
   const string bucketName = prefix + ToLower(Timestamp());
   {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     s3.CreateBucket(bucketName);
   }
   string objName = prefix + "obj-" + ToLower(Timestamp());
@@ -73,7 +73,7 @@ int main(int argc, char **argv) {
   ////
   string action = "PutFileObject";
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     const ETag etag = s3.PutFileObject(tmp.path, bucketName, objName);
     if (etag.empty())
       throw runtime_error("Empty etag");
@@ -94,7 +94,7 @@ int main(int argc, char **argv) {
   fclose(tmp.pFile);
   action = "GetFileObject";
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     s3.GetFileObject(tmp.path, bucketName, objName);
     CharArray tmpData(data.size());
     FILE *f = fopen(tmp.path.c_str(), "rb");
@@ -116,7 +116,7 @@ int main(int argc, char **argv) {
   ////
   action = "DeleteObject";
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     s3.DeleteObject(bucketName, objName);
     TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
@@ -124,7 +124,7 @@ int main(int argc, char **argv) {
   }
   action = "DeleteBucket";
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     s3.DeleteBucket(bucketName);
     TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {

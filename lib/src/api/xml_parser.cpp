@@ -53,14 +53,14 @@ bool ParseBool(const string &s) {
 }
 
 //------------------------------------------------------------------------------
-S3Client::ListObjectV2Result ParseObjects(const std::string &xml) {
+S3Api::ListObjectV2Result ParseObjects(const std::string &xml) {
   if (xml.empty())
     return {};
   auto d = DOMToDict(xml);
   if (d.empty()) {
     return {};
   }
-  S3Client::ListObjectV2Result res;
+  S3Api::ListObjectV2Result res;
   auto truncated = FindElementText(xml, "istruncated");
   res.truncated = ParseBool(truncated);
   const string prefix = "/listbucketresult/contents";

@@ -104,6 +104,7 @@ WebClient SendS3Request(S3ClientConfig args) {
                            .parameters = args.params,
                            .headers = headers});
   }
+  /// [WebClient]
   WebClient req;
   req.SSLVerify(verifyPeer, verifyHost);
   req.SetEndpoint(args.endpoint);
@@ -147,6 +148,7 @@ WebClient SendS3Request(S3ClientConfig args) {
   if (of)
     fclose(of);
   return req;
+  /// [WebClient]
 }
 
 S3Credentials GetS3Credentials(const string &fileName, string awsProfile) {

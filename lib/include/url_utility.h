@@ -49,12 +49,15 @@
 #include "common.h"
 #include "utility.h"
 
+namespace sss {
+
+/// Unsigned byte array
+/// \ingroup Types
+using Bytes = std::vector<uint8_t>;
+
 /** \addtogroup Internal
  *  @{
  */
-
-namespace sss {
-
 /// URL type
 struct URL {
   int port = -1;     ///< internet port
@@ -88,9 +91,6 @@ struct Time {
 /// requests
 /// \return Time structure filled with both full date-time and date only
 Time GetDates();
-
-/// Unsigned byte array
-using Bytes = std::vector<uint8_t>;
 
 /// Create \e HMAC encoded byte array
 /// \param key

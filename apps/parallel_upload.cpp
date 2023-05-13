@@ -158,7 +158,7 @@ int main(int argc, char const *argv[]) {
         mm["x-amz-meta-" + ToLower(k)] = v;
       }
     }
-    cout << UploadFile(config, mm);
+    cout << Upload(config, mm);
     return 0;
   } catch (const exception &e) {
     cerr << e.what() << endl;

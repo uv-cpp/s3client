@@ -72,7 +72,7 @@ Params ParseCmdLine(int argc, char **argv) {
 //----------------------------------------------------------------------------
 void TestS3Access(const Params &config) {
   try {
-    S3Client s3(config.access, config.secret, config.url);
+    S3Api s3(config.access, config.secret, config.url);
     s3.ListBuckets();
   } catch (const exception &e) {
     cerr << e.what() << endl

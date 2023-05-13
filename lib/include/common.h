@@ -45,14 +45,18 @@ namespace sss {
 
 /**
  * \addtogroup Types
- * \brief Redefinition of map types.
  * @{
  */
 ///@todo review and use unordered_map when parameters do not need to be in
 /// alphabetical order
+
+/// Base type for all dictionary types.
 using Map = std::map<std::string, std::string>;
+/// HTTP headers
 using Headers = Map;
+/// URL parameters: \c key1=value1&key2=value2...
 using Parameters = Map;
+/// Metadata map: \c key->value => \c xmz-meta-key:value
 using MetaDataMap = Map;
 /**
  * @}

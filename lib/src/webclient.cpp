@@ -330,6 +330,12 @@ bool WebClient::UploadDataFromBuffer(const char *data, size_t offset,
 // Upload file starting at offset
 bool WebClient::UploadFile(const std::string &fname, size_t offset,
                            size_t size) {
+
+  const size_t fsize = size ? size : FileSize(fname);
+  if (!fsize) {
+    throw runtime_error("Cannot compute file size for file " + fname);
+  }
+  size = fsize - offset;
   FILE *file = fopen(fname.c_str(), "rb");
   if (!file) {
     throw std::runtime_error("Cannot open file " + fname);

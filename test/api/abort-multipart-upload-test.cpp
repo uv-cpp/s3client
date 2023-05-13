@@ -55,7 +55,7 @@ int main(int argc, char **argv) {
   const string key = prefix + "obj-" + ToLower(Timestamp());
 
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     // create bucket
     s3.CreateBucket(bucket);
   } catch (...) {
@@ -67,7 +67,7 @@ int main(int argc, char **argv) {
   string action = "CreateMultipartUpload";
   UploadId uid;
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     uid = s3.CreateMultipartUpload(bucket, key);
     TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
@@ -77,7 +77,7 @@ int main(int argc, char **argv) {
   action = "UploadPart";
   vector<ETag> etags;
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     for (size_t i = 0; i != 3; ++i) {
       const size_t size = min(CHUNK_SIZE, SIZE - CHUNK_SIZE * i);
       const auto etag =
@@ -91,14 +91,14 @@ int main(int argc, char **argv) {
   ///
   action = "AbortMultipartUpload";
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     s3.AbortMultipartUpload(bucket, key, uid);
     TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     // delete bucket
     s3.DeleteBucket(bucket);
   } catch (...) {

@@ -50,7 +50,7 @@ int main(int argc, char **argv) {
   const string prefix = "sss-api-test-object";
   const string bucketName = prefix + ToLower(Timestamp());
   {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     s3.CreateBucket(bucketName);
   }
   string objName = prefix + "obj-" + ToLower(Timestamp());
@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
   /// [PutObject]
   string action = "PutObject";
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     const ETag etag = s3.PutObject(bucketName, objName, data);
     TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
@@ -69,7 +69,7 @@ int main(int argc, char **argv) {
   /// [HedObject]
   action = "HeadObject";
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     s3.HeadObject(bucketName, objName);
     TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
@@ -79,7 +79,7 @@ int main(int argc, char **argv) {
   /// [ListObjectsV2]
   action = "ListObjectsV2";
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     auto objects = s3.ListObjectsV2(bucketName);
     if (objects.keys.empty()) {
       throw runtime_error("Empty object list");
@@ -90,9 +90,9 @@ int main(int argc, char **argv) {
         found = true;
         break;
       }
-      if (!found) {
-        throw logic_error("Object not found");
-      }
+    }
+    if (!found) {
+      throw logic_error("Object not found");
     }
     TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
@@ -102,7 +102,7 @@ int main(int argc, char **argv) {
   /// [GetObject]
   action = "GetObject";
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     const auto &obj = s3.GetObject(bucketName, objName);
     if (obj != data) {
       throw logic_error("Data mismatch");
@@ -115,24 +115,24 @@ int main(int argc, char **argv) {
   /// [DeleteOject]
   action = "DeleteObject";
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     s3.DeleteObject(bucketName, objName);
     TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     s3.DeleteBucket(bucketName);
   } catch (const exception &e) {
-    cerr << "Error deleting bucket " << e.what() << endl;
+    cerr << "Error deleting object " << e.what() << endl;
     exit(EXIT_FAILURE);
   }
   /// [DeleteOject]
   /// [DeleteBucket]
   action = "DeleteBucket";
   try {
-    S3Client s3(cfg.access, cfg.secret, cfg.url);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
     s3.DeleteBucket(bucketName);
     TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
