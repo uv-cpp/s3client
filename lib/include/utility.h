@@ -139,7 +139,7 @@ private:
 /**
  * \brief Range over splits.
  *
- * \code{c++}
+ * \code{.cpp}
  * const std::string x = "meta1:value1;meta2:value2";
  * for (auto i : SplitRange(x, ";")) {
  *   auto s = begin(SplitRange(i, ":"));

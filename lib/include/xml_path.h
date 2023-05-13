@@ -78,15 +78,119 @@ std::vector<std::string> ParseXMLMultiPathText(const std::string &xml,
                                                const std::string &prefixPpath,
                                                const std::string &suffixPath);
 
-/// Transpose operation: from prefix->{element list}
-///
-///
-///
-std::vector<std::unordered_map<std::string, std::string>>
-RecordList(const std::string &prefix,
-           const std::unordered_map<std::string, std::vector<std::string>> &d);
+/** Extract records from DOM Map. \see DOMToDict.
+ * A record is defined as a map with:
+ *   - key = path to tag element containing text element in the format
+ *   "/tag1/tag2/..."
+ *   - value = text element under \a key path
+ *
+ * \b Example
+ *
+ * \b Input:
+ *   - \b \c domMap = XML text -> DOMToDict ->
+ *     {"/listbucketresult/contents/key", "Key1"}...
+ *   - \b \c prefixPath = "/listbucketresult/contents"
+ *
+ *  \code
+ *  <?xml version="1.0" encoding="UTF-8"?>
+ *  <ListBucketResult
+ *  	xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+ *  	<Name>tst</Name>
+ *  	<Prefix></Prefix>
+ *  	<MaxKeys>1000</MaxKeys>
+ *  	<IsTruncated>false</IsTruncated>
+ *  	<Contents>
+ *  		<Key>Key1</Key1>
+ *  		<Size>67108864</Size>
+ *  		<StorageClass>STANDARD</StorageClass>
+ *  		<Owner>
+ *  			<ID>Owner1</ID>
+ *  			<DisplayName>Owner One</DisplayName>
+ *  		</Owner>
+ *  		<Type>Normal</Type>
+ *  	</Contents>
+ *  	<Contents>
+ *  		<Key>Key2</Key>
+ *  		<Size>4294967296</Size>
+ *  		<StorageClass>STANDARD</StorageClass>
+ *  		<Owner>
+ *  			<ID>Owner1</ID>
+ *  			<DisplayName>Owner One</DisplayName>
+ *  		</Owner>
+ *  		<Type>Normal</Type>
+ *  	</Contents>
+ *  </ListBucketResult>
+ *  \endcode
+ *
+ * \b Output
+ *
+ * If the case insensitive flag is set (default) then all tag names
+ * are converted to lowercase.
+ *
+ * \code{.cpp}
+ * vector<unordered_map<string, string>> record = {
+ *     {
+ *       {"/key", "Key1"},
+ *       {"/size","67108864"},
+ *       {"/storageclass", "STANDARD"},
+ *       {"/owner/ID", "Owner1"},
+ *       {"/owner/displayname", "Owner One"}
+ *       {"/type", "Normal"}
+ *     },
+ *     {
+ *       {"/key", "Key2"},
+ *       {"/size","4294967296"},
+ *       {"/storageclass", "STANDARD"},
+ *       {"/owner/ID", "Owner1"},
+ *       {"/owner/displayname", "Owner One"}
+ *       {"/type", "Normal"}
+ *     }
+ *   };
+ * \endcode
+ *
+ * \param prefix XML path to record data.
+ *
+ * \param domMap XML document transformed into {"path", "text"} map through
+ *        DOMToDict function.
+ *
+ * \return list of record maps, each map contains the {field name, field value}
+ *         entries for one record.
+ *
+ */
+std::vector<std::unordered_map<std::string, std::string>> RecordList(
+    const std::string &prefix,
+    const std::unordered_map<std::string, std::vector<std::string>> &domMap);
+
 std::unordered_map<std::string, std::vector<std::string>>
 ParseXMLPathElementsText(const std::string &xml, const std::string &path);
+
+/// Convert XML text to {path, text element array} map.
+/// \b Input
+/// \code{.xml}
+/// <tag1>
+///   <tag2>
+///     Text 1_2
+///   </tag2>
+///   <tag2>
+///     Text 2_2
+///   </tag2>
+///   <othertag>
+///     Other text
+///   </othertag>
+/// </tag1>
+/// \endcode
+///
+/// \b Output
+/// \code{.cpp}
+///   unordered_map<string, string> domMap = {
+///     {"/tag1/tag2", {"Text 1_2", "Text 2_2"},
+///     {"/tag1/othertag", {"Other text"}}
+///   };
+/// \endcode
+///
+/// \param xml XML text
+/// \return map of {path, element array} where the key
+///         is the path to the text elements stored in the value
 std::unordered_map<std::string, std::vector<std::string>>
 DOMToDict(const std::string &xml);
 
@@ -97,15 +201,19 @@ std::unordered_map<std::string, std::vector<std::string>> ExtractRecord(
 std::string XMLToText(const tinyxml2::XMLDocument &doc,
                       std::unordered_map<std::string, std::string> kv = {},
                       bool header = true, int indent = 2);
+
 tinyxml2::XMLElement *CreatePath(tinyxml2::XMLElement *n,
                                  const std::string &path,
                                  const std::string &text = "");
+
 tinyxml2::XMLElement *CreatePath(tinyxml2::XMLDocument &doc,
                                  const std::string &path,
                                  const std::string &text = "");
+
 tinyxml2::XMLElement *
 CreatePaths(tinyxml2::XMLElement *n, const std::string &path,
             const std::vector<std::pair<std::string, std::string>> &paths);
+
 tinyxml2::XMLElement *
 CreatePaths(tinyxml2::XMLDocument &doc, const std::string &path,
             const std::vector<std::pair<std::string, std::string>> &paths);
