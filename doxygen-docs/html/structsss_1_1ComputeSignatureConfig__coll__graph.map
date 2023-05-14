@@ -1,0 +1,4 @@
+<map id="sss::ComputeSignatureConfig" name="sss::ComputeSignatureConfig">
+<area shape="rect" id="node1" title="Parameters for calls to ComputeSignature and SignHeaders function." alt="" coords="5,95,203,121"/>
+<area shape="rect" id="node2" href="$structsss_1_1Time.html" title="Time data type, used to generate pre&#45;signed URLs." alt="" coords="64,5,144,32"/>
+</map>

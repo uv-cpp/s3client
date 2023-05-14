@@ -1,0 +1,7 @@
+<map id="sss::WebClient::Send" name="sss::WebClient::Send">
+<area shape="rect" id="node1" title=" " alt="" coords="492,71,641,98"/>
+<area shape="rect" id="node2" href="$classsss_1_1WebClient.html#ae7b1f77bd4ae44585f2d49ea493bdcc5" title="Upload data from memory buffer." alt="" coords="256,5,444,47"/>
+<area shape="rect" id="node4" href="$classsss_1_1WebClient.html#ad038e41cfc902f6e49754c52a9a71992" title="Upload file." alt="" coords="259,71,441,98"/>
+<area shape="rect" id="node5" href="$classsss_1_1WebClient.html#accb4e986d73bb44149918fa0043ec43b" title="Upload file starting from offset using unbuffered I/O read." alt="" coords="259,123,441,164"/>
+<area shape="rect" id="node3" href="$classsss_1_1WebClient.html#ab5af9d8e7c424e49fab04f0d9d59b489" title="Upload file starting from offset using unbuffered memory mapping of file." alt="" coords="5,13,208,39"/>
+</map>
