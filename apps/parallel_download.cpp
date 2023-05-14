@@ -83,8 +83,8 @@ int main(int argc, char const *argv[]) {
         lyra::opt(awsProfile, "AWS config profile")["-p"]["--profile"](
             "Profile in AWS config file")
             .optional() |
-        lyra::opt(config.maxRetries, "Max retries")["-r"]["--retries"](
-            "Max number of per-multipart part retries")
+        lyra::opt(config.maxRetries,
+                  "Max retries")["-r"]["--retries"]("Max number of retries")
             .optional() |
         lyra::opt(config.jobs,
                   "parallel jobs")["-j"]["--jobs"]("Number of parallel jobs")

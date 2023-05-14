@@ -43,18 +43,13 @@ using namespace std;
 using namespace sss;
 using namespace api;
 /**
- * \addtogroup Tests Examples
- * \brief test/sample code
- * @{
- */
-/**
  * \file bucket-test.cpp
  * \brief bucket tests
  */
 /**
  * \brief Bucket tests
  */
-void BucketTest(int argc, char **argv) {
+int main(int argc, char **argv) {
   const Params cfg = ParseCmdLine(argc, argv);
   TestS3Access(cfg);
   const string TEST_PREFIX = "Bucket";
@@ -97,6 +92,7 @@ void BucketTest(int argc, char **argv) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
   /// [ListBuckets]
+
   /// [DeleteBucket]
   action = "DeleteBucket";
   try {
@@ -107,12 +103,4 @@ void BucketTest(int argc, char **argv) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
   /// [DeleteBucket]
-}
-/**
- * @}
- */
-/// \ingroup Internal
-int main(int argc, char **argv) {
-  BucketTest(argc, argv);
-  return 0;
 }

@@ -98,7 +98,7 @@ std::mutex WebClient::cleanupMutex_;
 
 // All the following functions are invoked from libcurl and the FILE* pointer
 // is moved to the proper offset before the functions are passed to libcurl
-/** \addtogroup internal
+/** \addtogroup Internal
  * @{
  */
 /// Read from file

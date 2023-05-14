@@ -1,47 +1,70 @@
 # S3 Toolkit
 
 C++ client library and tools.
-Originally developed to test *Ceph* object storage and learn the S3 API.
-All the code is tested on MacOS (x86 and ARM) and Linux SuSE and Ubuntu, x86 only. 
+Originally developed to test *Ceph* object storage, parallel transfers between 
+Lustre and *Ceph* on high speed (>= 100Gb/s) networks, and learn the S3 API.
 
-* `libs3client`: high level functions to sign and send requests and perform parallel uploads/downloads
-* S3 API accessible through the `libs3client` library, see `s3-api.h` include. 
+All the code is tested on MacOS (x86 and ARM) and Linux SuSE and Ubuntu,
+x86 only. 
 
-The following applications are available:
+## Library
 
-* `s3-client`: send raw requests
+* `libs3client`: high level functions to sign and send requests and perform 
+parallel uploads/downloads.
+
+S3 API accessible through the `libs3client` library, see `s3-api.h` and 
+`s3-client.h` includes. 
+
+Check out the `app` and `test` folders for usage examples.
+
+A small subset of the S3 action is implemented, but any request can be sent 
+through the `S3API::Send` method and `SendS3Request` function.
+
+XML requests and responses can be generated and parsed using the provide 
+high-level XML parsing and generation functions;
+see `Parsing` module in the Doxygen-generated API documentation or look into the
+`xml_path.h` and `test/xml-parse-test.cpp` files.
+
+Parallel upload and download works best when reading/writing from SSDs or RAID &
+parallel file-systems with `stripe size = N * (part size)`.
+
+The code is `C++17` compliant.
+
+When disabling S3v4 signing the library can be used as a generic HTTP client
+library.
+
+Work to enable multi-level asynchronous operations are in place: each thread
+will be using async I/O for sending multiple reuests.
+
+## Applications
+
+* `s3-client`: send requests and print raw responses
 * `s3-presign`: generate pre-signed `URL`
-* `s3-upload`: parallel upload
-* `s3-download`: parallel download
+* `s3-upload`: (single file) parallel upload
+* `s3-download`: (singe file) parallel download
 * `s3-gen-credentials`: generate access and secret keys
 
 Launch without arguments to see options.
-
-The *libs3client* library includes a high level and an S3 API implementing a small subset
-of the S3 Actions, however, every single action can be executed by invoking the
-`Send` methods and functions and passing body, url parameters and headers.
-
-All data transfer opeations are parallelised, and very soon an additional async interface
-will be available, where each thead will move individual chunks of data by invoking async I/O operations.
-
-When disabling S3v4 signing the library can be used as a generic HTTP client library.
-
-A high level XML parsing library based on *Tinyxml2* is provided for simplifying
-request generation and response parsing.
 
 
 ## Build and install
 
 The `install.sh` script includes the code for checking out the code, building
 and installing to a user specified path.
-Just [download](https://raw.githubusercontent.com/uv-cpp/s3client/main/install.sh) and run.
+Just [download](https://raw.githubusercontent.com/uv-cpp/s3client/main/install.sh)
+and run.
+
+
 ```sh
 bash ./install.sh <install path>
 ```
+
 `libcurl` must be available for the code to build.
 
 ...or build it manually 
-E.g. Building and installing a release version under `$HOME/.local` (default is `/usr/local`).
+
+E.g. Building and installing a release version under `$HOME/.local`
+(default is `/usr/local`):
 
 1. `git clone --recurse-submodules https://github.com/uv-cpp/s3client.git`
 2. `mkdir -p s3client/build`
@@ -54,28 +77,12 @@ Include files are found under `${CMAKE_INSTALL_PREFIX}/include/s3client`.
 The library is found under `${CMAKE_INSTALL_PREFIX}/lib` and the executables
 under `${CMAKE_INSTALL_PREFIX}/bin`.
 
-The `s3-client` tool is a low level interface which can log all the XML/JSON
-requests and responses.  
-
-Specify *URL* parameters and headers on the command line and data either through the command line 
-or external files.
-
-The upload/download tools work best when reading/writing from SSDs or RAID &
-parallel file-systems with `stripe size = chunk size`.
-
-The code is `C++17` compliant.
-
-Requests are sent through a `WebClient` class which wraps `libcurl` and *XML*
-responses are parsed using the standard regex library provided by the C++
-compiler. 
 
 ### Compilation options
 
 By default the library and all the command line tools and the S3 API extensions are built.
-To disable building the command line tools set `APPS=OFF`.
-To disable building the S3 API set `API=OFF`.
 
-The tests currently cover the S3 API only and are built together the API.
+To disable building the command line tools set `APPS=OFF`.
 
 ## Test
 
@@ -93,6 +100,7 @@ inside a contatiner using *podman*.
 Run the script after building all the applications and making sure that
 the `s3-gen-credentials` executable is findable through the `PATH` variable.
 
+
 Usage
 ```sh
 ./minio_podman_setup.sh <minio alias> <data path>
@@ -103,6 +111,24 @@ chmod u+x ./minio_podman_setup.sh
 ./minio_podman_setup.sh myalias ~/tmp/minio_data
 ```
 
+In cases where the *minio* server is already installed and available, you can 
+invoke the `minio_run_server.sh` instead.
+
+```sh
+chmod u+x ./minio_run_server.sh
+./minio_run_server.sh myalias ~/tmp/minio_data
+```
+
+Both scripts ouput access, secret and URL which should be stored into 
+environment variables.
+
+The `test` directory includes tests for the high level interface and the S3 API.
+
+All tests require passing the name of the environment variables storing access,
+secret and endpoint URL information.
+
+The provided `.sh` scripts inside the `test` directory can run all the tests
+at once.
 
 ## License
 
@@ -118,13 +144,6 @@ dependencies on the following software libraries:
 
 The `s3-client` application is just a wrapper around the `sss::SendS3Request` function.
 
-E.g.
-
-```cmake
-set(S3_CLIENT_SRCS "s3-client.cpp" url_utility.cpp aws_sign.cpp 
-    webclient.cpp utility.cpp lib-s3-client.cpp)
-```
-
 Sample requests are shown below, look here for a complete list:
 
 https://docs.aws.amazon.com/AmazonS3/latest/API/API_Operations.html
@@ -134,7 +153,8 @@ https://docs.aws.amazon.com/AmazonS3/latest/API/API_Operations.html
 Command line:
 
 ```sh
-bin/debug/s3-client -a $S3TEST_ACCESS -s $S3TEST_SECRET -e $S3TEST_URL -b bucket1 -m get
+s3-client -a $S3TEST_ACCESS -s $S3TEST_SECRET -e $S3TEST_URL \
+          -b bucket1 -m get
 ```
 
 C++:
@@ -143,16 +163,16 @@ C++:
 #include "s3-client.h"
 
 ...
-S3Args s3args;
-s3args.s3AccessKey = "Naowkmo0786XzwrF";
-s3args.s3SecretKey = "gpM6KV0Andtn2myBWePjoHXmSBy71UDK";
-s3args.endpoint = "http://127.0.0.1:9000";
-s3args.bucket = "bucket1" 
-s3args.method = "GET";
+S3ClientConfig args;
+args.accessKey = "Naowkmo0786XzwrF";
+args.secretKey = "gpM6KV0Andtn2myBWePjoHXmSBy71UDK";
+args.endpoint = "http://127.0.0.1:9000";
+args.bucket = "bucket1" 
+args.method = "GET";
 
 sss::WebClient req = sss::SendS3Request(s3args);
 
-cout << req.GetResponseBody() << endl;
+cout << req.GetContentText() << endl;
 ```
 Output:
 
@@ -228,7 +248,8 @@ Output:
 Command line:
 
 ```sh
-bin/debug/s3-client -a $S3TEST_ACCESS -s $S3TEST_SECRET -e $S3TEST_URL -b bucket1 -k object -m get -H "Range:bytes=100-150"
+s3-client -a $S3TEST_ACCESS -s $S3TEST_SECRET -e $S3TEST_URL \
+          -b bucket1 -k object -m get -H "Range:bytes=100-150"
 ```
 
 C++:
@@ -236,27 +257,21 @@ C++:
 ```cpp
 #include "s3-client.h"
 ...
-S3Args s3args;
-s3args.s3AccessKey = "Naowkmo0786XzwrF";
-s3args.s3SecretKey = "gpM6KV0Andtn2myBWePjoHXmSBy71UDK";
-s3args.endpoint = "http://127.0.0.1:9000";
-s3args.bucket = "bucket1" 
-s3args.method = "GET";
-s3args.headers =  "Range:bytes=100-150";
-
+S3ClientConfig args;
+args.accessKey = "Naowkmo0786XzwrF";
+args.secretKey = "gpM6KV0Andtn2myBWePjoHXmSBy71UDK";
+args.endpoint = "http://127.0.0.1:9000";
+args.bucket = "bucket1" 
+args.method = "GET";
+args.headers =  "Range:bytes=100-150";
 
 sss::WebClient req = sss::SendS3Request(s3args);
 
 cout << "Status: " << req.StatusCode() << endl << endl;
 // Response body
-vector<uint8_t> resp = req.GetResponseBody();
-string t(begin(resp), end(resp));
-cout << t << endl << endl;
+cout << req.GetContentText() << endl << endl;
 // Response header
-vector<uint8_t> h = req.GetResponseHeader();
-string hs(begin(h), end(h));
-cout << hs << endl;
-
+ h = req.GetHeaderText() << endl;
 ```
 
 Output:
@@ -286,12 +301,13 @@ X-Xss-Protection: 1; mode=block
 Date: Mon, 05 Dec 2022 08:10:53 GMT
 ```
 
-### Store data into variable/object
+### Store data into object
 
 Command line:
 
 ```sh
-bin/debug/s3-client -a $S3TEST_ACCESS -s $S3TEST_SECRET -e $S3TEST_URL -b bucket1 -k variable_name -v "10,20,30" -m put
+s3-client -a $S3TEST_ACCESS -s $S3TEST_SECRET -e $S3TEST_URL \
+          -b bucket1 -k variable_name -v "10,20,30" -m put
 ```
 
 C++
@@ -300,26 +316,23 @@ C++
 #include "s3-client.h"
 
 ...
-S3Args s3args;
-s3args.s3AccessKey = "Naowkmo0786XzwrF";
-s3args.s3SecretKey = "gpM6KV0Andtn2myBWePjoHXmSBy71UDK";
-s3args.endpoint = "http://127.0.0.1:9000";
-s3args.bucket = "bucket1";
-s3args.key = "variable_name"
-s3args.method = "PUT";
-s3args.data = "10,20,30";  
+S3ClientConfig args;
+args.accessKey = "Naowkmo0786XzwrF";
+args.secretKey = "gpM6KV0Andtn2myBWePjoHXmSBy71UDK";
+args.endpoint = "http://127.0.0.1:9000";
+args.bucket = "bucket1" 
+args.method = "GET";
+args.headers = "Range:bytes=100-150";
+args.method = "PUT";
+args.data = "10,20,30";  
 
 sss::WebClient req = sss::SendS3Request(s3args);
 
 cout << "Status: " << req.StatusCode() << endl << endl;
 // Response body
-vector<uint8_t> resp = req.GetResponseBody();
-string t(begin(resp), end(resp));
-cout << t << endl << endl;
+cout << req.GetContentText() << endl << endl;
 // Response header
-vector<uint8_t> h = req.GetResponseHeader();
-string hs(begin(h), end(h));
-cout << hs << endl;
+cout << req.GetHeaderText() << endl;
 ```
 
 Output
@@ -345,3 +358,116 @@ X-Xss-Protection: 1; mode=block
 Date: Mon, 05 Dec 2022 08:22:55 GMT
 ```
 
+## Parallel upload
+
+Parallel uploads are supported from both file and memory in the
+API and command line application.
+
+Command line
+
+```
+s3-upload -a $S3_ACCESS -s $S3_SECRET -e $S3_URL -f myfile \
+          -b bucket2 -k key -j $NUM_JOBS -n $PARTS_PER_JOBS -r $NUM_RETRIES
+```
+
+C++
+
+Extracted from the file transfer tests.
+
+```cpp
+...
+  #include <s3-api.h>
+...
+  string action = "Parallel file upload";
+  ////
+  try {
+    S3DataTransferConfig c = {.accessKey = cfg.access,
+                              .secretKey = cfg.secret,
+                              .bucket = bucket,
+                              .key = key,
+                              .file = tmp.path,
+                              .endpoints = {cfg.url},
+                              .jobs = NUM_JOBS,
+                              .partsPerJob = CHUNKS_PER_JOB};
+    /*auto etag =*/ Upload(c);
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
+    const CharArray uploaded = s3.GetObject(bucket, key);
+    if (uploaded != data)
+      throw logic_error("Data verification failed");
+    TestOutput(action, true, TEST_PREFIX);
+  } catch (const exception &e) {
+    TestOutput(action, false, TEST_PREFIX, e.what());
+  }
+```
+
+## Parallel file download
+
+Parallel downloads are supported to both file and memory in the
+API.
+
+Command line
+
+```
+s3-download -a $S3_ACCESS -s $S3_SECRET -e $S3_URL -f myfile \
+            -b bucket2 -k key -j $NUM_JOBS -n $PARTS_PER_JOBS -r $NUM_RETRIES
+```
+
+C++
+
+Extracted from the file transfer tests.
+
+```cpp
+...
+  #include <s3-api.h>
+...
+  action = "Parallel file download";
+  try {
+    S3DataTransferConfig c = {.accessKey = cfg.access,
+                              .secretKey = cfg.secret,
+                              .bucket = bucket,
+                              .key = key,
+                              .file = tmp.path,
+                              .endpoints = {cfg.url},
+                              .jobs = NUM_JOBS,
+                              .partsPerJob = CHUNKS_PER_JOB};
+    Download(c);
+    FILE *fi = fopen(tmp.path.c_str(), "rb");
+    vector<char> input(SIZE);
+    if (fread(input.data(), SIZE, 1, fi) != 1) {
+      throw std::runtime_error("Cannot open file for reading");
+    }
+    //
+    if (input == data) {
+      TestOutput(action, true, TEST_PREFIX);
+    } else {
+      throw logic_error("Data verification failed");
+    }
+  } catch (const exception &e) {
+    TestOutput(action, false, TEST_PREFIX, e.what());
+  }
+```
+
+## Parallel data transfer
+
+The following considerations apply to the transfer of single large files
+over fast connections only (at least 10 Gb/s).
+
+### Lustre
+
+When transferring from *Lustre* make sure that the stripe
+size is as close as possible to a multiple of the part size.
+Use: `lfs getstripe <filename>` to retrieve the stripe size.
+
+Whe downloading data to *Lustre* make sure that the stripe size
+for the directory is a multiple of the part size or create a file
+with the desired stripe size first using the `lfs setstripe` command.
+
+### Others
+
+*RAID* configurations and other parallel filesystems have 
+predefined stripe/block sizes, please do refer to the documentation
+before configuring the number of tasks and parts per task.
+
+Parallel reads and writes from/to flash memory are faster than serial 
+ones, but with spinning disks the overall performance might not be 
+impacted by trasferring data in parallel and even cause a slowdown.
