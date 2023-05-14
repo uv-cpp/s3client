@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-if [[-d "./repo"]]
-then
+if [[-d "./repo"]]; then
   cd repo
   git pull
 else
