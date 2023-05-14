@@ -17,3 +17,4 @@ bin
 .gch
 doxygen-docs
 repo
+doxygen*
