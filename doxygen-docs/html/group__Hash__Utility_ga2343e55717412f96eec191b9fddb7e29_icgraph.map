@@ -1,0 +1,6 @@
+<map id="alloc_padded" name="alloc_padded">
+<area shape="rect" id="node1" title="Allocate buffer of correct size for computing hash code." alt="" coords="321,50,418,76"/>
+<area shape="rect" id="node2" href="$group__Hash.html#gad5c9477541172455b23067794ea866c0" title="Implement HMAC algorithm." alt="" coords="5,13,80,39"/>
+<area shape="rect" id="node3" href="$group__Hash.html#gac7fe13b785f5fd4903af4339ac88fbd3" title="Return SHA256 hash." alt="" coords="144,50,257,76"/>
+<area shape="rect" id="node4" href="$group__Hash.html#gaf988f7b1cc0bb03254347581a1b8d959" title="Compute SHA256 hash of chunks of data, using preallocated temporary buffer to store padded data." alt="" coords="128,100,273,125"/>
+</map>

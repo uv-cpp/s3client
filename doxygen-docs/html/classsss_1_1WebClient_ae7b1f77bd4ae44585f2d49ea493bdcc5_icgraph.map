@@ -1,0 +1,5 @@
+<map id="sss::WebClient::UploadDataFromBuffer" name="sss::WebClient::UploadDataFromBuffer">
+<area shape="rect" id="node1" title="Upload data from memory buffer." alt="" coords="256,23,443,64"/>
+<area shape="rect" id="node2" href="$group__S3Client.html#ga5a769be8fbc874bad858ea95743e5643" title="Send S3 request to endpoint." alt="" coords="34,5,179,31"/>
+<area shape="rect" id="node3" href="$classsss_1_1WebClient.html#ab5af9d8e7c424e49fab04f0d9d59b489" title="Upload file starting from offset using unbuffered memory mapping of file." alt="" coords="5,55,208,80"/>
+</map>

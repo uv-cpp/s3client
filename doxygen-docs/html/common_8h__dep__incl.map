@@ -1,0 +1,15 @@
+<map id="/Users/ugovaretto/projects/s3client/repo/lib/include/common.h" name="/Users/ugovaretto/projects/s3client/repo/lib/include/common.h">
+<area shape="rect" id="node1" title="Common definitions." alt="" coords="340,5,515,61"/>
+<area shape="rect" id="node2" href="$aws__sign_8h.html" title="Public interface to signing URLs and HTTP headers with the S3v4 protocol standard." alt="" coords="189,213,365,268"/>
+<area shape="rect" id="node5" href="$s3-client_8h.html" title="declaration of functions and data types for sending S3 requests, signing URLs and downloading and upl..." alt="" coords="236,316,411,372"/>
+<area shape="rect" id="node10" href="$response__parser_8h.html" title="Functions to parse XML and HTTP headers." alt="" coords="28,109,203,165"/>
+<area shape="rect" id="node11" href="$url__utility_8h.html" title="Internal utility functions to process and parse text and URLs and create S3 signature keys." alt="" coords="491,109,666,165"/>
+<area shape="rect" id="node12" href="$webclient_8h.html" title="declaration of WebClient class wrapping libcurl to send web requests." alt="" coords="440,213,615,268"/>
+<area shape="rect" id="node13" href="$webclient_8cpp.html" title="implementation of WebClient class, wrapper around libcurl" alt="" coords="435,324,658,365"/>
+<area shape="rect" id="node3" href="$s3-api_8h.html" title="declarations of S3Client class;" alt="" coords="5,420,181,476"/>
+<area shape="rect" id="node4" href="$bucket-test_8cpp.html" title="bucket tests" alt="" coords="5,524,181,579"/>
+<area shape="rect" id="node6" href="$parallel__download_8cpp.html" title="Parallel object download download from S3 service." alt="" coords="205,420,381,476"/>
+<area shape="rect" id="node7" href="$parallel__upload_8cpp.html" title="Parallel upload to S3 service." alt="" coords="608,420,784,476"/>
+<area shape="rect" id="node8" href="$presign__url_8cpp.html" title="Presign URL." alt="" coords="406,420,583,476"/>
+<area shape="rect" id="node9" href="$apps_2s3-client_8cpp.html" title="Send S3v4&#45;signed requests to S3 andpoint and print raw responses." alt="" coords="808,428,1018,468"/>
+</map>

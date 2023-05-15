@@ -1,0 +1,10 @@
+<map id="sss::UrlEncode" name="sss::UrlEncode">
+<area shape="rect" id="node1" title=" " alt="" coords="670,87,782,112"/>
+<area shape="rect" id="node2" href="$group__Sign.html#ga904d511ec786b87644cc90dc96dd8f3f" title="Compute signature." alt="" coords="464,8,622,34"/>
+<area shape="rect" id="node6" href="$classsss_1_1WebClient.html#a7dfd984b33a29686fb0355b65b620e99" title=" " alt="" coords="210,55,416,96"/>
+<area shape="rect" id="node7" href="$group__Sign.html#gaaeb7f183b807aa05237023d855841246" title="Generate presigned URL." alt="" coords="485,112,602,138"/>
+<area shape="rect" id="node8" href="$group__Internal.html#ga6e3db8d156313abef7e2c966df1a3d7c" title=" " alt="" coords="488,161,599,187"/>
+<area shape="rect" id="node3" href="$group__Sign.html#ga3ae8e18ef70752b7369fca66c40c526b" title="Sign headers." alt="" coords="250,5,376,31"/>
+<area shape="rect" id="node4" href="$classsss_1_1api_1_1S3Api.html#a88b3eb551e57106ed171d9079de6afb4" title="[WebClient::Config]" alt="" coords="5,5,162,31"/>
+<area shape="rect" id="node5" href="$group__S3Client.html#ga5a769be8fbc874bad858ea95743e5643" title="Send S3 request to endpoint." alt="" coords="11,59,156,84"/>
+</map>
