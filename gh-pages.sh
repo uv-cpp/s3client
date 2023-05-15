@@ -8,6 +8,11 @@ else
 fi
 cd repo/doc
 echo "Generating Doxygen documentation..."
+if [[ -d doxygen-docs ]]; then
+  echo "  deleting previously generated documentation..."
+  rm -rf doxygen-docs
+fi
+echo "  running doxygen..."
 doxygen Doxyfile.ghpages > doxygen.log 2> doxygen.errors
 echo "Pushing to gh-pages..."
 cd ../../
@@ -16,5 +21,4 @@ git commit -m "Generated"
 git push origin gh-pages
 echo "...done"
 #rm -rf doxygen-docs
-
 
