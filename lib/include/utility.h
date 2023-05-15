@@ -78,7 +78,7 @@ void Split(const std::string &str, ContainerT &cont,
 
 /**
  * \addtogroup Ranges
- * \brief Implementation of rages functions (ranges are broken in CLang 14-15)
+ * \brief Implementation of ranges functions (ranges are broken in CLang 14-15)
  * https://stackoverflow.com/questions/72716894/how-to-use-stdviewstransform-on-a-vector/72718016
  * @{
  */

@@ -57,7 +57,7 @@ using UploadId = std::string;
  */
 /**
  * \addtogroup S3Client
- * \brief S3 client
+ * \brief S3 client interface.
  * Functions to send S3 requests, and perform parallel uploading and downloading
  * data from memory and files.
  * @{
