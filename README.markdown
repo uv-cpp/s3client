@@ -34,7 +34,7 @@ When disabling S3v4 signing the library can be used as a generic HTTP client
 library.
 
 Work to enable multi-level asynchronous operations is in ongoing: each thread
-will be using async I/O for sending multiple reuests.
+will be using async I/O for sending multiple requests.
 
 ## Applications
 
