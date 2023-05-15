@@ -1,5 +1,0 @@
-<map id="sha256::sha256_stream" name="sha256::sha256_stream">
-<area shape="rect" id="node1" title="Compute SHA256 hash, updating hash value at every invocation." alt="" coords="5,31,166,56"/>
-<area shape="rect" id="node2" href="$group__Hash__Utility.html#ga78ae03271cd4536e0d22219cf9ce294a" title="Left shift of unsigned 8 bit int and conversion to 32 bit." alt="" coords="232,5,282,31"/>
-<area shape="rect" id="node3" href="$group__Hash__Utility.html#gaec0ea9d7fd1557b10a283c3b3b474889" title="Right rotate bits of 32 bit integer numbers." alt="" coords="214,55,300,80"/>
-</map>

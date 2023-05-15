@@ -1,9 +1,0 @@
-<map id="sss::ParseURL" name="sss::ParseURL">
-<area shape="rect" id="node1" title=" " alt="" coords="589,80,701,106"/>
-<area shape="rect" id="node2" href="$group__Sign.html#ga904d511ec786b87644cc90dc96dd8f3f" title="Compute signature." alt="" coords="383,31,541,56"/>
-<area shape="rect" id="node6" href="$group__Sign.html#gaaeb7f183b807aa05237023d855841246" title="Generate presigned URL." alt="" coords="404,80,521,106"/>
-<area shape="rect" id="node7" href="$group__S3Client.html#gad8bcfb380e91093fec44517e1eddc939" title="Validate S3 client request parameters." alt="" coords="414,129,510,155"/>
-<area shape="rect" id="node3" href="$group__Sign.html#ga3ae8e18ef70752b7369fca66c40c526b" title="Sign headers." alt="" coords="210,31,335,56"/>
-<area shape="rect" id="node4" href="$classsss_1_1api_1_1S3Api.html#a88b3eb551e57106ed171d9079de6afb4" title="[WebClient::Config]" alt="" coords="5,5,162,31"/>
-<area shape="rect" id="node5" href="$group__S3Client.html#ga5a769be8fbc874bad858ea95743e5643" title="Send S3 request to endpoint." alt="" coords="11,55,156,80"/>
-</map>

@@ -1,8 +1,0 @@
-<map id="/Users/ugovaretto/projects/s3client/lib/include/s3&#45;client.h" name="/Users/ugovaretto/projects/s3client/lib/include/s3&#45;client.h">
-<area shape="rect" id="node1" title="declaration of functions and data types for sending S3 requests, signing URLs and downloading and upl..." alt="" coords="320,5,495,61"/>
-<area shape="rect" id="node2" href="$parallel__upload_8cpp.html" title="Parallel upload to S3 service." alt="" coords="5,109,181,165"/>
-<area shape="rect" id="node3" href="$presign__url_8cpp.html" title="Presign URL." alt="" coords="205,117,400,157"/>
-<area shape="rect" id="node4" href="$apps_2s3-client_8cpp.html" title="Send S3v4&#45;signed requests to S3 andpoint and print raw responses." alt="" coords="424,117,605,157"/>
-<area shape="rect" id="node5" href="$s3-api_8h.html" title="declarations of S3Client class;" alt="" coords="629,117,811,157"/>
-<area shape="rect" id="node6" href="$bucket-test_8cpp.html" title="bucket tests" alt="" coords="632,213,807,268"/>
-</map>

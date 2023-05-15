@@ -1,4 +1,0 @@
-<map id="sss::WebClient::UploadFile" name="sss::WebClient::UploadFile">
-<area shape="rect" id="node1" title="Upload file." alt="" coords="199,5,379,31"/>
-<area shape="rect" id="node2" href="$group__S3Client.html#ga5a769be8fbc874bad858ea95743e5643" title="Send S3 request to endpoint." alt="" coords="5,5,151,31"/>
-</map>
