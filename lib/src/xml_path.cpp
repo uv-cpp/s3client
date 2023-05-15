@@ -83,9 +83,12 @@ std::string Trim(const std::string &text) {
 }
 
 //-----------------------------------------------------------------------------
+// Given prefix as "/.../..."
+// and DOM in map format: <...></...> ->  "/path" => "text"
+// return all sub paths with the same prefix
 unordered_map<string, vector<string>>
-ExtractRecord(const string &prefix,
-              const unordered_map<string, vector<string>> &d) {
+ExtractSubPaths(const string &prefix,
+                const unordered_map<string, vector<string>> &d) {
   unordered_map<string, vector<string>> ret;
   for (const auto &kv : d) {
     if (kv.first.substr(0, prefix.size()) == prefix) {
@@ -100,7 +103,7 @@ ExtractRecord(const string &prefix,
 vector<unordered_map<string, string>>
 RecordList(const string &prefix,
            const unordered_map<string, vector<string>> &d) {
-  auto r = ExtractRecord(prefix, d);
+  auto r = ExtractSubPaths(prefix, d);
   if (r.empty())
     return {};
   size_t maxElements = 0;

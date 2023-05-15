@@ -18,7 +18,7 @@ std::vector<BucketInfo> ParseBuckets(const std::string &xml) {
     return {};
   }
   // always use lowercase when case insensitive (default) enabled
-  auto r = ExtractRecord("/listallmybucketsresult/buckets", d);
+  auto r = ExtractSubPaths("/listallmybucketsresult/buckets", d);
   if (r.empty()) {
     return {};
   }

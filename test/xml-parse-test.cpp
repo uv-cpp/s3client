@@ -113,7 +113,7 @@ void PrintDOMToDict() {
     }
   }
   // extract buckets information
-  auto r = ExtractRecord("/listallmybucketsresult/buckets", d);
+  auto r = ExtractSubPaths("/listallmybucketsresult/buckets", d);
   for (auto kv : r) {
     cout << kv.first << endl;
     for (auto i : kv.second) {
