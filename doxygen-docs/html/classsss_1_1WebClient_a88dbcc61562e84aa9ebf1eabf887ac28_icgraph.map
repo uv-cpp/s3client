@@ -1,7 +1,0 @@
-<map id="sss::WebClient::SetReadFunction" name="sss::WebClient::SetReadFunction">
-<area shape="rect" id="node1" title=" " alt="" coords="479,55,698,80"/>
-<area shape="rect" id="node2" href="$classsss_1_1WebClient.html#a96837f149bb473853a6523d096a25c56" title="Reset read/write functions to default." alt="" coords="199,5,431,31"/>
-<area shape="rect" id="node3" href="$classsss_1_1WebClient.html#ad038e41cfc902f6e49754c52a9a71992" title="Upload file." alt="" coords="225,55,405,80"/>
-<area shape="rect" id="node5" href="$classsss_1_1WebClient.html#accb4e986d73bb44149918fa0043ec43b" title="Upload file starting from offset using unbuffered I/O read." alt="" coords="225,105,405,145"/>
-<area shape="rect" id="node4" href="$group__S3Client.html#ga5a769be8fbc874bad858ea95743e5643" title="Send S3 request to endpoint." alt="" coords="5,55,151,80"/>
-</map>

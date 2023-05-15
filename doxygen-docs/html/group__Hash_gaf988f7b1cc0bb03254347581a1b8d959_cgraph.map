@@ -1,9 +1,0 @@
-<map id="sha256::sha256_next" name="sha256::sha256_next">
-<area shape="rect" id="node1" title="Compute SHA256 hash of chunks of data, using preallocated temporary buffer to store padded data." alt="" coords="5,80,151,106"/>
-<area shape="rect" id="node2" href="$group__Hash__Utility.html#ga2343e55717412f96eec191b9fddb7e29" title="Allocate buffer of correct size for computing hash code." alt="" coords="230,55,328,80"/>
-<area shape="rect" id="node5" href="$group__Hash.html#ga21b0412f8de5402ca9424fb129f51d5f" title="Compute SHA256 hash, updating hash value at every invocation." alt="" coords="199,104,359,130"/>
-<area shape="rect" id="node3" href="$group__Hash__Utility.html#ga2f56d7c5d4d0a61f36bdafd0abd32191" title="Return next number evenly divisible by specified number." alt="" coords="412,5,503,31"/>
-<area shape="rect" id="node4" href="$group__Hash__Utility.html#gac77df34e18fbd8a9ae82a50cf65d6cf4" title="Convert number from little endian to big endian." alt="" coords="407,55,508,80"/>
-<area shape="rect" id="node6" href="$group__Hash__Utility.html#ga78ae03271cd4536e0d22219cf9ce294a" title="Left shift of unsigned 8 bit int and conversion to 32 bit." alt="" coords="433,104,482,130"/>
-<area shape="rect" id="node7" href="$group__Hash__Utility.html#gaec0ea9d7fd1557b10a283c3b3b474889" title="Right rotate bits of 32 bit integer numbers." alt="" coords="415,153,501,179"/>
-</map>

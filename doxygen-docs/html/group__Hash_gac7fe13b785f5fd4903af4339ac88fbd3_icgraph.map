@@ -1,4 +1,0 @@
-<map id="sha256::sha256" name="sha256::sha256">
-<area shape="rect" id="node1" title="Return SHA256 hash." alt="" coords="128,29,241,55"/>
-<area shape="rect" id="node2" href="$group__Hash.html#gad5c9477541172455b23067794ea866c0" title="Implement HMAC algorithm." alt="" coords="5,29,80,55"/>
-</map>
