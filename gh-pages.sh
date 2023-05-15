@@ -26,7 +26,7 @@ doxygen Doxyfile.ghpages > doxygen.log 2> doxygen.errors
 echo "Pushing to gh-pages..."
 cd ../../
 git add -A
-git commit -m "Generated" > /dev/null
-git push origin gh-pages > /dev/null
+git commit -m "Generated" > /dev/null 2>&1
+git push origin gh-pages > /dev/null 2>&1
 echo "...done"
 
