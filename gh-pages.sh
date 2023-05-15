@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-if [[ -d "./repo" ]]; then
+if [[ -d repo ]]; then
   cd repo
   git pull
   cd ..
@@ -26,8 +26,7 @@ doxygen Doxyfile.ghpages > doxygen.log 2> doxygen.errors
 echo "Pushing to gh-pages..."
 cd ../../
 git add -A
-git commit -m "Generated"
-git push origin gh-pages
+git commit -m "Generated" > /dev/null
+git push origin gh-pages > /dev/null
 echo "...done"
-#rm -rf doxygen-docs
 
