@@ -2,7 +2,7 @@
 
 C++ client library and tools.
 Originally developed to test *Ceph* object storage, parallel transfers between 
-Lustre and *Ceph* on high speed (>= 100Gb/s) networks, and learn the S3 API.
+Lustre and *Ceph* on high speed (>= 100Gib/s) networks, and learn the S3 API.
 
 All the code is tested on MacOS (x86 and ARM) and Linux SuSE and Ubuntu,
 x86 only. 
@@ -38,6 +38,7 @@ will be using async I/O for sending multiple concurrent requests.
 
 Parallel upload/download using MPI and integration with ADIOS are being 
 experimented as well in separate repositories.
+
 
 ## Applications
 
