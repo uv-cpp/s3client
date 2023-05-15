@@ -1,0 +1,12 @@
+<map id="/Users/ugovaretto/projects/s3client/lib/include/url_utility.h" name="/Users/ugovaretto/projects/s3client/lib/include/url_utility.h">
+<area shape="rect" id="node1" title="Internal utility functions to process and parse text and URLs and create S3 signature keys." alt="" coords="291,5,466,61"/>
+<area shape="rect" id="node2" href="$parallel__upload_8cpp.html" title="Parallel upload to S3 service." alt="" coords="5,301,181,357"/>
+<area shape="rect" id="node3" href="$apps_2s3-client_8cpp.html" title="Send S3v4&#45;signed requests to S3 andpoint and print raw responses." alt="" coords="204,309,385,350"/>
+<area shape="rect" id="node4" href="$aws__sign_8h.html" title="Public interface to signing URLs and HTTP headers with the S3v4 protocol standard." alt="" coords="376,109,578,150"/>
+<area shape="rect" id="node9" href="$webclient_8h.html" title="declaration of WebClient class wrapping libcurl to send web requests." alt="" coords="603,109,805,150"/>
+<area shape="rect" id="node5" href="$s3-api_8h.html" title="declarations of S3Client class;" alt="" coords="627,309,810,350"/>
+<area shape="rect" id="node7" href="$s3-client_8h.html" title="declaration of functions and data types for sending S3 requests, signing URLs and downloading and upl..." alt="" coords="401,198,577,253"/>
+<area shape="rect" id="node6" href="$bucket-test_8cpp.html" title="bucket tests" alt="" coords="631,405,806,461"/>
+<area shape="rect" id="node8" href="$presign__url_8cpp.html" title="Presign URL." alt="" coords="409,309,604,350"/>
+<area shape="rect" id="node10" href="$webclient_8cpp.html" title="implementation of WebClient class, wrapper around libcurl" alt="" coords="742,205,935,246"/>
+</map>

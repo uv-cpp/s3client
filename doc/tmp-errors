@@ -1,0 +1,84 @@
+warning: Tag 'OUTPUT_TEXT_DIRECTION' at line 102 of file 'Doxyfile' has become obsolete.
+         To avoid this warning please remove this line from your configuration file or upgrade it using "doxygen -u"
+warning: Tag 'CLANG_ASSISTED_PARSING' at line 1160 of file 'Doxyfile' belongs to an option that was not enabled at compile time.
+         To avoid this warning please remove this line from your configuration file or upgrade it using "doxygen -u", or recompile doxygen with this feature enabled.
+warning: Tag 'CLANG_ADD_INC_PATHS' at line 1166 of file 'Doxyfile' belongs to an option that was not enabled at compile time.
+         To avoid this warning please remove this line from your configuration file or upgrade it using "doxygen -u", or recompile doxygen with this feature enabled.
+warning: Tag 'CLANG_OPTIONS' at line 1174 of file 'Doxyfile' belongs to an option that was not enabled at compile time.
+         To avoid this warning please remove this line from your configuration file or upgrade it using "doxygen -u", or recompile doxygen with this feature enabled.
+warning: Tag 'CLANG_DATABASE_PATH' at line 1187 of file 'Doxyfile' belongs to an option that was not enabled at compile time.
+         To avoid this warning please remove this line from your configuration file or upgrade it using "doxygen -u", or recompile doxygen with this feature enabled.
+warning: Tag 'FORMULA_TRANSPARENT' at line 1642 of file 'Doxyfile' has become obsolete.
+         To avoid this warning please remove this line from your configuration file or upgrade it using "doxygen -u"
+warning: Tag 'LATEX_SOURCE_CODE' at line 1955 of file 'Doxyfile' has become obsolete.
+         To avoid this warning please remove this line from your configuration file or upgrade it using "doxygen -u"
+warning: Tag 'RTF_SOURCE_CODE' at line 2045 of file 'Doxyfile' has become obsolete.
+         To avoid this warning please remove this line from your configuration file or upgrade it using "doxygen -u"
+warning: Tag 'DOCBOOK_PROGRAMLISTING' at line 2150 of file 'Doxyfile' has become obsolete.
+         To avoid this warning please remove this line from your configuration file or upgrade it using "doxygen -u"
+warning: Tag 'CLASS_DIAGRAMS' at line 2337 of file 'Doxyfile' has become obsolete.
+         To avoid this warning please remove this line from your configuration file or upgrade it using "doxygen -u"
+warning: Tag 'DOT_FONTNAME' at line 2379 of file 'Doxyfile' has become obsolete.
+         To avoid this warning please remove this line from your configuration file or upgrade it using "doxygen -u"
+warning: Tag 'DOT_FONTSIZE' at line 2386 of file 'Doxyfile' has become obsolete.
+         To avoid this warning please remove this line from your configuration file or upgrade it using "doxygen -u"
+warning: Tag 'DOT_TRANSPARENT' at line 2635 of file 'Doxyfile' has become obsolete.
+         To avoid this warning please remove this line from your configuration file or upgrade it using "doxygen -u"
+warning: source './examples' is not a readable file or directory... skipping.
+/Users/ugovaretto/projects/s3client/lib/include/url_utility.h:136: warning: unbalanced grouping commands
+/Users/ugovaretto/projects/s3client/lib/include/s3-api.h:80: warning: multiple use of section label 'ex1' while adding section, (first occurrence: /Users/ugovaretto/projects/s3client/lib/include/aws_sign.h, line 104)
+/Users/ugovaretto/projects/s3client/lib/include/s3-api.h:235: warning: multiple use of section label 'ex1' while adding section, (first occurrence: /Users/ugovaretto/projects/s3client/lib/include/aws_sign.h, line 104)
+/Users/ugovaretto/projects/s3client/lib/include/s3-client.h:127: warning: Member documentation for ToMeta found several times in @addtogroup groups!
+/Users/ugovaretto/projects/s3client/lib/include/url_utility.h:131: The member will remain in group S3Client, and won't be put into group Internal
+/Users/ugovaretto/projects/s3client/lib/src/api/object.cpp:51: warning: no matching class member found for 
+  ETag sss::api::S3Api::PutObject(const std::string &bucket, const std::string &key, const std::vector< char > &buffer, std::map< std::string, std::string > headers, const string &payloadHash)
+Possible candidates:
+  'ETag sss::api::S3Api::PutObject(const std::string &bucket, const std::string &key, const CharArray &buffer, Headers={{}}, const std::string &payloadHash={})' at line 260 of file /Users/ugovaretto/projects/s3client/lib/include/s3-api.h
+  'ETag sss::api::S3Api::PutObject(const std::string &bucket, const std::string &key, const char *, size_t size, Headers={{}}, const std::string &payloadHash={})' at line 264 of file /Users/ugovaretto/projects/s3client/lib/include/s3-api.h
+
+/Users/ugovaretto/projects/s3client/lib/src/api/object.cpp:71: warning: no matching class member found for 
+  ETag sss::api::S3Api::PutObject(const std::string &bucket, const std::string &key, const char *buffer, size_t size, std::map< std::string, std::string > headers, const string &payloadHash)
+Possible candidates:
+  'ETag sss::api::S3Api::PutObject(const std::string &bucket, const std::string &key, const CharArray &buffer, Headers={{}}, const std::string &payloadHash={})' at line 260 of file /Users/ugovaretto/projects/s3client/lib/include/s3-api.h
+  'ETag sss::api::S3Api::PutObject(const std::string &bucket, const std::string &key, const char *, size_t size, Headers={{}}, const std::string &payloadHash={})' at line 264 of file /Users/ugovaretto/projects/s3client/lib/include/s3-api.h
+
+/Users/ugovaretto/projects/s3client/lib/include/webclient.h:195: warning: Unsupported xml/html tag <proto> found
+/Users/ugovaretto/projects/s3client/lib/include/webclient.h:195: warning: Unsupported xml/html tag <server> found
+/Users/ugovaretto/projects/s3client/lib/include/webclient.h:195: warning: Unsupported xml/html tag <port> found
+/Users/ugovaretto/projects/s3client/lib/include/utility.h:198: warning: Unsupported xml/html tag <parent> found
+/Users/ugovaretto/projects/s3client/lib/include/utility.h:198: warning: Unsupported xml/html tag <child_key> found
+/Users/ugovaretto/projects/s3client/lib/hash/md5.h:63: warning: argument 'MD5' of command @param is not found in the argument list of md5::md5_stream(uint32_t hash[4], const uint8_t data[], uint64_t length)
+/Users/ugovaretto/projects/s3client/lib/hash/md5.h:63: warning: The following parameter of md5::md5_stream(uint32_t hash[4], const uint8_t data[], uint64_t length) is not documented:
+  parameter 'hash'
+/Users/ugovaretto/projects/s3client/lib/hash/sha256.h:73: warning: The following parameter of sha256::sha256_next(const uint8_t data[], uint32_t length, uint32_t hash[8], size_t total_length, uint8_t *tmpbuf) is not documented:
+  parameter 'tmpbuf'
+/Users/ugovaretto/projects/s3client/lib/src/aws_sign.cpp:131: warning: Found unknown command '@warnihg'
+/Users/ugovaretto/projects/s3client/lib/include/xml_path.h:63: warning: Unsupported xml/html tag <name> found
+/Users/ugovaretto/projects/s3client/lib/include/xml_path.h:63: warning: Unsupported xml/html tag </name> found
+/Users/ugovaretto/projects/s3client/lib/include/xml_path.h:63: warning: Unsupported xml/html tag <name> found
+/Users/ugovaretto/projects/s3client/lib/include/xml_path.h:63: warning: Unsupported xml/html tag </name> found
+/Users/ugovaretto/projects/s3client/lib/include/xml_path.h:64: warning: Unsupported xml/html tag <tag1> found
+/Users/ugovaretto/projects/s3client/lib/include/xml_path.h:64: warning: Unsupported xml/html tag <tag2> found
+/Users/ugovaretto/projects/s3client/lib/include/xml_path.h:64: warning: Unsupported xml/html tag </tag2> found
+/Users/ugovaretto/projects/s3client/lib/include/xml_path.h:58: warning: argument 'prefixPath' of command @param is not found in the argument list of ParseXMLMultiPathText(const std::string &xml, const std::string &prefixPpath, const std::string &suffixPath)
+/Users/ugovaretto/projects/s3client/lib/include/xml_path.h:58: warning: The following parameter of ParseXMLMultiPathText(const std::string &xml, const std::string &prefixPpath, const std::string &suffixPath) is not documented:
+  parameter 'prefixPpath'
+/Users/ugovaretto/projects/s3client/lib/include/xml_path.h:52: warning: argument 'XML' of command @param is not found in the argument list of ParseXMLPath(const std::string &xml, const std::string &path)
+/Users/ugovaretto/projects/s3client/lib/include/xml_path.h:52: warning: The following parameter of ParseXMLPath(const std::string &xml, const std::string &path) is not documented:
+  parameter 'xml'
+/Users/ugovaretto/projects/s3client/lib/include/response_parser.h:53: warning: Unsupported xml/html tag <tag> found
+/Users/ugovaretto/projects/s3client/lib/include/response_parser.h:54: warning: Unsupported xml/html tag <tag> found
+/Users/ugovaretto/projects/s3client/lib/include/response_parser.h:59: warning: Unsupported xml/html tag <tag> found
+/Users/ugovaretto/projects/s3client/lib/include/s3-client.h:132: warning: The following parameter of sss::Upload(const S3DataTransferConfig &cfg, const MetaDataMap &mm={}, bool sync=false) is not documented:
+  parameter 'mm'
+/Users/ugovaretto/projects/s3client/lib/include/webclient.h:195: warning: Unsupported xml/html tag <proto> found
+/Users/ugovaretto/projects/s3client/lib/include/webclient.h:195: warning: Unsupported xml/html tag <server> found
+/Users/ugovaretto/projects/s3client/lib/include/webclient.h:195: warning: Unsupported xml/html tag <port> found
+/Users/ugovaretto/projects/s3client/lib/include/webclient.h:168: warning: Unsupported xml/html tag <proto> found
+/Users/ugovaretto/projects/s3client/lib/include/webclient.h:168: warning: Unsupported xml/html tag <server> found
+/Users/ugovaretto/projects/s3client/lib/include/webclient.h:167: warning: The following parameter of sss::WebClient::WebClient(const std::string &endPoint, const std::string &path, const std::string &method="GET", const Map &params=Map(), const Map headers=Map()) is not documented:
+  parameter 'headers'
+/Users/ugovaretto/projects/s3client/lib/include/webclient.h:206: warning: The following parameter of sss::WebClient::SetMethod(const std::string &method, size_t size=0) is not documented:
+  parameter 'size'
+/Users/ugovaretto/projects/s3client/lib/include/s3-api.h:91: warning: block marked with [DeleteObject] for \snippet should appear twice in file api/object-test.cpp, found it 0 times
+
