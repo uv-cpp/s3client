@@ -501,15 +501,58 @@ public:
   //                                 &uid, int max_parts);
 
   /// Upload data to object by sending a \c PutObject request
+  /// \param[in] bucket bucket name
   ///
+  /// \param[in] key key name
+  ///
+  /// \param[in] buffer input buffer
+  ///
+  /// \param[in] headers optional http headers as {header name, value} map
+  ///
+  /// \param[in] optional payloadHash payload hash can be empty
+  ///
+  /// \return etag
   ETag PutObject(const std::string &bucket, const std::string &key,
-                 const CharArray &buffer, Headers = {{}},
+                 const CharArray &buffer, Headers headers = {{}},
                  const std::string &payloadHash = {});
 
+  /// Upload data to object by sending a \c PutObject request
+  /// \param[in] bucket bucket name
+  ///
+  /// \param[in] key key name
+  ///
+  /// \param[in] buffer input buffer
+  ///
+  /// \param[in] headers optional HTTP headers as {header name, value} map
+  ///
+  /// \param[in] optional payloadHash payload hash can be empty
+  ///
+  /// \return etag
   ETag PutObject(const std::string &bucket, const std::string &key,
-                 const char *, size_t size, Headers = {{}},
+                 const char *buffer, size_t size, Headers headers = {{}},
                  const std::string &payloadHash = {});
 
+  /// Upload part
+  ///
+  /// \param[in] bucket bucket name
+  ///
+  /// \param[in] key key name
+  ///
+  /// \param[in] uid upload id returned by CreateMultipartUpload
+  ///
+  /// \param[in] partNum 1-indexed part number
+  ///
+  /// \param[in] data input buffer
+  ///
+  /// \param[in] size data size
+  ///
+  /// \param[in] maxRetries maximum number of retries before aborting upload
+  ///
+  /// \param[in] headers optional HTTP headers as {header name, value} map
+  ///
+  /// \param[in] payloadHash optional payload hash, can be empty
+  ///
+  /// \return etag
   ETag UploadPart(const std::string &bucket, const std::string &key,
                   const UploadId &uid, int partNum, const char *data,
                   size_t size, int maxRetries = 1, Headers headers = {{}},
