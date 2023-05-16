@@ -1,5 +1,6 @@
 <map id="sss::FileSize" name="sss::FileSize">
-<area shape="rect" id="node1" title=" " alt="" coords="427,29,524,55"/>
-<area shape="rect" id="node2" href="$classsss_1_1WebClient.html#ad038e41cfc902f6e49754c52a9a71992" title="Upload file." alt="" coords="199,29,379,55"/>
-<area shape="rect" id="node3" href="$group__S3Client.html#ga5a769be8fbc874bad858ea95743e5643" title="Send S3 request to endpoint." alt="" coords="5,29,151,55"/>
+<area shape="rect" id="node1" title=" " alt="" coords="441,42,538,68"/>
+<area shape="rect" id="node2" href="$classsss_1_1WebClient.html#ad038e41cfc902f6e49754c52a9a71992" title="Upload file." alt="" coords="213,42,393,68"/>
+<area shape="rect" id="node3" href="$classsss_1_1api_1_1S3Api.html#ab7affe0834f5892b393e731783b7ccac" title=" " alt="" coords="5,5,165,46"/>
+<area shape="rect" id="node4" href="$group__S3Client.html#ga5a769be8fbc874bad858ea95743e5643" title="Send S3 request to endpoint." alt="" coords="12,70,158,96"/>
 </map>

@@ -2,6 +2,8 @@ var annotated_dup =
 [
     [ "sss", null, [
       [ "api", null, [
+        [ "BucketInfo", "structsss_1_1api_1_1BucketInfo.html", null ],
+        [ "ObjectInfo", "structsss_1_1api_1_1ObjectInfo.html", null ],
         [ "S3Api", "classsss_1_1api_1_1S3Api.html", "classsss_1_1api_1_1S3Api" ]
       ] ],
       [ "BucketValidation", "structsss_1_1BucketValidation.html", "structsss_1_1BucketValidation" ],

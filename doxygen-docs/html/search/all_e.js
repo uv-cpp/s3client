@@ -19,5 +19,7 @@ var searchData=
   ['presign_5furl_2ecpp_16',['presign_url.cpp',['../presign__url_8cpp.html',1,'']]],
   ['print_5fhash_17',['print_hash',['../group__Hash.html#gabbd4ca806ab3ab35436f9718a596d15b',1,'md5::print_hash()'],['../group__Hash.html#gab67535e651cd6086262eaff33afb9e2c',1,'sha256::print_hash()']]],
   ['proto_18',['proto',['../group__Internal.html#gaf1fb78e7747b1e5de41c6585f0f093ec',1,'sss::URL']]],
-  ['proxyurl_19',['proxyUrl',['../structsss_1_1S3DataTransferConfig.html#a3cdf2c33a78efd23fa7c9b515fdfae9a',1,'sss::S3DataTransferConfig']]]
+  ['proxyurl_19',['proxyUrl',['../structsss_1_1S3DataTransferConfig.html#a3cdf2c33a78efd23fa7c9b515fdfae9a',1,'sss::S3DataTransferConfig']]],
+  ['putfileobject_20',['PutFileObject',['../classsss_1_1api_1_1S3Api.html#ab7affe0834f5892b393e731783b7ccac',1,'sss::api::S3Api']]],
+  ['putobject_21',['PutObject',['../classsss_1_1api_1_1S3Api.html#a6ee9092a67e32ed994c6d7bd6a3f712c',1,'sss::api::S3Api::PutObject(const std::string &amp;bucket, const std::string &amp;key, const CharArray &amp;buffer, Headers headers={{}}, const std::string &amp;payloadHash={})'],['../classsss_1_1api_1_1S3Api.html#acf14c65d821e89d85dd5a72ba911122d',1,'sss::api::S3Api::PutObject(const std::string &amp;bucket, const std::string &amp;key, const char *buffer, size_t size, Headers headers={{}}, const std::string &amp;payloadHash={})']]]
 ];
