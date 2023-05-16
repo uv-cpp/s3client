@@ -80,6 +80,20 @@ struct ObjectInfo {
  * https://docs.aws.amazon.com/AmazonS3/latest/API/API_Operations_Amazon_Simple_Storage_Service.html
  * Also includes higher level methods to simplify access to API.
  *
+ * When sending requests, the fields specified as URL prameters are sent as part
+ * of the request, but in most cases the optional parameters sent as HTTP header
+ * fields are not sent along, it is therefore required to explicitly pass them
+ * in the \c headers parameter.
+ *
+ * E.g. the \c ListObjectV2 request supports HTTP
+ * headers for specifying the payer and owner of the listed objects.
+ * \code{.cpp}
+ * s3.ListObjectsV2(bucket, config, {
+ *     {"x-amz-request-payer", "RequestPayer"},
+ *     {"x-amz-expected-bucket-owner", "ExpectedBucketOwner"}
+ * });
+ * \endcode
+ *
  * \section ex1 Examples
  * From test cases printing results in \c CSV format.
  *
@@ -294,7 +308,7 @@ public:
   ///
   /// \param[in] maxRetries number of retried before aborting upload
   ///
-  /// \param[in] headers optional headers
+  /// \param[in] headers optional HTTP headers as {name, value} map
   ///
   /// \param[in] payloadHash payload hash, can be empty
   ///
@@ -315,46 +329,168 @@ public:
 
   // API
 public:
+  /// Abort multipart upload
+  /// \param[in] bucket bucket name
+  /// \param[in] key key name
+  /// \param[in] uploadId upload id returned by CreateMultipartUpload
   void AbortMultipartUpload(const std::string &bucket, const std::string &key,
-                            const UploadId &);
+                            const UploadId &uploadId);
 
+  /// Complete multipart upload
+  /// \param[in] uid upload id returned by CreateMultipartUpload
+  /// \param[in] bucket bucket name
+  /// \param[in] key key name
+  /// \param[in] etags etags of uploaded parts
+  /// \return etag of multipart upload
   ETag CompleteMultipartUpload(const UploadId &uid, const std::string &bucket,
                                const std::string &key,
                                const std::vector<ETag> &etags);
 
-  void CreateBucket(const std::string &bucket, const Headers & = {{}});
+  /// Create bucket
+  ///
+  /// \param[in] bucket bucket name
+  ///
+  /// \param[in] headers optional HTTP headers as {name, value} map
+  void CreateBucket(const std::string &bucket, const Headers &headers = {{}});
 
+  /// Create multipart upload
+  ///
+  /// \param[in] bucket bucket name
+  ///
+  /// \param[in] key key name
+  ///
+  /// \param[in] partSize part size hint, optional
+  ///
+  /// \param[in] headers optional HTTP headers as {name, value} map
   UploadId CreateMultipartUpload(const std::string &bucket,
                                  const std::string &key, size_t partSize = 0,
                                  Headers headers = {});
 
+  /// Delete bucket
+  ///
+  /// \param[in] bucket bucket name
+  ///
+  /// \param[in] headers headers sent along w
+  ///
+  /// \param[in] headers optional HTTP headers as {name, value} map
   void DeleteBucket(const std::string &bucket, const Headers &headers = {{}});
 
+  /// Delete object
+  ///
+  /// \param[in] bucket bucket name
+  ///
+  /// \param[in] key key name
+  ///
+  /// \param[in] optional http headers as {name, value} map sent along with
+  /// request
   void DeleteObject(const std::string &bucket, const std::string &key,
                     const Headers & = {{}});
   // @todo
   // bool DeleteObjects(const std::string &bucket,
   //                    const std::vector<std::string> &objects);
+
+  /// Download object data
+  ///
+  /// \param[in] bucket bucket name
+  ///
+  /// \param[in] key key name
+  ///
+  /// \param[in] beginReadOffset offset of first byte read from object
+  ///
+  /// \param[in] endReadOffset offset of last byte read from object
+  ///
+  /// \param[in] optional http headers as {name, value} map sent along with
+  /// request
+  ///
+  /// \return \c char array; \c char is the type used by \c libcurl
   const CharArray &GetObject(const std::string &bucket, const std::string &key,
-                             size_t begin = 0, size_t end = 0, Headers = {{}});
+                             size_t beginReadOffset = 0,
+                             size_t endReadOffset = 0, Headers = {{}});
 
-  /// GetObject action.
-  /// \section ex1 Example
-  /// \snippet api/object-test.cpp GetObject
+  /// Download object data into \c vector<char>
+  ///
+  /// \param[in] bucket bucket name
+  ///
+  /// \param[in] key key name
+  ///
+  /// \param[out] outBuffer output buffer
+  ///
+  /// \param[in] writeOffset offset in output buffer
+  ///
+  /// \param[in] beginReadOffset offset of first byte read from object
+  ///
+  /// \param[in] endReadOffset offset of last byte read from object
+  ///
+  /// \param[in] optional http headers as {name, value} map sent along with
+  /// request
   void GetObject(const std::string &bucket, const std::string &key,
-                 CharArray &buffer, size_t offset, size_t begin = 0,
-                 size_t end = 0, Headers headers = {{}});
-
-  void GetObject(const std::string &bucket, const std::string &key,
-                 char *buffer, size_t offset, size_t begin = 0, size_t end = 0,
+                 CharArray &outBuffer, size_t writeOffset,
+                 size_t beginReadOffset = 0, size_t endReadOffset = 0,
                  Headers headers = {{}});
 
+  /// Download object data into \c char buffer
+  ///
+  /// \param[in] bucket bucket name
+  ///
+  /// \param[in] key key name
+  ///
+  /// \param[out] outBuffer output buffer
+  ///
+  /// \param[in] writeOffset offset in output buffer
+  ///
+  /// \param[in] beginReadOffset offset of first byte read from object
+  ///
+  /// \param[in] endReadOffset offset of last byte read from object
+  ///
+  /// \param[in] optional http headers as {name, value} map sent along with
+  /// request
+  void GetObject(const std::string &bucket, const std::string &key,
+                 char *outBuffer, size_t writeOffset,
+                 size_t beginReadOffset = 0, size_t endReadOffset = 0,
+                 Headers headers = {{}});
+
+  /// Send \c HeadBucket request
+  ///
+  /// \param[in] bucket bucket name
+  ///
+  /// \param[in] optional http headers as {name, value} map sent along with
+  /// request
+  ///
+  /// \return HTTP headers as {http header name, value} map
   Headers HeadBucket(const std::string &bucket, const Headers &headers = {{}});
+
+  /// Send \c HeadObject request
+  ///
+  /// \param[in] bucket bucket name
+  ///
+  /// \param[in] key key name
+  ///
+  /// \param[in] optional http headers as {name, value} map sent along with
+  /// request
+  ///
+  /// \return HTTP headers as {http header name, value} map
   Headers HeadObject(const std::string &bucket, const std::string &key,
                      const Headers & = {{}});
 
+  /// List buckets
+  ///
+  /// \param[in] headers optional http headers as {name, value} map sent along
+  /// with request
+  ///
+  /// \return bucket list \see BucketInfo
   std::vector<BucketInfo> ListBuckets(const Headers &headers = {{}});
 
+  /// List objects by sending a \c ListObjectsV2 request
+  ///
+  /// \param[in] bucket bucket name
+  ///
+  /// \param[in] config optional configuration parameters \see
+  /// ListObjectV2Config
+  ///
+  /// \param[in] headers optional http headers as {name, value} map sent along
+  /// with request
+  ///
+  /// \return object list \see ListObjectV2Result
   ListObjectV2Result
   ListObjectsV2(const std::string &bucket,
                 const ListObjectV2Config &config = ListObjectV2Config{},
@@ -364,6 +500,8 @@ public:
   //                                 const std::string &key, const UploadId
   //                                 &uid, int max_parts);
 
+  /// Upload data to object by sending a \c PutObject request
+  ///
   ETag PutObject(const std::string &bucket, const std::string &key,
                  const CharArray &buffer, Headers = {{}},
                  const std::string &payloadHash = {});
