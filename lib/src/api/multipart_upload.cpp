@@ -228,6 +228,5 @@ void S3Api::AbortMultipartUpload(const string &bucket, const string &key,
         .key = key,
         .params = {{"uploadId", uid}}});
 }
-
 } // namespace api
 } // namespace sss

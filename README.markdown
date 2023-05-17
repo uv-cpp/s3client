@@ -2,7 +2,7 @@
 
 C++ client library and tools.
 Originally developed to test *Ceph* object storage, parallel transfers between 
-Lustre and *Ceph* on high speed (>= 100Gib/s) networks, and learn the S3 API.
+Lustre and *Ceph* on high speed networks, and learn the S3 API.
 
 All the code is tested on MacOS (x86 and ARM) and Linux SuSE and Ubuntu,
 x86 only. 
@@ -457,7 +457,13 @@ The following considerations apply to the transfer of single large files
 over fast connections only (at least 10 Gib/s) and to S3 services able
 to ingest data at GiB/s rate.
 
+Parallel reads and writes from/to flash memory are faster than serial 
+ones, but with spinning disks the overall performance might not be 
+impacted by trasferring data in parallel and even cause a slowdown.
+
 ### Lustre
+
+Lustre allows users to control the striping configuration.
 
 When transferring from *Lustre* make sure that the stripe
 size is as close as possible to a multiple of the part size.
@@ -469,10 +475,7 @@ with the desired stripe size first using the `lfs setstripe` command.
 
 ### Others
 
-*RAID* configurations and other parallel filesystems have 
-predefined stripe/block sizes, please do refer to the documentation
+*RAID* configurations and other parallel filesystems, like *GPFS* or *BeeGFS*
+have preconfigured stripe/block sizes, please do refer to your system configuration
 before configuring the number of tasks and parts per task.
 
-Parallel reads and writes from/to flash memory are faster than serial 
-ones, but with spinning disks the overall performance might not be 
-impacted by trasferring data in parallel and even cause a slowdown.

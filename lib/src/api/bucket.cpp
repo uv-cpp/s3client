@@ -43,6 +43,7 @@ namespace sss {
 namespace api {
 
 std::vector<BucketInfo> ParseBuckets(const std::string &xml);
+AccessControlPolicy ParseACL(const std::string &xml);
 
 //------------------------------------------------------------------------------
 bool S3Api::TestBucket(const string &bucket) {
@@ -76,6 +77,14 @@ vector<BucketInfo> S3Api::ListBuckets(const Headers &headers) {
   const auto &wc = Send({.method = "GET", .headers = headers});
   const string &c = wc.GetContentText();
   return ParseBuckets(wc.GetContentText());
+}
+
+//------------------------------------------------------------------------------
+AccessControlPolicy S3Api::GetBucketAcl(const string &bucket) {
+  const auto &c =
+      Send({.method = "GET", .bucket = bucket, .params = {{"acl", ""}}})
+          .GetContentText();
+  return ParseACL(c);
 }
 
 } // namespace api

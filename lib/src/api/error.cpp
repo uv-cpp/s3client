@@ -37,7 +37,7 @@
 using namespace std;
 
 namespace sss {
-// Handle error throwing exception
+// Handle error by throwing exception
 void HandleError(const WebClient &wc, const string &prefix) {
   if (wc.StatusCode() == 0) {
     throw runtime_error("Failed to send request");

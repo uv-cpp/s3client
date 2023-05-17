@@ -32,7 +32,7 @@
  ******************************************************************************/
 /**
  * \file s3-api.h
- * \brief declarations of \c S3Client class;
+ * \brief declarations of \c S3Api class.
  */
 
 #pragma once
@@ -51,12 +51,14 @@ namespace api {
  * \brief S3 API
  * @{
  */
+
 /// XML -> C++ mapping of \c ListBuckets/Buckets response.
 /// https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html
 struct BucketInfo {
   std::string name;
   std::string creationDate; //@todo replace with std::tm
 };
+
 /// XML -> C++ mapping of \c ListObjectsV2/Contents response.
 /// https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html
 struct ObjectInfo {
@@ -70,6 +72,25 @@ struct ObjectInfo {
   std::string ownerDisplayName;
   std::string ownerID;
 };
+
+/// XML -> C++ mapping of \c Gratee
+/// https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAcl.html
+struct Grantee {
+  std::string displayName;
+  std::string emailAddress;
+  std::string id;
+  std::string xsiType;
+  std::string uri;
+};
+
+/// XML -> C++ mapping of \c AccessControlPolicy
+/// https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAcl.html
+struct AccessControlPolicy {
+  std::string ownerDisplayName;
+  std::string ownerID;
+  std::vector<Grantee> grants;
+  std::string permission;
+};
 //@todo
 // struct PartInfo {};
 
@@ -78,21 +99,32 @@ struct ObjectInfo {
  *
  * Implements some of the S3 actions documented here:
  * https://docs.aws.amazon.com/AmazonS3/latest/API/API_Operations_Amazon_Simple_Storage_Service.html
- * Also includes higher level methods to simplify access to API.
  *
- * When sending requests, the fields specified as URL prameters are sent as part
- * of the request, but in most cases the optional parameters sent as HTTP header
- * fields are not sent along, it is therefore required to explicitly pass them
- * in the \c headers parameter.
+ * Also includes higher level methods to simplify access to the API.
+ *
+ * When sending requests, the fields specified as URL prameters are are passed
+ * to methods as C++ structs and sent as part of the request, but in most cases
+ * the optional parameters sent as HTTP header fields are not sent along, it is
+ * therefore required to explicitly pass them in the \c headers parameter.
  *
  * E.g. the \c ListObjectV2 request supports HTTP
- * headers for specifying the payer and owner of the listed objects.
- * \code{.cpp}
- * s3.ListObjectsV2(bucket, config, {
+ * headers for specifying the payer for the request and owner of the listed
+ * objects. \code{.cpp} s3.ListObjectsV2(bucket, config, {
  *     {"x-amz-request-payer", "RequestPayer"},
  *     {"x-amz-expected-bucket-owner", "ExpectedBucketOwner"}
  * });
  * \endcode
+ *
+ * <h2>Error handling</h2>
+ *
+ * Currently exceptions are being used to report errors, work is ongoing to
+ * move to result types similar to Rust's \c Result<ResultT,ErrorT>.
+ *
+ * All methods that send request throw:
+ *
+ *  - \c std::runtime_error in case of errors sending the request
+ *  - \c std::logic_error when the returned response
+ *
  *
  * \section ex1 Examples
  * From test cases printing results in \c CSV format.
@@ -200,6 +232,8 @@ public:
   /// Send request.
   /// \param[in] p send parameters \see SendParams
   /// \return reference to \c this \c S3Api instance.
+  /// \throws std::runtime_error in case of error sending request
+  /// \throws std::logic_error in case of returned error (status >= 400)
   const WebClient &Send(const SendParams &p) {
     /// [WebClient::Send]
     Config(p);
@@ -250,7 +284,7 @@ public:
     Send(params);
   }
 
-  // Higher level API
+  // High level API
 public:
   /// I/O mode used for reading and writing data from/to files.
   enum FileIOMode { BUFFERED, UNBUFFERED, MEMORY_MAPPED };
@@ -342,6 +376,8 @@ public:
   /// \param[in] key key name
   /// \param[in] etags etags of uploaded parts
   /// \return etag of multipart upload
+  /// \throws std::runtime_error in case of error sending request
+  /// \throws std::logic_error in case of returned error (status >= 400)
   ETag CompleteMultipartUpload(const UploadId &uid, const std::string &bucket,
                                const std::string &key,
                                const std::vector<ETag> &etags);
@@ -388,6 +424,11 @@ public:
   // @todo
   // bool DeleteObjects(const std::string &bucket,
   //                    const std::vector<std::string> &objects);
+
+  /// Return bucket's Access Control List
+  /// \param bucket bucket name
+  /// \return Acess Control Policy \see AccessControlPolicy
+  AccessControlPolicy GetBucketAcl(const std::string &bucket);
 
   /// Download object data
   ///
