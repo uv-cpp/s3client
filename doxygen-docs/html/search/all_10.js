@@ -39,7 +39,7 @@ var searchData=
   ['signedurl_160',['SignedURL',['../group__Sign.html#gaaeb7f183b807aa05237023d855841246',1,'sss']]],
   ['signheaders_161',['SignHeaders',['../group__Sign.html#ga3ae8e18ef70752b7369fca66c40c526b',1,'sss']]],
   ['signingendpoint_162',['SigningEndpoint',['../classsss_1_1api_1_1S3Api.html#ac8625078c491207079abda2a7732ecb1',1,'sss::api::S3Api']]],
-  ['signurl_163',['signUrl',['../structsss_1_1api_1_1S3Api_1_1SendParams.html#a912d3c331657a12c08c2377d3ca4576a',1,'sss::api::S3Api::SendParams::signUrl()'],['../structsss_1_1S3ClientConfig.html#a2e7a3c168e43fa135f8ac3e14ae9bc01',1,'sss::S3ClientConfig::signUrl()']]],
+  ['signurl_163',['signUrl',['../structsss_1_1S3ClientConfig.html#a2e7a3c168e43fa135f8ac3e14ae9bc01',1,'sss::S3ClientConfig::signUrl()'],['../structsss_1_1api_1_1S3Api_1_1SendParams.html#a912d3c331657a12c08c2377d3ca4576a',1,'sss::api::S3Api::SendParams::signUrl()']]],
   ['split_164',['Split',['../lib_2include_2utility_8h.html#a8b18515590234a1ee397b662556041a9',1,'sss']]],
   ['splititerator_165',['SplitIterator',['../classsss_1_1SplitIterator.html',1,'sss']]],
   ['splitrange_166',['SplitRange',['../classsss_1_1SplitRange.html',1,'sss']]],

@@ -105,7 +105,7 @@ $(document).ready(function(){initNavTree('structsss_1_1Signature.html',''); init
 <p><a class="el" href="structsss_1_1Signature.html" title="Signature information.">Signature</a> information.  
  <a href="structsss_1_1Signature.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="aws__sign_8h_source.html">aws_sign.h</a>&gt;</code></p>
+<p><code>#include &lt;aws_sign.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
@@ -126,8 +126,6 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="structsss_1_1Signature.html" title="Signature information.">Signature</a> information. </p>
-
-<p class="definition">Definition at line <a class="el" href="aws__sign_8h_source.html#l00082">82</a> of file <a class="el" href="aws__sign_8h_source.html">aws_sign.h</a>.</p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a id="a6d27106bf7706879a6aa9fe0f9eefe6f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6d27106bf7706879a6aa9fe0f9eefe6f">&#9670;&nbsp;</a></span>defaultHeaders</h2>
@@ -143,15 +141,13 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <p>Default headers used to sign the request. The following headers are always included: </p><div class="fragment"><div class="line">host</div>
 <div class="line">x-amz-content-<a class="code" href="group__Hash.html#gac7fe13b785f5fd4903af4339ac88fbd3">sha256</a></div>
 <div class="line">x-amz-data</div>
-<div class="ttc" id="agroup__Hash_html_gac7fe13b785f5fd4903af4339ac88fbd3"><div class="ttname"><a href="group__Hash.html#gac7fe13b785f5fd4903af4339ac88fbd3">sha256::sha256</a></div><div class="ttdeci">void sha256(const uint8_t data[], size_t length, uint32_t hash[8])</div><div class="ttdoc">Return SHA256 hash.</div><div class="ttdef"><b>Definition:</b> <a href="sha256_8cpp_source.html#l00147">sha256.cpp:147</a></div></div>
+<div class="ttc" id="agroup__Hash_html_gac7fe13b785f5fd4903af4339ac88fbd3"><div class="ttname"><a href="group__Hash.html#gac7fe13b785f5fd4903af4339ac88fbd3">sha256::sha256</a></div><div class="ttdeci">void sha256(const uint8_t data[], size_t length, uint32_t hash[8])</div><div class="ttdoc">Return SHA256 hash.</div><div class="ttdef"><b>Definition:</b> sha256.cpp:147</div></div>
 </div><!-- fragment --><p> any other header starting with <code>x-amz-</code> is added to the above set. </p>
-
-<p class="definition">Definition at line <a class="el" href="aws__sign_8h_source.html#l00096">96</a> of file <a class="el" href="aws__sign_8h_source.html">aws_sign.h</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>/home/ugovaretto/projects/uv-cpp/s3client/repo/lib/include/<a class="el" href="aws__sign_8h_source.html">aws_sign.h</a></li>
+<li>/home/ugovaretto/projects/uv-cpp/s3client/repo/lib/include/<a class="el" href="aws__sign_8h.html">aws_sign.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

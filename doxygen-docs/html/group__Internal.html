@@ -246,8 +246,6 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <li>date only</li>
 </ul>
 <p>Return current time and date in the two formats required to sign AWS S3 requests </p><dl class="section return"><dt>Returns</dt><dd><a class="el" href="structsss_1_1Time.html" title="Time data type, used to generate pre-signed URLs.">Time</a> structure filled with both full date-time and date only </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="aws__sign_8cpp_source.html#l00080">80</a> of file <a class="el" href="aws__sign_8cpp_source.html">aws_sign.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                {</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  time_t t;</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  time(&amp;t);</div>
@@ -301,8 +299,6 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>HMAC hash </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="aws__sign_8cpp_source.html#l00098">98</a> of file <a class="el" href="aws__sign_8cpp_source.html">aws_sign.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;{ <span class="keywordflow">return</span> HMAC256(msg, key); }</div>
 </div><!-- fragment -->
 </div>
@@ -331,8 +327,6 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>ASCII-encoded hex numbers </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="aws__sign_8cpp_source.html#l00117">117</a> of file <a class="el" href="aws__sign_8cpp_source.html">aws_sign.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;                           {</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  ostringstream os;</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
@@ -444,8 +438,6 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>url-encoded url </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="url__utility_8cpp_source.html#l00091">91</a> of file <a class="el" href="url__utility_8cpp_source.html">url_utility.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;                               {</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="keywordtype">string</span> url;</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span> i : p) {</div>
@@ -454,7 +446,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  }</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keywordflow">return</span> string(url.begin(), --url.end());</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;}</div>
-<div class="ttc" id="agroup__Internal_html_ga0f079ace8729714b3949eabe22f228c9"><div class="ttname"><a href="group__Internal.html#ga0f079ace8729714b3949eabe22f228c9">sss::UrlEncode</a></div><div class="ttdeci">std::string UrlEncode(const std::string &amp;s)</div><div class="ttdef"><b>Definition:</b> <a href="url__utility_8cpp_source.html#l00069">url_utility.cpp:69</a></div></div>
+<div class="ttc" id="agroup__Internal_html_ga0f079ace8729714b3949eabe22f228c9"><div class="ttname"><a href="group__Internal.html#ga0f079ace8729714b3949eabe22f228c9">sss::UrlEncode</a></div><div class="ttdeci">std::string UrlEncode(const std::string &amp;s)</div><div class="ttdef"><b>Definition:</b> url_utility.cpp:69</div></div>
 </div><!-- fragment --><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
 <div id="dynsection-1-summary" class="dynsummary" style="display:block;">
@@ -488,8 +480,6 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>url-encoded url </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="url__utility_8cpp_source.html#l00069">69</a> of file <a class="el" href="url__utility_8cpp_source.html">url_utility.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                                     {</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  std::ostringstream escaped;</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  escaped.fill(<span class="charliteral">&#39;0&#39;</span>);</div>
