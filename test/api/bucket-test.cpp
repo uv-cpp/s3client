@@ -75,6 +75,18 @@ int main(int argc, char **argv) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
   /// [ListBuckets]
+  action = "GetBucketAcl";
+  try {
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
+    auto accessPolicy = s3.GetBucketAcl(bucketName);
+    if (accessPolicy.permission != "FULL_CONTROL") {
+      throw logic_error("permission not equal to 'FULL_CONTROL'");
+    }
+    TestOutput(action, true, TEST_PREFIX);
+  } catch (const exception &e) {
+    TestOutput(action, false, TEST_PREFIX, e.what());
+  }
+  /// [ListBuckets]
   action = "ListBuckets";
   try {
     S3Api s3(cfg.access, cfg.secret, cfg.url);

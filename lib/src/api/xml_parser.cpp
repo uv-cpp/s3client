@@ -168,7 +168,7 @@ AccessControlPolicy ParseACL(const std::string &xml) {
     res.permission = i.count("/permission") ? i.at("/permission") : "";
     const Grantee g = {select("grantee/displayname"),
                        select("grantee/emailaddress"), select("grantee/id"),
-                       select("grantee/xsi:type"), select("grantee/uri")};
+                       select("grantee/type"), select("grantee/uri")};
     res.grants.push_back(g);
   }
   return res;
