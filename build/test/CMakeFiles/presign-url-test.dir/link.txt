@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/presign-url-test.dir/presign-url-test.cpp.o -o ../build/debug/test/presign-url-test   -L/home/ugovaretto/projects/uv-cpp/s3client/build/build/release  -Wl,-rpath,/home/ugovaretto/projects/uv-cpp/s3client/build/build/release ../lib/libs3client.a -lcurl 

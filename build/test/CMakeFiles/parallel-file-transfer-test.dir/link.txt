@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/parallel-file-transfer-test.dir/parallel-file-transfer-test.cpp.o CMakeFiles/parallel-file-transfer-test.dir/utility.cpp.o -o ../build/debug/test/parallel-file-transfer-test   -L/home/ugovaretto/projects/uv-cpp/s3client/build/build/release  -Wl,-rpath,/home/ugovaretto/projects/uv-cpp/s3client/build/build/release ../lib/libs3client.a -lcurl 

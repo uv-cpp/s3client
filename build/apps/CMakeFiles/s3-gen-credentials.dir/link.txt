@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/s3-gen-credentials.dir/generate_s3_credentials.cpp.o -o ../build/debug/s3-gen-credentials   -L/home/ugovaretto/projects/uv-cpp/s3client/build/build/release 

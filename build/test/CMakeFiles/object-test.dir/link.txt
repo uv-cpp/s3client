@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/object-test.dir/api/object-test.cpp.o CMakeFiles/object-test.dir/utility.cpp.o -o ../build/debug/test/object-test   -L/home/ugovaretto/projects/uv-cpp/s3client/build/build/release  -Wl,-rpath,/home/ugovaretto/projects/uv-cpp/s3client/build/build/release ../lib/libs3client.a -lcurl 

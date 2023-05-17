@@ -1,0 +1,1 @@
+/usr/bin/c++ -g CMakeFiles/abort-multipart-upload-test.dir/api/abort-multipart-upload-test.cpp.o CMakeFiles/abort-multipart-upload-test.dir/utility.cpp.o -o ../build/debug/test/abort-multipart-upload-test   -L/home/ugovaretto/projects/uv-cpp/s3client/build/build/release  -Wl,-rpath,/home/ugovaretto/projects/uv-cpp/s3client/build/build/release ../lib/libs3client.a -lcurl 
