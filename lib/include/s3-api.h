@@ -336,7 +336,7 @@ public:
   ///
   /// \param[in] uid upload id returned by CreateMultipartUpload method
   ///
-  /// \param[in] partNum 1-indexed part number
+  /// \param[in] partNum zero-indexed part number
   ///
   /// \param[in] iomode read mode \see FileIOMode
   ///
@@ -581,7 +581,7 @@ public:
   ///
   /// \param[in] uid upload id returned by CreateMultipartUpload
   ///
-  /// \param[in] partNum 1-indexed part number
+  /// \param[in] partNum zero-indexed part number
   ///
   /// \param[in] data input buffer
   ///

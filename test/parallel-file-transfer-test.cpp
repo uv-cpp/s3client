@@ -92,7 +92,10 @@ int main(int argc, char **argv) {
                               .endpoints = {cfg.url},
                               .jobs = NUM_JOBS,
                               .partsPerJob = CHUNKS_PER_JOB};
-    Upload(c);
+    auto etag = Upload(c);
+    if (etag.empty()) {
+      throw logic_error("Empty etag");
+    }
     S3Api s3(cfg.access, cfg.secret, cfg.url);
     const CharArray uploaded = s3.GetObject(bucket, key);
     if (uploaded != data)
@@ -114,6 +117,7 @@ int main(int argc, char **argv) {
                               .bucket = bucket,
                               .key = key,
                               .file = tmp.path,
+                              .data = nullptr, // default value, just in case
                               .endpoints = {cfg.url},
                               .jobs = NUM_JOBS,
                               .partsPerJob = CHUNKS_PER_JOB};

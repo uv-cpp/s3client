@@ -331,11 +331,10 @@ bool WebClient::UploadDataFromBuffer(const char *data, size_t offset,
 bool WebClient::UploadFile(const std::string &fname, size_t offset,
                            size_t size) {
 
-  const size_t fsize = size ? size : FileSize(fname);
-  if (!fsize) {
+  size = size ? size : FileSize(fname);
+  if (!size) {
     throw runtime_error("Cannot compute file size for file " + fname);
   }
-  size = fsize - offset;
   FILE *file = fopen(fname.c_str(), "rb");
   if (!file) {
     throw std::runtime_error("Cannot open file " + fname);
@@ -343,7 +342,6 @@ bool WebClient::UploadFile(const std::string &fname, size_t offset,
   if (fseek(file, offset, SEEK_SET)) {
     throw std::runtime_error("Cannot move file pointer");
   }
-
   FileInfo fi{file, size};
   if (!SetReadFunction(ReadFile, &fi)) {
     throw std::runtime_error("Cannot set read function");

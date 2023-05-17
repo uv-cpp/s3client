@@ -48,7 +48,7 @@ int main(int argc, char **argv) {
   // Check the default configuration for the minimum part size.
   // Om AWS the minimum size is 5MiB.
   // An "EntityTooSmall" error is returned when the part size is too small.
-  const size_t NUM_CHUNKS = 3;
+  const size_t NUM_CHUNKS = 2;
   const size_t CHUNK_SIZE = (SIZE + NUM_CHUNKS - 1) / NUM_CHUNKS;
   vector<char> data(SIZE);
   iota(begin(data), end(data), 0);
@@ -91,12 +91,8 @@ int main(int argc, char **argv) {
   vector<ETag> etags;
   try {
     S3Api s3(cfg.access, cfg.secret, cfg.url);
-    for (size_t i = 0; i != 3; ++i) {
+    for (size_t i = 0; i != NUM_CHUNKS; ++i) {
       const size_t size = min(CHUNK_SIZE, SIZE - CHUNK_SIZE * i);
-      // ByteArray b(size);
-      // fread(b.data(), size, 1, ff);
-      // const auto etag = s3.UploadPart(bucket, key, uid, i, b.data(),
-      // b.size());
       const auto etag = s3.UploadFilePart(tmp.path, i * CHUNK_SIZE, size,
                                           bucket, key, uid, i);
       etags.push_back(etag);

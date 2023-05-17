@@ -150,9 +150,6 @@ void DownloadData(const S3DataTransferConfig &cfg, bool sync) {
 
 //-----------------------------------------------------------------------------
 void Download(const S3DataTransferConfig &cfg, bool sync) {
-  if (!cfg.size) {
-    throw logic_error("Zero data size");
-  }
   if (!cfg.data && cfg.file.empty()) {
     throw logic_error("File name and data buffer pointer are both NULL");
   }

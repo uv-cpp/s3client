@@ -49,15 +49,19 @@ int main(int argc, char **argv) {
   const string TEST_PREFIX = "Object";
   const string prefix = "sss-api-test-object";
   const string bucketName = prefix + ToLower(Timestamp());
-  {
+  string action = "CreateBucket";
+  try {
     S3Api s3(cfg.access, cfg.secret, cfg.url);
     s3.CreateBucket(bucketName);
+    TestOutput(action, true, TEST_PREFIX);
+  } catch (const exception &e) {
+    TestOutput(action, false, TEST_PREFIX, e.what());
   }
   string objName = prefix + "obj-" + ToLower(Timestamp());
   CharArray data = CharArray(1024);
   iota(begin(data), end(data), 0);
   /// [PutObject]
-  string action = "PutObject";
+  action = "PutObject";
   try {
     S3Api s3(cfg.access, cfg.secret, cfg.url);
     const ETag etag = s3.PutObject(bucketName, objName, data);
@@ -120,13 +124,6 @@ int main(int argc, char **argv) {
     TestOutput(action, true, TEST_PREFIX);
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());
-  }
-  try {
-    S3Api s3(cfg.access, cfg.secret, cfg.url);
-    s3.DeleteBucket(bucketName);
-  } catch (const exception &e) {
-    cerr << "Error deleting object " << e.what() << endl;
-    exit(EXIT_FAILURE);
   }
   /// [DeleteOject]
   /// [DeleteBucket]
