@@ -1,1 +1,0 @@
-/usr/bin/c++ -g CMakeFiles/xml-parse-test.dir/xml-parse-test.cpp.o -o ../build/debug/test/xml-parse-test   -L/home/ugovaretto/projects/uv-cpp/s3client/build/build/release  -Wl,-rpath,/home/ugovaretto/projects/uv-cpp/s3client/build/build/release ../lib/libs3client.a -lcurl 

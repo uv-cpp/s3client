@@ -1,1 +1,0 @@
-/usr/bin/c++ -g CMakeFiles/s3-upload.dir/parallel_upload.cpp.o -o ../build/debug/s3-upload   -L/home/ugovaretto/projects/uv-cpp/s3client/build/build/release  -Wl,-rpath,/home/ugovaretto/projects/uv-cpp/s3client/build/build/release: ../lib/libs3client.a -lcurl 

@@ -1,1 +1,0 @@
-/usr/bin/c++ -g CMakeFiles/bucket-test.dir/api/bucket-test.cpp.o CMakeFiles/bucket-test.dir/utility.cpp.o -o ../build/debug/test/bucket-test   -L/home/ugovaretto/projects/uv-cpp/s3client/build/build/release  -Wl,-rpath,/home/ugovaretto/projects/uv-cpp/s3client/build/build/release ../lib/libs3client.a -lcurl 

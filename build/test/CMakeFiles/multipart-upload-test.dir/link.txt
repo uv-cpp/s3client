@@ -1,1 +1,0 @@
-/usr/bin/c++ -g CMakeFiles/multipart-upload-test.dir/api/multipart-upload-test.cpp.o CMakeFiles/multipart-upload-test.dir/utility.cpp.o -o ../build/debug/test/multipart-upload-test   -L/home/ugovaretto/projects/uv-cpp/s3client/build/build/release  -Wl,-rpath,/home/ugovaretto/projects/uv-cpp/s3client/build/build/release ../lib/libs3client.a -lcurl 
