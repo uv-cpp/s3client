@@ -1,0 +1,7 @@
+build
+doc
+dep
+.cache
+repo
+doxygen.log
+doxygen.errors
