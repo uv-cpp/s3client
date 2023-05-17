@@ -182,6 +182,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Clear</b> ()</td></tr
 <tr class="separator:a3d63825d1916e4ba3ca13122c7660603"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a14a75f15eb71fbba8639673100768b67"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a14a75f15eb71fbba8639673100768b67">DeleteObject</a> (const std::string &amp;bucket, const std::string &amp;key, const <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> &amp;={{}})</td></tr>
 <tr class="separator:a14a75f15eb71fbba8639673100768b67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b53152bf39143843a4033aa4a1b3fa0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsss_1_1api_1_1AccessControlPolicy.html">AccessControlPolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a3b53152bf39143843a4033aa4a1b3fa0">GetBucketAcl</a> (const std::string &amp;bucket)</td></tr>
+<tr class="separator:a3b53152bf39143843a4033aa4a1b3fa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af61465d92c0a94aa82ae863fc2a776a0"><td class="memItemLeft" align="right" valign="top">const CharArray &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#af61465d92c0a94aa82ae863fc2a776a0">GetObject</a> (const std::string &amp;bucket, const std::string &amp;key, size_t beginReadOffset=0, size_t endReadOffset=0, <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a>={{}})</td></tr>
 <tr class="separator:af61465d92c0a94aa82ae863fc2a776a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a62695addc7c86b5fa73465d0d80ec1fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a62695addc7c86b5fa73465d0d80ec1fa">GetObject</a> (const std::string &amp;bucket, const std::string &amp;key, CharArray &amp;outBuffer, size_t writeOffset, size_t beginReadOffset=0, size_t endReadOffset=0, <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> headers={{}})</td></tr>
@@ -217,13 +219,21 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>Clear</b> ()</td></tr
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>S3 Client inteface. </p>
-<p>Implements some of the S3 actions documented here: <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_Operations_Amazon_Simple_Storage_Service.html">https://docs.aws.amazon.com/AmazonS3/latest/API/API_Operations_Amazon_Simple_Storage_Service.html</a> Also includes higher level methods to simplify access to API.</p>
-<p>When sending requests, the fields specified as <a class="el" href="structsss_1_1URL.html" title="URL type.">URL</a> prameters are sent as part of the request, but in most cases the optional parameters sent as HTTP header fields are not sent along, it is therefore required to explicitly pass them in the <code>headers</code> parameter.</p>
-<p>E.g. the <code>ListObjectV2</code> request supports HTTP headers for specifying the payer and owner of the listed objects. </p><div class="fragment"><div class="line">s3.ListObjectsV2(bucket, config, {</div>
+<p>Implements some of the S3 actions documented here: <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_Operations_Amazon_Simple_Storage_Service.html">https://docs.aws.amazon.com/AmazonS3/latest/API/API_Operations_Amazon_Simple_Storage_Service.html</a></p>
+<p>Also includes higher level methods to simplify access to the API.</p>
+<p>When sending requests, the fields specified as <a class="el" href="structsss_1_1URL.html" title="URL type.">URL</a> prameters are are passed to methods as C++ structs and sent as part of the request, but in most cases the optional parameters sent as HTTP header fields are not sent along, it is therefore required to explicitly pass them in the <code>headers</code> parameter.</p>
+<p>E.g. the <code>ListObjectV2</code> request supports HTTP headers for specifying the payer for the request and owner of the listed objects. </p><div class="fragment"><div class="line"> s3.ListObjectsV2(bucket, config, {</div>
 <div class="line">    {<span class="stringliteral">&quot;x-amz-request-payer&quot;</span>, <span class="stringliteral">&quot;RequestPayer&quot;</span>},</div>
 <div class="line">    {<span class="stringliteral">&quot;x-amz-expected-bucket-owner&quot;</span>, <span class="stringliteral">&quot;ExpectedBucketOwner&quot;</span>}</div>
 <div class="line">});</div>
-</div><!-- fragment --><h1><a class="anchor" id="ex1"></a>
+</div><!-- fragment --><h2>Error handling</h2>
+<p>Currently exceptions are being used to report errors, work is ongoing to move to result types similar to Rust's <code>Result&lt;ResultT,ErrorT&gt;</code>.</p>
+<p>All methods that send request throw:</p>
+<ul>
+<li><code>std::runtime_error</code> in case of errors sending the request</li>
+<li><code>std::logic_error</code> when the returned response</li>
+</ul>
+<h1><a class="anchor" id="ex1"></a>
 Example</h1>
 <p>From test cases printing results in <code>CSV</code> format.</p>
 <p><b>Bucket</b> </p><div class="fragment"><div class="line">  <span class="keywordtype">string</span> action = <span class="stringliteral">&quot;CreateBucket&quot;</span>;</div>
@@ -235,26 +245,19 @@ Example</h1>
 <div class="line">  } <span class="keywordflow">catch</span> (<span class="keyword">const</span> exception &amp;e) {</div>
 <div class="line">    TestOutput(action, <span class="keyword">false</span>, TEST_PREFIX, e.what());</div>
 <div class="line">  }</div>
-<div class="ttc" id="aclasssss_1_1api_1_1S3Api_html"><div class="ttname"><a href="classsss_1_1api_1_1S3Api.html">sss::api::S3Api</a></div><div class="ttdoc">S3 Client inteface.</div><div class="ttdef"><b>Definition:</b> s3-api.h:110</div></div>
+<div class="ttc" id="aclasssss_1_1api_1_1S3Api_html"><div class="ttname"><a href="classsss_1_1api_1_1S3Api.html">sss::api::S3Api</a></div><div class="ttdoc">S3 Client inteface.</div><div class="ttdef"><b>Definition:</b> s3-api.h:142</div></div>
 <div class="ttc" id="alib_2include_2utility_8h_html_ab314781bb3f053ef5325b50f3a1b74f8"><div class="ttname"><a href="lib_2include_2utility_8h.html#ab314781bb3f053ef5325b50f3a1b74f8">sss::ToLower</a></div><div class="ttdeci">std::string ToLower(std::string s)</div></div>
-</div><!-- fragment --> <div class="fragment"><div class="line">  action = <span class="stringliteral">&quot;ListBuckets&quot;</span>;</div>
+</div><!-- fragment --> <div class="fragment"><div class="line">  action = <span class="stringliteral">&quot;GetBucketAcl&quot;</span>;</div>
 <div class="line">  <span class="keywordflow">try</span> {</div>
 <div class="line">    <a class="code hl_class" href="classsss_1_1api_1_1S3Api.html">S3Api</a> s3(cfg.access, cfg.secret, cfg.url);</div>
-<div class="line">    <span class="keyword">auto</span> buckets = s3.ListBuckets();</div>
-<div class="line">    <span class="keywordflow">if</span> (buckets.empty()) {</div>
-<div class="line">      <span class="keywordflow">throw</span> logic_error(<span class="stringliteral">&quot;Empty bucket list&quot;</span>);</div>
-<div class="line">    }</div>
-<div class="line">    <span class="keywordflow">if</span> (<a class="code hl_function" href="group__Ranges.html#ga4f73053571587e79eb3db628f5e6ef99">end</a>(buckets) ==</div>
-<div class="line">        find_if(<a class="code hl_function" href="group__Ranges.html#ga0aa7f3b15d2ebf9b597a1b5ba38ae8ac">begin</a>(buckets), <a class="code hl_function" href="group__Ranges.html#ga4f73053571587e79eb3db628f5e6ef99">end</a>(buckets),</div>
-<div class="line">                [&amp;](<span class="keyword">const</span> <span class="keyword">auto</span> &amp;b) { <span class="keywordflow">return</span> b.name == bucketName; })) {</div>
-<div class="line">      <span class="keywordflow">throw</span> logic_error(<span class="stringliteral">&quot;Missing bucket&quot;</span>);</div>
+<div class="line">    <span class="keyword">auto</span> accessPolicy = s3.GetBucketAcl(bucketName);</div>
+<div class="line">    <span class="keywordflow">if</span> (accessPolicy.permission != <span class="stringliteral">&quot;FULL_CONTROL&quot;</span>) {</div>
+<div class="line">      <span class="keywordflow">throw</span> logic_error(<span class="stringliteral">&quot;permission not equal to &#39;FULL_CONTROL&#39;&quot;</span>);</div>
 <div class="line">    }</div>
 <div class="line">    TestOutput(action, <span class="keyword">true</span>, TEST_PREFIX);</div>
 <div class="line">  } <span class="keywordflow">catch</span> (<span class="keyword">const</span> exception &amp;e) {</div>
 <div class="line">    TestOutput(action, <span class="keyword">false</span>, TEST_PREFIX, e.what());</div>
 <div class="line">  }</div>
-<div class="ttc" id="agroup__Ranges_html_ga0aa7f3b15d2ebf9b597a1b5ba38ae8ac"><div class="ttname"><a href="group__Ranges.html#ga0aa7f3b15d2ebf9b597a1b5ba38ae8ac">sss::begin</a></div><div class="ttdeci">auto begin(const SplitRange &amp;sr)</div><div class="ttdoc">return iterator at start position</div><div class="ttdef"><b>Definition:</b> utility.h:168</div></div>
-<div class="ttc" id="agroup__Ranges_html_ga4f73053571587e79eb3db628f5e6ef99"><div class="ttname"><a href="group__Ranges.html#ga4f73053571587e79eb3db628f5e6ef99">sss::end</a></div><div class="ttdeci">auto end(const SplitRange &amp;sr)</div><div class="ttdoc">return iterator at end position</div><div class="ttdef"><b>Definition:</b> utility.h:170</div></div>
 </div><!-- fragment --> <div class="fragment"><div class="line">  action = <span class="stringliteral">&quot;DeleteBucket&quot;</span>;</div>
 <div class="line">  <span class="keywordflow">try</span> {</div>
 <div class="line">    <a class="code hl_class" href="classsss_1_1api_1_1S3Api.html">S3Api</a> s3(cfg.access, cfg.secret, cfg.url);</div>
@@ -496,6 +499,13 @@ Example</h1>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>etag of multipart upload </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>in case of error sending request </td></tr>
+    <tr><td class="paramname">std::logic_error</td><td>in case of returned error (status &gt;= 400) </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p class="reference">References <a class="el" href="classsss_1_1api_1_1S3Api.html#ad09581bf28c4bbbcbb71b329959ec1ae">Send()</a>, and <a class="el" href="group__Parsing.html#gacf486071ed8bd3e6f76fe9ee23639bde">sss::XMLTag()</a>.</p>
 <div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -810,6 +820,50 @@ Example</h1>
 
 </div>
 </div>
+<a id="a3b53152bf39143843a4033aa4a1b3fa0" name="a3b53152bf39143843a4033aa4a1b3fa0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b53152bf39143843a4033aa4a1b3fa0">&#9670;&#160;</a></span>GetBucketAcl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structsss_1_1api_1_1AccessControlPolicy.html">AccessControlPolicy</a> sss::api::S3Api::GetBucketAcl </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>bucket</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return bucket's Access Control List </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bucket</td><td>bucket name </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Acess Control Policy </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="structsss_1_1api_1_1AccessControlPolicy.html">AccessControlPolicy</a> </dd></dl>
+
+<p class="reference">References <a class="el" href="classsss_1_1api_1_1S3Api.html#ad09581bf28c4bbbcbb71b329959ec1ae">Send()</a>.</p>
+<div id="dynsection-12" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-12-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-12-content" class="dyncontent" style="display:none;">
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a3b53152bf39143843a4033aa4a1b3fa0_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+</div>
+<div id="dynsection-13" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-13-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-13-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a3b53152bf39143843a4033aa4a1b3fa0_icgraph.svg" width="308" height="36"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
+
+</div>
+</div>
 <a id="a1196f1cb9ce1e5d69336e9b8dbb5d59c" name="a1196f1cb9ce1e5d69336e9b8dbb5d59c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1196f1cb9ce1e5d69336e9b8dbb5d59c">&#9670;&#160;</a></span>GetFileObject()</h2>
 
@@ -879,11 +933,11 @@ Example</h1>
 </dl>
 
 <p class="reference">References <a class="el" href="group__Ranges.html#ga0aa7f3b15d2ebf9b597a1b5ba38ae8ac">sss::begin()</a>, <a class="el" href="classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31">Config()</a>, <a class="el" href="group__Ranges.html#ga4f73053571587e79eb3db628f5e6ef99">sss::end()</a>, <a class="el" href="group__ErrorHandling.html#ga781648957bfce0bbc86cbdbff94e28a6">sss::HandleError()</a>, <a class="el" href="classsss_1_1WebClient.html#aa1d7484f0e09242ce53b24f9648ce50e">sss::WebClient::Send()</a>, and <a class="el" href="classsss_1_1WebClient.html#a002876073b3869a9b9a9d709d14f1d7e">sss::WebClient::SetWriteFunction()</a>.</p>
-<div id="dynsection-12" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-12-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-14" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-14-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-12-content" class="dyncontent" style="display:none;">
+<div id="dynsection-14-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a1196f1cb9ce1e5d69336e9b8dbb5d59c_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
@@ -960,11 +1014,11 @@ Example</h1>
 </dl>
 
 <p class="reference">References <a class="el" href="group__Ranges.html#ga0aa7f3b15d2ebf9b597a1b5ba38ae8ac">sss::begin()</a>, <a class="el" href="group__Ranges.html#ga4f73053571587e79eb3db628f5e6ef99">sss::end()</a>, <a class="el" href="classsss_1_1WebClient.html#a77a4e0190a4f207b969cb63b6ba38ccc">sss::WebClient::GetResponseBody()</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#ad09581bf28c4bbbcbb71b329959ec1ae">Send()</a>.</p>
-<div id="dynsection-13" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-13-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-15" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-15-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-15-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-13-content" class="dyncontent" style="display:none;">
+<div id="dynsection-15-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a0bb4e0b77028dadd78fcf5496ab6fca3_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
@@ -1041,11 +1095,11 @@ Example</h1>
 </dl>
 
 <p class="reference">References <a class="el" href="group__Ranges.html#ga0aa7f3b15d2ebf9b597a1b5ba38ae8ac">sss::begin()</a>, <a class="el" href="group__Ranges.html#ga4f73053571587e79eb3db628f5e6ef99">sss::end()</a>, <a class="el" href="classsss_1_1WebClient.html#a77a4e0190a4f207b969cb63b6ba38ccc">sss::WebClient::GetResponseBody()</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#ad09581bf28c4bbbcbb71b329959ec1ae">Send()</a>.</p>
-<div id="dynsection-14" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-14-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-16" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-16-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-16-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-14-content" class="dyncontent" style="display:none;">
+<div id="dynsection-16-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a62695addc7c86b5fa73465d0d80ec1fa_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
@@ -1109,11 +1163,11 @@ Example</h1>
 <dl class="section return"><dt>Returns</dt><dd><code>char</code> array; <code>char</code> is the type used by <code>libcurl</code> </dd></dl>
 
 <p class="reference">References <a class="el" href="group__Ranges.html#ga0aa7f3b15d2ebf9b597a1b5ba38ae8ac">sss::begin()</a>, <a class="el" href="group__Ranges.html#ga4f73053571587e79eb3db628f5e6ef99">sss::end()</a>, <a class="el" href="classsss_1_1WebClient.html#a77a4e0190a4f207b969cb63b6ba38ccc">sss::WebClient::GetResponseBody()</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#ad09581bf28c4bbbcbb71b329959ec1ae">Send()</a>.</p>
-<div id="dynsection-15" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-15-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-15-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-17" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-17-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-17-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-15-content" class="dyncontent" style="display:none;">
+<div id="dynsection-17-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_af61465d92c0a94aa82ae863fc2a776a0_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
@@ -1158,11 +1212,11 @@ Example</h1>
 <dl class="section return"><dt>Returns</dt><dd>object size </dd></dl>
 
 <p class="reference">References <a class="el" href="group__Internal.html#gad39402e23f6ef63de04e903825a7271a">sss::GetValue()</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22">HeadObject()</a>.</p>
-<div id="dynsection-16" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-16-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-16-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-18" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-18-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-18-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-16-content" class="dyncontent" style="display:none;">
+<div id="dynsection-18-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a872e80e356e8c404a9b0739d95a0af41_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
@@ -1194,11 +1248,11 @@ Example</h1>
 <dl class="section return"><dt>Returns</dt><dd>response body </dd></dl>
 
 <p class="reference">References <a class="el" href="classsss_1_1WebClient.html#a77a4e0190a4f207b969cb63b6ba38ccc">sss::WebClient::GetResponseBody()</a>.</p>
-<div id="dynsection-17" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-17-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-17-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-19" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-19-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-19-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-17-content" class="dyncontent" style="display:none;">
+<div id="dynsection-19-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_ae41728446ec775637fc871322b77d050_cgraph.svg" width="516" height="36"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
@@ -1230,11 +1284,11 @@ Example</h1>
 <dl class="section return"><dt>Returns</dt><dd>{header name, header value} map </dd></dl>
 
 <p class="reference">References <a class="el" href="classsss_1_1WebClient.html#a42af351286f1fa68c3385d81f0bc2015">sss::WebClient::GetHeaderText()</a>, and <a class="el" href="group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5">sss::HTTPHeaders()</a>.</p>
-<div id="dynsection-18" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-18-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-18-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-20" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-20-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-20-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-18-content" class="dyncontent" style="display:none;">
+<div id="dynsection-20-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a834e046a52178dcf540509df828b024f_cgraph.svg" width="100%" height="413"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
@@ -1277,19 +1331,19 @@ Example</h1>
 <dl class="section return"><dt>Returns</dt><dd>HTTP headers as {http header name, value} map </dd></dl>
 
 <p class="reference">References <a class="el" href="group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5">sss::HTTPHeaders()</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#ad09581bf28c4bbbcbb71b329959ec1ae">Send()</a>.</p>
-<div id="dynsection-19" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-19-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-19-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-21" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-21-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-21-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-19-content" class="dyncontent" style="display:none;">
+<div id="dynsection-21-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_aa4a2b1cc2c89a52d1aa89e571b785db2_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
-<div id="dynsection-20" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-20-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-20-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-22" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-22-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-22-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-20-content" class="dyncontent" style="display:none;">
+<div id="dynsection-22-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_aa4a2b1cc2c89a52d1aa89e571b785db2_icgraph.svg" width="299" height="36"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
@@ -1339,19 +1393,19 @@ Example</h1>
 <dl class="section return"><dt>Returns</dt><dd>HTTP headers as {http header name, value} map </dd></dl>
 
 <p class="reference">References <a class="el" href="group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5">sss::HTTPHeaders()</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#ad09581bf28c4bbbcbb71b329959ec1ae">Send()</a>.</p>
-<div id="dynsection-21" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-21-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-21-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-23" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-23-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-23-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-21-content" class="dyncontent" style="display:none;">
+<div id="dynsection-23-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_abc84a71b9a88b81afaa353ad17a91d22_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
-<div id="dynsection-22" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-22-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-22-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-24" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-24-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-24-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-22-content" class="dyncontent" style="display:none;">
+<div id="dynsection-24-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_abc84a71b9a88b81afaa353ad17a91d22_icgraph.svg" width="450" height="86"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
@@ -1384,19 +1438,19 @@ Example</h1>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="structsss_1_1api_1_1BucketInfo.html">BucketInfo</a> </dd></dl>
 
 <p class="reference">References <a class="el" href="classsss_1_1WebClient.html#ac9e82fc4b56b142d91f9b104f5266f91">sss::WebClient::GetContentText()</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#ad09581bf28c4bbbcbb71b329959ec1ae">Send()</a>.</p>
-<div id="dynsection-23" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-23-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-23-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-25" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-25-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-25-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-23-content" class="dyncontent" style="display:none;">
+<div id="dynsection-25-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a81e30673c06b609a2ee6e6bfd9130ca6_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
-<div id="dynsection-24" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-24-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-24-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-26" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-26-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-26-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-24-content" class="dyncontent" style="display:none;">
+<div id="dynsection-26-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a81e30673c06b609a2ee6e6bfd9130ca6_icgraph.svg" width="296" height="36"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
@@ -1453,11 +1507,11 @@ Example</h1>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="structsss_1_1api_1_1S3Api_1_1ListObjectV2Result.html">ListObjectV2Result</a> </dd></dl>
 
 <p class="reference">References <a class="el" href="classsss_1_1WebClient.html#ac9e82fc4b56b142d91f9b104f5266f91">sss::WebClient::GetContentText()</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#ad09581bf28c4bbbcbb71b329959ec1ae">Send()</a>.</p>
-<div id="dynsection-25" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-25-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-25-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-27" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-27-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-27-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-25-content" class="dyncontent" style="display:none;">
+<div id="dynsection-27-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a3f00f611cd210a58ac6e8c0555984433_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
@@ -1533,11 +1587,11 @@ Example</h1>
 <dl class="section return"><dt>Returns</dt><dd>ETag of uploaded object </dd></dl>
 
 <p class="reference">References <a class="el" href="classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31">Config()</a>, <a class="el" href="classsss_1_1WebClient.html#a93d66d3941f37ec425bcdf0eef3836e4">sss::WebClient::ErrorMsg()</a>, <a class="el" href="classsss_1_1WebClient.html#a42af351286f1fa68c3385d81f0bc2015">sss::WebClient::GetHeaderText()</a>, <a class="el" href="group__ErrorHandling.html#ga781648957bfce0bbc86cbdbff94e28a6">sss::HandleError()</a>, <a class="el" href="group__Parsing.html#ga020103649cb1ae997e00f10d72ad6acd">sss::HTTPHeader()</a>, and <a class="el" href="classsss_1_1WebClient.html#ad038e41cfc902f6e49754c52a9a71992">sss::WebClient::UploadFile()</a>.</p>
-<div id="dynsection-26" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-26-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-26-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-28" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-28-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-28-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-26-content" class="dyncontent" style="display:none;">
+<div id="dynsection-28-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_ab7affe0834f5892b393e731783b7ccac_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
@@ -1687,11 +1741,11 @@ Example</h1>
 </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>secret token </dd></dl>
-<div id="dynsection-27" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-27-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-27-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-29" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-29-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-29-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-27-content" class="dyncontent" style="display:none;">
+<div id="dynsection-29-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a6f518c16679e99f119966b36ac28463f_icgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
@@ -1729,21 +1783,28 @@ Example</h1>
 </dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html">SendParams</a> </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>reference to <code>this</code> <code><a class="el" href="classsss_1_1api_1_1S3Api.html" title="S3 Client inteface.">S3Api</a></code> instance. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>in case of error sending request </td></tr>
+    <tr><td class="paramname">std::logic_error</td><td>in case of returned error (status &gt;= 400) </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p class="reference">References <a class="el" href="classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31">Config()</a>, <a class="el" href="group__ErrorHandling.html#ga781648957bfce0bbc86cbdbff94e28a6">sss::HandleError()</a>, <a class="el" href="group__Internal.html#ga2b8b08c2a4994a87377d83ccfa9a6a53">sss::ParseParams()</a>, <a class="el" href="classsss_1_1WebClient.html#aa1d7484f0e09242ce53b24f9648ce50e">sss::WebClient::Send()</a>, <a class="el" href="classsss_1_1WebClient.html#a51ce0ecf6487b6a43072643fe4f4cb4e">sss::WebClient::SetPostData()</a>, <a class="el" href="classsss_1_1WebClient.html#a7dfd984b33a29686fb0355b65b620e99">sss::WebClient::SetUrlEncodedPostData()</a>, <a class="el" href="lib_2include_2utility_8h.html#ab314781bb3f053ef5325b50f3a1b74f8">sss::ToLower()</a>, <a class="el" href="classsss_1_1WebClient.html#ae7b1f77bd4ae44585f2d49ea493bdcc5">sss::WebClient::UploadDataFromBuffer()</a>, and <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#af99ea89f2e18e4f3c86e919223e98bce">sss::api::S3Api::SendParams::urlEncodePostParams</a>.</p>
-<div id="dynsection-28" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-28-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-28-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-30" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-30-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-30-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-28-content" class="dyncontent" style="display:none;">
+<div id="dynsection-30-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_ad09581bf28c4bbbcbb71b329959ec1ae_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
-<div id="dynsection-29" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-29-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-29-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-31" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-31-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-31-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-29-content" class="dyncontent" style="display:none;">
+<div id="dynsection-31-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_ad09581bf28c4bbbcbb71b329959ec1ae_icgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
@@ -1820,11 +1881,11 @@ Example</h1>
 </dl>
 
 <p class="reference">References <a class="el" href="classsss_1_1api_1_1S3Api.html#ad09581bf28c4bbbcbb71b329959ec1ae">Send()</a>, <a class="el" href="classsss_1_1WebClient.html#a88dbcc61562e84aa9ebf1eabf887ac28">sss::WebClient::SetReadFunction()</a>, and <a class="el" href="classsss_1_1WebClient.html#a002876073b3869a9b9a9d709d14f1d7e">sss::WebClient::SetWriteFunction()</a>.</p>
-<div id="dynsection-30" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-30-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-30-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-32" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-32-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-32-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-30-content" class="dyncontent" style="display:none;">
+<div id="dynsection-32-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a0473917e4d25a4a6fca40d097e4299d6_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
@@ -1854,11 +1915,11 @@ Example</h1>
 </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>signing endpoint <a class="el" href="structsss_1_1URL.html" title="URL type.">URL</a> </dd></dl>
-<div id="dynsection-31" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-31-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-31-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-33" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-33-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-33-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-31-content" class="dyncontent" style="display:none;">
+<div id="dynsection-33-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a69578085d659cbb214ef8ccc12a12cd4_icgraph.svg" width="404" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
@@ -1889,11 +1950,11 @@ Example</h1>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if bucket exist, <code>false</code> otherwise </dd></dl>
 
 <p class="reference">References <a class="el" href="classsss_1_1api_1_1S3Api.html#ad09581bf28c4bbbcbb71b329959ec1ae">Send()</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#a69578085d659cbb214ef8ccc12a12cd4">SigningEndpoint()</a>.</p>
-<div id="dynsection-32" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-32-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-32-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-34" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-34-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-34-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-32-content" class="dyncontent" style="display:none;">
+<div id="dynsection-34-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a23223ee1fb701c55af2d942dbf261ae2_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
@@ -1935,11 +1996,11 @@ Example</h1>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if key exists, <code>false</code> otherwise </dd></dl>
 
 <p class="reference">References <a class="el" href="classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22">HeadObject()</a>.</p>
-<div id="dynsection-33" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-33-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-33-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-35" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-35-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-35-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-33-content" class="dyncontent" style="display:none;">
+<div id="dynsection-35-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_aa3f7a3001bdad58c7b0c04cbd0dc3236_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>

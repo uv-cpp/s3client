@@ -68,7 +68,7 @@ var sectionId = 'dynsection-0';
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="s3-api_8h.html" target="_top" xlink:title="declarations of S3Client class;">
+<g id="a_node2"><a xlink:href="s3-api_8h.html" target="_top" xlink:title="declarations of S3Api class.">
 <polygon fill="white" stroke="#666666" points="664.36,-295.5 613.86,-295.5 613.86,-276.25 664.36,-276.25 664.36,-295.5"/>
 <text text-anchor="middle" x="639.11" y="-282" font-family="Helvetica,sans-Serif" font-size="10.00">s3&#45;api.h</text>
 </a>

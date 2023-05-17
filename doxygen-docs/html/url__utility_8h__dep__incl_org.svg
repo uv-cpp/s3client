@@ -89,7 +89,7 @@
 <!-- Node5 -->
 <g id="node5" class="node">
 <title>Node5</title>
-<g id="a_node5"><a xlink:href="s3-api_8h.html" target="_top" xlink:title="declarations of S3Client class;">
+<g id="a_node5"><a xlink:href="s3-api_8h.html" target="_top" xlink:title="declarations of S3Api class.">
 <polygon fill="white" stroke="#666666" points="758.88,-119.5 627.38,-119.5 627.38,-77.75 758.88,-77.75 758.88,-119.5"/>
 <text text-anchor="start" x="635.38" y="-106" font-family="Helvetica,sans-Serif" font-size="10.00">/Users/ugovaretto/projects</text>
 <text text-anchor="start" x="635.38" y="-94.75" font-family="Helvetica,sans-Serif" font-size="10.00">/s3client/repo/lib/include</text>

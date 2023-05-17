@@ -5,7 +5,7 @@
 <area shape="rect" id="node3" href="$parallel__upload_8cpp.html" title="Parallel upload to S3 service." alt="" coords="239,420,416,476"/>
 <area shape="rect" id="node4" href="$apps_2s3-client_8cpp.html" title="Send S3v4&#45;signed requests to S3 andpoint and print raw responses." alt="" coords="5,428,215,468"/>
 <area shape="rect" id="node5" href="$aws__sign_8h.html" title="Public interface to signing URLs and HTTP headers with the S3v4 protocol standard." alt="" coords="434,213,610,268"/>
-<area shape="rect" id="node6" href="$s3-api_8h.html" title="declarations of S3Client class;" alt="" coords="842,420,1018,476"/>
+<area shape="rect" id="node6" href="$s3-api_8h.html" title="declarations of S3Api class." alt="" coords="842,420,1018,476"/>
 <area shape="rect" id="node8" href="$s3-client_8h.html" title="declaration of functions and data types for sending S3 requests, signing URLs and downloading and upl..." alt="" coords="441,316,616,372"/>
 <area shape="rect" id="node7" href="$bucket-test_8cpp.html" title="bucket tests" alt="" coords="842,524,1018,579"/>
 <area shape="rect" id="node9" href="$parallel__download_8cpp.html" title="Parallel object download download from S3 service." alt="" coords="642,420,818,476"/>

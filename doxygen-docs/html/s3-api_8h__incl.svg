@@ -57,7 +57,7 @@ var sectionId = 'dynsection-0';
 <!-- Node1 -->
 <g id="node1" class="node">
 <title>Node1</title>
-<g id="a_node1"><a xlink:title="declarations of S3Client class;">
+<g id="a_node1"><a xlink:title="declarations of S3Api class.">
 <polygon fill="#999999" stroke="#666666" points="279.5,-318 148,-318 148,-276.25 279.5,-276.25 279.5,-318"/>
 <text text-anchor="start" x="156" y="-304.5" font-family="Helvetica,sans-Serif" font-size="10.00">/Users/ugovaretto/projects</text>
 <text text-anchor="start" x="156" y="-293.25" font-family="Helvetica,sans-Serif" font-size="10.00">/s3client/repo/lib/include</text>

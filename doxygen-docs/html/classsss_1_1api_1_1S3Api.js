@@ -18,6 +18,7 @@ var classsss_1_1api_1_1S3Api =
     [ "DeleteBucket", "classsss_1_1api_1_1S3Api.html#a3d63825d1916e4ba3ca13122c7660603", null ],
     [ "DeleteObject", "classsss_1_1api_1_1S3Api.html#a14a75f15eb71fbba8639673100768b67", null ],
     [ "Endpoint", "classsss_1_1api_1_1S3Api.html#a25a999d87c121627166fc0a896f536c7", null ],
+    [ "GetBucketAcl", "classsss_1_1api_1_1S3Api.html#a3b53152bf39143843a4033aa4a1b3fa0", null ],
     [ "GetFileObject", "classsss_1_1api_1_1S3Api.html#a1196f1cb9ce1e5d69336e9b8dbb5d59c", null ],
     [ "GetObject", "classsss_1_1api_1_1S3Api.html#a0bb4e0b77028dadd78fcf5496ab6fca3", null ],
     [ "GetObject", "classsss_1_1api_1_1S3Api.html#a62695addc7c86b5fa73465d0d80ec1fa", null ],

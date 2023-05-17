@@ -2,7 +2,9 @@ var annotated_dup =
 [
     [ "sss", null, [
       [ "api", null, [
+        [ "AccessControlPolicy", "structsss_1_1api_1_1AccessControlPolicy.html", null ],
         [ "BucketInfo", "structsss_1_1api_1_1BucketInfo.html", null ],
+        [ "Grantee", "structsss_1_1api_1_1Grantee.html", null ],
         [ "ObjectInfo", "structsss_1_1api_1_1ObjectInfo.html", null ],
         [ "S3Api", "classsss_1_1api_1_1S3Api.html", "classsss_1_1api_1_1S3Api" ]
       ] ],

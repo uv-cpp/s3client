@@ -1,5 +1,5 @@
 <map id="/Users/ugovaretto/projects/s3client/repo/lib/include/s3&#45;api.h" name="/Users/ugovaretto/projects/s3client/repo/lib/include/s3&#45;api.h">
-<area shape="rect" id="node1" title="declarations of S3Client class;" alt="" coords="203,5,378,61"/>
+<area shape="rect" id="node1" title="declarations of S3Api class." alt="" coords="203,5,378,61"/>
 <area shape="rect" id="node2" href="$aws__sign_8h.html" title="Public interface to signing URLs and HTTP headers with the S3v4 protocol standard." alt="" coords="208,183,295,208"/>
 <area shape="rect" id="node13" href="$response__parser_8h.html" title="Functions to parse XML and HTTP headers." alt="" coords="5,256,133,282"/>
 <area shape="rect" id="node15" href="$s3-client_8h.html" title="declaration of functions and data types for sending S3 requests, signing URLs and downloading and upl..." alt="" coords="291,109,372,135"/>
