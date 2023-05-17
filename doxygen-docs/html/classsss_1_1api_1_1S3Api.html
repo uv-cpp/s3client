@@ -107,7 +107,7 @@ $(document).ready(function(){initNavTree('classsss_1_1api_1_1S3Api.html',''); in
 <p>S3 Client inteface.  
  <a href="classsss_1_1api_1_1S3Api.html#details">More...</a></p>
 
-<p><code>#include &lt;s3-api.h&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="s3-api_8h_source.html">s3-api.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
@@ -299,7 +299,9 @@ Example</h1>
 <div class="line">  } <span class="keywordflow">catch</span> (<span class="keyword">const</span> exception &amp;e) {</div>
 <div class="line">    TestOutput(action, <span class="keyword">false</span>, TEST_PREFIX, e.what());</div>
 <div class="line">  }</div>
-</div><!-- fragment --><div class="fragment"></div><!-- fragment --></div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+</div><!-- fragment --><div class="fragment"></div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="s3-api_8h_source.html#l00142">142</a> of file <a class="el" href="s3-api_8h_source.html">s3-api.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="af60525ee5baebfe10eea4b78392c7f71"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af60525ee5baebfe10eea4b78392c7f71">&#9670;&nbsp;</a></span>S3Api()</h2>
 
@@ -355,6 +357,8 @@ Example</h1>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="s3-api_8h_source.html#l00196">196</a> of file <a class="el" href="s3-api_8h_source.html">s3-api.h</a>.</p>
 <div class="fragment"><div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;      : access_(access), secret_(secret), endpoint_(endpoint),</div>
 <div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;        signingEndpoint_(signingEndpoint) {</div>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;    <span class="keywordflow">if</span> (signingEndpoint_.empty())</div>
@@ -403,15 +407,17 @@ Example</h1>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="multipart__upload_8cpp_source.html#l00224">224</a> of file <a class="el" href="multipart__upload_8cpp_source.html">multipart_upload.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;                                                      {</div>
 <div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;  <a class="code" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send</a>({.method = <span class="stringliteral">&quot;DELETE&quot;</span>,</div>
 <div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;        .bucket = bucket,</div>
 <div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;        .key = key,</div>
 <div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;        .params = {{<span class="stringliteral">&quot;uploadId&quot;</span>, uid}}});</div>
 <div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;}</div>
-<div class="ttc" id="aclasssss_1_1api_1_1S3Api_html_a02b4f0c95255f151beb72f0a6bdf5889"><div class="ttname"><a href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">sss::api::S3Api::Send</a></div><div class="ttdeci">const WebClient &amp; Send(const SendParams &amp;p)</div><div class="ttdef"><b>Definition:</b> s3-api.h:237</div></div>
+<div class="ttc" id="aclasssss_1_1api_1_1S3Api_html_a02b4f0c95255f151beb72f0a6bdf5889"><div class="ttname"><a href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">sss::api::S3Api::Send</a></div><div class="ttdeci">const WebClient &amp; Send(const SendParams &amp;p)</div><div class="ttdef"><b>Definition:</b> <a href="s3-api_8h_source.html#l00237">s3-api.h:237</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
+<p class="reference">References <a class="el" href="s3-api_8h_source.html#l00237">Send()</a>.</p>
 <div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -446,6 +452,8 @@ Example</h1>
 </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>access token </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="s3-api_8h_source.html#l00604">604</a> of file <a class="el" href="s3-api_8h_source.html">s3-api.h</a>.</p>
 <div class="fragment"><div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;{ <span class="keywordflow">return</span> access_; }</div>
 </div><!-- fragment --><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
@@ -512,6 +520,8 @@ Example</h1>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="multipart__upload_8cpp_source.html#l00161">161</a> of file <a class="el" href="multipart__upload_8cpp_source.html">multipart_upload.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;                                                               {</div>
 <div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160; </div>
 <div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;  <a class="code" href="group__Types.html#ga2155fa93f33d36504b89ed16788e8fa9">Parameters</a> params = {{<span class="stringliteral">&quot;uploadId&quot;</span>, uid}};</div>
@@ -534,9 +544,9 @@ Example</h1>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  <span class="keywordflow">return</span> etag;</div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;}</div>
 <div class="ttc" id="agroup__Parsing_html_gacf486071ed8bd3e6f76fe9ee23639bde"><div class="ttname"><a href="group__Parsing.html#gacf486071ed8bd3e6f76fe9ee23639bde">sss::XMLTag</a></div><div class="ttdeci">std::string XMLTag(const std::string &amp;xml, const std::string &amp;tag)</div></div>
-<div class="ttc" id="agroup__Types_html_ga2155fa93f33d36504b89ed16788e8fa9"><div class="ttname"><a href="group__Types.html#ga2155fa93f33d36504b89ed16788e8fa9">sss::Parameters</a></div><div class="ttdeci">Map Parameters</div><div class="ttdoc">URL parameters: key1=value1&amp;key2=value2...</div><div class="ttdef"><b>Definition:</b> common.h:58</div></div>
+<div class="ttc" id="agroup__Types_html_ga2155fa93f33d36504b89ed16788e8fa9"><div class="ttname"><a href="group__Types.html#ga2155fa93f33d36504b89ed16788e8fa9">sss::Parameters</a></div><div class="ttdeci">Map Parameters</div><div class="ttdoc">URL parameters: key1=value1&amp;key2=value2...</div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00058">common.h:58</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1WebClient.html#ac9e82fc4b56b142d91f9b104f5266f91">sss::WebClient::GetContentText()</a>, <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>, and <a class="el" href="group__Parsing.html#gacf486071ed8bd3e6f76fe9ee23639bde">sss::XMLTag()</a>.</p>
+<p class="reference">References <a class="el" href="webclient_8cpp_source.html#l00432">sss::WebClient::GetContentText()</a>, <a class="el" href="s3-api_8h_source.html#l00237">Send()</a>, and <a class="el" href="group__Parsing.html#gacf486071ed8bd3e6f76fe9ee23639bde">sss::XMLTag()</a>.</p>
 <div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-2-summary" class="dynsummary" style="display:block;">
@@ -572,6 +582,8 @@ Example</h1>
   </dd>
 </dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html">SendParams</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="s3-api_8cpp_source.html#l00043">43</a> of file <a class="el" href="s3-api_8cpp_source.html">s3-api.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;                                            {</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;  <span class="comment">// if credentials empty send regular unsigned request</span></div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;  <span class="keyword">auto</span> sh = <a class="code" href="classsss_1_1api_1_1S3Api.html#a1a4e05ac14390c7f42feef2c26e22031">Access</a>().empty() ? <a class="code" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a>()</div>
@@ -600,19 +612,19 @@ Example</h1>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  webClient_.<a class="code" href="classsss_1_1WebClient.html#a75890c14fbe4a4bbac61718a4f3c064d">SetHeaders</a>(sh);</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  <span class="keywordflow">return</span> webClient_;</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;}</div>
-<div class="ttc" id="aclasssss_1_1WebClient_html_a12b5db6b8c667024557ab58059d39994"><div class="ttname"><a href="classsss_1_1WebClient.html#a12b5db6b8c667024557ab58059d39994">sss::WebClient::SetPath</a></div><div class="ttdeci">void SetPath(const std::string &amp;path)</div><div class="ttdef"><b>Definition:</b> webclient.cpp:197</div></div>
-<div class="ttc" id="aclasssss_1_1WebClient_html_a75890c14fbe4a4bbac61718a4f3c064d"><div class="ttname"><a href="classsss_1_1WebClient.html#a75890c14fbe4a4bbac61718a4f3c064d">sss::WebClient::SetHeaders</a></div><div class="ttdeci">void SetHeaders(const Map &amp;headers)</div><div class="ttdef"><b>Definition:</b> webclient.cpp:202</div></div>
-<div class="ttc" id="aclasssss_1_1WebClient_html_a9bf978d95b79728f6d60fc2bdb4fe546"><div class="ttname"><a href="classsss_1_1WebClient.html#a9bf978d95b79728f6d60fc2bdb4fe546">sss::WebClient::SetReqParameters</a></div><div class="ttdeci">void SetReqParameters(const Map &amp;params)</div><div class="ttdef"><b>Definition:</b> webclient.cpp:217</div></div>
-<div class="ttc" id="aclasssss_1_1WebClient_html_af6233ffd7b294e1e7e606e838dd44e9e"><div class="ttname"><a href="classsss_1_1WebClient.html#af6233ffd7b294e1e7e606e838dd44e9e">sss::WebClient::SetMethod</a></div><div class="ttdeci">void SetMethod(const std::string &amp;method, size_t size=0)</div><div class="ttdef"><b>Definition:</b> webclient.cpp:222</div></div>
-<div class="ttc" id="aclasssss_1_1WebClient_html_afc3b7a92568fbb1ea447918920ca266e"><div class="ttname"><a href="classsss_1_1WebClient.html#afc3b7a92568fbb1ea447918920ca266e">sss::WebClient::SetEndpoint</a></div><div class="ttdeci">void SetEndpoint(const std::string &amp;ep)</div><div class="ttdoc">Set endpoint:  &lt;proto&gt;://&lt;server&gt;:&lt;port&gt;</div><div class="ttdef"><b>Definition:</b> webclient.cpp:192</div></div>
-<div class="ttc" id="aclasssss_1_1api_1_1S3Api_html_a1a4e05ac14390c7f42feef2c26e22031"><div class="ttname"><a href="classsss_1_1api_1_1S3Api.html#a1a4e05ac14390c7f42feef2c26e22031">sss::api::S3Api::Access</a></div><div class="ttdeci">const std::string &amp; Access() const</div><div class="ttdef"><b>Definition:</b> s3-api.h:604</div></div>
-<div class="ttc" id="aclasssss_1_1api_1_1S3Api_html_a3718745d3b940462ae9f3b78f773b3a6"><div class="ttname"><a href="classsss_1_1api_1_1S3Api.html#a3718745d3b940462ae9f3b78f773b3a6">sss::api::S3Api::Clear</a></div><div class="ttdeci">void Clear()</div><div class="ttdoc">Clear data and reset read and write functions.</div><div class="ttdef"><b>Definition:</b> s3-api.h:224</div></div>
-<div class="ttc" id="aclasssss_1_1api_1_1S3Api_html_a70f1068d07e1d4c1be164e0cb9328cc0"><div class="ttname"><a href="classsss_1_1api_1_1S3Api.html#a70f1068d07e1d4c1be164e0cb9328cc0">sss::api::S3Api::Endpoint</a></div><div class="ttdeci">const std::string &amp; Endpoint() const</div><div class="ttdef"><b>Definition:</b> s3-api.h:608</div></div>
-<div class="ttc" id="aclasssss_1_1api_1_1S3Api_html_acfffe29254323fb41231787a0afb7edc"><div class="ttname"><a href="classsss_1_1api_1_1S3Api.html#acfffe29254323fb41231787a0afb7edc">sss::api::S3Api::Secret</a></div><div class="ttdeci">const std::string &amp; Secret() const</div><div class="ttdef"><b>Definition:</b> s3-api.h:606</div></div>
-<div class="ttc" id="agroup__Sign_html_ga3ae8e18ef70752b7369fca66c40c526b"><div class="ttname"><a href="group__Sign.html#ga3ae8e18ef70752b7369fca66c40c526b">sss::SignHeaders</a></div><div class="ttdeci">Headers SignHeaders(const ComputeSignatureConfig &amp;cfg)</div><div class="ttdoc">Sign headers.</div><div class="ttdef"><b>Definition:</b> aws_sign.cpp:313</div></div>
-<div class="ttc" id="agroup__Types_html_ga715f63ab4ed0dae42d3337ff0a29d5d3"><div class="ttname"><a href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">sss::Headers</a></div><div class="ttdeci">Map Headers</div><div class="ttdoc">HTTP headers.</div><div class="ttdef"><b>Definition:</b> common.h:56</div></div>
+<div class="ttc" id="aclasssss_1_1WebClient_html_a12b5db6b8c667024557ab58059d39994"><div class="ttname"><a href="classsss_1_1WebClient.html#a12b5db6b8c667024557ab58059d39994">sss::WebClient::SetPath</a></div><div class="ttdeci">void SetPath(const std::string &amp;path)</div><div class="ttdef"><b>Definition:</b> <a href="webclient_8cpp_source.html#l00197">webclient.cpp:197</a></div></div>
+<div class="ttc" id="aclasssss_1_1WebClient_html_a75890c14fbe4a4bbac61718a4f3c064d"><div class="ttname"><a href="classsss_1_1WebClient.html#a75890c14fbe4a4bbac61718a4f3c064d">sss::WebClient::SetHeaders</a></div><div class="ttdeci">void SetHeaders(const Map &amp;headers)</div><div class="ttdef"><b>Definition:</b> <a href="webclient_8cpp_source.html#l00202">webclient.cpp:202</a></div></div>
+<div class="ttc" id="aclasssss_1_1WebClient_html_a9bf978d95b79728f6d60fc2bdb4fe546"><div class="ttname"><a href="classsss_1_1WebClient.html#a9bf978d95b79728f6d60fc2bdb4fe546">sss::WebClient::SetReqParameters</a></div><div class="ttdeci">void SetReqParameters(const Map &amp;params)</div><div class="ttdef"><b>Definition:</b> <a href="webclient_8cpp_source.html#l00217">webclient.cpp:217</a></div></div>
+<div class="ttc" id="aclasssss_1_1WebClient_html_af6233ffd7b294e1e7e606e838dd44e9e"><div class="ttname"><a href="classsss_1_1WebClient.html#af6233ffd7b294e1e7e606e838dd44e9e">sss::WebClient::SetMethod</a></div><div class="ttdeci">void SetMethod(const std::string &amp;method, size_t size=0)</div><div class="ttdef"><b>Definition:</b> <a href="webclient_8cpp_source.html#l00222">webclient.cpp:222</a></div></div>
+<div class="ttc" id="aclasssss_1_1WebClient_html_afc3b7a92568fbb1ea447918920ca266e"><div class="ttname"><a href="classsss_1_1WebClient.html#afc3b7a92568fbb1ea447918920ca266e">sss::WebClient::SetEndpoint</a></div><div class="ttdeci">void SetEndpoint(const std::string &amp;ep)</div><div class="ttdoc">Set endpoint:  &lt;proto&gt;://&lt;server&gt;:&lt;port&gt;</div><div class="ttdef"><b>Definition:</b> <a href="webclient_8cpp_source.html#l00192">webclient.cpp:192</a></div></div>
+<div class="ttc" id="aclasssss_1_1api_1_1S3Api_html_a1a4e05ac14390c7f42feef2c26e22031"><div class="ttname"><a href="classsss_1_1api_1_1S3Api.html#a1a4e05ac14390c7f42feef2c26e22031">sss::api::S3Api::Access</a></div><div class="ttdeci">const std::string &amp; Access() const</div><div class="ttdef"><b>Definition:</b> <a href="s3-api_8h_source.html#l00604">s3-api.h:604</a></div></div>
+<div class="ttc" id="aclasssss_1_1api_1_1S3Api_html_a3718745d3b940462ae9f3b78f773b3a6"><div class="ttname"><a href="classsss_1_1api_1_1S3Api.html#a3718745d3b940462ae9f3b78f773b3a6">sss::api::S3Api::Clear</a></div><div class="ttdeci">void Clear()</div><div class="ttdoc">Clear data and reset read and write functions.</div><div class="ttdef"><b>Definition:</b> <a href="s3-api_8h_source.html#l00224">s3-api.h:224</a></div></div>
+<div class="ttc" id="aclasssss_1_1api_1_1S3Api_html_a70f1068d07e1d4c1be164e0cb9328cc0"><div class="ttname"><a href="classsss_1_1api_1_1S3Api.html#a70f1068d07e1d4c1be164e0cb9328cc0">sss::api::S3Api::Endpoint</a></div><div class="ttdeci">const std::string &amp; Endpoint() const</div><div class="ttdef"><b>Definition:</b> <a href="s3-api_8h_source.html#l00608">s3-api.h:608</a></div></div>
+<div class="ttc" id="aclasssss_1_1api_1_1S3Api_html_acfffe29254323fb41231787a0afb7edc"><div class="ttname"><a href="classsss_1_1api_1_1S3Api.html#acfffe29254323fb41231787a0afb7edc">sss::api::S3Api::Secret</a></div><div class="ttdeci">const std::string &amp; Secret() const</div><div class="ttdef"><b>Definition:</b> <a href="s3-api_8h_source.html#l00606">s3-api.h:606</a></div></div>
+<div class="ttc" id="agroup__Sign_html_ga3ae8e18ef70752b7369fca66c40c526b"><div class="ttname"><a href="group__Sign.html#ga3ae8e18ef70752b7369fca66c40c526b">sss::SignHeaders</a></div><div class="ttdeci">Headers SignHeaders(const ComputeSignatureConfig &amp;cfg)</div><div class="ttdoc">Sign headers.</div><div class="ttdef"><b>Definition:</b> <a href="aws__sign_8cpp_source.html#l00313">aws_sign.cpp:313</a></div></div>
+<div class="ttc" id="agroup__Types_html_ga715f63ab4ed0dae42d3337ff0a29d5d3"><div class="ttname"><a href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">sss::Headers</a></div><div class="ttdeci">Map Headers</div><div class="ttdoc">HTTP headers.</div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00056">common.h:56</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1api_1_1S3Api.html#a1a4e05ac14390c7f42feef2c26e22031">Access()</a>, <a class="el" href="classsss_1_1api_1_1S3Api.html#a3718745d3b940462ae9f3b78f773b3a6">Clear()</a>, <a class="el" href="classsss_1_1api_1_1S3Api.html#a70f1068d07e1d4c1be164e0cb9328cc0">Endpoint()</a>, <a class="el" href="structsss_1_1ComputeSignatureConfig.html#a8b7c502fa573fc0479c5355a7dc1da89">sss::ComputeSignatureConfig::payloadHash</a>, <a class="el" href="classsss_1_1api_1_1S3Api.html#acfffe29254323fb41231787a0afb7edc">Secret()</a>, <a class="el" href="classsss_1_1WebClient.html#afc3b7a92568fbb1ea447918920ca266e">sss::WebClient::SetEndpoint()</a>, <a class="el" href="classsss_1_1WebClient.html#a75890c14fbe4a4bbac61718a4f3c064d">sss::WebClient::SetHeaders()</a>, <a class="el" href="classsss_1_1WebClient.html#af6233ffd7b294e1e7e606e838dd44e9e">sss::WebClient::SetMethod()</a>, <a class="el" href="classsss_1_1WebClient.html#a12b5db6b8c667024557ab58059d39994">sss::WebClient::SetPath()</a>, <a class="el" href="classsss_1_1WebClient.html#a9bf978d95b79728f6d60fc2bdb4fe546">sss::WebClient::SetReqParameters()</a>, and <a class="el" href="group__Sign.html#ga3ae8e18ef70752b7369fca66c40c526b">sss::SignHeaders()</a>.</p>
+<p class="reference">References <a class="el" href="s3-api_8h_source.html#l00604">Access()</a>, <a class="el" href="s3-api_8h_source.html#l00224">Clear()</a>, <a class="el" href="s3-api_8h_source.html#l00608">Endpoint()</a>, <a class="el" href="aws__sign_8h_source.html#l00058">sss::ComputeSignatureConfig::payloadHash</a>, <a class="el" href="s3-api_8h_source.html#l00606">Secret()</a>, <a class="el" href="webclient_8cpp_source.html#l00192">sss::WebClient::SetEndpoint()</a>, <a class="el" href="webclient_8cpp_source.html#l00202">sss::WebClient::SetHeaders()</a>, <a class="el" href="webclient_8cpp_source.html#l00222">sss::WebClient::SetMethod()</a>, <a class="el" href="webclient_8cpp_source.html#l00197">sss::WebClient::SetPath()</a>, <a class="el" href="webclient_8cpp_source.html#l00217">sss::WebClient::SetReqParameters()</a>, and <a class="el" href="aws__sign_8cpp_source.html#l00313">sss::SignHeaders()</a>.</p>
 <div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-3-summary" class="dynsummary" style="display:block;">
@@ -665,11 +677,13 @@ Example</h1>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="bucket_8cpp_source.html#l00059">59</a> of file <a class="el" href="bucket_8cpp_source.html">bucket.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                                                                        {</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;  <a class="code" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send</a>({.method = <span class="stringliteral">&quot;PUT&quot;</span>, .bucket = bucket, .headers = headers});</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
+<p class="reference">References <a class="el" href="s3-api_8h_source.html#l00237">Send()</a>.</p>
 <div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-5-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-5-summary" class="dynsummary" style="display:block;">
@@ -728,6 +742,8 @@ Example</h1>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="multipart__upload_8cpp_source.html#l00190">190</a> of file <a class="el" href="multipart__upload_8cpp_source.html">multipart_upload.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;                                                       {</div>
 <div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;  <span class="keywordflow">if</span> (partSize &gt; 0)</div>
 <div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    headers.insert({<span class="stringliteral">&quot;x-amz-part-size&quot;</span>, to_string(partSize)});</div>
@@ -740,9 +756,9 @@ Example</h1>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">string</span> xml = webClient_.<a class="code" href="classsss_1_1WebClient.html#ac9e82fc4b56b142d91f9b104f5266f91">GetContentText</a>();</div>
 <div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="group__Parsing.html#gacf486071ed8bd3e6f76fe9ee23639bde">XMLTag</a>(xml, <span class="stringliteral">&quot;uploadId&quot;</span>);</div>
 <div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;}</div>
-<div class="ttc" id="aclasssss_1_1WebClient_html_ac9e82fc4b56b142d91f9b104f5266f91"><div class="ttname"><a href="classsss_1_1WebClient.html#ac9e82fc4b56b142d91f9b104f5266f91">sss::WebClient::GetContentText</a></div><div class="ttdeci">std::string GetContentText() const</div><div class="ttdoc">Get response body as text.</div><div class="ttdef"><b>Definition:</b> webclient.cpp:432</div></div>
+<div class="ttc" id="aclasssss_1_1WebClient_html_ac9e82fc4b56b142d91f9b104f5266f91"><div class="ttname"><a href="classsss_1_1WebClient.html#ac9e82fc4b56b142d91f9b104f5266f91">sss::WebClient::GetContentText</a></div><div class="ttdeci">std::string GetContentText() const</div><div class="ttdoc">Get response body as text.</div><div class="ttdef"><b>Definition:</b> <a href="webclient_8cpp_source.html#l00432">webclient.cpp:432</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1WebClient.html#ac9e82fc4b56b142d91f9b104f5266f91">sss::WebClient::GetContentText()</a>, <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>, and <a class="el" href="group__Parsing.html#gacf486071ed8bd3e6f76fe9ee23639bde">sss::XMLTag()</a>.</p>
+<p class="reference">References <a class="el" href="webclient_8cpp_source.html#l00432">sss::WebClient::GetContentText()</a>, <a class="el" href="s3-api_8h_source.html#l00237">Send()</a>, and <a class="el" href="group__Parsing.html#gacf486071ed8bd3e6f76fe9ee23639bde">sss::XMLTag()</a>.</p>
 <div id="dynsection-6" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-6-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-6-summary" class="dynsummary" style="display:block;">
@@ -788,11 +804,13 @@ Example</h1>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="bucket_8cpp_source.html#l00064">64</a> of file <a class="el" href="bucket_8cpp_source.html">bucket.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                                                                        {</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;  <a class="code" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send</a>({.method = <span class="stringliteral">&quot;DELETE&quot;</span>, .bucket = bucket, .headers = headers});</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
+<p class="reference">References <a class="el" href="s3-api_8h_source.html#l00237">Send()</a>.</p>
 <div id="dynsection-7" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-7-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-7-summary" class="dynsummary" style="display:block;">
@@ -844,11 +862,13 @@ Example</h1>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="object_8cpp_source.html#l00180">180</a> of file <a class="el" href="object_8cpp_source.html">object.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;                                                 {</div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  <a class="code" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send</a>({.method = <span class="stringliteral">&quot;DELETE&quot;</span>, .bucket = bucket, .key = key, .headers = headers});</div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
+<p class="reference">References <a class="el" href="s3-api_8h_source.html#l00237">Send()</a>.</p>
 <div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-8-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-8-summary" class="dynsummary" style="display:block;">
@@ -883,6 +903,8 @@ Example</h1>
 </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>endpoint <a class="el" href="structsss_1_1URL.html" title="URL type.">URL</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="s3-api_8h_source.html#l00608">608</a> of file <a class="el" href="s3-api_8h_source.html">s3-api.h</a>.</p>
 <div class="fragment"><div class="line"><a name="l00608"></a><span class="lineno">  608</span>&#160;{ <span class="keywordflow">return</span> endpoint_; }</div>
 </div><!-- fragment --><div id="dynsection-9" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-9-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
@@ -918,6 +940,8 @@ Example</h1>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Acess Control Policy </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="structsss_1_1api_1_1AccessControlPolicy.html">AccessControlPolicy</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="bucket_8cpp_source.html#l00083">83</a> of file <a class="el" href="bucket_8cpp_source.html">bucket.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;                                                            {</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="keyword">const</span> <span class="keyword">auto</span> &amp;c =</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;      <a class="code" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send</a>({.method = <span class="stringliteral">&quot;GET&quot;</span>, .bucket = bucket, .params = {{<span class="stringliteral">&quot;acl&quot;</span>, <span class="stringliteral">&quot;&quot;</span>}}})</div>
@@ -925,7 +949,7 @@ Example</h1>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <span class="keywordflow">return</span> ParseACL(c);</div>
 <div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1WebClient.html#ac9e82fc4b56b142d91f9b104f5266f91">sss::WebClient::GetContentText()</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
+<p class="reference">References <a class="el" href="webclient_8cpp_source.html#l00432">sss::WebClient::GetContentText()</a>, and <a class="el" href="s3-api_8h_source.html#l00237">Send()</a>.</p>
 <div id="dynsection-10" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-10-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-10-summary" class="dynsummary" style="display:block;">
@@ -1004,6 +1028,8 @@ Example</h1>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="object_8cpp_source.html#l00156">156</a> of file <a class="el" href="object_8cpp_source.html">object.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;                                           {</div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160; </div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;  FILE *out = !filesystem::exists(fileName) ? fopen(fileName.c_str(), <span class="stringliteral">&quot;wb&quot;</span>)</div>
@@ -1023,14 +1049,14 @@ Example</h1>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;  fclose(out);</div>
 <div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;  <a class="code" href="group__ErrorHandling.html#ga781648957bfce0bbc86cbdbff94e28a6">HandleError</a>(webClient_);</div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;}</div>
-<div class="ttc" id="aclasssss_1_1WebClient_html_a002876073b3869a9b9a9d709d14f1d7e"><div class="ttname"><a href="classsss_1_1WebClient.html#a002876073b3869a9b9a9d709d14f1d7e">sss::WebClient::SetWriteFunction</a></div><div class="ttdeci">bool SetWriteFunction(WriteFunction f, void *userData)</div><div class="ttdef"><b>Definition:</b> webclient.cpp:278</div></div>
-<div class="ttc" id="aclasssss_1_1WebClient_html_aa1d7484f0e09242ce53b24f9648ce50e"><div class="ttname"><a href="classsss_1_1WebClient.html#aa1d7484f0e09242ce53b24f9648ce50e">sss::WebClient::Send</a></div><div class="ttdeci">bool Send()</div><div class="ttdef"><b>Definition:</b> webclient.cpp:165</div></div>
-<div class="ttc" id="aclasssss_1_1api_1_1S3Api_html_a840772746fbb0a79c161037da7b24a31"><div class="ttname"><a href="classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31">sss::api::S3Api::Config</a></div><div class="ttdeci">WebClient &amp; Config(const SendParams &amp;p)</div><div class="ttdoc">[WebClient::Config]</div><div class="ttdef"><b>Definition:</b> s3-api.cpp:43</div></div>
+<div class="ttc" id="aclasssss_1_1WebClient_html_a002876073b3869a9b9a9d709d14f1d7e"><div class="ttname"><a href="classsss_1_1WebClient.html#a002876073b3869a9b9a9d709d14f1d7e">sss::WebClient::SetWriteFunction</a></div><div class="ttdeci">bool SetWriteFunction(WriteFunction f, void *userData)</div><div class="ttdef"><b>Definition:</b> <a href="webclient_8cpp_source.html#l00278">webclient.cpp:278</a></div></div>
+<div class="ttc" id="aclasssss_1_1WebClient_html_aa1d7484f0e09242ce53b24f9648ce50e"><div class="ttname"><a href="classsss_1_1WebClient.html#aa1d7484f0e09242ce53b24f9648ce50e">sss::WebClient::Send</a></div><div class="ttdeci">bool Send()</div><div class="ttdef"><b>Definition:</b> <a href="webclient_8cpp_source.html#l00165">webclient.cpp:165</a></div></div>
+<div class="ttc" id="aclasssss_1_1api_1_1S3Api_html_a840772746fbb0a79c161037da7b24a31"><div class="ttname"><a href="classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31">sss::api::S3Api::Config</a></div><div class="ttdeci">WebClient &amp; Config(const SendParams &amp;p)</div><div class="ttdoc">[WebClient::Config]</div><div class="ttdef"><b>Definition:</b> <a href="s3-api_8cpp_source.html#l00043">s3-api.cpp:43</a></div></div>
 <div class="ttc" id="agroup__ErrorHandling_html_ga781648957bfce0bbc86cbdbff94e28a6"><div class="ttname"><a href="group__ErrorHandling.html#ga781648957bfce0bbc86cbdbff94e28a6">sss::HandleError</a></div><div class="ttdeci">void HandleError(const WebClient &amp;wc, const std::string &amp;prefix=&quot;&quot;)</div></div>
-<div class="ttc" id="agroup__Ranges_html_ga0aa7f3b15d2ebf9b597a1b5ba38ae8ac"><div class="ttname"><a href="group__Ranges.html#ga0aa7f3b15d2ebf9b597a1b5ba38ae8ac">sss::begin</a></div><div class="ttdeci">auto begin(const SplitRange &amp;sr)</div><div class="ttdoc">return iterator at start position</div><div class="ttdef"><b>Definition:</b> utility.h:168</div></div>
-<div class="ttc" id="agroup__Ranges_html_ga4f73053571587e79eb3db628f5e6ef99"><div class="ttname"><a href="group__Ranges.html#ga4f73053571587e79eb3db628f5e6ef99">sss::end</a></div><div class="ttdeci">auto end(const SplitRange &amp;sr)</div><div class="ttdoc">return iterator at end position</div><div class="ttdef"><b>Definition:</b> utility.h:170</div></div>
+<div class="ttc" id="agroup__Ranges_html_ga0aa7f3b15d2ebf9b597a1b5ba38ae8ac"><div class="ttname"><a href="group__Ranges.html#ga0aa7f3b15d2ebf9b597a1b5ba38ae8ac">sss::begin</a></div><div class="ttdeci">auto begin(const SplitRange &amp;sr)</div><div class="ttdoc">return iterator at start position</div><div class="ttdef"><b>Definition:</b> <a href="lib_2include_2utility_8h_source.html#l00168">utility.h:168</a></div></div>
+<div class="ttc" id="agroup__Ranges_html_ga4f73053571587e79eb3db628f5e6ef99"><div class="ttname"><a href="group__Ranges.html#ga4f73053571587e79eb3db628f5e6ef99">sss::end</a></div><div class="ttdeci">auto end(const SplitRange &amp;sr)</div><div class="ttdoc">return iterator at end position</div><div class="ttdef"><b>Definition:</b> <a href="lib_2include_2utility_8h_source.html#l00170">utility.h:170</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31">Config()</a>, <a class="el" href="classsss_1_1WebClient.html#aa1d7484f0e09242ce53b24f9648ce50e">sss::WebClient::Send()</a>, and <a class="el" href="classsss_1_1WebClient.html#a002876073b3869a9b9a9d709d14f1d7e">sss::WebClient::SetWriteFunction()</a>.</p>
+<p class="reference">References <a class="el" href="s3-api_8cpp_source.html#l00043">Config()</a>, <a class="el" href="webclient_8cpp_source.html#l00165">sss::WebClient::Send()</a>, and <a class="el" href="webclient_8cpp_source.html#l00278">sss::WebClient::SetWriteFunction()</a>.</p>
 <div id="dynsection-11" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-11-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-11-summary" class="dynsummary" style="display:block;">
@@ -1110,6 +1136,8 @@ Example</h1>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="object_8cpp_source.html#l00141">141</a> of file <a class="el" href="object_8cpp_source.html">object.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;                                       {</div>
 <div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160; </div>
 <div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="group__Ranges.html#ga4f73053571587e79eb3db628f5e6ef99">end</a> &gt; 0) {</div>
@@ -1121,9 +1149,9 @@ Example</h1>
 <div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;  <span class="keyword">const</span> <span class="keyword">auto</span> &amp;bytes = wc.<a class="code" href="classsss_1_1WebClient.html#a77a4e0190a4f207b969cb63b6ba38ccc">GetResponseBody</a>();</div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;  copy(bytes.begin(), bytes.end(), buffer + offset);</div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;}</div>
-<div class="ttc" id="aclasssss_1_1WebClient_html_a77a4e0190a4f207b969cb63b6ba38ccc"><div class="ttname"><a href="classsss_1_1WebClient.html#a77a4e0190a4f207b969cb63b6ba38ccc">sss::WebClient::GetResponseBody</a></div><div class="ttdeci">const std::vector&lt; char &gt; &amp; GetResponseBody() const</div><div class="ttdef"><b>Definition:</b> webclient.cpp:270</div></div>
+<div class="ttc" id="aclasssss_1_1WebClient_html_a77a4e0190a4f207b969cb63b6ba38ccc"><div class="ttname"><a href="classsss_1_1WebClient.html#a77a4e0190a4f207b969cb63b6ba38ccc">sss::WebClient::GetResponseBody</a></div><div class="ttdeci">const std::vector&lt; char &gt; &amp; GetResponseBody() const</div><div class="ttdef"><b>Definition:</b> <a href="webclient_8cpp_source.html#l00270">webclient.cpp:270</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1WebClient.html#a77a4e0190a4f207b969cb63b6ba38ccc">sss::WebClient::GetResponseBody()</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
+<p class="reference">References <a class="el" href="webclient_8cpp_source.html#l00270">sss::WebClient::GetResponseBody()</a>, and <a class="el" href="s3-api_8h_source.html#l00237">Send()</a>.</p>
 <div id="dynsection-12" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-12-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-12-summary" class="dynsummary" style="display:block;">
@@ -1203,6 +1231,8 @@ Example</h1>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="object_8cpp_source.html#l00124">124</a> of file <a class="el" href="object_8cpp_source.html">object.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;                                                   {</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="group__Ranges.html#ga4f73053571587e79eb3db628f5e6ef99">end</a> &gt; 0) {</div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;    headers.insert(</div>
@@ -1217,7 +1247,7 @@ Example</h1>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;  copy(bytes.begin(), bytes.end(), buffer.begin() + offset);</div>
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1WebClient.html#a77a4e0190a4f207b969cb63b6ba38ccc">sss::WebClient::GetResponseBody()</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
+<p class="reference">References <a class="el" href="webclient_8cpp_source.html#l00270">sss::WebClient::GetResponseBody()</a>, and <a class="el" href="s3-api_8h_source.html#l00237">Send()</a>.</p>
 <div id="dynsection-13" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-13-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-13-summary" class="dynsummary" style="display:block;">
@@ -1284,6 +1314,8 @@ Example</h1>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>char</code> array; <code>char</code> is the type used by <code>libcurl</code> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="object_8cpp_source.html#l00110">110</a> of file <a class="el" href="object_8cpp_source.html">object.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;                                                               {</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;  <span class="keywordflow">if</span> (<a class="code" href="group__Ranges.html#ga4f73053571587e79eb3db628f5e6ef99">end</a> &gt; 0) {</div>
@@ -1295,7 +1327,7 @@ Example</h1>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;  <span class="keywordflow">return</span> wc.<a class="code" href="classsss_1_1WebClient.html#a77a4e0190a4f207b969cb63b6ba38ccc">GetResponseBody</a>();</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1WebClient.html#a77a4e0190a4f207b969cb63b6ba38ccc">sss::WebClient::GetResponseBody()</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
+<p class="reference">References <a class="el" href="webclient_8cpp_source.html#l00270">sss::WebClient::GetResponseBody()</a>, and <a class="el" href="s3-api_8h_source.html#l00237">Send()</a>.</p>
 <div id="dynsection-14" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-14-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-14-summary" class="dynsummary" style="display:block;">
@@ -1343,6 +1375,8 @@ Example</h1>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>object size </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="s3-api_8cpp_source.html#l00073">73</a> of file <a class="el" href="s3-api_8cpp_source.html">s3-api.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;                                                                    {</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">bool</span> caseInsensitive = <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;  <span class="keywordflow">try</span> {</div>
@@ -1354,10 +1388,10 @@ Example</h1>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;    <span class="keywordflow">return</span> -1;</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  }</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;}</div>
-<div class="ttc" id="aclasssss_1_1api_1_1S3Api_html_abc84a71b9a88b81afaa353ad17a91d22"><div class="ttname"><a href="classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22">sss::api::S3Api::HeadObject</a></div><div class="ttdeci">Headers HeadObject(const std::string &amp;bucket, const std::string &amp;key, const Headers &amp;={{}})</div><div class="ttdef"><b>Definition:</b> object.cpp:186</div></div>
+<div class="ttc" id="aclasssss_1_1api_1_1S3Api_html_abc84a71b9a88b81afaa353ad17a91d22"><div class="ttname"><a href="classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22">sss::api::S3Api::HeadObject</a></div><div class="ttdeci">Headers HeadObject(const std::string &amp;bucket, const std::string &amp;key, const Headers &amp;={{}})</div><div class="ttdef"><b>Definition:</b> <a href="object_8cpp_source.html#l00186">object.cpp:186</a></div></div>
 <div class="ttc" id="agroup__Internal_html_gad39402e23f6ef63de04e903825a7271a"><div class="ttname"><a href="group__Internal.html#gad39402e23f6ef63de04e903825a7271a">sss::GetValue</a></div><div class="ttdeci">std::string GetValue(const std::map&lt; std::string, std::string &gt; &amp;map, const std::string &amp;rx, bool caseSensitive=true)</div><div class="ttdoc">Map key to value using regular expression.</div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="group__Internal.html#gad39402e23f6ef63de04e903825a7271a">sss::GetValue()</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22">HeadObject()</a>.</p>
+<p class="reference">References <a class="el" href="group__Internal.html#gad39402e23f6ef63de04e903825a7271a">sss::GetValue()</a>, and <a class="el" href="object_8cpp_source.html#l00186">HeadObject()</a>.</p>
 <div id="dynsection-15" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-15-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-15-summary" class="dynsummary" style="display:block;">
@@ -1392,11 +1426,13 @@ Example</h1>
 </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>response body </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="s3-api_8h_source.html#l00612">612</a> of file <a class="el" href="s3-api_8h_source.html">s3-api.h</a>.</p>
 <div class="fragment"><div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;                                                 {</div>
 <div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160;    <span class="keywordflow">return</span> webClient_.<a class="code" href="classsss_1_1WebClient.html#a77a4e0190a4f207b969cb63b6ba38ccc">GetResponseBody</a>();</div>
 <div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;  }</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1WebClient.html#a77a4e0190a4f207b969cb63b6ba38ccc">sss::WebClient::GetResponseBody()</a>.</p>
+<p class="reference">References <a class="el" href="webclient_8cpp_source.html#l00270">sss::WebClient::GetResponseBody()</a>.</p>
 <div id="dynsection-16" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-16-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-16-summary" class="dynsummary" style="display:block;">
@@ -1431,13 +1467,15 @@ Example</h1>
 </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>{header name, header value} map </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="s3-api_8h_source.html#l00616">616</a> of file <a class="el" href="s3-api_8h_source.html">s3-api.h</a>.</p>
 <div class="fragment"><div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;                                     {</div>
 <div class="line"><a name="l00617"></a><span class="lineno">  617</span>&#160;    <span class="keywordflow">return</span> <a class="code" href="group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5">HTTPHeaders</a>(webClient_.<a class="code" href="classsss_1_1WebClient.html#a42af351286f1fa68c3385d81f0bc2015">GetHeaderText</a>());</div>
 <div class="line"><a name="l00618"></a><span class="lineno">  618</span>&#160;  }</div>
-<div class="ttc" id="aclasssss_1_1WebClient_html_a42af351286f1fa68c3385d81f0bc2015"><div class="ttname"><a href="classsss_1_1WebClient.html#a42af351286f1fa68c3385d81f0bc2015">sss::WebClient::GetHeaderText</a></div><div class="ttdeci">std::string GetHeaderText() const</div><div class="ttdef"><b>Definition:</b> webclient.cpp:437</div></div>
+<div class="ttc" id="aclasssss_1_1WebClient_html_a42af351286f1fa68c3385d81f0bc2015"><div class="ttname"><a href="classsss_1_1WebClient.html#a42af351286f1fa68c3385d81f0bc2015">sss::WebClient::GetHeaderText</a></div><div class="ttdeci">std::string GetHeaderText() const</div><div class="ttdef"><b>Definition:</b> <a href="webclient_8cpp_source.html#l00437">webclient.cpp:437</a></div></div>
 <div class="ttc" id="agroup__Parsing_html_gaca9233a3e8a097605d9168bf860e93e5"><div class="ttname"><a href="group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5">sss::HTTPHeaders</a></div><div class="ttdeci">Headers HTTPHeaders(const std::string &amp;headers)</div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1WebClient.html#a42af351286f1fa68c3385d81f0bc2015">sss::WebClient::GetHeaderText()</a>, and <a class="el" href="group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5">sss::HTTPHeaders()</a>.</p>
+<p class="reference">References <a class="el" href="webclient_8cpp_source.html#l00437">sss::WebClient::GetHeaderText()</a>, and <a class="el" href="group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5">sss::HTTPHeaders()</a>.</p>
 <div id="dynsection-17" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-17-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-17-summary" class="dynsummary" style="display:block;">
@@ -1483,13 +1521,15 @@ Example</h1>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>HTTP headers as {http header name, value} map </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="bucket_8cpp_source.html#l00069">69</a> of file <a class="el" href="bucket_8cpp_source.html">bucket.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                                                                      {</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  <span class="keyword">const</span> <span class="keyword">auto</span> &amp;wc =</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;      <a class="code" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send</a>({.method = <span class="stringliteral">&quot;HEAD&quot;</span>, .bucket = bucket, .headers = headers});</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5">HTTPHeaders</a>(wc.GetContentText());</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1WebClient.html#ac9e82fc4b56b142d91f9b104f5266f91">sss::WebClient::GetContentText()</a>, <a class="el" href="group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5">sss::HTTPHeaders()</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
+<p class="reference">References <a class="el" href="webclient_8cpp_source.html#l00432">sss::WebClient::GetContentText()</a>, <a class="el" href="group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5">sss::HTTPHeaders()</a>, and <a class="el" href="s3-api_8h_source.html#l00237">Send()</a>.</p>
 <div id="dynsection-18" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-18-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-18-summary" class="dynsummary" style="display:block;">
@@ -1542,13 +1582,15 @@ Example</h1>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>HTTP headers as {http header name, value} map </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="object_8cpp_source.html#l00186">186</a> of file <a class="el" href="object_8cpp_source.html">object.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;                                                  {</div>
 <div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;  <span class="keyword">const</span> <span class="keyword">auto</span> &amp;wc = <a class="code" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send</a>(</div>
 <div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;      {.method = <span class="stringliteral">&quot;HEAD&quot;</span>, .bucket = bucket, .key = key, .headers = headers});</div>
 <div class="line"><a name="l00190"></a><span class="lineno">  190</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5">HTTPHeaders</a>(wc.GetHeaderText());</div>
 <div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1WebClient.html#a42af351286f1fa68c3385d81f0bc2015">sss::WebClient::GetHeaderText()</a>, <a class="el" href="group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5">sss::HTTPHeaders()</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
+<p class="reference">References <a class="el" href="webclient_8cpp_source.html#l00437">sss::WebClient::GetHeaderText()</a>, <a class="el" href="group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5">sss::HTTPHeaders()</a>, and <a class="el" href="s3-api_8h_source.html#l00237">Send()</a>.</p>
 <div id="dynsection-19" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-19-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-19-summary" class="dynsummary" style="display:block;">
@@ -1592,13 +1634,15 @@ Example</h1>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>bucket list </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="structsss_1_1api_1_1BucketInfo.html">BucketInfo</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="bucket_8cpp_source.html#l00076">76</a> of file <a class="el" href="bucket_8cpp_source.html">bucket.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                                                            {</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;  <span class="keyword">const</span> <span class="keyword">auto</span> &amp;wc = <a class="code" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send</a>({.method = <span class="stringliteral">&quot;GET&quot;</span>, .headers = headers});</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">string</span> &amp;c = wc.<a class="code" href="classsss_1_1WebClient.html#ac9e82fc4b56b142d91f9b104f5266f91">GetContentText</a>();</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;  <span class="keywordflow">return</span> ParseBuckets(wc.GetContentText());</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1WebClient.html#ac9e82fc4b56b142d91f9b104f5266f91">sss::WebClient::GetContentText()</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
+<p class="reference">References <a class="el" href="webclient_8cpp_source.html#l00432">sss::WebClient::GetContentText()</a>, and <a class="el" href="s3-api_8h_source.html#l00237">Send()</a>.</p>
 <div id="dynsection-21" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-21-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-21-summary" class="dynsummary" style="display:block;">
@@ -1658,6 +1702,8 @@ Example</h1>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>object list </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="structsss_1_1api_1_1S3Api_1_1ListObjectV2Result.html">ListObjectV2Result</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="object_8cpp_source.html#l00204">204</a> of file <a class="el" href="object_8cpp_source.html">object.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;                                                                       {</div>
 <div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;  <a class="code" href="group__Types.html#gadb51ebb99d8e67b505941f6d9230891c">Map</a> params;</div>
 <div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;  params[<span class="stringliteral">&quot;continuation_token&quot;</span>] = config.continuationToken;</div>
@@ -1673,9 +1719,9 @@ Example</h1>
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;                         .headers = headers});</div>
 <div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;  <span class="keywordflow">return</span> ParseObjects(webClient_.<a class="code" href="classsss_1_1WebClient.html#ac9e82fc4b56b142d91f9b104f5266f91">GetContentText</a>());</div>
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;}</div>
-<div class="ttc" id="agroup__Types_html_gadb51ebb99d8e67b505941f6d9230891c"><div class="ttname"><a href="group__Types.html#gadb51ebb99d8e67b505941f6d9230891c">sss::Map</a></div><div class="ttdeci">std::map&lt; std::string, std::string &gt; Map</div><div class="ttdoc">Base type for all dictionary types.</div><div class="ttdef"><b>Definition:</b> common.h:54</div></div>
+<div class="ttc" id="agroup__Types_html_gadb51ebb99d8e67b505941f6d9230891c"><div class="ttname"><a href="group__Types.html#gadb51ebb99d8e67b505941f6d9230891c">sss::Map</a></div><div class="ttdeci">std::map&lt; std::string, std::string &gt; Map</div><div class="ttdoc">Base type for all dictionary types.</div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00054">common.h:54</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1WebClient.html#ac9e82fc4b56b142d91f9b104f5266f91">sss::WebClient::GetContentText()</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
+<p class="reference">References <a class="el" href="webclient_8cpp_source.html#l00432">sss::WebClient::GetContentText()</a>, and <a class="el" href="s3-api_8h_source.html#l00237">Send()</a>.</p>
 <div id="dynsection-22" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-22-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-22-summary" class="dynsummary" style="display:block;">
@@ -1754,6 +1800,8 @@ Example</h1>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>ETag of uploaded object </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="object_8cpp_source.html#l00091">91</a> of file <a class="el" href="object_8cpp_source.html">object.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;                                                        {</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">size_t</span> fsize = size ? size : filesystem::file_size(fileName);</div>
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  headers.insert({<span class="stringliteral">&quot;content-length&quot;</span>, to_string(fsize)});</div>
@@ -1768,11 +1816,11 @@ Example</h1>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;  <a class="code" href="group__ErrorHandling.html#ga781648957bfce0bbc86cbdbff94e28a6">HandleError</a>(webClient_);</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="group__Parsing.html#ga020103649cb1ae997e00f10d72ad6acd">HTTPHeader</a>(webClient_.<a class="code" href="classsss_1_1WebClient.html#a42af351286f1fa68c3385d81f0bc2015">GetHeaderText</a>(), <span class="stringliteral">&quot;ETag&quot;</span>);</div>
 <div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;}</div>
-<div class="ttc" id="aclasssss_1_1WebClient_html_a93d66d3941f37ec425bcdf0eef3836e4"><div class="ttname"><a href="classsss_1_1WebClient.html#a93d66d3941f37ec425bcdf0eef3836e4">sss::WebClient::ErrorMsg</a></div><div class="ttdeci">std::string ErrorMsg() const</div><div class="ttdef"><b>Definition:</b> webclient.cpp:416</div></div>
-<div class="ttc" id="aclasssss_1_1WebClient_html_ad038e41cfc902f6e49754c52a9a71992"><div class="ttname"><a href="classsss_1_1WebClient.html#ad038e41cfc902f6e49754c52a9a71992">sss::WebClient::UploadFile</a></div><div class="ttdeci">bool UploadFile(const std::string &amp;fname, size_t fsize=0)</div><div class="ttdoc">Upload file.</div><div class="ttdef"><b>Definition:</b> webclient.cpp:294</div></div>
+<div class="ttc" id="aclasssss_1_1WebClient_html_a93d66d3941f37ec425bcdf0eef3836e4"><div class="ttname"><a href="classsss_1_1WebClient.html#a93d66d3941f37ec425bcdf0eef3836e4">sss::WebClient::ErrorMsg</a></div><div class="ttdeci">std::string ErrorMsg() const</div><div class="ttdef"><b>Definition:</b> <a href="webclient_8cpp_source.html#l00416">webclient.cpp:416</a></div></div>
+<div class="ttc" id="aclasssss_1_1WebClient_html_ad038e41cfc902f6e49754c52a9a71992"><div class="ttname"><a href="classsss_1_1WebClient.html#ad038e41cfc902f6e49754c52a9a71992">sss::WebClient::UploadFile</a></div><div class="ttdeci">bool UploadFile(const std::string &amp;fname, size_t fsize=0)</div><div class="ttdoc">Upload file.</div><div class="ttdef"><b>Definition:</b> <a href="webclient_8cpp_source.html#l00294">webclient.cpp:294</a></div></div>
 <div class="ttc" id="agroup__Parsing_html_ga020103649cb1ae997e00f10d72ad6acd"><div class="ttname"><a href="group__Parsing.html#ga020103649cb1ae997e00f10d72ad6acd">sss::HTTPHeader</a></div><div class="ttdeci">std::string HTTPHeader(const std::string &amp;headers, const std::string &amp;header)</div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31">Config()</a>, <a class="el" href="classsss_1_1WebClient.html#a93d66d3941f37ec425bcdf0eef3836e4">sss::WebClient::ErrorMsg()</a>, <a class="el" href="classsss_1_1WebClient.html#a42af351286f1fa68c3385d81f0bc2015">sss::WebClient::GetHeaderText()</a>, <a class="el" href="group__Parsing.html#ga020103649cb1ae997e00f10d72ad6acd">sss::HTTPHeader()</a>, and <a class="el" href="classsss_1_1WebClient.html#aac358c3660f8efeaa8d66186c3f95a7e">sss::WebClient::UploadFile()</a>.</p>
+<p class="reference">References <a class="el" href="s3-api_8cpp_source.html#l00043">Config()</a>, <a class="el" href="webclient_8cpp_source.html#l00416">sss::WebClient::ErrorMsg()</a>, <a class="el" href="webclient_8cpp_source.html#l00437">sss::WebClient::GetHeaderText()</a>, <a class="el" href="group__Parsing.html#ga020103649cb1ae997e00f10d72ad6acd">sss::HTTPHeader()</a>, and <a class="el" href="webclient_8cpp_source.html#l00331">sss::WebClient::UploadFile()</a>.</p>
 <div id="dynsection-23" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-23-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-23-summary" class="dynsummary" style="display:block;">
@@ -1927,6 +1975,8 @@ Example</h1>
 </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>secret token </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="s3-api_8h_source.html#l00606">606</a> of file <a class="el" href="s3-api_8h_source.html">s3-api.h</a>.</p>
 <div class="fragment"><div class="line"><a name="l00606"></a><span class="lineno">  606</span>&#160;{ <span class="keywordflow">return</span> secret_; }</div>
 </div><!-- fragment --><div id="dynsection-24" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-24-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
@@ -1977,6 +2027,8 @@ Example</h1>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="s3-api_8h_source.html#l00237">237</a> of file <a class="el" href="s3-api_8h_source.html">s3-api.h</a>.</p>
 <div class="fragment"><div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;                                             {</div>
 <div class="line"><a name="l00239"></a><span class="lineno">  239</span>&#160;    <a class="code" href="classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31">Config</a>(p);</div>
 <div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;    <span class="keywordflow">if</span> (ToLower(p.method) == <span class="stringliteral">&quot;put&quot;</span>) {</div>
@@ -1999,12 +2051,12 @@ Example</h1>
 <div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;    <a class="code" href="group__ErrorHandling.html#ga781648957bfce0bbc86cbdbff94e28a6">HandleError</a>(webClient_);</div>
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;    <span class="keywordflow">return</span> webClient_;</div>
 <div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;  }</div>
-<div class="ttc" id="aclasssss_1_1WebClient_html_a51ce0ecf6487b6a43072643fe4f4cb4e"><div class="ttname"><a href="classsss_1_1WebClient.html#a51ce0ecf6487b6a43072643fe4f4cb4e">sss::WebClient::SetPostData</a></div><div class="ttdeci">void SetPostData(const std::string &amp;data)</div><div class="ttdef"><b>Definition:</b> webclient.cpp:261</div></div>
-<div class="ttc" id="aclasssss_1_1WebClient_html_a7dfd984b33a29686fb0355b65b620e99"><div class="ttname"><a href="classsss_1_1WebClient.html#a7dfd984b33a29686fb0355b65b620e99">sss::WebClient::SetUrlEncodedPostData</a></div><div class="ttdeci">void SetUrlEncodedPostData(const Map &amp;postData)</div><div class="ttdef"><b>Definition:</b> webclient.cpp:249</div></div>
-<div class="ttc" id="aclasssss_1_1WebClient_html_ae7b1f77bd4ae44585f2d49ea493bdcc5"><div class="ttname"><a href="classsss_1_1WebClient.html#ae7b1f77bd4ae44585f2d49ea493bdcc5">sss::WebClient::UploadDataFromBuffer</a></div><div class="ttdeci">bool UploadDataFromBuffer(const char *data, size_t offset, size_t size)</div><div class="ttdoc">Upload data from memory buffer.</div><div class="ttdef"><b>Definition:</b> webclient.cpp:314</div></div>
+<div class="ttc" id="aclasssss_1_1WebClient_html_a51ce0ecf6487b6a43072643fe4f4cb4e"><div class="ttname"><a href="classsss_1_1WebClient.html#a51ce0ecf6487b6a43072643fe4f4cb4e">sss::WebClient::SetPostData</a></div><div class="ttdeci">void SetPostData(const std::string &amp;data)</div><div class="ttdef"><b>Definition:</b> <a href="webclient_8cpp_source.html#l00261">webclient.cpp:261</a></div></div>
+<div class="ttc" id="aclasssss_1_1WebClient_html_a7dfd984b33a29686fb0355b65b620e99"><div class="ttname"><a href="classsss_1_1WebClient.html#a7dfd984b33a29686fb0355b65b620e99">sss::WebClient::SetUrlEncodedPostData</a></div><div class="ttdeci">void SetUrlEncodedPostData(const Map &amp;postData)</div><div class="ttdef"><b>Definition:</b> <a href="webclient_8cpp_source.html#l00249">webclient.cpp:249</a></div></div>
+<div class="ttc" id="aclasssss_1_1WebClient_html_ae7b1f77bd4ae44585f2d49ea493bdcc5"><div class="ttname"><a href="classsss_1_1WebClient.html#ae7b1f77bd4ae44585f2d49ea493bdcc5">sss::WebClient::UploadDataFromBuffer</a></div><div class="ttdeci">bool UploadDataFromBuffer(const char *data, size_t offset, size_t size)</div><div class="ttdoc">Upload data from memory buffer.</div><div class="ttdef"><b>Definition:</b> <a href="webclient_8cpp_source.html#l00314">webclient.cpp:314</a></div></div>
 <div class="ttc" id="agroup__Internal_html_ga2b8b08c2a4994a87377d83ccfa9a6a53"><div class="ttname"><a href="group__Internal.html#ga2b8b08c2a4994a87377d83ccfa9a6a53">sss::ParseParams</a></div><div class="ttdeci">Parameters ParseParams(std::string s)</div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31">Config()</a>, <a class="el" href="group__Internal.html#ga2b8b08c2a4994a87377d83ccfa9a6a53">sss::ParseParams()</a>, <a class="el" href="classsss_1_1WebClient.html#aa1d7484f0e09242ce53b24f9648ce50e">sss::WebClient::Send()</a>, <a class="el" href="classsss_1_1WebClient.html#a51ce0ecf6487b6a43072643fe4f4cb4e">sss::WebClient::SetPostData()</a>, <a class="el" href="classsss_1_1WebClient.html#a7dfd984b33a29686fb0355b65b620e99">sss::WebClient::SetUrlEncodedPostData()</a>, <a class="el" href="classsss_1_1WebClient.html#ae7b1f77bd4ae44585f2d49ea493bdcc5">sss::WebClient::UploadDataFromBuffer()</a>, and <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#af99ea89f2e18e4f3c86e919223e98bce">sss::api::S3Api::SendParams::urlEncodePostParams</a>.</p>
+<p class="reference">References <a class="el" href="s3-api_8cpp_source.html#l00043">Config()</a>, <a class="el" href="group__Internal.html#ga2b8b08c2a4994a87377d83ccfa9a6a53">sss::ParseParams()</a>, <a class="el" href="webclient_8cpp_source.html#l00165">sss::WebClient::Send()</a>, <a class="el" href="webclient_8cpp_source.html#l00261">sss::WebClient::SetPostData()</a>, <a class="el" href="webclient_8cpp_source.html#l00249">sss::WebClient::SetUrlEncodedPostData()</a>, <a class="el" href="webclient_8cpp_source.html#l00314">sss::WebClient::UploadDataFromBuffer()</a>, and <a class="el" href="s3-api_8h_source.html#l00179">sss::api::S3Api::SendParams::urlEncodePostParams</a>.</p>
 <div id="dynsection-25" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-25-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-25-summary" class="dynsummary" style="display:block;">
@@ -2092,14 +2144,16 @@ Example</h1>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="s3-api_8h_source.html#l00279">279</a> of file <a class="el" href="s3-api_8h_source.html">s3-api.h</a>.</p>
 <div class="fragment"><div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;                                   {</div>
 <div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;    webClient_.<a class="code" href="classsss_1_1WebClient.html#a002876073b3869a9b9a9d709d14f1d7e">SetWriteFunction</a>(receiveFun, receiveUserData);</div>
 <div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;    webClient_.<a class="code" href="classsss_1_1WebClient.html#a88dbcc61562e84aa9ebf1eabf887ac28">SetReadFunction</a>(sendFun, sendUserData);</div>
 <div class="line"><a name="l00284"></a><span class="lineno">  284</span>&#160;    <a class="code" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send</a>(params);</div>
 <div class="line"><a name="l00285"></a><span class="lineno">  285</span>&#160;  }</div>
-<div class="ttc" id="aclasssss_1_1WebClient_html_a88dbcc61562e84aa9ebf1eabf887ac28"><div class="ttname"><a href="classsss_1_1WebClient.html#a88dbcc61562e84aa9ebf1eabf887ac28">sss::WebClient::SetReadFunction</a></div><div class="ttdeci">bool SetReadFunction(ReadFunction f, void *userData)</div><div class="ttdef"><b>Definition:</b> webclient.cpp:286</div></div>
+<div class="ttc" id="aclasssss_1_1WebClient_html_a88dbcc61562e84aa9ebf1eabf887ac28"><div class="ttname"><a href="classsss_1_1WebClient.html#a88dbcc61562e84aa9ebf1eabf887ac28">sss::WebClient::SetReadFunction</a></div><div class="ttdeci">bool SetReadFunction(ReadFunction f, void *userData)</div><div class="ttdef"><b>Definition:</b> <a href="webclient_8cpp_source.html#l00286">webclient.cpp:286</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>, <a class="el" href="classsss_1_1WebClient.html#a88dbcc61562e84aa9ebf1eabf887ac28">sss::WebClient::SetReadFunction()</a>, and <a class="el" href="classsss_1_1WebClient.html#a002876073b3869a9b9a9d709d14f1d7e">sss::WebClient::SetWriteFunction()</a>.</p>
+<p class="reference">References <a class="el" href="s3-api_8h_source.html#l00237">Send()</a>, <a class="el" href="webclient_8cpp_source.html#l00286">sss::WebClient::SetReadFunction()</a>, and <a class="el" href="webclient_8cpp_source.html#l00278">sss::WebClient::SetWriteFunction()</a>.</p>
 <div id="dynsection-27" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-27-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-27-summary" class="dynsummary" style="display:block;">
@@ -2134,6 +2188,8 @@ Example</h1>
 </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>signing endpoint <a class="el" href="structsss_1_1URL.html" title="URL type.">URL</a> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="s3-api_8h_source.html#l00610">610</a> of file <a class="el" href="s3-api_8h_source.html">s3-api.h</a>.</p>
 <div class="fragment"><div class="line"><a name="l00610"></a><span class="lineno">  610</span>&#160;{ <span class="keywordflow">return</span> signingEndpoint_; }</div>
 </div><!-- fragment --><div id="dynsection-28" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-28-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
@@ -2168,6 +2224,8 @@ Example</h1>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if bucket exist, <code>false</code> otherwise </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="bucket_8cpp_source.html#l00049">49</a> of file <a class="el" href="bucket_8cpp_source.html">bucket.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;                                           {</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="keywordflow">try</span> {</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    <a class="code" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send</a>({.method = <span class="stringliteral">&quot;GET&quot;</span>, .bucket = bucket, .signUrl = <a class="code" href="classsss_1_1api_1_1S3Api.html#ac8625078c491207079abda2a7732ecb1">SigningEndpoint</a>()});</div>
@@ -2176,9 +2234,9 @@ Example</h1>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;  }</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;}</div>
-<div class="ttc" id="aclasssss_1_1api_1_1S3Api_html_ac8625078c491207079abda2a7732ecb1"><div class="ttname"><a href="classsss_1_1api_1_1S3Api.html#ac8625078c491207079abda2a7732ecb1">sss::api::S3Api::SigningEndpoint</a></div><div class="ttdeci">const std::string &amp; SigningEndpoint() const</div><div class="ttdef"><b>Definition:</b> s3-api.h:610</div></div>
+<div class="ttc" id="aclasssss_1_1api_1_1S3Api_html_ac8625078c491207079abda2a7732ecb1"><div class="ttname"><a href="classsss_1_1api_1_1S3Api.html#ac8625078c491207079abda2a7732ecb1">sss::api::S3Api::SigningEndpoint</a></div><div class="ttdeci">const std::string &amp; SigningEndpoint() const</div><div class="ttdef"><b>Definition:</b> <a href="s3-api_8h_source.html#l00610">s3-api.h:610</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>, <a class="el" href="classsss_1_1api_1_1S3Api.html#ac8625078c491207079abda2a7732ecb1">SigningEndpoint()</a>, and <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a912d3c331657a12c08c2377d3ca4576a">sss::api::S3Api::SendParams::signUrl</a>.</p>
+<p class="reference">References <a class="el" href="s3-api_8h_source.html#l00237">Send()</a>, <a class="el" href="s3-api_8h_source.html#l00610">SigningEndpoint()</a>, and <a class="el" href="s3-api_8h_source.html#l00176">sss::api::S3Api::SendParams::signUrl</a>.</p>
 <div id="dynsection-29" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-29-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-29-summary" class="dynsummary" style="display:block;">
@@ -2223,6 +2281,8 @@ Example</h1>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if key exists, <code>false</code> otherwise </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="object_8cpp_source.html#l00194">194</a> of file <a class="el" href="object_8cpp_source.html">object.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;                                                                    {</div>
 <div class="line"><a name="l00195"></a><span class="lineno">  195</span>&#160;  <span class="keywordflow">try</span> {</div>
 <div class="line"><a name="l00196"></a><span class="lineno">  196</span>&#160;    <a class="code" href="classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22">HeadObject</a>(bucket, key);</div>
@@ -2232,7 +2292,7 @@ Example</h1>
 <div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;  }</div>
 <div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22">HeadObject()</a>.</p>
+<p class="reference">References <a class="el" href="object_8cpp_source.html#l00186">HeadObject()</a>.</p>
 <div id="dynsection-30" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-30-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-30-summary" class="dynsummary" style="display:block;">
@@ -2347,6 +2407,8 @@ Example</h1>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>ETag of uploaded object </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="multipart__upload_8cpp_source.html#l00215">215</a> of file <a class="el" href="multipart__upload_8cpp_source.html">multipart_upload.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;                                                      {</div>
 <div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;  <span class="keywordflow">return</span> DoUploadFilePart(*<span class="keyword">this</span>, file, offset, size, bucket, key, uid, partNum,</div>
 <div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;                          1, mode, maxRetries, headers, payloadHash);</div>
@@ -2437,6 +2499,8 @@ Example</h1>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>etag </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="multipart__upload_8cpp_source.html#l00206">206</a> of file <a class="el" href="multipart__upload_8cpp_source.html">multipart_upload.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;                                                  {</div>
 <div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;  <span class="keywordflow">return</span> DoUploadPart(*<span class="keyword">this</span>, bucket, key, data, uid, partNum, size, 1,</div>
 <div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;                      maxRetries, headers, payloadHash);</div>
@@ -2445,11 +2509,11 @@ Example</h1>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/home/ugovaretto/projects/uv-cpp/s3client/repo/lib/include/<a class="el" href="s3-api_8h.html">s3-api.h</a></li>
-<li>/home/ugovaretto/projects/uv-cpp/s3client/repo/lib/src/api/bucket.cpp</li>
-<li>/home/ugovaretto/projects/uv-cpp/s3client/repo/lib/src/api/multipart_upload.cpp</li>
-<li>/home/ugovaretto/projects/uv-cpp/s3client/repo/lib/src/api/object.cpp</li>
-<li>/home/ugovaretto/projects/uv-cpp/s3client/repo/lib/src/api/s3-api.cpp</li>
+<li>/home/ugovaretto/projects/uv-cpp/s3client/repo/lib/include/<a class="el" href="s3-api_8h_source.html">s3-api.h</a></li>
+<li>/home/ugovaretto/projects/uv-cpp/s3client/repo/lib/src/api/<a class="el" href="bucket_8cpp_source.html">bucket.cpp</a></li>
+<li>/home/ugovaretto/projects/uv-cpp/s3client/repo/lib/src/api/<a class="el" href="multipart__upload_8cpp_source.html">multipart_upload.cpp</a></li>
+<li>/home/ugovaretto/projects/uv-cpp/s3client/repo/lib/src/api/<a class="el" href="object_8cpp_source.html">object.cpp</a></li>
+<li>/home/ugovaretto/projects/uv-cpp/s3client/repo/lib/src/api/<a class="el" href="s3-api_8cpp_source.html">s3-api.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
