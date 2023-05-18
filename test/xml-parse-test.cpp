@@ -37,6 +37,12 @@
 #include <iostream>
 #include <iterator>
 
+#include "s3-api.h"
+namespace sss {
+namespace api {
+std::string GenerateAclXML(const AccessControlPolicy &);
+}
+} // namespace sss
 using namespace sss;
 using namespace std;
 
@@ -121,7 +127,31 @@ void PrintDOMToDict() {
     }
   }
 }
-
+static const char *ACL =
+    "<?xml version=\"1.0\" encoding=\"utf-8\"?><accesscontrolpolicy><"
+    "accesscontrollist><owner><displayname>"
+    "Owner</displayname><ownerid>Owner</"
+    "ownerid></"
+    "owner><grant><grantee><displayname>Me</"
+    "displayname><emailaddress>me@you.com</"
+    "emailaddress><id>ID</id><type>MyType</"
+    "type><uri>res://path</uri></"
+    "grantee><permission>Everything and "
+    "more</permission></grant></"
+    "accesscontrollist></accesscontrolpolicy>";
+void GenerateAclXMLTest() {
+  const api::AccessControlPolicy acl{
+      .ownerDisplayName = "Owner",
+      .ownerID = "Owner ID",
+      .grants = {{.grantee = {.displayName = "Me",
+                              .emailAddress = "me@you.com",
+                              .id = "ID",
+                              .xsiType = "MyType",
+                              .uri = "res://path"},
+                  .permission = "Everything and more"}}};
+  auto xml = api::GenerateAclXML(acl);
+  assert(xml == ACL);
+}
 int main(int, char **) {
   ParseXMLTagTest();
   cout << "XMLTagTest: Pass" << endl;
@@ -131,6 +161,8 @@ int main(int, char **) {
   cout << "ParseXMLTagPathTest: Pass" << endl;
   ParseXMLMultiPathTest();
   cout << "ParseXMLTagMultiPathTest: Pass" << endl;
+  GenerateAclXMLTest();
+  cout << "GenerateAclXMLTest: Pass" << endl;
   // PrintDOMToDict();
   return 0;
 }

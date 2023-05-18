@@ -44,6 +44,7 @@ namespace api {
 
 std::vector<BucketInfo> ParseBuckets(const std::string &xml);
 AccessControlPolicy ParseACL(const std::string &xml);
+std::string GenerateAclXML(const AccessControlPolicy &);
 
 //------------------------------------------------------------------------------
 bool S3Api::TestBucket(const string &bucket) {
@@ -87,5 +88,15 @@ AccessControlPolicy S3Api::GetBucketAcl(const string &bucket) {
   return ParseACL(c);
 }
 
+//------------------------------------------------------------------------------
+void S3Api::PutBucketAcl(const string &bucket, const AccessControlPolicy &acl) {
+  const string xml = GenerateAclXML(acl);
+  const auto &c = Send({.method = "PUT",
+                        .bucket = bucket,
+                        .params = {{"acl", ""}},
+                        .uploadData = xml.c_str(),
+                        .uploadDataSize = xml.size()})
+                      .GetContentText();
+}
 } // namespace api
 } // namespace sss

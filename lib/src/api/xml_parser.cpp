@@ -9,6 +9,91 @@ using namespace tinyxml2;
 namespace sss {
 namespace api {
 
+//-----------------------------------------------------------------------------
+// XML generator @todo expose externally
+//-----------------------------------------------------------------------------
+class XMLStream {
+public:
+  enum Move { UP, DOWN, REWIND };
+  void Up(int level = 1) {
+    if (!cur_) {
+      throw logic_error("Cannot pop, Null element");
+    }
+    if (!cur_->Parent()) {
+      throw logic_error("Cannot pop, Null parent");
+    }
+    for (; level; cur_ = cur_->Parent()->ToElement(), level--)
+      ;
+  }
+  void Down() { down_ = true; }
+
+  void Rewind() {
+    if (!cur_) {
+      return;
+    }
+    for (; cur_->Parent();
+         cur_ = cur_->Parent() ? cur_->Parent()->ToElement() : nullptr)
+      ;
+  }
+  XMLStream &InsertText(const std::string &text) {
+    cur_->SetText(text.c_str());
+    return *this;
+  }
+  XMLStream &Insert(const std::string &s) {
+    if (!cur_) {
+      cur_ = doc_.NewElement(s.c_str());
+      doc_.InsertFirstChild(cur_);
+      down_ = false;
+    } else {
+      auto e = cur_->InsertNewChildElement(s.c_str());
+      if (down_) {
+        cur_ = e;
+        down_ = false;
+      }
+    }
+    return *this;
+  }
+  XMLStream &Insert(Move a, int level = 1) {
+    switch (a) {
+    case UP:
+      Up(level);
+      break;
+    case DOWN:
+      Down();
+      break;
+    case REWIND:
+      Rewind();
+      break;
+    default:
+      break;
+    }
+    return *this;
+  }
+
+  XMLStream &operator[](const std::string &s) {
+    down_ = true;
+    return Insert(s);
+  }
+  XMLStream &operator[](Move a) { return Insert(a); }
+  XMLStream &operator[](std::pair<Move, int> s) {
+    return Insert(s.first, s.second);
+  }
+  XMLStream(XMLDocument &d) : doc_(d) {}
+  XMLStream &operator=(const std::string &s) {
+    InsertText(s);
+    Up();
+    return *this;
+  }
+
+  operator std::string() { return XMLToText(doc_, true, 0, 0); }
+
+  const XMLDocument &GetDocument() const { return doc_; }
+
+private:
+  XMLDocument &doc_;
+  XMLElement *cur_ = nullptr;
+  bool down_ = false;
+};
 //------------------------------------------------------------------------------
 std::vector<BucketInfo> ParseBuckets(const std::string &xml) {
   if (xml.empty())
@@ -176,122 +261,46 @@ AccessControlPolicy ParseACL(const std::string &xml) {
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-class XMLStream {
-public:
-  enum StackAction { POP, PUSH, REWIND };
-  void Pop(int level = 1) {
-    for (; level; cur_ = cur_->Parent()->ToElement(), level--)
-      ;
-  }
-  void Push() { push_ = true; }
-
-  void Rewind() {
-    if (!cur_) {
-      return;
-    }
-    for (; cur_->Parent();
-         cur_ = cur_->Parent() ? cur_->Parent()->ToElement() : nullptr)
-      ;
-  }
-  XMLStream &InsertText(const std::string &text) {
-    cur_->InsertNewText(text.c_str());
-    return *this;
-  }
-  XMLStream &Insert(const std::string &s) {
-    if (!cur_) {
-      cur_ = doc_.NewElement(s.c_str());
-    } else {
-      auto e = cur_->InsertNewChildElement(s.c_str());
-      if (push_) {
-        cur_ = e;
-        push_ = false;
-      }
-    }
-    return *this;
-  }
-  XMLStream &Insert(StackAction a, int level = 1) {
-    switch (a) {
-    case POP:
-      Pop(level);
-      break;
-    case PUSH:
-      Push();
-      break;
-    case REWIND:
-      Rewind();
-      break;
-    default:
-      break;
-    }
-    return *this;
-  }
-
-  XMLStream &operator[](const std::string &s) { return Insert(s); }
-  XMLStream &operator[](int i) {
-    switch (i) {
-    case 1:
-      Push();
-      break;
-    case 0:
-      Rewind();
-      break;
-    case -1:
-      Pop();
-      break;
-    default:
-      break;
-    }
-    return *this;
-  }
-  XMLStream &operator[](StackAction a) { return Insert(a); }
-  XMLStream &operator[](std::pair<StackAction, int> s) {
-    return Insert(s.first, s.second);
-  }
-  XMLStream(XMLDocument &d) : doc_(d) {}
-  XMLStream &operator=(const std::string &s) { return InsertText(s); }
-
-  operator std::string() { return XMLToText(doc_); }
-
-private:
-  XMLDocument &doc_;
-  XMLElement *cur_ = nullptr;
-  bool push_ = false;
-};
-
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-
 std::string GenerateAclXML(const AccessControlPolicy &acl) {
   XMLDocument doc;
   XMLStream os(doc);
   os["accesscontrolpolicy"]["accesscontrollist"];
+  const auto UP = XMLStream::Move::UP;
+  if (!acl.ownerDisplayName.empty() || !acl.ownerID.empty()) {
+    os["owner"];
+    if (!acl.ownerDisplayName.empty()) {
+      os["displayname"] = acl.ownerDisplayName;
+    }
+    if (!acl.ownerID.empty()) {
+      os["ownerid"] = acl.ownerDisplayName;
+    }
+  }
+  os[UP];
   for (const auto &g : acl.grants) {
     if (g.permission.empty()) {
       throw logic_error("Missing required field 'permission'");
     }
-    os["Grant"];
+    os["grant"];
     const Grant::Grantee &i = g.grantee;
-    const int UP = -1;
     if (!i.Empty()) {
       os["grantee"];
       if (!i.displayName.empty()) {
-        (os["displayname"] = i.displayName)[UP];
+        os["displayname"] = i.displayName;
       }
       if (!i.emailAddress.empty()) {
-        (os["emailaddress"] = i.emailAddress)[UP];
+        os["emailaddress"] = i.emailAddress;
       }
       if (!i.id.empty()) {
-        (os["id"] = i.id)[UP];
+        os["id"] = i.id;
       }
       if (!i.xsiType.empty()) {
-        (os["type"] = i.xsiType)[UP];
+        os["type"] = i.xsiType;
       }
       if (!i.uri.empty()) {
-        (os["uri"] = i.uri)[UP];
+        os["uri"] = i.uri;
       }
     }
     os[UP]["permission"] = g.permission;
-    os[UP];
   }
   return os;
 }

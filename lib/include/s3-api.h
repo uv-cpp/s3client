@@ -553,6 +553,13 @@ public:
   //                                 const std::string &key, const UploadId
   //                                 &uid, int max_parts);
 
+  /// Set Access Control Policy for bucket.
+  ///
+  /// \param[in] bucket bucket name
+  ///
+  /// \param[in] acl Acess Control Policy \see AccessControlPolicy
+  void PutBucketAcl(const std::string &bucket, const AccessControlPolicy &acl);
+
   /// Upload data to object by sending a \c PutObject request
   /// \param[in] bucket bucket name
   ///

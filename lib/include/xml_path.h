@@ -260,14 +260,19 @@ std::unordered_map<std::string, std::vector<std::string>> ExtractSubPaths(
 /// \param[in] doc XML document in \c tinyxml2 format
 ///
 /// \param[in] kv keyword => value map, keywords are replaced with values in
-/// translated text \param[in] header if \c true addx the \c <xml...> header
+/// translated text
+///
+/// \param[in] header if \c true addx the \c <xml...> header
+///
+/// \param[in] eol end of line separator, default is '\n', if '0' no EOL
+/// generated
 ///
 /// \param[in] indent indentation value
 ///
 /// \return XML text with keywords replaced with values specified in input map
-std::string XMLToText(const tinyxml2::XMLDocument &doc,
-                      std::unordered_map<std::string, std::string> kv = {},
-                      bool header = true, int indent = 2);
+std::string XMLToText(const tinyxml2::XMLDocument &doc, bool header = true,
+                      char eol_ = '\n', int indent = 2,
+                      std::unordered_map<std::string, std::string> kv = {});
 
 /// Create XML tree from path format and place it under
 /// passed element.

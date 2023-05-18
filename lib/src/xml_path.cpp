@@ -247,13 +247,15 @@ class ToTextVisitor : public XMLVisitor {
 public:
   bool VisitEnter(const XMLDocument &) {
     if (header_) {
-      os_ << "<?xml version=\"1.0\" encoding=\"utf-8\"?>" << '\n';
+      os_ << "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+      if (eol_) {
+        os_ << eol_;
+      }
     }
     return true;
   }
   bool VisitExit(const XMLDocument &) { return true; }
   bool VisitEnter(const XMLElement &e, const XMLAttribute *) {
-    indent_ += indentIncrement_;
     os_ << string(indent_, ' ') << '<' << e.Name();
     if (const XMLAttribute *a = e.FirstAttribute()) {
       os_ << ' ' << a->Name() << '=' << '"' << Map(a->Value()) << '"';
@@ -262,30 +264,41 @@ public:
       }
       os_ << ' ';
     }
-    os_ << '>' << '\n';
+    os_ << ">";
+    if (eol_) {
+      os_ << eol_;
+    }
+    indent_ += indentIncrement_;
     return true;
   }
   bool VisitExit(const XMLElement &e) {
     indent_ -= indentIncrement_;
-    os_ << string(indent_, ' ') << "</" << e.Name() << '>' << '\n';
+    os_ << string(indent_, ' ') << "</" << e.Name() << '>';
+    if (eol_) {
+      os_ << eol_;
+    }
     return true;
   }
   bool Visit(const XMLDeclaration &) { return true; }
   bool Visit(const XMLText &t) {
     indent_ += indentIncrement_;
-    os_ << string(indent_, ' ') << '<' << Map(t.Value()) << '>' << '\n';
+    os_ << string(indent_, ' ') << Map(t.Value());
+    if (eol_) {
+      os_ << eol_;
+    }
     indent_ -= indentIncrement_;
     return true;
   }
   bool Visit(const XMLComment &) { return true; }
   bool Visit(const XMLUnknown &) { return true; }
   string Text() const { return os_.str(); }
-  ToTextVisitor(bool header = true, int indentIncrement = 2)
-      : header_(header), indentIncrement_(indentIncrement) {}
+  ToTextVisitor(bool header = true, char eol = '\n', int indentIncrement = 2)
+      : header_(header), eol_(eol), indentIncrement_(indentIncrement) {}
 
   ToTextVisitor(unordered_map<string, string> keys, bool header = true,
-                int indentIncrement = 2)
-      : map_(keys), header_(header), indentIncrement_(indentIncrement) {}
+                char eol = '\n', int indentIncrement = 2)
+      : map_(keys), header_(header), eol_(eol),
+        indentIncrement_(indentIncrement) {}
 
 private:
   const string &Map(const string &k) { return map_.empty() ? k : map_.at(k); }
@@ -297,6 +310,7 @@ private:
   int indent_ = 0;
   ostringstream os_;
   bool caseInsesitive_ = true;
+  char eol_;
 };
 //-----------------------------------------------------------------------------
 // return all children of path with specific name
@@ -622,9 +636,9 @@ XMLElement *CreatePaths(XMLDocument &doc, const string &path,
   return e;
 }
 
-string XMLToText(const XMLDocument &doc, bool header, int indent,
+string XMLToText(const XMLDocument &doc, bool header, char eol, int indent,
                  unordered_map<string, string> kv) {
-  ToTextVisitor v(std::move(kv), header, indent);
+  ToTextVisitor v(std::move(kv), header, eol, indent);
   doc.Accept(&v);
   return v.Text();
 }
