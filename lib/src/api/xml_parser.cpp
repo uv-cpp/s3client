@@ -174,5 +174,117 @@ AccessControlPolicy ParseACL(const std::string &xml) {
   return res;
 }
 
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+class XMLStream {
+public:
+  enum StackAction { POP, PUSH, REWIND };
+  void Pop(int level = 1) {
+    for (; level; cur_ = cur_->Parent()->ToElement(), level--)
+      ;
+  }
+  void Push() { push_ = true; }
+
+  void Rewind() {
+    if (!cur_) {
+      return;
+    }
+    for (; cur_->Parent();
+         cur_ = cur_->Parent() ? cur_->Parent()->ToElement() : nullptr)
+      ;
+  }
+  XMLStream &InsertText(const std::string &text) {
+    cur_->InsertNewText(text.c_str());
+    return *this;
+  }
+  XMLStream &Insert(const std::string &s) {
+    if (!cur_) {
+      cur_ = doc_.NewElement(s.c_str());
+    } else {
+      auto e = cur_->InsertNewChildElement(s.c_str());
+      if (push_) {
+        cur_ = e;
+        push_ = false;
+      }
+    }
+    return *this;
+  }
+  XMLStream &Insert(StackAction a, int level = 1) {
+    switch (a) {
+    case POP:
+      Pop(level);
+      break;
+    case PUSH:
+      Push();
+      break;
+    case REWIND:
+      Rewind();
+      break;
+    default:
+      break;
+    }
+    return *this;
+  }
+
+  XMLStream &operator[](const std::string &s) { return Insert(s); }
+  XMLStream &operator[](int i) {
+    switch (i) {
+    case 1:
+      Push();
+      break;
+    case 0:
+      Rewind();
+      break;
+    case -1:
+      Pop();
+      break;
+    default:
+      break;
+    }
+    return *this;
+  }
+  XMLStream &operator[](StackAction a) { return Insert(a); }
+  XMLStream &operator[](std::pair<StackAction, int> s) {
+    return Insert(s.first, s.second);
+  }
+  XMLStream(XMLDocument &d) : doc_(d) {}
+  XMLStream &operator=(const std::string &s) { return InsertText(s); }
+
+  operator std::string() { return XMLToText(doc_); }
+
+private:
+  XMLDocument &doc_;
+  XMLElement *cur_ = nullptr;
+  bool push_ = false;
+};
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+
+std::string GenerateAclXML(const AccessControlPolicy &acl) {
+  XMLDocument doc;
+  XMLStream os(doc);
+  os["accesscontrolpolicy"]["accesscontrollist"];
+  for (const auto &i : acl.grants) {
+    os["Grant"];
+    if (!i.displayName.empty()) {
+      (os["grantee"]["displayname"] = i.displayName)[-1];
+    }
+    if (!i.emailAddress.empty()) {
+      (os["grantee"]["emailaddress"] = i.emailAddress)[-1];
+    }
+    if (!i.id.empty()) {
+      (os["grantee"]["id"] = i.id)[-1];
+    }
+    if (!i.xsiType.empty()) {
+      (os["grantee"]["type"] = i.xsiType)[-1];
+    }
+    if (!i.uri.empty()) {
+      (os["grantee"]["uri"] = i.uri)[-1];
+    }
+    os["permission"] = i
+  }
+  return os;
+}
 } // namespace api
 } // namespace sss

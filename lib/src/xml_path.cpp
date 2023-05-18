@@ -578,8 +578,9 @@ unordered_map<string, vector<string>> DOMToDict(const string &xml) {
 
 //-----------------------------------------------------------------------------
 // XML Generation
-XMLElement *CreatePath(XMLElement *n, deque<string> path,
+XMLElement *CreatePath(XMLElement *e, deque<string> path,
                        const string &text = "") {
+  XMLElement *n = e;
   while (!path.empty()) {
     n = n->InsertNewChildElement(path.front().c_str());
     path.pop_front();

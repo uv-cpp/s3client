@@ -46,7 +46,8 @@ namespace sss {
 namespace api {
 
 S3Api::ListObjectV2Result ParseObjects(const std::string &xml);
-
+AccessControlPolicy ParseACL(const std::string &xml);
+std::string GenerateAclXML(const AccessControlPolicy &acl);
 //------------------------------------------------------------------------------
 ETag S3Api::PutObject(const std::string &bucket, const std::string &key,
                       const CharArray &buffer, Headers headers,
@@ -219,5 +220,27 @@ S3Api::ListObjectV2Result S3Api::ListObjectsV2(const std::string &bucket,
   return ParseObjects(webClient_.GetContentText());
 }
 
+//------------------------------------------------------------------------------
+AccessControlPolicy S3Api::GetObjectAcl(const string &bucket,
+                                        const string &key) {
+  const auto &c = Send({.method = "GET",
+                        .bucket = bucket,
+                        .key = key,
+                        .params = {{"acl", ""}}})
+                      .GetContentText();
+  return ParseACL(c);
+}
+//------------------------------------------------------------------------------
+void S3Api::PutObjectAcl(const string &bucket, const string &key,
+                         const AccessControlPolicy &acl) {
+  const string xml = GenerateAclXML(acl);
+  const auto &c = Send({.method = "PUT",
+                        .bucket = bucket,
+                        .key = key,
+                        .params = {{"acl", ""}},
+                        .uploadData = xml.c_str(),
+                        .uploadDataSize = xml.size()})
+                      .GetContentText();
+}
 } // namespace api
 } // namespace sss

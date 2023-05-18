@@ -490,6 +490,12 @@ public:
                  size_t beginReadOffset = 0, size_t endReadOffset = 0,
                  Headers headers = {{}});
 
+  /// Return bucket's Access Control List
+  /// \param bucket bucket name
+  /// \param key key name
+  /// \return Acess Control Policy \see AccessControlPolicy
+  AccessControlPolicy GetObjectAcl(const std::string &bucket,
+                                   const std::string &key);
   /// Send \c HeadBucket request
   ///
   /// \param[in] bucket bucket name
@@ -572,6 +578,13 @@ public:
   ETag PutObject(const std::string &bucket, const std::string &key,
                  const char *buffer, size_t size, Headers headers = {{}},
                  const std::string &payloadHash = {});
+
+  /// Set Access Control Policy
+  /// \param bucket[in] bucket name
+  /// \param key[in] key name
+  /// \param acl[in] access control policy \see AccessControlPolicy
+  void PutObjectAcl(const std::string &bucket, const std::string &key,
+                    const AccessControlPolicy &acl);
 
   /// Upload part
   ///
