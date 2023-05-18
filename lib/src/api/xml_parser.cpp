@@ -165,10 +165,10 @@ AccessControlPolicy ParseACL(const std::string &xml) {
       }
       return it->second;
     };
-    res.permission = i.count("/permission") ? i.at("/permission") : "";
-    const Grantee g = {select("grantee/displayname"),
-                       select("grantee/emailaddress"), select("grantee/id"),
-                       select("grantee/type"), select("grantee/uri")};
+    const Grant g = {{select("grantee/displayname"),
+                      select("grantee/emailaddress"), select("grantee/id"),
+                      select("grantee/type"), select("grantee/uri")},
+                     select("/permission")};
     res.grants.push_back(g);
   }
   return res;
@@ -265,24 +265,33 @@ std::string GenerateAclXML(const AccessControlPolicy &acl) {
   XMLDocument doc;
   XMLStream os(doc);
   os["accesscontrolpolicy"]["accesscontrollist"];
-  for (const auto &i : acl.grants) {
+  for (const auto &g : acl.grants) {
+    if (g.permission.empty()) {
+      throw logic_error("Missing required field 'permission'");
+    }
     os["Grant"];
-    if (!i.displayName.empty()) {
-      (os["grantee"]["displayname"] = i.displayName)[-1];
+    const Grant::Grantee &i = g.grantee;
+    const int UP = -1;
+    if (!i.Empty()) {
+      os["grantee"];
+      if (!i.displayName.empty()) {
+        (os["displayname"] = i.displayName)[UP];
+      }
+      if (!i.emailAddress.empty()) {
+        (os["emailaddress"] = i.emailAddress)[UP];
+      }
+      if (!i.id.empty()) {
+        (os["id"] = i.id)[UP];
+      }
+      if (!i.xsiType.empty()) {
+        (os["type"] = i.xsiType)[UP];
+      }
+      if (!i.uri.empty()) {
+        (os["uri"] = i.uri)[UP];
+      }
     }
-    if (!i.emailAddress.empty()) {
-      (os["grantee"]["emailaddress"] = i.emailAddress)[-1];
-    }
-    if (!i.id.empty()) {
-      (os["grantee"]["id"] = i.id)[-1];
-    }
-    if (!i.xsiType.empty()) {
-      (os["grantee"]["type"] = i.xsiType)[-1];
-    }
-    if (!i.uri.empty()) {
-      (os["grantee"]["uri"] = i.uri)[-1];
-    }
-    os["permission"] = i
+    os[UP]["permission"] = g.permission;
+    os[UP];
   }
   return os;
 }

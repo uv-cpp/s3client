@@ -79,7 +79,10 @@ int main(int argc, char **argv) {
   try {
     S3Api s3(cfg.access, cfg.secret, cfg.url);
     auto accessPolicy = s3.GetBucketAcl(bucketName);
-    if (accessPolicy.permission != "FULL_CONTROL") {
+    if (accessPolicy.grants.empty()) {
+      throw logic_error("Empty grants list");
+    }
+    if (accessPolicy.grants.front().permission != "FULL_CONTROL") {
       throw logic_error("permission not equal to 'FULL_CONTROL'");
     }
     TestOutput(action, true, TEST_PREFIX);

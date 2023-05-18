@@ -75,12 +75,19 @@ struct ObjectInfo {
 
 /// XML -> C++ mapping of \c Gratee
 /// https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAcl.html
-struct Grantee {
-  std::string displayName;
-  std::string emailAddress;
-  std::string id;
-  std::string xsiType;
-  std::string uri;
+struct Grant {
+  struct Grantee {
+    std::string displayName;
+    std::string emailAddress;
+    std::string id;
+    std::string xsiType;
+    std::string uri;
+    bool Empty() const {
+      return uri.empty() && xsiType.empty() && id.empty() &&
+             emailAddress.empty() && displayName.empty();
+    }
+  } grantee;
+  std::string permission;
 };
 
 /// XML -> C++ mapping of \c AccessControlPolicy
@@ -88,8 +95,7 @@ struct Grantee {
 struct AccessControlPolicy {
   std::string ownerDisplayName;
   std::string ownerID;
-  std::vector<Grantee> grants;
-  std::string permission;
+  std::vector<Grant> grants;
 };
 //@todo
 // struct PartInfo {};
