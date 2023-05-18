@@ -73,7 +73,7 @@ struct ObjectInfo {
   std::string ownerID;
 };
 
-/// XML -> C++ mapping of \c Gratee
+/// XML -> C++ mapping of \c Grantee
 /// https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAcl.html
 struct Grant {
   struct Grantee {
@@ -559,7 +559,6 @@ public:
   ///
   /// \param[in] acl Acess Control Policy \see AccessControlPolicy
   void PutBucketAcl(const std::string &bucket, const AccessControlPolicy &acl);
-
   /// Upload data to object by sending a \c PutObject request
   /// \param[in] bucket bucket name
   ///
