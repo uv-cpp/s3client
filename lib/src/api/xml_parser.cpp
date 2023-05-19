@@ -13,7 +13,7 @@ namespace api {
 //-----------------------------------------------------------------------------
 // XML generator @todo expose externally
 //-----------------------------------------------------------------------------
-class XMLStream {
+class XMLOStream {
 public:
   enum MoveAction { UP, DOWN, REWIND };
   void Up(int level = 1) {
@@ -36,11 +36,11 @@ public:
          cur_ = cur_->Parent() ? cur_->Parent()->ToElement() : nullptr)
       ;
   }
-  XMLStream &InsertText(const std::string &text) {
+  XMLOStream &InsertText(const std::string &text) {
     cur_->SetText(text.c_str());
     return *this;
   }
-  XMLStream &Insert(const std::string &s) {
+  XMLOStream &Insert(const std::string &s) {
     if (!cur_) {
       cur_ = doc_.NewElement(s.c_str());
       doc_.InsertFirstChild(cur_);
@@ -54,7 +54,7 @@ public:
     }
     return *this;
   }
-  XMLStream &Move(MoveAction a, int level = 1) {
+  XMLOStream &Move(MoveAction a, int level = 1) {
     switch (a) {
     case UP:
       Up(level);
@@ -71,7 +71,7 @@ public:
     return *this;
   }
 
-  XMLStream &operator[](const std::string &s) {
+  XMLOStream &operator[](const std::string &s) {
     if (all_of(begin(s), end(s), [](auto c) { return c == '/'; })) {
       Up(s.size());
       return *this;
@@ -79,9 +79,9 @@ public:
     down_ = true;
     return Insert(s);
   }
-  XMLStream &operator[](MoveAction a) { return Move(a); }
-  XMLStream(XMLDocument &d) : doc_(d) {}
-  XMLStream &operator=(const std::string &s) {
+  XMLOStream &operator[](MoveAction a) { return Move(a); }
+  XMLOStream(XMLDocument &d) : doc_(d) {}
+  XMLOStream &operator=(const std::string &s) {
     InsertText(s);
     Up();
     return *this;
@@ -265,7 +265,7 @@ AccessControlPolicy ParseACL(const std::string &xml) {
 //-----------------------------------------------------------------------------
 std::string GenerateAclXML(const AccessControlPolicy &acl) {
   XMLDocument doc;
-  XMLStream os(doc);
+  XMLOStream os(doc);
   os["accesscontrolpolicy"]["accesscontrollist"];
   if (!acl.ownerDisplayName.empty() || !acl.ownerID.empty()) {
     os["owner"]; // <accesscontrolpolicy><accesscontrollist><owner>
