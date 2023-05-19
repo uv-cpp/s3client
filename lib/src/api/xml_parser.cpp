@@ -253,7 +253,7 @@ AccessControlPolicy ParseACL(const std::string &xml) {
     const Grant g = {{select("grantee/displayname"),
                       select("grantee/emailaddress"), select("grantee/id"),
                       select("grantee/type"), select("grantee/uri")},
-                     select("/permission")};
+                     select("permission")};
     res.grants.push_back(g);
   }
   return res;
