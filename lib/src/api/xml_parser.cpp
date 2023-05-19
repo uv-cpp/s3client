@@ -2,6 +2,7 @@
 #include "tinyxml2.h"
 #include "xml_path.h"
 #include <cassert>
+#include <stack>
 
 using namespace std;
 using namespace tinyxml2;
@@ -14,7 +15,7 @@ namespace api {
 //-----------------------------------------------------------------------------
 class XMLStream {
 public:
-  enum Move { UP, DOWN, REWIND };
+  enum MoveAction { UP, DOWN, REWIND };
   void Up(int level = 1) {
     if (!cur_) {
       throw logic_error("Cannot pop, Null element");
@@ -53,7 +54,7 @@ public:
     }
     return *this;
   }
-  XMLStream &Insert(Move a, int level = 1) {
+  XMLStream &Move(MoveAction a, int level = 1) {
     switch (a) {
     case UP:
       Up(level);
@@ -71,13 +72,14 @@ public:
   }
 
   XMLStream &operator[](const std::string &s) {
+    if (all_of(begin(s), end(s), [](auto c) { return c == '/'; })) {
+      Up(s.size());
+      return *this;
+    }
     down_ = true;
     return Insert(s);
   }
-  XMLStream &operator[](Move a) { return Insert(a); }
-  XMLStream &operator[](std::pair<Move, int> s) {
-    return Insert(s.first, s.second);
-  }
+  XMLStream &operator[](MoveAction a) { return Move(a); }
   XMLStream(XMLDocument &d) : doc_(d) {}
   XMLStream &operator=(const std::string &s) {
     InsertText(s);
@@ -265,42 +267,58 @@ std::string GenerateAclXML(const AccessControlPolicy &acl) {
   XMLDocument doc;
   XMLStream os(doc);
   os["accesscontrolpolicy"]["accesscontrollist"];
-  const auto UP = XMLStream::Move::UP;
   if (!acl.ownerDisplayName.empty() || !acl.ownerID.empty()) {
-    os["owner"];
+    os["owner"]; // <accesscontrolpolicy><accesscontrollist><owner>
     if (!acl.ownerDisplayName.empty()) {
+      //<accesscontrolpolicy><accesscontrollist><owner><displayname>
       os["displayname"] = acl.ownerDisplayName;
+      //</displayname> automatically move to upper level after assignment
     }
     if (!acl.ownerID.empty()) {
+      //<accesscontrolpolicy><accesscontrollist><owner><ownerid>
       os["ownerid"] = acl.ownerDisplayName;
+      //</ownerid> automatically move to upper level after assignment
     }
   }
-  os[UP];
+  os["/"]; // </owner>
   for (const auto &g : acl.grants) {
     if (g.permission.empty()) {
       throw logic_error("Missing required field 'permission'");
     }
-    os["grant"];
+    os["grant"]; // <grant>
     const Grant::Grantee &i = g.grantee;
     if (!i.Empty()) {
-      os["grantee"];
+      os["grantee"]; // <grant><grantee>
       if (!i.displayName.empty()) {
+        // <grant><grantee><displayname>
         os["displayname"] = i.displayName;
+        // </displayname>
       }
       if (!i.emailAddress.empty()) {
+        // <grant><grantee><emailaddress>
         os["emailaddress"] = i.emailAddress;
+        // </emailaddress>
       }
       if (!i.id.empty()) {
+        // <grant><grantee><id>
         os["id"] = i.id;
+        // </id>
       }
       if (!i.xsiType.empty()) {
+        // <grant><grantee><type>``
         os["type"] = i.xsiType;
+        // </type>
       }
       if (!i.uri.empty()) {
+        // <grant><grantee><uri>
         os["uri"] = i.uri;
+        // <uri>
       }
     }
-    os[UP]["permission"] = g.permission;
+    os["/"] // </grantee>
+            // <grant><permission>
+      ["permission"] = g.permission;
+    // </permission>
   }
   return os;
 }
