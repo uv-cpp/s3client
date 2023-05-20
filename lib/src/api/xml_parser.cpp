@@ -1,8 +1,42 @@
+/*******************************************************************************
+ * BSD 3-Clause License
+ *
+ * Copyright (c) 2020-2023, Ugo Varetto
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+ *
+ * 1. Redistributions of source code must retain the above copyright notice,
+ *    this list of conditions and the following disclaimer.
+ *
+ * 2. Redistributions in binary form must reproduce the above copyright notice,
+ *    this list of conditions and the following disclaimer in the documentation
+ *    and/or other materials provided with the distribution.
+ *
+ * 3. Neither the name of the copyright holder nor the names of its
+ *    contributors may be used to endorse or promote products derived from
+ *    this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ ******************************************************************************/
+
 #include "s3-api.h"
 #include "tinyxml2.h"
 #include "xml_path.h"
-#include <cassert>
-#include <stack>
+#include "xmlstreams.h"
+
+#include <variant>
 
 using namespace std;
 using namespace tinyxml2;
@@ -10,92 +44,6 @@ using namespace tinyxml2;
 namespace sss {
 namespace api {
 
-//-----------------------------------------------------------------------------
-// XML generator @todo expose externally
-//-----------------------------------------------------------------------------
-class XMLOStream {
-public:
-  enum MoveAction { UP, DOWN, REWIND };
-  void Up(int level = 1) {
-    if (!cur_) {
-      throw logic_error("Cannot pop, Null element");
-    }
-    if (!cur_->Parent()) {
-      throw logic_error("Cannot pop, Null parent");
-    }
-    for (; level; cur_ = cur_->Parent()->ToElement(), level--)
-      ;
-  }
-  void Down() { down_ = true; }
-
-  void Rewind() {
-    if (!cur_) {
-      return;
-    }
-    for (; cur_->Parent();
-         cur_ = cur_->Parent() ? cur_->Parent()->ToElement() : nullptr)
-      ;
-  }
-  XMLOStream &InsertText(const std::string &text) {
-    cur_->SetText(text.c_str());
-    return *this;
-  }
-  XMLOStream &Insert(const std::string &s) {
-    if (!cur_) {
-      cur_ = doc_.NewElement(s.c_str());
-      doc_.InsertFirstChild(cur_);
-      down_ = false;
-    } else {
-      auto e = cur_->InsertNewChildElement(s.c_str());
-      if (down_) {
-        cur_ = e;
-        down_ = false;
-      }
-    }
-    return *this;
-  }
-  XMLOStream &Move(MoveAction a, int level = 1) {
-    switch (a) {
-    case UP:
-      Up(level);
-      break;
-    case DOWN:
-      Down();
-      break;
-    case REWIND:
-      Rewind();
-      break;
-    default:
-      break;
-    }
-    return *this;
-  }
-
-  XMLOStream &operator[](const std::string &s) {
-    if (all_of(begin(s), end(s), [](auto c) { return c == '/'; })) {
-      Up(s.size());
-      return *this;
-    }
-    down_ = true;
-    return Insert(s);
-  }
-  XMLOStream &operator[](MoveAction a) { return Move(a); }
-  XMLOStream(XMLDocument &d) : doc_(d) {}
-  XMLOStream &operator=(const std::string &s) {
-    InsertText(s);
-    Up();
-    return *this;
-  }
-
-  operator std::string() { return XMLToText(doc_, true, 0, 0); }
-
-  const XMLDocument &GetDocument() const { return doc_; }
-
-private:
-  XMLDocument &doc_;
-  XMLElement *cur_ = nullptr;
-  bool down_ = false;
-};
 //------------------------------------------------------------------------------
 std::vector<BucketInfo> ParseBuckets(const std::string &xml) {
   if (xml.empty())
@@ -173,34 +121,22 @@ bool ParseBool(const string &s) {
 S3Api::ListObjectV2Result ParseObjects(const std::string &xml) {
   if (xml.empty())
     return {};
-  auto d = DOMToDict(xml);
-  if (d.empty()) {
-    return {};
-  }
+  XMLIStream is(xml);
   S3Api::ListObjectV2Result res;
-  auto truncated = FindElementText(xml, "istruncated");
+  const string truncated = is["/istruncated"];
   res.truncated = ParseBool(truncated);
-  const string prefix = "/listbucketresult/contents";
-  auto r = RecordList(prefix, d);
+  XMLRecords r = is["listbucketresult/contents"];
   vector<ObjectInfo> v;
   for (const auto &i : r) {
-    auto select = [&](const string &s) {
-      const auto pre = "/" + s;
-      const auto &it = i.find(pre);
-      if (it == i.cend()) {
-        return string("");
-      }
-      return it->second;
-    };
     res.keys.push_back(
-        {.checksumAlgo = select("checksumalgo"),
-         .key = select("key"),
-         .lastModified = select("lastmodified"),
-         .etag = select("etag"),
-         .size = select("size").empty() ? 0 : stoul(select("size")),
-         .storageClass = select("storageclass"),
-         .ownerDisplayName = select("owner/displayname"),
-         .ownerID = select("owner/id")});
+        {.checksumAlgo = Get(i, "/checksumalgo"),
+         .key = Get(i, "/key"),
+         .lastModified = Get(i, "/lastmodified"),
+         .etag = Get(i, "/etag"),
+         .size = Get(i, "/size").empty() ? 0 : stoul(Get(i, "/size")),
+         .storageClass = Get(i, "/storageclass"),
+         .ownerDisplayName = Get(i, "/owner/displayname"),
+         .ownerID = Get(i, "/owner/id")});
   }
   return res;
 }
@@ -227,40 +163,24 @@ S3Api::ListObjectV2Result ParseObjects(const std::string &xml) {
 //    </AccessControlList>
 // </AccessControlPolicy>
 
-//------------------------------------------------------------------------------
 AccessControlPolicy ParseACL(const std::string &xml) {
   if (xml.empty())
     return {};
-  auto d = DOMToDict(xml);
-  if (d.empty()) {
-    return {};
-  }
+  XMLIStream is(xml);
   AccessControlPolicy res;
-  auto get = [&](string key) {
-    key = "/accesscontrolpolicy/" + key;
-    return d.count(key) ? d[key].front() : "";
-  };
-  res.ownerDisplayName = get("/owner/displayname");
-  res.ownerID = get("/owner/id");
-  auto r = RecordList("/accesscontrolpolicy/accesscontrollist/grant", d);
-  for (const auto &i : r) {
-    auto select = [&](const string &s) {
-      const auto pre = "/" + s;
-      const auto &it = i.find(pre);
-      if (it == i.cend()) {
-        return string("");
-      }
-      return it->second;
-    };
-    const Grant g = {{select("grantee/displayname"),
-                      select("grantee/emailaddress"), select("grantee/id"),
-                      select("grantee/type"), select("grantee/uri")},
-                     select("permission")};
+  const string prefix = "/accesscontrolpolicy";
+  res.ownerDisplayName = is[prefix + "/owner/displayname"];
+  res.ownerID = is[prefix + "/owner/id"];
+  XMLRecords r = is["accesscontrolpolicy/accesscontrollist/grant"];
+  for (auto &i : r) {
+    const Grant g = {{Get(i, "/grantee/displayname"),
+                      Get(i, "/grantee/emailaddress"), Get(i, "/grantee/id"),
+                      Get(i, "/grantee/type"), Get(i, "/grantee/uri")},
+                     Get(i, "/permission")};
     res.grants.push_back(g);
   }
   return res;
 }
-
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 std::string GenerateAclXML(const AccessControlPolicy &acl) {
