@@ -30,7 +30,10 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
-
+/**
+ * file xmlstreams.h
+ * \brief xml parser and generator.
+ */
 #pragma once
 #include "s3-api.h"
 #include "tinyxml2.h"
@@ -40,17 +43,61 @@
 #include <variant>
 #include <vector>
 
+/// \addtogroup Types
+/// @{
 using XMLRecord = std::unordered_map<std::string, std::string>;
 using XMLRecords = std::vector<XMLRecord>;
 using XMLResult =
     std::variant<bool, std::string, std::vector<std::string>, XMLRecords>;
+/// @}
 
-//-----------------------------------------------------------------------------
-// XML generator
-//-----------------------------------------------------------------------------
+/** \addtogroup Parsing
+ * @{
+ */
+/**
+ *
+ * \brief XMLGenerator. Use methods or overloaded subscript operator to insert
+ * data into XML tree.
+ *
+ * A XML document object and a pointer to the current XML Element are maintained
+ * inside the class instance.
+ * Elements are added under the current element.
+ * The current element pointer can be moved up or down the tree as needed.
+ * The generated XML code is extracted by calling the XMLText method.
+ *
+ * \section Example
+ * Generating the ACL request body.
+ *
+ * Request format:
+ * \code{.xml}
+ * <AccessControlPolicy>
+ *    <Owner>
+ *       <DisplayName>string</DisplayName>
+ *       <ID>string</ID>
+ *    </Owner>
+ *    <AccessControlList>
+ *       <Grant>
+ *          <Grantee>
+ *             <DisplayName>string</DisplayName>
+ *             <EmailAddress>string</EmailAddress>
+ *             <ID>string</ID>
+ *             <xsi:type>string</xsi:type>
+ *             <URI>string</URI>
+ *          </Grantee>
+ *          <Permission>string</Permission>
+ *       </Grant>
+ *    </AccessControlList>
+ * </AccessControlPolicy>
+ * \endcode
+ * Code:
+ * \snippet api/xml_parser.cpp GenerateAclXML
+ */
 class XMLOStream {
 public:
+  /// Move up or down one level in tree or rewind to root.
   enum MoveAction { UP, DOWN, REWIND };
+  /// Move up
+  /// \param level number of parents to traverse, default is one
   void Up(int level = 1) {
     if (!cur_) {
       throw std::logic_error("Cannot pop, Null element");
@@ -61,34 +108,62 @@ public:
     for (; level; cur_ = cur_->Parent()->ToElement(), level--)
       ;
   }
+  /// Down
+  /// Set \c down_ flag: pointer to current node will be moved to child after
+  /// next insertion
   void Down() { down_ = true; }
-
+  /// Move pointer to current node to root.
   void Rewind() {
     if (!cur_) {
       return;
     }
-    for (; cur_->Parent();
-         cur_ = cur_->Parent() ? cur_->Parent()->ToElement() : nullptr)
+    for (; cur_->Parent(); cur_ = cur_->Parent()->ToElement())
       ;
   }
+  /// Insert text inside current element.
+  /// \param[in] text text to insert
+  /// \return reference to current \c XMLOStream instance, will return
+  /// without inserting in case current pointer to XML element is \c NULL
   XMLOStream &InsertText(const std::string &text) {
+    if (!cur_)
+      return *this;
     cur_->SetText(text.c_str());
     return *this;
   }
+  /// Insert XML element under current XML element.
+  /// \param[in] s tag name
+  /// \return reference to current \c XMLOStream instance
   XMLOStream &Insert(const std::string &s) {
-    if (!cur_) {
-      cur_ = doc_.NewElement(s.c_str());
-      doc_.InsertFirstChild(cur_);
-      down_ = false;
-    } else {
-      auto e = cur_->InsertNewChildElement(s.c_str());
-      if (down_) {
-        cur_ = e;
-        down_ = false;
+    std::vector<std::string> elems;
+    std::istringstream is(s);
+    for (std::string buf; std::getline(is, buf, '/');) {
+      if (!buf.empty()) {
+        elems.push_back(buf);
       }
+    }
+    if (elems.empty())
+      return *this;
+    auto pe = cur_;
+    if (!cur_) {
+      cur_ = doc_.NewElement(elems.front().c_str());
+      doc_.InsertFirstChild(cur_);
+      pe = cur_;
+    } else {
+      pe = cur_->InsertNewChildElement(s.c_str());
+    }
+    for (auto e = ++begin(elems); e != end(elems); ++e) {
+      pe = pe->InsertNewChildElement(e->c_str());
+    }
+    if (down_) {
+      cur_ = pe;
+      down_ = false;
     }
     return *this;
   }
+  /// Move pointer to XML element.
+  /// \see MoveAction
+  /// In the case of \c REWIND or \c UP the action is executed immediately
+  /// in case of \c DOWN it is executed after next insertion operation
   XMLOStream &Move(MoveAction a, int level = 1) {
     switch (a) {
     case UP:
@@ -106,6 +181,10 @@ public:
     return *this;
   }
 
+  /// Invokes insert method forcing \c DOWN action after insert.
+  /// In case only path separator (\c '/') elements are provided the \c UP
+  /// action is invoked as many times as there are \c '/' caracters in the
+  /// string.
   XMLOStream &operator[](const std::string &s) {
     if (all_of(begin(s), end(s), [](auto c) { return c == '/'; })) {
       Up(s.size());
@@ -114,16 +193,22 @@ public:
     down_ = true;
     return Insert(s);
   }
+  /// Invoke \c Insert(MoveAction) method
   XMLOStream &operator[](MoveAction a) { return Move(a); }
+  /// Constructor: requires a reference to a pre-existing XML document.
+  /// \param[in] d wrapped XML document
   XMLOStream(tinyxml2::XMLDocument &d) : doc_(d) {}
+  /// Add text element to current XML element and move up one level.
+  /// \param[in] s text to insert
+  /// \return reference to XMLOStream instance
   XMLOStream &operator=(const std::string &s) {
     InsertText(s);
     Up();
     return *this;
   }
-
-  operator std::string() { return XMLToText(doc_, true, 0, 0); }
-
+  /// \return current content of XML document as XML text
+  std::string XMLText() const { return XMLToText(doc_, true, 0, 0); }
+  /// \return reference to current document
   const tinyxml2::XMLDocument &GetDocument() const { return doc_; }
 
 private:
@@ -133,14 +218,29 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-// XML Parser
-//-----------------------------------------------------------------------------
+/** \brief XML parser, returns array of text elements with the same parent path
+ *  or an array of parsed XML sub trees.
+ *
+ *  An XML subtree is represented as record in the form
+ *  \code
+ *  map<path to text element, text element>
+ *  \endcode
+ *  under the specifed path.
+ *
+ *
+ *
+ */
 class XMLIStream {
 public:
-  const XMLIStream &operator[](const std::string &i) const {
+  /// Extract array of text elements under specified path or
+  /// list of records in the form `map<path to text element, text element>`.
+  /// \param[in] p path to text elements if path starts with \c '/' or
+  /// to sbtrees under path if it does not start with \c '/'
+  /// \return reference to current instance
+  const XMLIStream &operator[](const std::string &p) const {
     // return all text elements under path
-    if (i.front() == '/') {
-      auto r = dd_.find(i);
+    if (p.front() == '/') {
+      auto r = dd_.find(p);
       if (r == end(dd_)) {
         v_ = false;
         return *this;
@@ -152,7 +252,7 @@ public:
       }
       // return all records under path
     } else {
-      auto r = RecordList("/" + i, dd_);
+      auto r = RecordList("/" + p, dd_);
       if (r.empty()) {
         v_ = false;
       } else {
@@ -196,3 +296,6 @@ inline std::string Get(const XMLRecord &r, const std::string &path) {
   auto i = r.find(path);
   return i == end(r) ? std::string() : i->second;
 }
+/**
+ * @}
+ */

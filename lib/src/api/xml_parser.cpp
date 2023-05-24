@@ -145,7 +145,6 @@ S3Api::ListObjectV2Result ParseObjects(const std::string &xml) {
 // HTTP/1.1 200
 // <?xml version="1.0" encoding="UTF-8"?>
 // <AccessControlPolicy>
-//    <Owner>
 //       <DisplayName>string</DisplayName>
 //       <ID>string</ID>
 //    </Owner>
@@ -183,10 +182,11 @@ AccessControlPolicy ParseACL(const std::string &xml) {
 }
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
+/// [GenerateAclXML]
 std::string GenerateAclXML(const AccessControlPolicy &acl) {
   XMLDocument doc;
   XMLOStream os(doc);
-  os["accesscontrolpolicy"]["accesscontrollist"];
+  os["accesscontrolpolicy/accesscontrollist"];
   if (!acl.ownerDisplayName.empty() || !acl.ownerID.empty()) {
     os["owner"]; // <accesscontrolpolicy><accesscontrollist><owner>
     if (!acl.ownerDisplayName.empty()) {
@@ -199,8 +199,8 @@ std::string GenerateAclXML(const AccessControlPolicy &acl) {
       os["ownerid"] = acl.ownerDisplayName;
       //</ownerid> automatically move to upper level after assignment
     }
+    os["/"]; // </owner>
   }
-  os["/"]; // </owner>
   for (const auto &g : acl.grants) {
     if (g.permission.empty()) {
       throw logic_error("Missing required field 'permission'");
@@ -240,7 +240,8 @@ std::string GenerateAclXML(const AccessControlPolicy &acl) {
       ["permission"] = g.permission;
     // </permission>
   }
-  return os;
+  return os.XMLText();
 }
+/// [GenerateAclXML]
 } // namespace api
 } // namespace sss

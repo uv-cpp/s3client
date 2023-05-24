@@ -165,7 +165,7 @@ public:
   /// Constructor initializing only URL
   WebClient(const std::string &url) : url_(url), method_("GET") { InitEnv(); }
   /// Constructor
-  /// \param[in] endPoint endpoint in the format \c <proto>://<server>:port
+  /// \param[in] endPoint endpoint in the format `<proto>://<server>:port`
   /// \param[in] path path to be added to endPoint to compete URL: /.../...
   /// \param[in] method HTTP method
   /// \param[in] params key,value map of parameters \c k1=value1&k2=value2&...
@@ -192,7 +192,7 @@ public:
   /// Set full URL
   /// \param[in] url endpoint + paramters URL
   bool SetUrl(const std::string &url);
-  /// Set endpoint: \c <proto>://<server>:<port>
+  /// Set endpoint: `<proto>://<server>:<port>`
   void SetEndpoint(const std::string &ep);
   /// Set URL path.
   /// \param[in] path URL with endpoint part removed.
