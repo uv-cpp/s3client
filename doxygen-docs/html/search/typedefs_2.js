@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['map_401',['Map',['../group__Types.html#gadb51ebb99d8e67b505941f6d9230891c',1,'sss']]],
-  ['metadatamap_402',['MetaDataMap',['../group__Types.html#ga70b971dea7826eb6b2da9a3c03045da2',1,'sss']]]
+  ['etag_498',['ETag',['../group__Types.html#ga5315a21a30a0f1f7095037d972003961',1,'sss']]]
 ];

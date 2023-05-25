@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="node1" class="node">
 <title>Node1</title>
-<g id="a_node1"><a xlink:title=" ">
+<g id="a_node1"><a xlink:title="Check if key exists.">
 <polygon fill="#bfbfbf" stroke="black" points="0,-369.5 0,-388.5 137,-388.5 137,-369.5 0,-369.5"/>
 <text text-anchor="middle" x="68.5" y="-376.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::TestObject</text>
 </a>
@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22" target="_top" xlink:title="Send HeadObject request.">
 <polygon fill="none" stroke="black" points="173,-369.5 173,-388.5 314,-388.5 314,-369.5 173,-369.5"/>
 <text text-anchor="middle" x="243.5" y="-376.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::HeadObject</text>
 </a>
@@ -50,7 +50,7 @@
 <!-- Node5 -->
 <g id="node5" class="node">
 <title>Node5</title>
-<g id="a_node5"><a xlink:href="group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5" target="_top" xlink:title=" ">
+<g id="a_node5"><a xlink:href="group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5" target="_top" xlink:title="Extract and return HTTP headers as key&#45;value pairs.">
 <polygon fill="none" stroke="black" points="377,-369.5 377,-388.5 478,-388.5 478,-369.5 377,-369.5"/>
 <text text-anchor="middle" x="427.5" y="-376.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::HTTPHeaders</text>
 </a>
@@ -65,7 +65,7 @@
 <!-- Node6 -->
 <g id="node6" class="node">
 <title>Node6</title>
-<g id="a_node6"><a xlink:href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889" target="_top" xlink:title=" ">
+<g id="a_node6"><a xlink:href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889" target="_top" xlink:title="Send request.">
 <polygon fill="none" stroke="black" points="371.5,-209.5 371.5,-228.5 483.5,-228.5 483.5,-209.5 371.5,-209.5"/>
 <text text-anchor="middle" x="427.5" y="-216.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::Send</text>
 </a>
@@ -96,7 +96,7 @@
 <!-- Node7 -->
 <g id="node7" class="node">
 <title>Node7</title>
-<g id="a_node7"><a xlink:href="classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31" target="_top" xlink:title="[WebClient::Config]">
+<g id="a_node7"><a xlink:href="classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31" target="_top" xlink:title="Configure instance.">
 <polygon fill="none" stroke="black" points="559.5,-209.5 559.5,-228.5 677.5,-228.5 677.5,-209.5 559.5,-209.5"/>
 <text text-anchor="middle" x="618.5" y="-216.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::Config</text>
 </a>
@@ -293,7 +293,7 @@
 <!-- Node20 -->
 <g id="node20" class="node">
 <title>Node20</title>
-<g id="a_node20"><a xlink:href="classsss_1_1WebClient.html#afc3b7a92568fbb1ea447918920ca266e" target="_top" xlink:title="Set endpoint: &#160;&lt;proto&gt;://&lt;server&gt;:&lt;port&gt;">
+<g id="a_node20"><a xlink:href="classsss_1_1WebClient.html#afc3b7a92568fbb1ea447918920ca266e" target="_top" xlink:title="Set endpoint: &lt;proto&gt;://&lt;server&gt;:&lt;port&gt;">
 <polygon fill="none" stroke="black" points="732,-342.5 732,-361.5 875,-361.5 875,-342.5 732,-342.5"/>
 <text text-anchor="middle" x="803.5" y="-349.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::WebClient::SetEndpoint</text>
 </a>

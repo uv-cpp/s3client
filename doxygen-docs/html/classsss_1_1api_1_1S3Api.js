@@ -1,9 +1,13 @@
 var classsss_1_1api_1_1S3Api =
 [
-    [ "ListObjectV2Config", "structsss_1_1api_1_1S3Api_1_1ListObjectV2Config.html", null ],
-    [ "ListObjectV2Result", "structsss_1_1api_1_1S3Api_1_1ListObjectV2Result.html", null ],
+    [ "ListObjectV2Config", "structsss_1_1api_1_1S3Api_1_1ListObjectV2Config.html", "structsss_1_1api_1_1S3Api_1_1ListObjectV2Config" ],
+    [ "ListObjectV2Result", "structsss_1_1api_1_1S3Api_1_1ListObjectV2Result.html", "structsss_1_1api_1_1S3Api_1_1ListObjectV2Result" ],
     [ "SendParams", "structsss_1_1api_1_1S3Api_1_1SendParams.html", "structsss_1_1api_1_1S3Api_1_1SendParams" ],
-    [ "FileIOMode", "classsss_1_1api_1_1S3Api.html#acf181b732741a8582598182a0298c21b", null ],
+    [ "FileIOMode", "classsss_1_1api_1_1S3Api.html#acf181b732741a8582598182a0298c21b", [
+      [ "BUFFERED", "classsss_1_1api_1_1S3Api.html#acf181b732741a8582598182a0298c21ba12358d00f64b0aff68596a09eb355d5b", null ],
+      [ "UNBUFFERED", "classsss_1_1api_1_1S3Api.html#acf181b732741a8582598182a0298c21ba443762ca8eca7f543dacf9e5f2582c04", null ],
+      [ "MEMORY_MAPPED", "classsss_1_1api_1_1S3Api.html#acf181b732741a8582598182a0298c21baedd5d7dbfbd5666c7c80f0d0a90fa0a4", null ]
+    ] ],
     [ "S3Api", "classsss_1_1api_1_1S3Api.html#af60525ee5baebfe10eea4b78392c7f71", null ],
     [ "S3Api", "classsss_1_1api_1_1S3Api.html#a6011b3bee8609144fa6970b0ef8a52de", null ],
     [ "S3Api", "classsss_1_1api_1_1S3Api.html#ae23944029b2f9edb70d31180a47605c3", null ],
@@ -23,6 +27,7 @@ var classsss_1_1api_1_1S3Api =
     [ "GetObject", "classsss_1_1api_1_1S3Api.html#a0bb4e0b77028dadd78fcf5496ab6fca3", null ],
     [ "GetObject", "classsss_1_1api_1_1S3Api.html#a62695addc7c86b5fa73465d0d80ec1fa", null ],
     [ "GetObject", "classsss_1_1api_1_1S3Api.html#af61465d92c0a94aa82ae863fc2a776a0", null ],
+    [ "GetObjectAcl", "classsss_1_1api_1_1S3Api.html#ae548966dc38f328fc45ee1500f5caf5b", null ],
     [ "GetObjectSize", "classsss_1_1api_1_1S3Api.html#a872e80e356e8c404a9b0739d95a0af41", null ],
     [ "GetResponseBody", "classsss_1_1api_1_1S3Api.html#a83364bc622245c0396a3bbc46399baf4", null ],
     [ "GetResponseHeaders", "classsss_1_1api_1_1S3Api.html#a834e046a52178dcf540509df828b024f", null ],
@@ -30,9 +35,11 @@ var classsss_1_1api_1_1S3Api =
     [ "HeadObject", "classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22", null ],
     [ "ListBuckets", "classsss_1_1api_1_1S3Api.html#a81e30673c06b609a2ee6e6bfd9130ca6", null ],
     [ "ListObjectsV2", "classsss_1_1api_1_1S3Api.html#a3f00f611cd210a58ac6e8c0555984433", null ],
+    [ "PutBucketAcl", "classsss_1_1api_1_1S3Api.html#aa35e9b1cc7661cd9bb0d5f2de6cbbc7d", null ],
     [ "PutFileObject", "classsss_1_1api_1_1S3Api.html#ab7affe0834f5892b393e731783b7ccac", null ],
     [ "PutObject", "classsss_1_1api_1_1S3Api.html#acf14c65d821e89d85dd5a72ba911122d", null ],
     [ "PutObject", "classsss_1_1api_1_1S3Api.html#a6ee9092a67e32ed994c6d7bd6a3f712c", null ],
+    [ "PutObjectAcl", "classsss_1_1api_1_1S3Api.html#a2cc08fb777cfc4d24c40bea1cde967e7", null ],
     [ "Secret", "classsss_1_1api_1_1S3Api.html#acfffe29254323fb41231787a0afb7edc", null ],
     [ "Send", "classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889", null ],
     [ "Send", "classsss_1_1api_1_1S3Api.html#a0473917e4d25a4a6fca40d097e4299d6", null ],

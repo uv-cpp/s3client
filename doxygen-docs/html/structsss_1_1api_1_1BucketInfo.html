@@ -95,16 +95,37 @@ $(document).ready(function(){initNavTree('structsss_1_1api_1_1BucketInfo.html','
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
 <div class="title">sss::api::BucketInfo Struct Reference<div class="ingroups"><a class="el" href="group__S3__API.html">S3_API</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;s3-api.h&gt;</code></p>
+<p>XML -&gt; C++ mapping of <code>ListBuckets/Buckets</code> response. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html">https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html</a>.  
+ <a href="structsss_1_1api_1_1BucketInfo.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="s3-api_8h_source.html">s3-api.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Data Fields</h2></td></tr>
+<tr class="memitem:a559c69f8aa36ca5e23ee3d3ecd6b6cd1"><td class="memItemLeft" align="right" valign="top"><a id="a559c69f8aa36ca5e23ee3d3ecd6b6cd1"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>name</b></td></tr>
+<tr class="separator:a559c69f8aa36ca5e23ee3d3ecd6b6cd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa1843e4a6a5c536507a468c2c2a55d6"><td class="memItemLeft" align="right" valign="top"><a id="aaa1843e4a6a5c536507a468c2c2a55d6"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>creationDate</b></td></tr>
+<tr class="separator:aaa1843e4a6a5c536507a468c2c2a55d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>XML -&gt; C++ mapping of <code>ListBuckets/Buckets</code> response. <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html">https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html</a> </p>
+<div class="textblock"><p>XML -&gt; C++ mapping of <code>ListBuckets/Buckets</code> response. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html">https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html</a>. </p>
+<div class="fragment"><div class="line"><span class="keyword">struct </span>BucketInfo {</div>
+<div class="line"> std::string name;</div>
+<div class="line"> std::string creationDate;</div>
+<div class="line">};</div>
+</div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="s3-api_8h_source.html#l00063">63</a> of file <a class="el" href="s3-api_8h_source.html">s3-api.h</a>.</p>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
-<li>/home/ugovaretto/projects/uv-cpp/s3client/repo/lib/include/<a class="el" href="s3-api_8h.html">s3-api.h</a></li>
+<li>/home/ugovaretto/projects/uv-cpp/s3client/repo/lib/include/<a class="el" href="s3-api_8h_source.html">s3-api.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

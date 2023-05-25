@@ -95,6 +95,8 @@ $(document).ready(function(){initNavTree('classsss_1_1SplitRange.html',''); init
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
 <div class="title">sss::SplitRange Class Reference<div class="ingroups"><a class="el" href="group__Ranges.html">Ranges</a></div></div>  </div>
 </div><!--header-->
@@ -103,7 +105,20 @@ $(document).ready(function(){initNavTree('classsss_1_1SplitRange.html',''); init
 <p>Range over splits.  
  <a href="classsss_1_1SplitRange.html#details">More...</a></p>
 
-<p><code>#include &lt;utility.h&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="lib_2include_2utility_8h_source.html">utility.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a22e6c68708b3d291f3b01bfb8e488166"><td class="memItemLeft" align="right" valign="top"><a id="a22e6c68708b3d291f3b01bfb8e488166"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>SplitRange</b> (const std::string &amp;str, const std::string &amp;delims)</td></tr>
+<tr class="separator:a22e6c68708b3d291f3b01bfb8e488166"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3349d6f0124a20e853b9017c157f22d1"><td class="memItemLeft" align="right" valign="top"><a id="a3349d6f0124a20e853b9017c157f22d1"></a>
+<a class="el" href="classsss_1_1SplitIterator.html">SplitIterator</a>&#160;</td><td class="memItemRight" valign="bottom"><b>begin</b> () const</td></tr>
+<tr class="separator:a3349d6f0124a20e853b9017c157f22d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67c86e90457b2c763d77dce8c8065202"><td class="memItemLeft" align="right" valign="top"><a id="a67c86e90457b2c763d77dce8c8065202"></a>
+<a class="el" href="classsss_1_1SplitIterator.html">SplitIterator</a>&#160;</td><td class="memItemRight" valign="bottom"><b>end</b> () const</td></tr>
+<tr class="separator:a67c86e90457b2c763d77dce8c8065202"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Range over splits. </p>
 <div class="fragment"><div class="line"><span class="keyword">const</span> std::string x = <span class="stringliteral">&quot;meta1:value1;meta2:value2&quot;</span>;</div>
@@ -111,8 +126,10 @@ $(document).ready(function(){initNavTree('classsss_1_1SplitRange.html',''); init
 <div class="line">  <span class="keyword">auto</span> s = begin(SplitRange(i, <span class="stringliteral">&quot;:&quot;</span>));</div>
 <div class="line">  cout &lt;&lt; *s++ &lt;&lt; <span class="stringliteral">&quot;: &quot;</span> &lt;&lt; *s &lt;&lt; endl;</div>
 <div class="line">}</div>
-</div><!-- fragment --> </div><hr/>The documentation for this class was generated from the following file:<ul>
-<li>/home/ugovaretto/projects/uv-cpp/s3client/repo/lib/include/<a class="el" href="lib_2include_2utility_8h.html">utility.h</a></li>
+</div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="lib_2include_2utility_8h_source.html#l00150">150</a> of file <a class="el" href="lib_2include_2utility_8h_source.html">utility.h</a>.</p>
+</div><hr/>The documentation for this class was generated from the following file:<ul>
+<li>/home/ugovaretto/projects/uv-cpp/s3client/repo/lib/include/<a class="el" href="lib_2include_2utility_8h_source.html">utility.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

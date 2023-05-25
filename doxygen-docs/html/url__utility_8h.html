@@ -110,8 +110,8 @@ $(document).ready(function(){initNavTree('url__utility_8h.html',''); initResizab
 <code>#include &lt;map&gt;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
-<code>#include &quot;<a class="el" href="common_8h.html">common.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="lib_2include_2utility_8h.html">utility.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="common_8h_source.html">common.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="lib_2include_2utility_8h_source.html">utility.h</a>&quot;</code><br />
 </div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Include dependency graph for url_utility.h:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -128,7 +128,9 @@ $(document).ready(function(){initNavTree('url__utility_8h.html',''); initResizab
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="url__utility_8h__dep__incl.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
-</div><table class="memberdecls">
+</div>
+<p><a href="url__utility_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsss_1_1URL.html">sss::URL</a></td></tr>
@@ -164,11 +166,14 @@ Functions</h2></td></tr>
 std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Internal.html#gad39402e23f6ef63de04e903825a7271a">sss::GetValue</a> (const std::map&lt; std::string, std::string &gt; &amp;map, const std::string &amp;rx, bool caseSensitive=true)</td></tr>
 <tr class="memdesc:gad39402e23f6ef63de04e903825a7271a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Map key to value using regular expression. <br /></td></tr>
 <tr class="separator:gad39402e23f6ef63de04e903825a7271a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3898026085460f9f0424cc3972e55374"><td class="memItemLeft" align="right" valign="top">Headers&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__S3Client.html#ga3898026085460f9f0424cc3972e55374">sss::ToMeta</a> (const std::map&lt; std::string, std::string &gt; &amp;metaData)</td></tr>
+<tr class="memitem:ga3898026085460f9f0424cc3972e55374"><td class="memItemLeft" align="right" valign="top">Headers&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Internal.html#ga3898026085460f9f0424cc3972e55374">sss::ToMeta</a> (const std::map&lt; std::string, std::string &gt; &amp;metaData)</td></tr>
+<tr class="memdesc:ga3898026085460f9f0424cc3972e55374"><td class="mdescLeft">&#160;</td><td class="mdescRight">Translate metadata (key,value) pairs to <code>amz-</code> format and return header map which can be merged with other headers using the <code>std::map::merge</code> method, since C++17.  <a href="group__Internal.html#ga3898026085460f9f0424cc3972e55374">More...</a><br /></td></tr>
 <tr class="separator:ga3898026085460f9f0424cc3972e55374"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Internal utility functions to process and parse text and URLs and create S3 signature keys. </p>
+
+<p class="definition">Definition in file <a class="el" href="url__utility_8h_source.html">url_utility.h</a>.</p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

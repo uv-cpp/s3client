@@ -46,7 +46,7 @@ if (edges && edges.length) {
         </defs>
 
 <script type="text/javascript">
-var viewWidth = 548;
+var viewWidth = 675;
 var viewHeight = 206;
 var sectionId = 'dynsection-1';
 </script>
@@ -85,105 +85,122 @@ var sectionId = 'dynsection-1';
 <!-- Node3 -->
 <g id="node3" class="node">
 <title>Node3</title>
-<g id="a_node3"><a xlink:href="hmac256_8cpp.html" target="_top" xlink:title="implementation of HMAC hashing algorithm.">
-<polygon fill="none" stroke="black" points="96,-0.5 96,-41.5 226,-41.5 226,-0.5 96,-0.5"/>
-<text text-anchor="start" x="104" y="-29.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
-<text text-anchor="start" x="104" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/lib</text>
-<text text-anchor="middle" x="161" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">/hash/hmac256.cpp</text>
+<g id="a_node3"><a xlink:href="md5_8cpp.html" target="_top" xlink:title="Implementation of MD5 algorithm,.">
+<polygon fill="none" stroke="black" points="93,-0.5 93,-41.5 223,-41.5 223,-0.5 93,-0.5"/>
+<text text-anchor="start" x="101" y="-29.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
+<text text-anchor="start" x="101" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/lib</text>
+<text text-anchor="middle" x="158" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">/hash/md5.cpp</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node3 -->
 <g id="edge2" class="edge">
 <title>Node1&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M222.25,-154.59C205.06,-146.36 188.47,-135.16 177,-120 159.83,-97.32 158.15,-63.17 159.12,-41.75"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="221.27,-157.99 231.83,-158.86 224.12,-151.6 221.27,-157.99"/>
+<path fill="none" stroke="midnightblue" d="M222.29,-154.23C205.19,-146.02 188.64,-134.91 177,-120 159.4,-97.46 156.6,-63.26 156.83,-41.8"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="221.27,-157.61 231.82,-158.5 224.13,-151.22 221.27,-157.61"/>
 </g>
 <!-- Node4 -->
 <g id="node4" class="node">
 <title>Node4</title>
-<g id="a_node4"><a xlink:href="md5_8cpp.html" target="_top" xlink:title="Implementation of MD5 algorithm,.">
-<polygon fill="none" stroke="black" points="407,-0.5 407,-41.5 537,-41.5 537,-0.5 407,-0.5"/>
-<text text-anchor="start" x="415" y="-29.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
-<text text-anchor="start" x="415" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/lib</text>
-<text text-anchor="middle" x="472" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">/hash/md5.cpp</text>
+<g id="a_node4"><a xlink:href="hmac256_8cpp.html" target="_top" xlink:title="implementation of HMAC hashing algorithm.">
+<polygon fill="none" stroke="black" points="241,-0.5 241,-41.5 371,-41.5 371,-0.5 241,-0.5"/>
+<text text-anchor="start" x="249" y="-29.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
+<text text-anchor="start" x="249" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/lib</text>
+<text text-anchor="middle" x="306" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">/hash/hmac256.cpp</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node4 -->
 <g id="edge3" class="edge">
 <title>Node1&#45;&gt;Node4</title>
-<path fill="none" stroke="midnightblue" d="M324.03,-149.28C344.67,-129.19 374.06,-101.24 401,-78 415.5,-65.49 432.31,-52.19 445.93,-41.68"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="321.55,-146.82 316.84,-156.31 326.44,-151.82 321.55,-146.82"/>
+<path fill="none" stroke="midnightblue" d="M314.38,-147.58C318.73,-139.02 322.78,-129.4 325,-120 331.37,-93.01 322.36,-61.48 314.7,-41.62"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="311.3,-145.92 309.63,-156.38 317.46,-149.25 311.3,-145.92"/>
 </g>
 <!-- Node5 -->
 <g id="node5" class="node">
 <title>Node5</title>
 <g id="a_node5"><a xlink:href="sha256_8cpp.html" target="_top" xlink:title="Implementation of SHA256 algorithm.">
-<polygon fill="none" stroke="black" points="249,-0.5 249,-41.5 379,-41.5 379,-0.5 249,-0.5"/>
-<text text-anchor="start" x="257" y="-29.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
-<text text-anchor="start" x="257" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/lib</text>
-<text text-anchor="middle" x="314" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">/hash/sha256.cpp</text>
+<polygon fill="none" stroke="black" points="537,-0.5 537,-41.5 667,-41.5 667,-0.5 537,-0.5"/>
+<text text-anchor="start" x="545" y="-29.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
+<text text-anchor="start" x="545" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/lib</text>
+<text text-anchor="middle" x="602" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">/hash/sha256.cpp</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node5 -->
 <g id="edge4" class="edge">
 <title>Node1&#45;&gt;Node5</title>
-<path fill="none" stroke="midnightblue" d="M314.38,-147.58C318.73,-139.02 322.78,-129.4 325,-120 331.29,-93.34 325.42,-61.72 320.14,-41.76"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="311.3,-145.92 309.63,-156.38 317.46,-149.25 311.3,-145.92"/>
+<path fill="none" stroke="midnightblue" d="M372.41,-168.71C417.64,-161.59 474.79,-147.57 519,-120 550.78,-100.18 576.6,-64.17 590.59,-41.75"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="371.73,-165.27 362.36,-170.2 372.76,-172.19 371.73,-165.27"/>
 </g>
 <!-- Node6 -->
 <g id="node6" class="node">
 <title>Node6</title>
 <g id="a_node6"><a xlink:href="sha256_8h.html" target="_top" xlink:title="declaration of SHA256 hash functions.">
-<polygon fill="none" stroke="black" points="186,-78.5 186,-119.5 316,-119.5 316,-78.5 186,-78.5"/>
-<text text-anchor="start" x="194" y="-107.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
-<text text-anchor="start" x="194" y="-96.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/lib</text>
-<text text-anchor="middle" x="251" y="-85.5" font-family="Helvetica,sans-Serif" font-size="10.00">/hash/sha256.h</text>
+<polygon fill="none" stroke="black" points="380,-78.5 380,-119.5 510,-119.5 510,-78.5 380,-78.5"/>
+<text text-anchor="start" x="388" y="-107.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
+<text text-anchor="start" x="388" y="-96.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/lib</text>
+<text text-anchor="middle" x="445" y="-85.5" font-family="Helvetica,sans-Serif" font-size="10.00">/hash/sha256.h</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node6 -->
 <g id="edge5" class="edge">
 <title>Node1&#45;&gt;Node6</title>
-<path fill="none" stroke="midnightblue" d="M279.91,-147.76C274.21,-138.35 268.01,-128.1 262.81,-119.51"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="276.98,-149.69 285.15,-156.43 282.97,-146.06 276.98,-149.69"/>
+<path fill="none" stroke="midnightblue" d="M344.19,-151.77C364.48,-141.35 387.87,-129.34 407.02,-119.51"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="342.41,-148.75 335.11,-156.43 345.61,-154.97 342.41,-148.75"/>
 </g>
-<!-- Node7 -->
-<g id="node7" class="node">
-<title>Node7</title>
-<g id="a_node7"><a xlink:href="md5_8h.html" target="_top" xlink:title="declaration of MD5 hashing functions.">
-<polygon fill="none" stroke="black" points="410,-78.5 410,-119.5 540,-119.5 540,-78.5 410,-78.5"/>
-<text text-anchor="start" x="418" y="-107.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
-<text text-anchor="start" x="418" y="-96.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/lib</text>
-<text text-anchor="middle" x="475" y="-85.5" font-family="Helvetica,sans-Serif" font-size="10.00">/hash/md5.h</text>
+<!-- Node8 -->
+<g id="node8" class="node">
+<title>Node8</title>
+<g id="a_node8"><a xlink:href="md5_8h.html" target="_top" xlink:title="declaration of MD5 hashing functions.">
+<polygon fill="none" stroke="black" points="186,-78.5 186,-119.5 316,-119.5 316,-78.5 186,-78.5"/>
+<text text-anchor="start" x="194" y="-107.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
+<text text-anchor="start" x="194" y="-96.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/lib</text>
+<text text-anchor="middle" x="251" y="-85.5" font-family="Helvetica,sans-Serif" font-size="10.00">/hash/md5.h</text>
 </a>
 </g>
 </g>
-<!-- Node1&#45;&gt;Node7 -->
-<g id="edge8" class="edge">
-<title>Node1&#45;&gt;Node7</title>
-<path fill="none" stroke="midnightblue" d="M352.11,-152.47C376.88,-141.89 405.77,-129.56 429.32,-119.51"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="350.66,-149.28 342.84,-156.43 353.41,-155.72 350.66,-149.28"/>
+<!-- Node1&#45;&gt;Node8 -->
+<g id="edge9" class="edge">
+<title>Node1&#45;&gt;Node8</title>
+<path fill="none" stroke="midnightblue" d="M279.91,-147.76C274.21,-138.35 268.01,-128.1 262.81,-119.51"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="276.98,-149.69 285.15,-156.43 282.97,-146.06 276.98,-149.69"/>
 </g>
-<!-- Node6&#45;&gt;Node3 -->
+<!-- Node6&#45;&gt;Node4 -->
 <g id="edge6" class="edge">
-<title>Node6&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M219.95,-71.78C208.18,-61.84 195.01,-50.72 184.1,-41.51"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="217.92,-74.65 227.82,-78.43 222.44,-69.3 217.92,-74.65"/>
+<title>Node6&#45;&gt;Node4</title>
+<path fill="none" stroke="midnightblue" d="M400.42,-73.63C381.43,-63.24 359.57,-51.29 341.67,-41.51"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="398.75,-76.7 409.2,-78.43 402.11,-70.56 398.75,-76.7"/>
 </g>
 <!-- Node6&#45;&gt;Node5 -->
 <g id="edge7" class="edge">
 <title>Node6&#45;&gt;Node5</title>
-<path fill="none" stroke="midnightblue" d="M273.69,-70.63C281.68,-60.99 290.49,-50.36 297.83,-41.51"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="270.91,-68.5 267.22,-78.43 276.3,-72.96 270.91,-68.5"/>
+<path fill="none" stroke="midnightblue" d="M494.48,-74.05C516.13,-63.57 541.22,-51.42 561.71,-41.51"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="492.91,-70.92 485.43,-78.43 495.96,-77.22 492.91,-70.92"/>
 </g>
-<!-- Node7&#45;&gt;Node4 -->
-<g id="edge9" class="edge">
-<title>Node7&#45;&gt;Node4</title>
-<path fill="none" stroke="midnightblue" d="M473.83,-68.3C473.47,-59.3 473.09,-49.65 472.77,-41.51"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="470.34,-68.57 474.23,-78.43 477.33,-68.3 470.34,-68.57"/>
+<!-- Node7 -->
+<g id="node7" class="node">
+<title>Node7</title>
+<g id="a_node7"><a xlink:href="aws__sign_8cpp_source.html" target="_top" xlink:title=" ">
+<polygon fill="none" stroke="black" points="389,-0.5 389,-41.5 519,-41.5 519,-0.5 389,-0.5"/>
+<text text-anchor="start" x="397" y="-29.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
+<text text-anchor="start" x="397" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/lib</text>
+<text text-anchor="middle" x="454" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/aws_sign.cpp</text>
+</a>
+</g>
+</g>
+<!-- Node6&#45;&gt;Node7 -->
+<g id="edge8" class="edge">
+<title>Node6&#45;&gt;Node7</title>
+<path fill="none" stroke="midnightblue" d="M448.52,-68.3C449.58,-59.3 450.73,-49.65 451.69,-41.51"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="445.02,-68.09 447.32,-78.43 451.97,-68.91 445.02,-68.09"/>
+</g>
+<!-- Node8&#45;&gt;Node3 -->
+<g id="edge10" class="edge">
+<title>Node8&#45;&gt;Node3</title>
+<path fill="none" stroke="midnightblue" d="M219.26,-72.06C207.02,-62.06 193.25,-50.8 181.87,-41.51"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="217.09,-74.81 227.05,-78.43 221.52,-69.39 217.09,-74.81"/>
 </g>
 </g>
 </svg>

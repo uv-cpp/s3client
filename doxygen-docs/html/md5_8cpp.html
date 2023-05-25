@@ -96,7 +96,8 @@ $(document).ready(function(){initNavTree('md5_8cpp.html',''); initResizable(); }
 
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a>  </div>
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">md5.cpp File Reference</div>  </div>
 </div><!--header-->
@@ -104,8 +105,8 @@ $(document).ready(function(){initNavTree('md5_8cpp.html',''); initResizable(); }
 
 <p>Implementation of MD5 algorithm,.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="md5_8h.html">md5.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="lib_2hash_2utility_8h.html">utility.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="md5_8h_source.html">md5.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="lib_2hash_2utility_8h_source.html">utility.h</a>&quot;</code><br />
 <code>#include &lt;cassert&gt;</code><br />
 <code>#include &lt;cstdint&gt;</code><br />
 <code>#include &lt;cstdio&gt;</code><br />
@@ -119,16 +120,85 @@ $(document).ready(function(){initNavTree('md5_8cpp.html',''); initResizable(); }
 <div class="center"><iframe scrolling="no" frameborder="0" src="md5_8cpp__incl.svg" width="442" height="291"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
-</div><table class="memberdecls">
+</div>
+<p><a href="md5_8cpp_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:a09a00dff3d78e042336ceb546f76d10f"><td class="memItemLeft" align="right" valign="top"><a id="a09a00dff3d78e042336ceb546f76d10f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>md5::md5_stream</b> (uint32_t hash[4], const uint8_t data[], size_t length)</td></tr>
+<tr class="separator:a09a00dff3d78e042336ceb546f76d10f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a557bda7a26a0a85a533da6faa5275823"><td class="memItemLeft" align="right" valign="top"><a id="a557bda7a26a0a85a533da6faa5275823"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>md5::md5</b> (const uint8_t data[], size_t length, uint32_t hash[4])</td></tr>
+<tr class="separator:a557bda7a26a0a85a533da6faa5275823"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabbd4ca806ab3ab35436f9718a596d15b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Hash.html#gabbd4ca806ab3ab35436f9718a596d15b">md5::print_hash</a> (uint32_t hash[4])</td></tr>
 <tr class="memdesc:gabbd4ca806ab3ab35436f9718a596d15b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print hash code to stdout.  <a href="group__Hash.html#gabbd4ca806ab3ab35436f9718a596d15b">More...</a><br /></td></tr>
 <tr class="separator:gabbd4ca806ab3ab35436f9718a596d15b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a05755fa6d0a12bd60fbd2b395527f526"><td class="memItemLeft" align="right" valign="top"><a id="a05755fa6d0a12bd60fbd2b395527f526"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>md5::md5_file</b> (const char *fname, uint32_t hash[4])</td></tr>
+<tr class="separator:a05755fa6d0a12bd60fbd2b395527f526"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ac1258a889b6a6e9625b896892b0bd639"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>md5::r</b> []</td></tr>
+<tr class="separator:ac1258a889b6a6e9625b896892b0bd639"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab11542e1dee4b23ca1b576ed93c2ff41"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>md5::k</b> []</td></tr>
+<tr class="separator:ab11542e1dee4b23ca1b576ed93c2ff41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implementation of MD5 algorithm,. </p>
-</div></div><!-- contents -->
+
+<p class="definition">Definition in file <a class="el" href="md5_8cpp_source.html">md5.cpp</a>.</p>
+</div><h2 class="groupheader">Variable Documentation</h2>
+<a id="ab11542e1dee4b23ca1b576ed93c2ff41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab11542e1dee4b23ca1b576ed93c2ff41">&#9670;&nbsp;</a></span>k</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t md5::k</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {</div>
+<div class="line">    0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee, 0xf57c0faf, 0x4787c62a,</div>
+<div class="line">    0xa8304613, 0xfd469501, 0x698098d8, 0x8b44f7af, 0xffff5bb1, 0x895cd7be,</div>
+<div class="line">    0x6b901122, 0xfd987193, 0xa679438e, 0x49b40821, 0xf61e2562, 0xc040b340,</div>
+<div class="line">    0x265e5a51, 0xe9b6c7aa, 0xd62f105d, 0x02441453, 0xd8a1e681, 0xe7d3fbc8,</div>
+<div class="line">    0x21e1cde6, 0xc33707d6, 0xf4d50d87, 0x455a14ed, 0xa9e3e905, 0xfcefa3f8,</div>
+<div class="line">    0x676f02d9, 0x8d2a4c8a, 0xfffa3942, 0x8771f681, 0x6d9d6122, 0xfde5380c,</div>
+<div class="line">    0xa4beea44, 0x4bdecfa9, 0xf6bb4b60, 0xbebfbc70, 0x289b7ec6, 0xeaa127fa,</div>
+<div class="line">    0xd4ef3085, 0x04881d05, 0xd9d4d039, 0xe6db99e5, 0x1fa27cf8, 0xc4ac5665,</div>
+<div class="line">    0xf4292244, 0x432aff97, 0xab9423a7, 0xfc93a039, 0x655b59c3, 0x8f0ccc92,</div>
+<div class="line">    0xffeff47d, 0x85845dd1, 0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1,</div>
+<div class="line">    0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391}</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="md5_8cpp_source.html#l00058">58</a> of file <a class="el" href="md5_8cpp_source.html">md5.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ac1258a889b6a6e9625b896892b0bd639"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1258a889b6a6e9625b896892b0bd639">&#9670;&nbsp;</a></span>r</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t md5::r</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">= {7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22,</div>
+<div class="line">                5, 9,  14, 20, 5, 9,  14, 20, 5, 9,  14, 20, 5, 9,  14, 20,</div>
+<div class="line">                4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23,</div>
+<div class="line">                6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21}</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="md5_8cpp_source.html#l00051">51</a> of file <a class="el" href="md5_8cpp_source.html">md5.cpp</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

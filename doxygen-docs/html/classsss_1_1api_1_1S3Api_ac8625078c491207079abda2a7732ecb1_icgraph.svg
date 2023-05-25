@@ -21,7 +21,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="classsss_1_1api_1_1S3Api.html#a23223ee1fb701c55af2d942dbf261ae2" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="classsss_1_1api_1_1S3Api.html#a23223ee1fb701c55af2d942dbf261ae2" target="_top" xlink:title="Check if bucket exist.">
 <polygon fill="none" stroke="black" points="0,-6 0,-25 139,-25 139,-6 0,-6"/>
 <text text-anchor="middle" x="69.5" y="-13" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::TestBucket</text>
 </a>

@@ -96,61 +96,91 @@ $(document).ready(function(){initNavTree('group__Parsing.html',''); initResizabl
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Parsing</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>Response parser function for XML body and HTTP headers.  
+<p>High level XML parsing functions using filepath like input.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Data Structures</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classXMLOStream.html">XMLOStream</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">XMLGenerator. Use methods or overloaded subscript operator to insert data into XML tree.  <a href="classXMLOStream.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classXMLIStream.html">XMLIStream</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">XML parser, returns array of text elements with the same parent path or an array of parsed XML sub trees.  <a href="classXMLIStream.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gacf486071ed8bd3e6f76fe9ee23639bde"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#gacf486071ed8bd3e6f76fe9ee23639bde">sss::XMLTag</a> (const std::string &amp;xml, const std::string &amp;tag)</td></tr>
-<tr class="separator:gacf486071ed8bd3e6f76fe9ee23639bde"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gad3c529a92548fc2acddaef5f1797405f"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#gad3c529a92548fc2acddaef5f1797405f">sss::XMLTags</a> (const std::string &amp;xml, const std::string &amp;tag)</td></tr>
-<tr class="separator:gad3c529a92548fc2acddaef5f1797405f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaddaff0aa8a7f3ad2e60f73e16fc3ce11"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#gaddaff0aa8a7f3ad2e60f73e16fc3ce11">sss::XMLTagPath</a> (const std::string &amp;xml, const std::string &amp;path)</td></tr>
-<tr class="separator:gaddaff0aa8a7f3ad2e60f73e16fc3ce11"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga020103649cb1ae997e00f10d72ad6acd"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#ga020103649cb1ae997e00f10d72ad6acd">sss::HTTPHeader</a> (const std::string &amp;headers, const std::string &amp;header)</td></tr>
-<tr class="separator:ga020103649cb1ae997e00f10d72ad6acd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaca9233a3e8a097605d9168bf860e93e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5">sss::HTTPHeaders</a> (const std::string &amp;headers)</td></tr>
-<tr class="separator:gaca9233a3e8a097605d9168bf860e93e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga95e0b5f396ca92caa59f6870807789b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Types.html#ga70b971dea7826eb6b2da9a3c03045da2">MetaDataMap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#ga95e0b5f396ca92caa59f6870807789b6">sss::MetaDataHeaders</a> (const std::string &amp;headers)</td></tr>
-<tr class="separator:ga95e0b5f396ca92caa59f6870807789b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gab31b67eec4fc7c00367031debd298fd8"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#gab31b67eec4fc7c00367031debd298fd8">sss::TrimETag</a> (const std::string &amp;etag)</td></tr>
-<tr class="separator:gab31b67eec4fc7c00367031debd298fd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga663d4f6452842fce3694964ec0d38bd1"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#ga663d4f6452842fce3694964ec0d38bd1">FindElementText</a> (const std::string &amp;xml, const std::string &amp;element)</td></tr>
+<tr class="memdesc:ga663d4f6452842fce3694964ec0d38bd1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return text inside XML tags.  <a href="group__Parsing.html#ga663d4f6452842fce3694964ec0d38bd1">More...</a><br /></td></tr>
 <tr class="separator:ga663d4f6452842fce3694964ec0d38bd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacf271316bde50a40dba0a85b94fe0f00"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#gacf271316bde50a40dba0a85b94fe0f00">ParseXMLPath</a> (const std::string &amp;xml, const std::string &amp;path)</td></tr>
+<tr class="memdesc:gacf271316bde50a40dba0a85b94fe0f00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract text under XML path.  <a href="group__Parsing.html#gacf271316bde50a40dba0a85b94fe0f00">More...</a><br /></td></tr>
 <tr class="separator:gacf271316bde50a40dba0a85b94fe0f00"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga47cda9fb9518e4bb48a79de69ffa2d8e"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#ga47cda9fb9518e4bb48a79de69ffa2d8e">ParseXMLMultiPathText</a> (const std::string &amp;xml, const std::string &amp;prefixPpath, const std::string &amp;suffixPath)</td></tr>
+<tr class="memdesc:ga47cda9fb9518e4bb48a79de69ffa2d8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multilevel parsing function: return all elements matching path under prefix.  <a href="group__Parsing.html#ga47cda9fb9518e4bb48a79de69ffa2d8e">More...</a><br /></td></tr>
 <tr class="separator:ga47cda9fb9518e4bb48a79de69ffa2d8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga80f48c1aa643e95b59084124b1163e9a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::unordered_map&lt; std::string, std::string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#ga80f48c1aa643e95b59084124b1163e9a">RecordList</a> (const std::string &amp;prefix, const std::unordered_map&lt; std::string, std::vector&lt; std::string &gt;&gt; &amp;domMap)</td></tr>
+<tr class="memdesc:ga80f48c1aa643e95b59084124b1163e9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract records from DOM Map.  <a href="group__Parsing.html#ga80f48c1aa643e95b59084124b1163e9a">More...</a><br /></td></tr>
 <tr class="separator:ga80f48c1aa643e95b59084124b1163e9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6f44ce3f3d0eff5d7cbe8cc4af96182a"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; std::string, std::vector&lt; std::string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#ga6f44ce3f3d0eff5d7cbe8cc4af96182a">ParseXMLPathElementsText</a> (const std::string &amp;xml, const std::string &amp;path)</td></tr>
+<tr class="memdesc:ga6f44ce3f3d0eff5d7cbe8cc4af96182a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return all elements at location grouped by element name.  <a href="group__Parsing.html#ga6f44ce3f3d0eff5d7cbe8cc4af96182a">More...</a><br /></td></tr>
 <tr class="separator:ga6f44ce3f3d0eff5d7cbe8cc4af96182a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga670f6e87d88a598cebfdb5679865e5bf"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; std::string, std::vector&lt; std::string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#ga670f6e87d88a598cebfdb5679865e5bf">DOMToDict</a> (const std::string &amp;xml)</td></tr>
+<tr class="memdesc:ga670f6e87d88a598cebfdb5679865e5bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convert XML text to {path, text element array} map. <b>Input</b>.  <a href="group__Parsing.html#ga670f6e87d88a598cebfdb5679865e5bf">More...</a><br /></td></tr>
 <tr class="separator:ga670f6e87d88a598cebfdb5679865e5bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabc88c65d913fc6dcffdd8bfc9d07d01e"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; std::string, std::vector&lt; std::string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#gabc88c65d913fc6dcffdd8bfc9d07d01e">ExtractSubPaths</a> (const std::string &amp;prefix, const std::unordered_map&lt; std::string, std::vector&lt; std::string &gt;&gt; &amp;domMap)</td></tr>
+<tr class="memdesc:gabc88c65d913fc6dcffdd8bfc9d07d01e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return map of {subpaths with same prefix, {list of text elements under subpaths}}.  <a href="group__Parsing.html#gabc88c65d913fc6dcffdd8bfc9d07d01e">More...</a><br /></td></tr>
 <tr class="separator:gabc88c65d913fc6dcffdd8bfc9d07d01e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga851afe92d93d5b21bb8769740eddf2e4"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#ga851afe92d93d5b21bb8769740eddf2e4">XMLToText</a> (const tinyxml2::XMLDocument &amp;doc, std::unordered_map&lt; std::string, std::string &gt; kv={}, bool header=true, int indent=2)</td></tr>
-<tr class="separator:ga851afe92d93d5b21bb8769740eddf2e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga85c224486b4f631683d4f6bc22a54620"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#ga85c224486b4f631683d4f6bc22a54620">XMLToText</a> (const tinyxml2::XMLDocument &amp;doc, bool header=true, char eol_='\n', int indent=2, std::unordered_map&lt; std::string, std::string &gt; kv={})</td></tr>
+<tr class="memdesc:ga85c224486b4f631683d4f6bc22a54620"><td class="mdescLeft">&#160;</td><td class="mdescRight">Transform DOM into text, replacing matching keywords with values specified in {keyword =&gt; value} map.  <a href="group__Parsing.html#ga85c224486b4f631683d4f6bc22a54620">More...</a><br /></td></tr>
+<tr class="separator:ga85c224486b4f631683d4f6bc22a54620"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga393154e196d120c3d014cb06e24c4a1f"><td class="memItemLeft" align="right" valign="top">tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#ga393154e196d120c3d014cb06e24c4a1f">CreatePath</a> (tinyxml2::XMLElement *n, const std::string &amp;path, const std::string &amp;text=&quot;&quot;)</td></tr>
+<tr class="memdesc:ga393154e196d120c3d014cb06e24c4a1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create XML tree from path format and place it under passed element. I.e. from {"/tag1/tag2", "text"} to "&lt;tag1&gt;&lt;tag2&gt;text&lt;/tag2&gt;&lt;/tag1&gt;".  <a href="group__Parsing.html#ga393154e196d120c3d014cb06e24c4a1f">More...</a><br /></td></tr>
 <tr class="separator:ga393154e196d120c3d014cb06e24c4a1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6989c6eef8bb0bee867187e951b0431d"><td class="memItemLeft" align="right" valign="top"><a id="ga6989c6eef8bb0bee867187e951b0431d"></a>
 tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#ga6989c6eef8bb0bee867187e951b0431d">CreatePath</a> (tinyxml2::XMLDocument &amp;doc, const std::string &amp;path, const std::string &amp;text=&quot;&quot;)</td></tr>
 <tr class="memdesc:ga6989c6eef8bb0bee867187e951b0431d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create XML tree from path format and place inside document instance. <br /></td></tr>
 <tr class="separator:ga6989c6eef8bb0bee867187e951b0431d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga03c5efdbaa1d2e1f1b1390ae4db1dfb8"><td class="memItemLeft" align="right" valign="top">tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#ga03c5efdbaa1d2e1f1b1390ae4db1dfb8">CreatePaths</a> (tinyxml2::XMLElement *n, const std::string &amp;path, const std::vector&lt; std::pair&lt; std::string, std::string &gt;&gt; &amp;paths)</td></tr>
+<tr class="memdesc:ga03c5efdbaa1d2e1f1b1390ae4db1dfb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create multiple XML trees under element. Invokes CreatePath multiple times passing {path, text} value at each invocation.  <a href="group__Parsing.html#ga03c5efdbaa1d2e1f1b1390ae4db1dfb8">More...</a><br /></td></tr>
 <tr class="separator:ga03c5efdbaa1d2e1f1b1390ae4db1dfb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaba45b5db7fd1946f983427aa890e8b87"><td class="memItemLeft" align="right" valign="top">tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#gaba45b5db7fd1946f983427aa890e8b87">CreatePaths</a> (tinyxml2::XMLDocument &amp;doc, const std::string &amp;path, const std::vector&lt; std::pair&lt; std::string, std::string &gt;&gt; &amp;paths)</td></tr>
+<tr class="memdesc:gaba45b5db7fd1946f983427aa890e8b87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create multiple XML trees inside <code>tynyxml2</code> XML document. Invokes CreatePath multiple times passing {path, text} value at each invocation.  <a href="group__Parsing.html#gaba45b5db7fd1946f983427aa890e8b87">More...</a><br /></td></tr>
 <tr class="separator:gaba45b5db7fd1946f983427aa890e8b87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacf486071ed8bd3e6f76fe9ee23639bde"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#gacf486071ed8bd3e6f76fe9ee23639bde">sss::XMLTag</a> (const std::string &amp;xml, const std::string &amp;tag)</td></tr>
+<tr class="memdesc:gacf486071ed8bd3e6f76fe9ee23639bde"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract and return content of XML tag.  <a href="group__Parsing.html#gacf486071ed8bd3e6f76fe9ee23639bde">More...</a><br /></td></tr>
+<tr class="separator:gacf486071ed8bd3e6f76fe9ee23639bde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad3c529a92548fc2acddaef5f1797405f"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#gad3c529a92548fc2acddaef5f1797405f">sss::XMLTags</a> (const std::string &amp;xml, const std::string &amp;tag)</td></tr>
+<tr class="memdesc:gad3c529a92548fc2acddaef5f1797405f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract and return content of all XML tags matching word.  <a href="group__Parsing.html#gad3c529a92548fc2acddaef5f1797405f">More...</a><br /></td></tr>
+<tr class="separator:gad3c529a92548fc2acddaef5f1797405f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaddaff0aa8a7f3ad2e60f73e16fc3ce11"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#gaddaff0aa8a7f3ad2e60f73e16fc3ce11">sss::XMLTagPath</a> (const std::string &amp;xml, const std::string &amp;path)</td></tr>
+<tr class="memdesc:gaddaff0aa8a7f3ad2e60f73e16fc3ce11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract and return content of XML tag matching hierchical path.  <a href="group__Parsing.html#gaddaff0aa8a7f3ad2e60f73e16fc3ce11">More...</a><br /></td></tr>
+<tr class="separator:gaddaff0aa8a7f3ad2e60f73e16fc3ce11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga020103649cb1ae997e00f10d72ad6acd"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#ga020103649cb1ae997e00f10d72ad6acd">sss::HTTPHeader</a> (const std::string &amp;headers, const std::string &amp;header)</td></tr>
+<tr class="memdesc:ga020103649cb1ae997e00f10d72ad6acd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract and return HTTP header.  <a href="group__Parsing.html#ga020103649cb1ae997e00f10d72ad6acd">More...</a><br /></td></tr>
+<tr class="separator:ga020103649cb1ae997e00f10d72ad6acd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaca9233a3e8a097605d9168bf860e93e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5">sss::HTTPHeaders</a> (const std::string &amp;headers)</td></tr>
+<tr class="memdesc:gaca9233a3e8a097605d9168bf860e93e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract and return HTTP headers as key-value pairs.  <a href="group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5">More...</a><br /></td></tr>
+<tr class="separator:gaca9233a3e8a097605d9168bf860e93e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga95e0b5f396ca92caa59f6870807789b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Types.html#ga70b971dea7826eb6b2da9a3c03045da2">MetaDataMap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#ga95e0b5f396ca92caa59f6870807789b6">sss::MetaDataHeaders</a> (const std::string &amp;headers)</td></tr>
+<tr class="memdesc:ga95e0b5f396ca92caa59f6870807789b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract and return <code>x-amz-meta-*</code> headers.  <a href="group__Parsing.html#ga95e0b5f396ca92caa59f6870807789b6">More...</a><br /></td></tr>
+<tr class="separator:ga95e0b5f396ca92caa59f6870807789b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gab31b67eec4fc7c00367031debd298fd8"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#gab31b67eec4fc7c00367031debd298fd8">sss::TrimETag</a> (const std::string &amp;etag)</td></tr>
+<tr class="memdesc:gab31b67eec4fc7c00367031debd298fd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract ETag string from returned etag text.  <a href="group__Parsing.html#gab31b67eec4fc7c00367031debd298fd8">More...</a><br /></td></tr>
+<tr class="separator:gab31b67eec4fc7c00367031debd298fd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8a75f823e8de2f3d1b501bab6b6510f5"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Parsing.html#ga8a75f823e8de2f3d1b501bab6b6510f5">Get</a> (const XMLRecord &amp;r, const std::string &amp;path)</td></tr>
+<tr class="separator:ga8a75f823e8de2f3d1b501bab6b6510f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Response parser function for XML body and HTTP headers. </p>
-<p>High level XML parsing functions using filepath like input.</p>
+<p>High level XML parsing functions using filepath like input. </p>
+<p>Response parser function for XML body and HTTP headers.</p>
 <h2 class="groupheader">Function Documentation</h2>
 <a id="ga393154e196d120c3d014cb06e24c4a1f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga393154e196d120c3d014cb06e24c4a1f">&#9670;&nbsp;</a></span>CreatePath()</h2>
@@ -183,7 +213,8 @@ tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a cla
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Create XML tree from path format and place it under passed element. I.e. from {"/tag1/tag2", "text"} to "&lt;tag1&gt;&lt;tag2&gt;text&lt;/tag2&gt;&lt;/tag1&gt;"</p>
+
+<p>Create XML tree from path format and place it under passed element. I.e. from {"/tag1/tag2", "text"} to "&lt;tag1&gt;&lt;tag2&gt;text&lt;/tag2&gt;&lt;/tag1&gt;". </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>pointer to root element </td></tr>
@@ -226,7 +257,8 @@ tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a cla
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Create multiple XML trees inside <code>tynyxml2</code> XML document. Invokes CreatePath multiple times passing {path, text} value at each invocation.</p>
+
+<p>Create multiple XML trees inside <code>tynyxml2</code> XML document. Invokes CreatePath multiple times passing {path, text} value at each invocation. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>root element </td></tr>
@@ -270,7 +302,8 @@ tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a cla
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Create multiple XML trees under element. Invokes CreatePath multiple times passing {path, text} value at each invocation.</p>
+
+<p>Create multiple XML trees under element. Invokes CreatePath multiple times passing {path, text} value at each invocation. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>root element </td></tr>
@@ -298,7 +331,9 @@ tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a cla
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Convert XML text to {path, text element array} map. <b>Input</b> </p><div class="fragment"><div class="line">&lt;<span class="keywordtype">tag1</span>&gt;</div>
+
+<p>Convert XML text to {path, text element array} map. <b>Input</b>. </p>
+<div class="fragment"><div class="line">&lt;<span class="keywordtype">tag1</span>&gt;</div>
 <div class="line">  &lt;<span class="keywordtype">tag2</span>&gt;</div>
 <div class="line">    <span class="keyword">Text</span> 1<span class="keyword">_2</span></div>
 <div class="line">  &lt;/<span class="keywordtype">tag2</span>&gt;</div>
@@ -320,6 +355,14 @@ tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a cla
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>map of {path, element array} where the key is the path to the text elements stored in the value </dd></dl>
+<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="group__Parsing_ga670f6e87d88a598cebfdb5679865e5bf_icgraph.svg" width="326" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
 
 </div>
 </div>
@@ -348,7 +391,8 @@ tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a cla
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Return map of {subpaths with same prefix, {list of text elements under subpaths}}</p>
+
+<p>Return map of {subpaths with same prefix, {list of text elements under subpaths}}. </p>
 <p><b>Input</b> </p><div class="fragment"><div class="line"><span class="keywordtype">string</span> path = <span class="stringliteral">&quot;/path/to/some&quot;</span></div>
 <div class="line">unordered_map&lt;string, vector&lt;string&gt;&gt; domMapInput = {</div>
 <div class="line">  {<span class="stringliteral">&quot;/path/to/some/textA&quot;</span>, {<span class="stringliteral">&quot;text A1&quot;</span>, <span class="stringliteral">&quot;text A2&quot;</span>}},</div>
@@ -356,7 +400,7 @@ tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a cla
 <div class="line">  {<span class="stringliteral">&quot;/path/to/some/textB&quot;</span>, {<span class="stringliteral">&quot;text B1&quot;</span>, <span class="stringliteral">&quot;text B2&quot;</span>, <span class="stringliteral">&quot;text B3&quot;</span>}}</div>
 <div class="line">};</div>
 <div class="line"><span class="keyword">auto</span> subPaths = <a class="code" href="group__Parsing.html#gabc88c65d913fc6dcffdd8bfc9d07d01e">ExtractSubPaths</a>(path, domMapInput);</div>
-<div class="ttc" id="agroup__Parsing_html_gabc88c65d913fc6dcffdd8bfc9d07d01e"><div class="ttname"><a href="group__Parsing.html#gabc88c65d913fc6dcffdd8bfc9d07d01e">ExtractSubPaths</a></div><div class="ttdeci">std::unordered_map&lt; std::string, std::vector&lt; std::string &gt; &gt; ExtractSubPaths(const std::string &amp;prefix, const std::unordered_map&lt; std::string, std::vector&lt; std::string &gt;&gt; &amp;domMap)</div></div>
+<div class="ttc" id="agroup__Parsing_html_gabc88c65d913fc6dcffdd8bfc9d07d01e"><div class="ttname"><a href="group__Parsing.html#gabc88c65d913fc6dcffdd8bfc9d07d01e">ExtractSubPaths</a></div><div class="ttdeci">std::unordered_map&lt; std::string, std::vector&lt; std::string &gt; &gt; ExtractSubPaths(const std::string &amp;prefix, const std::unordered_map&lt; std::string, std::vector&lt; std::string &gt;&gt; &amp;domMap)</div><div class="ttdoc">Return map of {subpaths with same prefix, {list of text elements under subpaths}}.</div></div>
 </div><!-- fragment --><p> <b>Output</b> </p><div class="fragment"><div class="line">unordered_map&lt;string, vector&lt;string&gt;&gt; subPaths = {</div>
 <div class="line">  {<span class="stringliteral">&quot;/textA&quot;</span>, {<span class="stringliteral">&quot;text A1&quot;</span>, <span class="stringliteral">&quot;text A2&quot;</span>}},</div>
 <div class="line">  {<span class="stringliteral">&quot;/textB&quot;</span>, {<span class="stringliteral">&quot;text B1&quot;</span>, <span class="stringliteral">&quot;text B2&quot;</span>}}</div>
@@ -397,7 +441,8 @@ tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a cla
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Return text inside XML tags.</p>
+
+<p>Return text inside XML tags. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">xml</td><td>XML text. </td></tr>
@@ -407,6 +452,63 @@ tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a cla
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>XML text element. </dd></dl>
 
+</div>
+</div>
+<a id="ga8a75f823e8de2f3d1b501bab6b6510f5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8a75f823e8de2f3d1b501bab6b6510f5">&#9670;&nbsp;</a></span>Get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Get </td>
+          <td>(</td>
+          <td class="paramtype">const XMLRecord &amp;&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>path</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Extract string from map </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">r</td><td>XMLRecord instance </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd>XMLRecord </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">path</td><td>key in the form "/tag1/tag11..." </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>text or empty string if text not found or empty </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="xmlstreams_8h_source.html#l00343">343</a> of file <a class="el" href="xmlstreams_8h_source.html">xmlstreams.h</a>.</p>
+<div class="fragment"><div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;                                                                {</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;  <span class="keyword">auto</span> i = r.find(path);</div>
+<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;  <span class="keywordflow">return</span> i == <a class="code" href="group__Ranges.html#ga4f73053571587e79eb3db628f5e6ef99">end</a>(r) ? std::string() : i-&gt;second;</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;}</div>
+<div class="ttc" id="agroup__Ranges_html_ga4f73053571587e79eb3db628f5e6ef99"><div class="ttname"><a href="group__Ranges.html#ga4f73053571587e79eb3db628f5e6ef99">sss::end</a></div><div class="ttdeci">auto end(const SplitRange &amp;sr)</div><div class="ttdoc">return iterator at end position</div><div class="ttdef"><b>Definition:</b> <a href="lib_2include_2utility_8h_source.html#l00170">utility.h:170</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ga020103649cb1ae997e00f10d72ad6acd"></a>
@@ -434,18 +536,20 @@ tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a cla
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Extract and return HTTP header </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Extract and return HTTP header. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">headers</td><td>text containing the header section of an HTTP payload </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">header</td><td>header name </td></tr>
   </table>
   </dd>
 </dl>
-<div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" frameborder="0" src="group__Parsing_ga020103649cb1ae997e00f10d72ad6acd_icgraph.svg" width="347" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
@@ -467,18 +571,20 @@ tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a cla
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Extract and return HTTP headers as key-value pairs </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Extract and return HTTP headers as key-value pairs. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">headers</td><td>text containing the header section of an HTTP payload </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>std::map&lt;std::string, std::string&gt;</code> of {header name, header value} tuples </dd></dl>
-<div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" frameborder="0" src="group__Parsing_gaca9233a3e8a097605d9168bf860e93e5_icgraph.svg" width="644" height="180"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
@@ -500,7 +606,9 @@ tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a cla
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Extract and return <code>x-amz-meta-*</code> headers </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Extract and return <code>x-amz-meta-*</code> headers. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">headers</td><td>text containing the header section of an HTTP payload </td></tr>
   </table>
@@ -541,7 +649,8 @@ tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a cla
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Multilevel parsing function: return all elements matching path under prefix.</p>
+
+<p>Multilevel parsing function: return all elements matching path under prefix. </p>
 <p>E.g.</p>
 <p>If prefix is "/tag1/tag11" and suffix is "/name" it will extract text from <b>all</b> the &lt;name&gt;Name one&lt;/name&gt;&lt;name&gt;Name two&lt;/name&gt; elements inside <code></code> &lt;tag1&gt;&lt;tag2&gt;..&lt;/tag2&gt;&lt;/tag1 equivalent to:</p>
 <p>It groups text elements by XML prefix, mapping prefix to multiple text elements.</p>
@@ -582,7 +691,8 @@ tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a cla
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Extract text under XML path.</p>
+
+<p>Extract text under XML path. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">XML</td><td>text. </td></tr>
@@ -619,7 +729,8 @@ tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a cla
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Return all elements at location grouped by element name</p>
+
+<p>Return all elements at location grouped by element name. </p>
 <p><b>Input</b> </p><div class="fragment"><div class="line">&lt;<span class="keywordtype">tag1</span>&gt;</div>
 <div class="line">  &lt;<span class="keywordtype">tag11</span>&gt;</div>
 <div class="line">    &lt;<span class="keywordtype">node1</span>&gt;</div>
@@ -676,7 +787,9 @@ tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a cla
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Extract records from DOM Map. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="group__Parsing.html#ga670f6e87d88a598cebfdb5679865e5bf">DOMToDict</a>. A record is defined as a map with:<ul>
+
+<p>Extract records from DOM Map. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__Parsing.html#ga670f6e87d88a598cebfdb5679865e5bf" title="Convert XML text to {path, text element array} map. Input.">DOMToDict</a>. A record is defined as a map with:<ul>
 <li>key = path to tag element containing text element in the format "/tag1/tag2/..."</li>
 <li>value = text element under <em>key</em> path</li>
 </ul>
@@ -733,6 +846,20 @@ tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a cla
 <div class="line">      {<span class="stringliteral">&quot;/type&quot;</span>, <span class="stringliteral">&quot;Normal&quot;</span>}</div>
 <div class="line">    }</div>
 <div class="line">  };</div>
+</div><!-- fragment --><p>Transpose operation:</p>
+<p>FROM: </p><div class="fragment"><div class="line">/bucket/creation/date  date1</div>
+<div class="line">                       date2</div>
+<div class="line">                       date3</div>
+<div class="line">/bucket/name   name1</div>
+<div class="line">               name2</div>
+</div><!-- fragment --><p>TO: </p><div class="fragment"><div class="line">/bucket/creation/date  date1</div>
+<div class="line">/bucket/name           name1</div>
+<div class="line"> </div>
+<div class="line">/bucket/creation/date  date2</div>
+<div class="line">/bucket/name           name2</div>
+<div class="line"> </div>
+<div class="line">/bucket/creation/date  date3</div>
+<div class="line">/bucket/name           <span class="stringliteral">&quot;&quot;</span></div>
 </div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">prefix</td><td>XML path to record data.</td></tr>
@@ -741,6 +868,14 @@ tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a cla
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>list of record maps, each map contains the {field name, field value} entries for one record. </dd></dl>
+<div id="dynsection-3" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-3-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="group__Parsing_ga80f48c1aa643e95b59084124b1163e9a_icgraph.svg" width="303" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
 
 </div>
 </div>
@@ -759,7 +894,9 @@ tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a cla
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Extract ETag string from returned etag text. </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Extract ETag string from returned etag text. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">etag</td><td>etag text </td></tr>
   </table>
@@ -794,7 +931,9 @@ tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a cla
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Extract and return content of XML tag </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Extract and return content of XML tag. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">xml</td><td>XML text </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">tag</td><td><code></code> &lt;tag&gt; name </td></tr>
@@ -802,11 +941,11 @@ tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a cla
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code></code> &lt;tag&gt; content </dd></dl>
-<div id="dynsection-2" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-2-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-4" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-4-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" frameborder="0" src="group__Parsing_gacf486071ed8bd3e6f76fe9ee23639bde_icgraph.svg" width="366" height="118"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
@@ -838,7 +977,9 @@ tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a cla
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Extract and return content of XML tag matching hierchical path. </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Extract and return content of XML tag matching hierchical path. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">xml</td><td>XML text </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">path</td><td><code>tag</code> path separated by <code>'/'</code> character </td></tr>
@@ -874,7 +1015,9 @@ tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a cla
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Extract and return content of all XML tags matching word </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Extract and return content of all XML tags matching word. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">xml</td><td>XML text </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">tag</td><td><code></code> &lt;tag&gt; name </td></tr>
@@ -885,8 +1028,8 @@ tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a cla
 
 </div>
 </div>
-<a id="ga851afe92d93d5b21bb8769740eddf2e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga851afe92d93d5b21bb8769740eddf2e4">&#9670;&nbsp;</a></span>XMLToText()</h2>
+<a id="ga85c224486b4f631683d4f6bc22a54620"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga85c224486b4f631683d4f6bc22a54620">&#9670;&nbsp;</a></span>XMLToText()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -900,20 +1043,26 @@ tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a cla
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::unordered_map&lt; std::string, std::string &gt;&#160;</td>
-          <td class="paramname"><em>kv</em> = <code>{}</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">bool&#160;</td>
           <td class="paramname"><em>header</em> = <code>true</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>eol_</em> = <code>'\n'</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>indent</em> = <code>2</code>&#160;</td>
+          <td class="paramname"><em>indent</em> = <code>2</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::unordered_map&lt; std::string, std::string &gt;&#160;</td>
+          <td class="paramname"><em>kv</em> = <code>{}</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -922,17 +1071,28 @@ tinyxml2::XMLElement *&#160;</td><td class="memItemRight" valign="bottom"><a cla
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Translate from DOM to text, replacing matching keywords with values specified in {keyword =&gt; value} map.</p>
+
+<p>Transform DOM into text, replacing matching keywords with values specified in {keyword =&gt; value} map. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">doc</td><td>XML document in <code>tinyxml2</code> format</td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">kv</td><td>keyword =&gt; value map, keywords are replaced with values in translated text</td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">header</td><td>if <code>true</code> addx the <code>&lt;xml</code>...&gt; header</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">eol</td><td>end of line separator, default is '<br  />
+', if '0' no EOL generated</td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">indent</td><td>indentation value</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>XML text with keywords replaced with values specified in input map </dd></dl>
+<div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-5-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="group__Parsing_ga85c224486b4f631683d4f6bc22a54620_icgraph.svg" width="308" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
 
 </div>
 </div>

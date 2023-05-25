@@ -1,16 +1,18 @@
 var searchData=
 [
-  ['upload_182',['Upload',['../group__S3Client.html#gac5f34efe8d5fde67f9c2c006742d6f85',1,'sss']]],
-  ['uploaddatafrombuffer_183',['UploadDataFromBuffer',['../classsss_1_1WebClient.html#ae7b1f77bd4ae44585f2d49ea493bdcc5',1,'sss::WebClient']]],
-  ['uploadfile_184',['UploadFile',['../classsss_1_1WebClient.html#ad038e41cfc902f6e49754c52a9a71992',1,'sss::WebClient::UploadFile(const std::string &amp;fname, size_t fsize=0)'],['../classsss_1_1WebClient.html#aac358c3660f8efeaa8d66186c3f95a7e',1,'sss::WebClient::UploadFile(const std::string &amp;fname, size_t offset, size_t size)']]],
-  ['uploadfilemm_185',['UploadFileMM',['../classsss_1_1WebClient.html#ab5af9d8e7c424e49fab04f0d9d59b489',1,'sss::WebClient']]],
-  ['uploadfilepart_186',['UploadFilePart',['../classsss_1_1api_1_1S3Api.html#aa8bcb6604830a045a7e29a0bc55c0f52',1,'sss::api::S3Api']]],
-  ['uploadfileunbuffered_187',['UploadFileUnbuffered',['../classsss_1_1WebClient.html#accb4e986d73bb44149918fa0043ec43b',1,'sss::WebClient']]],
-  ['uploadpart_188',['UploadPart',['../classsss_1_1api_1_1S3Api.html#aa96041afbc4648fc644037c88b30d1a7',1,'sss::api::S3Api']]],
-  ['url_189',['URL',['../structsss_1_1URL.html',1,'sss']]],
-  ['url_5futility_2eh_190',['url_utility.h',['../url__utility_8h.html',1,'']]],
-  ['urlencode_191',['UrlEncode',['../group__Internal.html#ga0f079ace8729714b3949eabe22f228c9',1,'sss::UrlEncode(const std::string &amp;s)'],['../group__Internal.html#ga6e3db8d156313abef7e2c966df1a3d7c',1,'sss::UrlEncode(const Map &amp;p)']]],
-  ['urlencodepostparams_192',['urlEncodePostParams',['../structsss_1_1api_1_1S3Api_1_1SendParams.html#af99ea89f2e18e4f3c86e919223e98bce',1,'sss::api::S3Api::SendParams']]],
-  ['utility_2ecpp_193',['utility.cpp',['../lib_2hash_2utility_8cpp.html',1,'']]],
-  ['utility_2eh_194',['utility.h',['../lib_2hash_2utility_8h.html',1,'(Global Namespace)'],['../lib_2include_2utility_8h.html',1,'(Global Namespace)']]]
+  ['tempfile_208',['TempFile',['../structTempFile.html',1,'']]],
+  ['testbucket_209',['TestBucket',['../classsss_1_1api_1_1S3Api.html#a23223ee1fb701c55af2d942dbf261ae2',1,'sss::api::S3Api']]],
+  ['testobject_210',['TestObject',['../classsss_1_1api_1_1S3Api.html#aa3f7a3001bdad58c7b0c04cbd0dc3236',1,'sss::api::S3Api']]],
+  ['time_211',['Time',['../structsss_1_1Time.html',1,'sss']]],
+  ['timestamp_212',['timeStamp',['../group__Internal.html#gaa14dc75f1b6eaec6816a6be5a0450816',1,'sss::Time']]],
+  ['to_5fbig_5fendian_213',['to_big_endian',['../group__Hash__Utility.html#gac77df34e18fbd8a9ae82a50cf65d6cf4',1,'utility.h']]],
+  ['to_5flittle_214',['to_little',['../group__Hash.html#ga3175ec2f1104e9fd94349074ddc9d7d1',1,'sha256']]],
+  ['to_5flittle_5fendian_215',['to_little_endian',['../group__Hash__Utility.html#gaaea301b59a68d5bb6ea05216b80fa47c',1,'utility.h']]],
+  ['tolower_216',['ToLower',['../lib_2include_2utility_8h.html#ab314781bb3f053ef5325b50f3a1b74f8',1,'sss']]],
+  ['tometa_217',['ToMeta',['../group__Internal.html#ga3898026085460f9f0424cc3972e55374',1,'sss']]],
+  ['totextvisitor_218',['ToTextVisitor',['../classToTextVisitor.html',1,'']]],
+  ['toupper_219',['ToUpper',['../lib_2include_2utility_8h.html#ae153c064d6f1beda845702f67605b20e',1,'sss']]],
+  ['trimetag_220',['TrimETag',['../group__Parsing.html#gab31b67eec4fc7c00367031debd298fd8',1,'sss']]],
+  ['trimline_221',['TrimLine',['../lib_2include_2utility_8h.html#a1c4118109dd2031327101ad531cf0e5c',1,'sss']]],
+  ['types_222',['Types',['../group__Types.html',1,'']]]
 ];

@@ -143,6 +143,9 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Internal.html#ga27be61dcbd5f768458bdc07f4583103d">sss::ReadFile</a> (void *ptr, size_t size, size_t nmemb, void *userdata)</td></tr>
 <tr class="memdesc:ga27be61dcbd5f768458bdc07f4583103d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read from file. <br /></td></tr>
 <tr class="separator:ga27be61dcbd5f768458bdc07f4583103d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaee469b607610ad28c2be0f16726d5b6a"><td class="memItemLeft" align="right" valign="top"><a id="gaee469b607610ad28c2be0f16726d5b6a"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>sss::ReadFileUnbuffered</b> (void *ptr, size_t size, size_t nmemb, void *userdata)</td></tr>
+<tr class="separator:gaee469b607610ad28c2be0f16726d5b6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1d8ee27f5ea27f7920608330f638352a"><td class="memItemLeft" align="right" valign="top"><a id="ga1d8ee27f5ea27f7920608330f638352a"></a>
 size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Internal.html#ga1d8ee27f5ea27f7920608330f638352a">sss::WriteFile</a> (char *ptr, size_t size, size_t nmemb, void *userdata)</td></tr>
 <tr class="memdesc:ga1d8ee27f5ea27f7920608330f638352a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write to file. <br /></td></tr>
@@ -151,6 +154,9 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gr
 size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Internal.html#ga3ea7d81ae150fff0bead20dff933aec0">sss::WriteFileUnbuffered</a> (char *ptr, size_t size, size_t nmemb, void *userdata)</td></tr>
 <tr class="memdesc:ga3ea7d81ae150fff0bead20dff933aec0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write to file using unbuffered I/O. <br /></td></tr>
 <tr class="separator:ga3ea7d81ae150fff0bead20dff933aec0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3898026085460f9f0424cc3972e55374"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Internal.html#ga3898026085460f9f0424cc3972e55374">sss::ToMeta</a> (const std::map&lt; std::string, std::string &gt; &amp;metaData)</td></tr>
+<tr class="memdesc:ga3898026085460f9f0424cc3972e55374"><td class="mdescLeft">&#160;</td><td class="mdescRight">Translate metadata (key,value) pairs to <code>amz-</code> format and return header map which can be merged with other headers using the <code>std::map::merge</code> method, since C++17.  <a href="group__Internal.html#ga3898026085460f9f0424cc3972e55374">More...</a><br /></td></tr>
+<tr class="separator:ga3898026085460f9f0424cc3972e55374"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
 Variables</h2></td></tr>
@@ -246,6 +252,8 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <li>date only</li>
 </ul>
 <p>Return current time and date in the two formats required to sign AWS S3 requests </p><dl class="section return"><dt>Returns</dt><dd><a class="el" href="structsss_1_1Time.html" title="Time data type, used to generate pre-signed URLs.">Time</a> structure filled with both full date-time and date only </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="aws__sign_8cpp_source.html#l00080">80</a> of file <a class="el" href="aws__sign_8cpp_source.html">aws_sign.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;                {</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  time_t t;</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  time(&amp;t);</div>
@@ -299,6 +307,8 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>HMAC hash </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="aws__sign_8cpp_source.html#l00098">98</a> of file <a class="el" href="aws__sign_8cpp_source.html">aws_sign.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;{ <span class="keywordflow">return</span> HMAC256(msg, key); }</div>
 </div><!-- fragment -->
 </div>
@@ -327,6 +337,8 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>ASCII-encoded hex numbers </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="aws__sign_8cpp_source.html#l00117">117</a> of file <a class="el" href="aws__sign_8cpp_source.html">aws_sign.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;                           {</div>
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;  ostringstream os;</div>
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160; </div>
@@ -416,6 +428,45 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 
 </div>
 </div>
+<a id="ga3898026085460f9f0424cc3972e55374"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga3898026085460f9f0424cc3972e55374">&#9670;&nbsp;</a></span>ToMeta()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__Types.html#gadb51ebb99d8e67b505941f6d9230891c">Map</a> sss::ToMeta </td>
+          <td>(</td>
+          <td class="paramtype">const std::map&lt; std::string, std::string &gt; &amp;&#160;</td>
+          <td class="paramname"><em>metaData</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Translate metadata (key,value) pairs to <code>amz-</code> format and return header map which can be merged with other headers using the <code>std::map::merge</code> method, since C++17. </p>
+<p>Adds <code>x-amz-meta-</code> prefix to map keys and checks that total size is less than maximum metadata header size (currently 2kB). </p>
+
+<p class="definition">Definition at line <a class="el" href="url__utility_8cpp_source.html#l00165">165</a> of file <a class="el" href="url__utility_8cpp_source.html">url_utility.cpp</a>.</p>
+<div class="fragment"><div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;                                {</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">size_t</span> MAX_META_SIZE = 2048;</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;  <a class="code" href="group__Types.html#gadb51ebb99d8e67b505941f6d9230891c">Map</a> meta;</div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">string</span> prefix = <span class="stringliteral">&quot;x-amz-meta-&quot;</span>;</div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;  <span class="keywordtype">size_t</span> size = 0;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span> kv : metadata) {</div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="keyword">auto</span> key = prefix + kv.first;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    meta[key] = kv.second;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    size += key.size() + kv.second.size() + 1; <span class="comment">// +1 --&gt; &quot;:&quot;</span></div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;  }</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;  <span class="keywordflow">if</span> (size &gt; MAX_META_SIZE)</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    <span class="keywordflow">throw</span> std::domain_error(<span class="stringliteral">&quot;Size of metadata bigger than &quot;</span> +</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;                            to_string(MAX_META_SIZE) + <span class="stringliteral">&quot; bytes&quot;</span>);</div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;  <span class="keywordflow">return</span> meta;</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;}</div>
+<div class="ttc" id="agroup__Types_html_gadb51ebb99d8e67b505941f6d9230891c"><div class="ttname"><a href="group__Types.html#gadb51ebb99d8e67b505941f6d9230891c">sss::Map</a></div><div class="ttdeci">std::map&lt; std::string, std::string &gt; Map</div><div class="ttdoc">Base type for all dictionary types.</div><div class="ttdef"><b>Definition:</b> <a href="common_8h_source.html#l00054">common.h:54</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="ga6e3db8d156313abef7e2c966df1a3d7c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ga6e3db8d156313abef7e2c966df1a3d7c">&#9670;&nbsp;</a></span>UrlEncode() <span class="overload">[1/2]</span></h2>
 
@@ -438,6 +489,8 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>url-encoded url </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="url__utility_8cpp_source.html#l00091">91</a> of file <a class="el" href="url__utility_8cpp_source.html">url_utility.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;                               {</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;  <span class="keywordtype">string</span> url;</div>
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <span class="keywordflow">for</span> (<span class="keyword">auto</span> i : p) {</div>
@@ -446,7 +499,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  }</div>
 <div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keywordflow">return</span> string(url.begin(), --url.end());</div>
 <div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;}</div>
-<div class="ttc" id="agroup__Internal_html_ga0f079ace8729714b3949eabe22f228c9"><div class="ttname"><a href="group__Internal.html#ga0f079ace8729714b3949eabe22f228c9">sss::UrlEncode</a></div><div class="ttdeci">std::string UrlEncode(const std::string &amp;s)</div><div class="ttdef"><b>Definition:</b> url_utility.cpp:69</div></div>
+<div class="ttc" id="agroup__Internal_html_ga0f079ace8729714b3949eabe22f228c9"><div class="ttname"><a href="group__Internal.html#ga0f079ace8729714b3949eabe22f228c9">sss::UrlEncode</a></div><div class="ttdeci">std::string UrlEncode(const std::string &amp;s)</div><div class="ttdef"><b>Definition:</b> <a href="url__utility_8cpp_source.html#l00069">url_utility.cpp:69</a></div></div>
 </div><!-- fragment --><div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
 <div id="dynsection-1-summary" class="dynsummary" style="display:block;">
@@ -480,6 +533,8 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>url-encoded url </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="url__utility_8cpp_source.html#l00069">69</a> of file <a class="el" href="url__utility_8cpp_source.html">url_utility.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;                                     {</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  std::ostringstream escaped;</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  escaped.fill(<span class="charliteral">&#39;0&#39;</span>);</div>

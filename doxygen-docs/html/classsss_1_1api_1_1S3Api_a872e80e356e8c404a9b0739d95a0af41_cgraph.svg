@@ -48,7 +48,7 @@ if (edges && edges.length) {
 <script type="text/javascript">
 var viewWidth = 1311;
 var viewHeight = 545;
-var sectionId = 'dynsection-15';
+var sectionId = 'dynsection-16';
 </script>
 <script xlink:href="svgpan.js"/>
 <svg id="graph" class="graph">
@@ -57,7 +57,7 @@ var sectionId = 'dynsection-15';
 <!-- Node1 -->
 <g id="node1" class="node">
 <title>Node1</title>
-<g id="a_node1"><a xlink:title="[WebClient::Config]">
+<g id="a_node1"><a xlink:title="Return object size.">
 <polygon fill="#bfbfbf" stroke="black" points="0,-388.5 0,-407.5 153,-407.5 153,-388.5 0,-388.5"/>
 <text text-anchor="middle" x="76.5" y="-395.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::GetObjectSize</text>
 </a>
@@ -81,7 +81,7 @@ var sectionId = 'dynsection-15';
 <!-- Node3 -->
 <g id="node3" class="node">
 <title>Node3</title>
-<g id="a_node3"><a xlink:href="classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22" target="_top" xlink:title=" ">
+<g id="a_node3"><a xlink:href="classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22" target="_top" xlink:title="Send HeadObject request.">
 <polygon fill="none" stroke="black" points="189,-369.5 189,-388.5 330,-388.5 330,-369.5 189,-369.5"/>
 <text text-anchor="middle" x="259.5" y="-376.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::HeadObject</text>
 </a>
@@ -111,7 +111,7 @@ var sectionId = 'dynsection-15';
 <!-- Node6 -->
 <g id="node6" class="node">
 <title>Node6</title>
-<g id="a_node6"><a xlink:href="group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5" target="_top" xlink:title=" ">
+<g id="a_node6"><a xlink:href="group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5" target="_top" xlink:title="Extract and return HTTP headers as key&#45;value pairs.">
 <polygon fill="none" stroke="black" points="393,-369.5 393,-388.5 494,-388.5 494,-369.5 393,-369.5"/>
 <text text-anchor="middle" x="443.5" y="-376.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::HTTPHeaders</text>
 </a>
@@ -126,7 +126,7 @@ var sectionId = 'dynsection-15';
 <!-- Node7 -->
 <g id="node7" class="node">
 <title>Node7</title>
-<g id="a_node7"><a xlink:href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889" target="_top" xlink:title=" ">
+<g id="a_node7"><a xlink:href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889" target="_top" xlink:title="Send request.">
 <polygon fill="none" stroke="black" points="387.5,-209.5 387.5,-228.5 499.5,-228.5 499.5,-209.5 387.5,-209.5"/>
 <text text-anchor="middle" x="443.5" y="-216.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::Send</text>
 </a>
@@ -157,7 +157,7 @@ var sectionId = 'dynsection-15';
 <!-- Node8 -->
 <g id="node8" class="node">
 <title>Node8</title>
-<g id="a_node8"><a xlink:href="classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31" target="_top" xlink:title="[WebClient::Config]">
+<g id="a_node8"><a xlink:href="classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31" target="_top" xlink:title="Configure instance.">
 <polygon fill="none" stroke="black" points="575.5,-209.5 575.5,-228.5 693.5,-228.5 693.5,-209.5 575.5,-209.5"/>
 <text text-anchor="middle" x="634.5" y="-216.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::Config</text>
 </a>
@@ -354,7 +354,7 @@ var sectionId = 'dynsection-15';
 <!-- Node21 -->
 <g id="node21" class="node">
 <title>Node21</title>
-<g id="a_node21"><a xlink:href="classsss_1_1WebClient.html#afc3b7a92568fbb1ea447918920ca266e" target="_top" xlink:title="Set endpoint: &#160;&lt;proto&gt;://&lt;server&gt;:&lt;port&gt;">
+<g id="a_node21"><a xlink:href="classsss_1_1WebClient.html#afc3b7a92568fbb1ea447918920ca266e" target="_top" xlink:title="Set endpoint: &lt;proto&gt;://&lt;server&gt;:&lt;port&gt;">
 <polygon fill="none" stroke="black" points="748,-342.5 748,-361.5 891,-361.5 891,-342.5 748,-342.5"/>
 <text text-anchor="middle" x="819.5" y="-349.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::WebClient::SetEndpoint</text>
 </a>

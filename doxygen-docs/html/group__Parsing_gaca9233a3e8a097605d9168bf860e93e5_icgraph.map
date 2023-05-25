@@ -1,8 +1,8 @@
 <map id="sss::HTTPHeaders" name="sss::HTTPHeaders">
-<area shape="rect" id="node1" title=" " alt="" coords="504,71,639,98"/>
+<area shape="rect" id="node1" title="Extract and return HTTP headers as key&#45;value pairs." alt="" coords="504,71,639,98"/>
 <area shape="rect" id="node2" href="$classsss_1_1api_1_1S3Api.html#a834e046a52178dcf540509df828b024f" title=" " alt="" coords="257,5,456,47"/>
 <area shape="rect" id="node3" href="$classsss_1_1api_1_1S3Api.html#aa4a2b1cc2c89a52d1aa89e571b785db2" title=" " alt="" coords="261,71,452,98"/>
-<area shape="rect" id="node4" href="$classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22" title=" " alt="" coords="263,122,451,149"/>
-<area shape="rect" id="node5" href="$classsss_1_1api_1_1S3Api.html#a872e80e356e8c404a9b0739d95a0af41" title="[WebClient::Config]" alt="" coords="5,97,209,123"/>
-<area shape="rect" id="node6" href="$classsss_1_1api_1_1S3Api.html#aa3f7a3001bdad58c7b0c04cbd0dc3236" title=" " alt="" coords="16,147,199,174"/>
+<area shape="rect" id="node4" href="$classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22" title="Send HeadObject request." alt="" coords="263,122,451,149"/>
+<area shape="rect" id="node5" href="$classsss_1_1api_1_1S3Api.html#a872e80e356e8c404a9b0739d95a0af41" title="Return object size." alt="" coords="5,97,209,123"/>
+<area shape="rect" id="node6" href="$classsss_1_1api_1_1S3Api.html#aa3f7a3001bdad58c7b0c04cbd0dc3236" title="Check if key exists." alt="" coords="16,147,199,174"/>
 </map>

@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="node1" class="node">
 <title>Node1</title>
-<g id="a_node1"><a xlink:title=" ">
+<g id="a_node1"><a xlink:title="Extract and return HTTP header.">
 <polygon fill="#bfbfbf" stroke="black" points="156,-6 156,-25 252,-25 252,-6 156,-6"/>
 <text text-anchor="middle" x="204" y="-13" font-family="Helvetica,sans-Serif" font-size="10.00">sss::HTTPHeader</text>
 </a>
@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="classsss_1_1api_1_1S3Api.html#ab7affe0834f5892b393e731783b7ccac" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="classsss_1_1api_1_1S3Api.html#ab7affe0834f5892b393e731783b7ccac" target="_top" xlink:title="Upload file to object.">
 <polygon fill="none" stroke="black" points="0,-0.5 0,-30.5 120,-30.5 120,-0.5 0,-0.5"/>
 <text text-anchor="start" x="8" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::PutFile</text>
 <text text-anchor="middle" x="60" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">Object</text>

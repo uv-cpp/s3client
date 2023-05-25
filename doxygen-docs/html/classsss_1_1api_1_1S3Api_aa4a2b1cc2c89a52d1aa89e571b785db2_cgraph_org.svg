@@ -35,7 +35,7 @@
 <!-- Node4 -->
 <g id="node4" class="node">
 <title>Node4</title>
-<g id="a_node4"><a xlink:href="group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5" target="_top" xlink:title=" ">
+<g id="a_node4"><a xlink:href="group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5" target="_top" xlink:title="Extract and return HTTP headers as key&#45;value pairs.">
 <polygon fill="none" stroke="black" points="207.5,-367.5 207.5,-386.5 308.5,-386.5 308.5,-367.5 207.5,-367.5"/>
 <text text-anchor="middle" x="258" y="-374.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::HTTPHeaders</text>
 </a>
@@ -50,7 +50,7 @@
 <!-- Node5 -->
 <g id="node5" class="node">
 <title>Node5</title>
-<g id="a_node5"><a xlink:href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889" target="_top" xlink:title=" ">
+<g id="a_node5"><a xlink:href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889" target="_top" xlink:title="Send request.">
 <polygon fill="none" stroke="black" points="202,-209.5 202,-228.5 314,-228.5 314,-209.5 202,-209.5"/>
 <text text-anchor="middle" x="258" y="-216.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::Send</text>
 </a>
@@ -80,7 +80,7 @@
 <!-- Node6 -->
 <g id="node6" class="node">
 <title>Node6</title>
-<g id="a_node6"><a xlink:href="classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31" target="_top" xlink:title="[WebClient::Config]">
+<g id="a_node6"><a xlink:href="classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31" target="_top" xlink:title="Configure instance.">
 <polygon fill="none" stroke="black" points="400,-209.5 400,-228.5 518,-228.5 518,-209.5 400,-209.5"/>
 <text text-anchor="middle" x="459" y="-216.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::Config</text>
 </a>
@@ -277,7 +277,7 @@
 <!-- Node19 -->
 <g id="node19" class="node">
 <title>Node19</title>
-<g id="a_node19"><a xlink:href="classsss_1_1WebClient.html#afc3b7a92568fbb1ea447918920ca266e" target="_top" xlink:title="Set endpoint: &#160;&lt;proto&gt;://&lt;server&gt;:&lt;port&gt;">
+<g id="a_node19"><a xlink:href="classsss_1_1WebClient.html#afc3b7a92568fbb1ea447918920ca266e" target="_top" xlink:title="Set endpoint: &lt;proto&gt;://&lt;server&gt;:&lt;port&gt;">
 <polygon fill="none" stroke="black" points="581,-342.5 581,-361.5 724,-361.5 724,-342.5 581,-342.5"/>
 <text text-anchor="middle" x="652.5" y="-349.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::WebClient::SetEndpoint</text>
 </a>

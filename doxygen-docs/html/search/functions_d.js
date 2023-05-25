@@ -1,8 +1,15 @@
 var searchData=
 [
-  ['readfile_315',['ReadFile',['../group__Internal.html#ga27be61dcbd5f768458bdc07f4583103d',1,'sss']]],
-  ['recordlist_316',['RecordList',['../group__Parsing.html#ga80f48c1aa643e95b59084124b1163e9a',1,'xml_path.h']]],
-  ['redirectstderr_317',['RedirectSTDErr',['../classsss_1_1WebClient.html#aca12fa34231a3efabc8c717635932d5e',1,'sss::WebClient']]],
-  ['resetrwfunctions_318',['ResetRWFunctions',['../classsss_1_1WebClient.html#a96837f149bb473853a6523d096a25c56',1,'sss::WebClient']]],
-  ['right_5frotate_319',['right_rotate',['../group__Hash__Utility.html#gaec0ea9d7fd1557b10a283c3b3b474889',1,'utility.h']]]
+  ['parseheaders_380',['ParseHeaders',['../group__Internal.html#gab5b85dd69c3bfe70d89c96b77b5b46f2',1,'sss']]],
+  ['parseparams_381',['ParseParams',['../group__Internal.html#ga2b8b08c2a4994a87377d83ccfa9a6a53',1,'sss']]],
+  ['parsetomlfile_382',['ParseTomlFile',['../lib_2include_2utility_8h.html#afaf7d810ee7626a814d7cbe790dce4ab',1,'sss']]],
+  ['parseurl_383',['ParseURL',['../group__Internal.html#ga7160aa316f2c6633467b47588263c690',1,'sss']]],
+  ['parsexmlmultipathtext_384',['ParseXMLMultiPathText',['../group__Parsing.html#ga47cda9fb9518e4bb48a79de69ffa2d8e',1,'xml_path.h']]],
+  ['parsexmlpath_385',['ParseXMLPath',['../group__Parsing.html#gacf271316bde50a40dba0a85b94fe0f00',1,'xml_path.h']]],
+  ['parsexmlpathelementstext_386',['ParseXMLPathElementsText',['../group__Parsing.html#ga6f44ce3f3d0eff5d7cbe8cc4af96182a',1,'xml_path.h']]],
+  ['print_5fhash_387',['print_hash',['../group__Hash.html#gab67535e651cd6086262eaff33afb9e2c',1,'sha256::print_hash()'],['../group__Hash.html#gabbd4ca806ab3ab35436f9718a596d15b',1,'md5::print_hash()']]],
+  ['putbucketacl_388',['PutBucketAcl',['../classsss_1_1api_1_1S3Api.html#aa35e9b1cc7661cd9bb0d5f2de6cbbc7d',1,'sss::api::S3Api']]],
+  ['putfileobject_389',['PutFileObject',['../classsss_1_1api_1_1S3Api.html#ab7affe0834f5892b393e731783b7ccac',1,'sss::api::S3Api']]],
+  ['putobject_390',['PutObject',['../classsss_1_1api_1_1S3Api.html#a6ee9092a67e32ed994c6d7bd6a3f712c',1,'sss::api::S3Api::PutObject(const std::string &amp;bucket, const std::string &amp;key, const CharArray &amp;buffer, Headers headers={{}}, const std::string &amp;payloadHash={})'],['../classsss_1_1api_1_1S3Api.html#acf14c65d821e89d85dd5a72ba911122d',1,'sss::api::S3Api::PutObject(const std::string &amp;bucket, const std::string &amp;key, const char *buffer, size_t size, Headers headers={{}}, const std::string &amp;payloadHash={})']]],
+  ['putobjectacl_391',['PutObjectAcl',['../classsss_1_1api_1_1S3Api.html#a2cc08fb777cfc4d24c40bea1cde967e7',1,'sss::api::S3Api']]]
 ];

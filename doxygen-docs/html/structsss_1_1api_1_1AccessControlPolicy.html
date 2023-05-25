@@ -95,16 +95,41 @@ $(document).ready(function(){initNavTree('structsss_1_1api_1_1AccessControlPolic
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
 <div class="title">sss::api::AccessControlPolicy Struct Reference<div class="ingroups"><a class="el" href="group__S3__API.html">S3_API</a></div></div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;s3-api.h&gt;</code></p>
+<p>XML -&gt; C++ mapping of <code><a class="el" href="structsss_1_1api_1_1AccessControlPolicy.html" title="XML -&gt; C++ mapping of AccessControlPolicy https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBuck...">AccessControlPolicy</a></code> <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAcl.html">https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAcl.html</a>.  
+ <a href="structsss_1_1api_1_1AccessControlPolicy.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="s3-api_8h_source.html">s3-api.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Data Fields</h2></td></tr>
+<tr class="memitem:a4634972e0f1460b331605942353bcb5f"><td class="memItemLeft" align="right" valign="top"><a id="a4634972e0f1460b331605942353bcb5f"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>ownerDisplayName</b></td></tr>
+<tr class="separator:a4634972e0f1460b331605942353bcb5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74c298bb0a07de65b487e0eaf93eb610"><td class="memItemLeft" align="right" valign="top"><a id="a74c298bb0a07de65b487e0eaf93eb610"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>ownerID</b></td></tr>
+<tr class="separator:a74c298bb0a07de65b487e0eaf93eb610"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe77d38776cf90247d91ec177b49fdfb"><td class="memItemLeft" align="right" valign="top"><a id="afe77d38776cf90247d91ec177b49fdfb"></a>
+std::vector&lt; <a class="el" href="structsss_1_1api_1_1Grant.html">Grant</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>grants</b></td></tr>
+<tr class="separator:afe77d38776cf90247d91ec177b49fdfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>XML -&gt; C++ mapping of <code><a class="el" href="structsss_1_1api_1_1AccessControlPolicy.html">AccessControlPolicy</a></code> <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAcl.html">https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAcl.html</a> </p>
+<div class="textblock"><p>XML -&gt; C++ mapping of <code><a class="el" href="structsss_1_1api_1_1AccessControlPolicy.html" title="XML -&gt; C++ mapping of AccessControlPolicy https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBuck...">AccessControlPolicy</a></code> <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAcl.html">https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAcl.html</a>. </p>
+<div class="fragment"><div class="line"><span class="keyword">struct </span>AccessControlPolicy {</div>
+<div class="line">  std::string ownerDisplayName;</div>
+<div class="line">  std::string ownerID;</div>
+<div class="line">  std::vector&lt;Grant&gt; grants;</div>
+<div class="line">};</div>
+</div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="s3-api_8h_source.html#l00137">137</a> of file <a class="el" href="s3-api_8h_source.html">s3-api.h</a>.</p>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
-<li>/home/ugovaretto/projects/uv-cpp/s3client/repo/lib/include/<a class="el" href="s3-api_8h.html">s3-api.h</a></li>
+<li>/home/ugovaretto/projects/uv-cpp/s3client/repo/lib/include/<a class="el" href="s3-api_8h_source.html">s3-api.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

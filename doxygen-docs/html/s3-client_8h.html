@@ -106,9 +106,9 @@ $(document).ready(function(){initNavTree('s3-client_8h.html',''); initResizable(
 
 <p>declaration of functions and data types for sending S3 requests, signing URLs and downloading and uploading files.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="aws__sign_8h.html">aws_sign.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="common_8h.html">common.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="webclient_8h.html">webclient.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="aws__sign_8h_source.html">aws_sign.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="common_8h_source.html">common.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="webclient_8h_source.html">webclient.h</a>&quot;</code><br />
 <code>#include &lt;string&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 </div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
@@ -124,16 +124,19 @@ $(document).ready(function(){initNavTree('s3-client_8h.html',''); initResizable(
 <div id="dynsection-1-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="s3-client_8h__dep__incl.svg" width="100%" height="506"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="s3-client_8h__dep__incl.svg" width="100%" height="595"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
-</div><table class="memberdecls">
+</div>
+<p><a href="s3-client_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsss_1_1S3Credentials.html">sss::S3Credentials</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">S3 Credentials in AWS format.  <a href="structsss_1_1S3Credentials.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsss_1_1S3ClientConfig.html">sss::S3ClientConfig</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameters for SendS3Request calls.  <a href="structsss_1_1S3ClientConfig.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsss_1_1S3DataTransferConfig.html">sss::S3DataTransferConfig</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameters for calls to upload and download functions.  <a href="structsss_1_1S3DataTransferConfig.html#details">More...</a><br /></td></tr>
@@ -144,36 +147,56 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ga70b971dea7826eb6b2da9a3c03045da2"><td class="memItemLeft" align="right" valign="top">
-using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Types.html#ga70b971dea7826eb6b2da9a3c03045da2">sss::MetaDataMap</a> = std::map&lt; std::string, std::string &gt;</td></tr>
-<tr class="memdesc:ga70b971dea7826eb6b2da9a3c03045da2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Metadata map: <code>key-&gt;value</code> =&gt; <code>xmz-meta-key</code>:value. <br /></td></tr>
+<tr class="memitem:ga9a03838eeab410fbc2118ed838d96bf5"><td class="memItemLeft" align="right" valign="top">
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Types.html#ga9a03838eeab410fbc2118ed838d96bf5">sss::CharArray</a> = std::vector&lt; char &gt;</td></tr>
+<tr class="memdesc:ga9a03838eeab410fbc2118ed838d96bf5"><td class="mdescLeft">&#160;</td><td class="mdescRight">char array wrapping <code>char*</code> buffers used by <code>libcurl</code> <br /></td></tr>
+<tr class="separator:ga9a03838eeab410fbc2118ed838d96bf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga77796e48da5734723e99d9fabc9cc307"><td class="memItemLeft" align="right" valign="top">
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Types.html#ga77796e48da5734723e99d9fabc9cc307">sss::StringArray</a> = std::vector&lt; std::string &gt;</td></tr>
+<tr class="memdesc:ga77796e48da5734723e99d9fabc9cc307"><td class="mdescLeft">&#160;</td><td class="mdescRight">array of <code>std::string</code> objects <br /></td></tr>
+<tr class="separator:ga77796e48da5734723e99d9fabc9cc307"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5315a21a30a0f1f7095037d972003961"><td class="memItemLeft" align="right" valign="top">
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Types.html#ga5315a21a30a0f1f7095037d972003961">sss::ETag</a> = std::string</td></tr>
+<tr class="memdesc:ga5315a21a30a0f1f7095037d972003961"><td class="mdescLeft">&#160;</td><td class="mdescRight">ETag returned by upload requests. <br /></td></tr>
+<tr class="separator:ga5315a21a30a0f1f7095037d972003961"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga70b971dea7826eb6b2da9a3c03045da2"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Types.html#ga70b971dea7826eb6b2da9a3c03045da2">sss::MetaDataMap</a> = std::map&lt; std::string, std::string &gt;</td></tr>
+<tr class="memdesc:ga70b971dea7826eb6b2da9a3c03045da2"><td class="mdescLeft">&#160;</td><td class="mdescRight">{meta data header, meta data value}  <a href="group__Types.html#ga70b971dea7826eb6b2da9a3c03045da2">More...</a><br /></td></tr>
 <tr class="separator:ga70b971dea7826eb6b2da9a3c03045da2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa685e1aceba83607dc032d1dbe96d207"><td class="memItemLeft" align="right" valign="top">
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Types.html#gaa685e1aceba83607dc032d1dbe96d207">sss::UploadId</a> = std::string</td></tr>
+<tr class="memdesc:gaa685e1aceba83607dc032d1dbe96d207"><td class="mdescLeft">&#160;</td><td class="mdescRight">multiplart upload id returned when starting a multipart uplaod operation <br /></td></tr>
+<tr class="separator:gaa685e1aceba83607dc032d1dbe96d207"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga1d738375a9c819164ebd50ce9ead8ce2"><td class="memItemLeft" align="right" valign="top">
-BucketValidation&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__S3Client.html#ga1d738375a9c819164ebd50ce9ead8ce2">sss::ValidateBucket</a> (const std::string name)</td></tr>
-<tr class="memdesc:ga1d738375a9c819164ebd50ce9ead8ce2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Validate bucket name. <br /></td></tr>
+<tr class="memitem:ga1d738375a9c819164ebd50ce9ead8ce2"><td class="memItemLeft" align="right" valign="top">BucketValidation&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__S3Client.html#ga1d738375a9c819164ebd50ce9ead8ce2">sss::ValidateBucket</a> (const std::string name)</td></tr>
+<tr class="memdesc:ga1d738375a9c819164ebd50ce9ead8ce2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Validate bucket name. Bucket name restrictions: see <a href="https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-s3-bucket-naming-requirements.html">https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-s3-bucket-naming-requirements.html</a>.  <a href="group__S3Client.html#ga1d738375a9c819164ebd50ce9ead8ce2">More...</a><br /></td></tr>
 <tr class="separator:ga1d738375a9c819164ebd50ce9ead8ce2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga3898026085460f9f0424cc3972e55374"><td class="memItemLeft" align="right" valign="top">Headers&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__S3Client.html#ga3898026085460f9f0424cc3972e55374">sss::ToMeta</a> (const std::map&lt; std::string, std::string &gt; &amp;metaData)</td></tr>
+<tr class="memitem:ga3898026085460f9f0424cc3972e55374"><td class="memItemLeft" align="right" valign="top">Headers&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Internal.html#ga3898026085460f9f0424cc3972e55374">sss::ToMeta</a> (const std::map&lt; std::string, std::string &gt; &amp;metaData)</td></tr>
+<tr class="memdesc:ga3898026085460f9f0424cc3972e55374"><td class="mdescLeft">&#160;</td><td class="mdescRight">Translate metadata (key,value) pairs to <code>amz-</code> format and return header map which can be merged with other headers using the <code>std::map::merge</code> method, since C++17.  <a href="group__Internal.html#ga3898026085460f9f0424cc3972e55374">More...</a><br /></td></tr>
 <tr class="separator:ga3898026085460f9f0424cc3972e55374"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad8bcfb380e91093fec44517e1eddc939"><td class="memItemLeft" align="right" valign="top">
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__S3Client.html#gad8bcfb380e91093fec44517e1eddc939">sss::Validate</a> (const S3ClientConfig &amp;s)</td></tr>
 <tr class="memdesc:gad8bcfb380e91093fec44517e1eddc939"><td class="mdescLeft">&#160;</td><td class="mdescRight">Validate S3 client request parameters. <br /></td></tr>
 <tr class="separator:gad8bcfb380e91093fec44517e1eddc939"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5a769be8fbc874bad858ea95743e5643"><td class="memItemLeft" align="right" valign="top">
-WebClient&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__S3Client.html#ga5a769be8fbc874bad858ea95743e5643">sss::SendS3Request</a> (S3ClientConfig)</td></tr>
-<tr class="memdesc:ga5a769be8fbc874bad858ea95743e5643"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send S3 request to endpoint. <br /></td></tr>
-<tr class="separator:ga5a769be8fbc874bad858ea95743e5643"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaba88d66bdabd9d5d15bc07a3ce387c50"><td class="memItemLeft" align="right" valign="top">
+WebClient&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__S3Client.html#gaba88d66bdabd9d5d15bc07a3ce387c50">sss::SendS3Request</a> (S3ClientConfig cfg)</td></tr>
+<tr class="memdesc:gaba88d66bdabd9d5d15bc07a3ce387c50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send S3 request to endpoint. <br /></td></tr>
+<tr class="separator:gaba88d66bdabd9d5d15bc07a3ce387c50"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac5f34efe8d5fde67f9c2c006742d6f85"><td class="memItemLeft" align="right" valign="top">ETag&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__S3Client.html#gac5f34efe8d5fde67f9c2c006742d6f85">sss::Upload</a> (const S3DataTransferConfig &amp;cfg, const MetaDataMap &amp;mm={}, bool sync=false)</td></tr>
+<tr class="memdesc:gac5f34efe8d5fde67f9c2c006742d6f85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parallel upload If <code>cfg.data</code> not <code>NULL</code> data is read from memory, from file specified in <code>cfg.file</code> instead.  <a href="group__S3Client.html#gac5f34efe8d5fde67f9c2c006742d6f85">More...</a><br /></td></tr>
 <tr class="separator:gac5f34efe8d5fde67f9c2c006742d6f85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad9e1cbb4715a672101995636897814e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__S3Client.html#gad9e1cbb4715a672101995636897814e4">sss::Download</a> (const S3DataTransferConfig &amp;cfg, bool sync=false)</td></tr>
+<tr class="memdesc:gad9e1cbb4715a672101995636897814e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parallel upload If <code>cfg.data</code> not <code>NULL</code> data is written into <code>cfg.data</code> buffer, to file specified in <code>cfg.file</code> instead.  <a href="group__S3Client.html#gad9e1cbb4715a672101995636897814e4">More...</a><br /></td></tr>
 <tr class="separator:gad9e1cbb4715a672101995636897814e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7e21b1aa81a654a3c634724912c69383"><td class="memItemLeft" align="right" valign="top">S3Credentials&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__S3Client.html#ga7e21b1aa81a654a3c634724912c69383">sss::GetS3Credentials</a> (const std::string &amp;fileName, std::string awsProfile)</td></tr>
+<tr class="memdesc:ga7e21b1aa81a654a3c634724912c69383"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read S3 credentials from file.  <a href="group__S3Client.html#ga7e21b1aa81a654a3c634724912c69383">More...</a><br /></td></tr>
 <tr class="separator:ga7e21b1aa81a654a3c634724912c69383"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>declaration of functions and data types for sending S3 requests, signing URLs and downloading and uploading files. </p>
+
+<p class="definition">Definition in file <a class="el" href="s3-client_8h_source.html">s3-client.h</a>.</p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

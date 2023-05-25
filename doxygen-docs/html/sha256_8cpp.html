@@ -104,8 +104,8 @@ $(document).ready(function(){initNavTree('sha256_8cpp.html',''); initResizable()
 
 <p>Implementation of SHA256 algorithm.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="sha256_8h.html">sha256.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="lib_2hash_2utility_8h.html">utility.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="sha256_8h_source.html">sha256.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="lib_2hash_2utility_8h_source.html">utility.h</a>&quot;</code><br />
 <code>#include &lt;cassert&gt;</code><br />
 <code>#include &lt;cstdint&gt;</code><br />
 <code>#include &lt;cstdio&gt;</code><br />
@@ -119,9 +119,23 @@ $(document).ready(function(){initNavTree('sha256_8cpp.html',''); initResizable()
 <div class="center"><iframe scrolling="no" frameborder="0" src="sha256_8cpp__incl.svg" width="442" height="291"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
-</div><table class="memberdecls">
+</div>
+<p><a href="sha256_8cpp_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
+<tr class="memitem:ac639c5bdb5993c1c40c1aa6f63227bc1"><td class="memItemLeft" align="right" valign="top"><a id="ac639c5bdb5993c1c40c1aa6f63227bc1"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>sha256::Sigma0</b> (uint32_t x)</td></tr>
+<tr class="separator:ac639c5bdb5993c1c40c1aa6f63227bc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3e07be37684781cfa98bc1e10da521f"><td class="memItemLeft" align="right" valign="top"><a id="ac3e07be37684781cfa98bc1e10da521f"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>sha256::Sigma1</b> (uint32_t x)</td></tr>
+<tr class="separator:ac3e07be37684781cfa98bc1e10da521f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8169a01496b07aada8b04b75dcd83b69"><td class="memItemLeft" align="right" valign="top"><a id="a8169a01496b07aada8b04b75dcd83b69"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>sha256::Ch</b> (uint32_t c, uint32_t x, uint32_t y)</td></tr>
+<tr class="separator:a8169a01496b07aada8b04b75dcd83b69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3d6dc3295c08250f1c03f3f5b689b11"><td class="memItemLeft" align="right" valign="top"><a id="ab3d6dc3295c08250f1c03f3f5b689b11"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>sha256::Maj</b> (uint32_t x, uint32_t y, uint32_t z)</td></tr>
+<tr class="separator:ab3d6dc3295c08250f1c03f3f5b689b11"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga21b0412f8de5402ca9424fb129f51d5f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Hash.html#ga21b0412f8de5402ca9424fb129f51d5f">sha256::sha256_stream</a> (uint32_t hash[8], const uint8_t data[], uint64_t length)</td></tr>
 <tr class="memdesc:ga21b0412f8de5402ca9424fb129f51d5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute SHA256 hash, updating hash value at every invocation.  <a href="group__Hash.html#ga21b0412f8de5402ca9424fb129f51d5f">More...</a><br /></td></tr>
 <tr class="separator:ga21b0412f8de5402ca9424fb129f51d5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -134,9 +148,14 @@ Functions</h2></td></tr>
 <tr class="memitem:gab67535e651cd6086262eaff33afb9e2c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Hash.html#gab67535e651cd6086262eaff33afb9e2c">sha256::print_hash</a> (uint32_t hash[8])</td></tr>
 <tr class="memdesc:gab67535e651cd6086262eaff33afb9e2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print SHA256 hash to standard output.  <a href="group__Hash.html#gab67535e651cd6086262eaff33afb9e2c">More...</a><br /></td></tr>
 <tr class="separator:gab67535e651cd6086262eaff33afb9e2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28c7e16e8ddbbee93ad6a8dd9bef33cf"><td class="memItemLeft" align="right" valign="top"><a id="a28c7e16e8ddbbee93ad6a8dd9bef33cf"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>sha256::sha256_file</b> (const char *fname, uint32_t hash[8])</td></tr>
+<tr class="separator:a28c7e16e8ddbbee93ad6a8dd9bef33cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implementation of SHA256 algorithm. </p>
+
+<p class="definition">Definition in file <a class="el" href="sha256_8cpp_source.html">sha256.cpp</a>.</p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

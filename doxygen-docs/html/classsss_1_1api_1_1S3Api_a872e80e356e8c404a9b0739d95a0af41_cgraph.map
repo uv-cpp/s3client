@@ -1,12 +1,12 @@
 <map id="sss::api::S3Api::GetObjectSize" name="sss::api::S3Api::GetObjectSize">
-<area shape="rect" id="node1" title="[WebClient::Config]" alt="" coords="5,177,209,203"/>
+<area shape="rect" id="node1" title="Return object size." alt="" coords="5,177,209,203"/>
 <area shape="rect" id="node2" href="$group__Internal.html#gad39402e23f6ef63de04e903825a7271a" title="Map key to value using regular expression." alt="" coords="299,151,403,178"/>
-<area shape="rect" id="node3" href="$classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22" title=" " alt="" coords="257,202,445,229"/>
+<area shape="rect" id="node3" href="$classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22" title="Send HeadObject request." alt="" coords="257,202,445,229"/>
 <area shape="rect" id="node4" href="$classsss_1_1WebClient.html#a42af351286f1fa68c3385d81f0bc2015" title=" " alt="" coords="493,70,700,97"/>
-<area shape="rect" id="node6" href="$group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5" title=" " alt="" coords="529,202,664,229"/>
-<area shape="rect" id="node7" href="$classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889" title=" " alt="" coords="522,415,671,442"/>
+<area shape="rect" id="node6" href="$group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5" title="Extract and return HTTP headers as key&#45;value pairs." alt="" coords="529,202,664,229"/>
+<area shape="rect" id="node7" href="$classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889" title="Send request." alt="" coords="522,415,671,442"/>
 <area shape="rect" id="node5" href="$classsss_1_1WebClient.html#a0b9b001ddc7ce778a613250e27e50731" title=" " alt="" coords="752,5,951,47"/>
-<area shape="rect" id="node8" href="$classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31" title="[WebClient::Config]" alt="" coords="773,415,930,442"/>
+<area shape="rect" id="node8" href="$classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31" title="Configure instance." alt="" coords="773,415,930,442"/>
 <area shape="rect" id="node17" href="$classsss_1_1WebClient.html#a51ce0ecf6487b6a43072643fe4f4cb4e" title=" " alt="" coords="1261,187,1455,214"/>
 <area shape="rect" id="node24" href="$group__Internal.html#ga2b8b08c2a4994a87377d83ccfa9a6a53" title=" " alt="" coords="786,651,917,678"/>
 <area shape="rect" id="node25" href="$classsss_1_1WebClient.html#aa1d7484f0e09242ce53b24f9648ce50e" title=" " alt="" coords="1023,694,1173,721"/>
@@ -19,7 +19,7 @@
 <area shape="rect" id="node18" href="$classsss_1_1WebClient.html#a9bf978d95b79728f6d60fc2bdb4fe546" title=" " alt="" coords="1243,517,1473,543"/>
 <area shape="rect" id="node19" href="$classsss_1_1api_1_1S3Api.html#a70f1068d07e1d4c1be164e0cb9328cc0" title=" " alt="" coords="1013,593,1183,619"/>
 <area shape="rect" id="node20" href="$classsss_1_1api_1_1S3Api.html#acfffe29254323fb41231787a0afb7edc" title=" " alt="" coords="1019,187,1177,214"/>
-<area shape="rect" id="node21" href="$classsss_1_1WebClient.html#afc3b7a92568fbb1ea447918920ca266e" title="Set endpoint: &#160;&lt;proto&gt;://&lt;server&gt;:&lt;port&gt;" alt="" coords="1003,238,1193,265"/>
+<area shape="rect" id="node21" href="$classsss_1_1WebClient.html#afc3b7a92568fbb1ea447918920ca266e" title="Set endpoint: &lt;proto&gt;://&lt;server&gt;:&lt;port&gt;" alt="" coords="1003,238,1193,265"/>
 <area shape="rect" id="node22" href="$classsss_1_1WebClient.html#af6233ffd7b294e1e7e606e838dd44e9e" title=" " alt="" coords="1007,643,1189,670"/>
 <area shape="rect" id="node23" href="$group__Sign.html#ga3ae8e18ef70752b7369fca66c40c526b" title="Sign headers." alt="" coords="1035,491,1161,518"/>
 <area shape="rect" id="node11" href="$classsss_1_1WebClient.html#a381f5715b7a2f19a0d4414d278874bae" title="Clear internal buffers." alt="" coords="1262,415,1454,442"/>

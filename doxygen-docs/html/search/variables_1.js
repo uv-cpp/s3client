@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['data_374',['data',['../structsss_1_1S3ClientConfig.html#aceec5181d8cad0fd9de7b8cd4706da18',1,'sss::S3ClientConfig::data()'],['../structsss_1_1S3DataTransferConfig.html#a847bd9aa39e91d7db6eb498502008286',1,'sss::S3DataTransferConfig::data()']]],
-  ['dataisfilename_375',['dataIsFileName',['../structsss_1_1S3ClientConfig.html#a352698b1b6c3b5928ded22ed5a7a4160',1,'sss::S3ClientConfig']]],
-  ['datestamp_376',['dateStamp',['../group__Internal.html#ga935e9fe62d0114837edef770e9de476c',1,'sss::Time']]],
-  ['defaultheaders_377',['defaultHeaders',['../structsss_1_1Signature.html#a6d27106bf7706879a6aa9fe0f9eefe6f',1,'sss::Signature']]]
+  ['bucket_457',['bucket',['../structsss_1_1S3SignUrlConfig.html#adc5b4ad14d2a65cf800862f3da408ba5',1,'sss::S3SignUrlConfig::bucket()'],['../structsss_1_1S3ClientConfig.html#a80ab1f3109bad41f0b94f2d658b99234',1,'sss::S3ClientConfig::bucket()'],['../structsss_1_1S3DataTransferConfig.html#a092110bde25c145705fe1db8b166edc0',1,'sss::S3DataTransferConfig::bucket()'],['../structsss_1_1api_1_1S3Api_1_1SendParams.html#a75626dcbb93c2d85dae72c30b76a5455',1,'sss::api::S3Api::SendParams::bucket()']]]
 ];

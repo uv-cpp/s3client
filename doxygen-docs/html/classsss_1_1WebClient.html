@@ -96,6 +96,7 @@ $(document).ready(function(){initNavTree('classsss_1_1WebClient.html',''); initR
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Data Structures</a> &#124;
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a>  </div>
   <div class="headertitle">
@@ -106,7 +107,7 @@ $(document).ready(function(){initNavTree('classsss_1_1WebClient.html',''); initR
 <p>Send web requests through libcurl.  
  <a href="classsss_1_1WebClient.html#details">More...</a></p>
 
-<p><code>#include &lt;webclient.h&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="webclient_8h_source.html">webclient.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -146,7 +147,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ac35b59b0b47e59d5adf896d3af55bbfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc3b7a92568fbb1ea447918920ca266e"><td class="memItemLeft" align="right" valign="top"><a id="afc3b7a92568fbb1ea447918920ca266e"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1WebClient.html#afc3b7a92568fbb1ea447918920ca266e">SetEndpoint</a> (const std::string &amp;ep)</td></tr>
-<tr class="memdesc:afc3b7a92568fbb1ea447918920ca266e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set endpoint: <code></code> &lt;proto&gt;://&lt;server&gt;:&lt;port&gt; <br /></td></tr>
+<tr class="memdesc:afc3b7a92568fbb1ea447918920ca266e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set endpoint: <code>&lt;proto&gt;://&lt;server&gt;:&lt;port&gt;</code> <br /></td></tr>
 <tr class="separator:afc3b7a92568fbb1ea447918920ca266e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a12b5db6b8c667024557ab58059d39994"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1WebClient.html#a12b5db6b8c667024557ab58059d39994">SetPath</a> (const std::string &amp;path)</td></tr>
 <tr class="separator:a12b5db6b8c667024557ab58059d39994"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -272,9 +273,11 @@ Usage</h1>
 <div class="line"><span class="keywordflow">if</span> (of)</div>
 <div class="line">  fclose(of);</div>
 <div class="line"><span class="keywordflow">return</span> req;</div>
-<div class="ttc" id="aclasssss_1_1WebClient_html_a22fbf741cb6076d22616ed914c2a8814"><div class="ttname"><a href="classsss_1_1WebClient.html#a22fbf741cb6076d22616ed914c2a8814">sss::WebClient::WebClient</a></div><div class="ttdeci">WebClient()</div><div class="ttdoc">Default constructor. First instance initializes libcurl.</div><div class="ttdef"><b>Definition:</b> webclient.h:164</div></div>
+<div class="ttc" id="aclasssss_1_1WebClient_html_a22fbf741cb6076d22616ed914c2a8814"><div class="ttname"><a href="classsss_1_1WebClient.html#a22fbf741cb6076d22616ed914c2a8814">sss::WebClient::WebClient</a></div><div class="ttdeci">WebClient()</div><div class="ttdoc">Default constructor. First instance initializes libcurl.</div><div class="ttdef"><b>Definition:</b> <a href="webclient_8h_source.html#l00164">webclient.h:164</a></div></div>
 <div class="ttc" id="agroup__Internal_html_ga2b8b08c2a4994a87377d83ccfa9a6a53"><div class="ttname"><a href="group__Internal.html#ga2b8b08c2a4994a87377d83ccfa9a6a53">sss::ParseParams</a></div><div class="ttdeci">Parameters ParseParams(std::string s)</div></div>
-</div><!-- fragment --> </div><h2 class="groupheader">Member Typedef Documentation</h2>
+</div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="webclient_8h_source.html#l00125">125</a> of file <a class="el" href="webclient_8h_source.html">webclient.h</a>.</p>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="aa631ae58bc0c12c33f44083c8a6d09fc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa631ae58bc0c12c33f44083c8a6d09fc">&#9670;&nbsp;</a></span>ReadFunction</h2>
 
@@ -293,6 +296,8 @@ Usage</h1>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8h_source.html#l00135">135</a> of file <a class="el" href="webclient_8h_source.html">webclient.h</a>.</p>
 
 </div>
 </div>
@@ -314,6 +319,8 @@ Usage</h1>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8h_source.html#l00130">130</a> of file <a class="el" href="webclient_8h_source.html">webclient.h</a>.</p>
 
 </div>
 </div>
@@ -371,13 +378,15 @@ Usage</h1>
 </div><div class="memdoc">
 <p>Constructor </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">endPoint</td><td>endpoint in the format <code></code> &lt;proto&gt;://&lt;server&gt;:port </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">endPoint</td><td>endpoint in the format <code>&lt;proto&gt;://&lt;server&gt;:port</code> </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">path</td><td>path to be added to endPoint to compete <a class="el" href="structsss_1_1URL.html" title="URL type.">URL</a>: /.../... </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">method</td><td>HTTP method </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">params</td><td>key,value map of parameters <code>k1=value1&amp;k2=value2&amp;</code>... </td></tr>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8h_source.html#l00172">172</a> of file <a class="el" href="webclient_8h_source.html">webclient.h</a>.</p>
 <div class="fragment"><div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;      : endpoint_(endPoint), path_(path), method_(method), params_(params),</div>
 <div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;        headers_(headers) {</div>
 <div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    InitEnv();</div>
@@ -402,6 +411,8 @@ Usage</h1>
 
 <p>Destructor. Last instance cleans up libcurl. </p>
 <p>Cleanup and invoke cleanup on libcurl in case of last instance. </p>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8cpp_source.html#l00148">148</a> of file <a class="el" href="webclient_8cpp_source.html">webclient.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;                      {</div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;  <span class="keywordflow">if</span> (curlHeaderList_) {</div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    curl_slist_free_all(curlHeaderList_);</div>
@@ -437,6 +448,8 @@ Usage</h1>
       </table>
 </div><div class="memdoc">
 <p>Return curl error. </p><dl class="section return"><dt>Returns</dt><dd><em>libcurl</em> error as returned by <code>curl_easy_strerror</code> or <code>curl_multi_strerror</code>. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8cpp_source.html#l00416">416</a> of file <a class="el" href="webclient_8cpp_source.html">webclient.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;{ <span class="keywordflow">return</span> errorBuffer_.data(); }</div>
 </div><!-- fragment --><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
@@ -464,15 +477,17 @@ Usage</h1>
       </table>
 </div><div class="memdoc">
 <p>Get headers as text. </p><dl class="section return"><dt>Returns</dt><dd>response headers as a single string. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8cpp_source.html#l00437">437</a> of file <a class="el" href="webclient_8cpp_source.html">webclient.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;                                         {</div>
 <div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;  std::vector&lt;char&gt; header = <a class="code" href="classsss_1_1WebClient.html#a0b9b001ddc7ce778a613250e27e50731">GetResponseHeader</a>();</div>
 <div class="line"><a name="l00439"></a><span class="lineno">  439</span>&#160;  <span class="keywordflow">return</span> std::string(<a class="code" href="group__Ranges.html#ga0aa7f3b15d2ebf9b597a1b5ba38ae8ac">begin</a>(header), <a class="code" href="group__Ranges.html#ga4f73053571587e79eb3db628f5e6ef99">end</a>(header));</div>
 <div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;}</div>
-<div class="ttc" id="aclasssss_1_1WebClient_html_a0b9b001ddc7ce778a613250e27e50731"><div class="ttname"><a href="classsss_1_1WebClient.html#a0b9b001ddc7ce778a613250e27e50731">sss::WebClient::GetResponseHeader</a></div><div class="ttdeci">const std::vector&lt; char &gt; &amp; GetResponseHeader() const</div><div class="ttdef"><b>Definition:</b> webclient.cpp:274</div></div>
-<div class="ttc" id="agroup__Ranges_html_ga0aa7f3b15d2ebf9b597a1b5ba38ae8ac"><div class="ttname"><a href="group__Ranges.html#ga0aa7f3b15d2ebf9b597a1b5ba38ae8ac">sss::begin</a></div><div class="ttdeci">auto begin(const SplitRange &amp;sr)</div><div class="ttdoc">return iterator at start position</div><div class="ttdef"><b>Definition:</b> utility.h:168</div></div>
-<div class="ttc" id="agroup__Ranges_html_ga4f73053571587e79eb3db628f5e6ef99"><div class="ttname"><a href="group__Ranges.html#ga4f73053571587e79eb3db628f5e6ef99">sss::end</a></div><div class="ttdeci">auto end(const SplitRange &amp;sr)</div><div class="ttdoc">return iterator at end position</div><div class="ttdef"><b>Definition:</b> utility.h:170</div></div>
+<div class="ttc" id="aclasssss_1_1WebClient_html_a0b9b001ddc7ce778a613250e27e50731"><div class="ttname"><a href="classsss_1_1WebClient.html#a0b9b001ddc7ce778a613250e27e50731">sss::WebClient::GetResponseHeader</a></div><div class="ttdeci">const std::vector&lt; char &gt; &amp; GetResponseHeader() const</div><div class="ttdef"><b>Definition:</b> <a href="webclient_8cpp_source.html#l00274">webclient.cpp:274</a></div></div>
+<div class="ttc" id="agroup__Ranges_html_ga0aa7f3b15d2ebf9b597a1b5ba38ae8ac"><div class="ttname"><a href="group__Ranges.html#ga0aa7f3b15d2ebf9b597a1b5ba38ae8ac">sss::begin</a></div><div class="ttdeci">auto begin(const SplitRange &amp;sr)</div><div class="ttdoc">return iterator at start position</div><div class="ttdef"><b>Definition:</b> <a href="lib_2include_2utility_8h_source.html#l00168">utility.h:168</a></div></div>
+<div class="ttc" id="agroup__Ranges_html_ga4f73053571587e79eb3db628f5e6ef99"><div class="ttname"><a href="group__Ranges.html#ga4f73053571587e79eb3db628f5e6ef99">sss::end</a></div><div class="ttdeci">auto end(const SplitRange &amp;sr)</div><div class="ttdoc">return iterator at end position</div><div class="ttdef"><b>Definition:</b> <a href="lib_2include_2utility_8h_source.html#l00170">utility.h:170</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1WebClient.html#a0b9b001ddc7ce778a613250e27e50731">GetResponseHeader()</a>.</p>
+<p class="reference">References <a class="el" href="webclient_8cpp_source.html#l00274">GetResponseHeader()</a>.</p>
 <div id="dynsection-1" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-1-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-1-summary" class="dynsummary" style="display:block;">
@@ -520,6 +535,8 @@ Usage</h1>
 
 <p>Passthrough method to <code>curl_easy_getinfo</code>. </p>
 <p><a href="https://curl.se/libcurl/c/curl_easy_getinfo.html">https://curl.se/libcurl/c/curl_easy_getinfo.html</a> </p>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8cpp_source.html#l00424">424</a> of file <a class="el" href="webclient_8cpp_source.html">webclient.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00424"></a><span class="lineno">  424</span>&#160;                                                       {</div>
 <div class="line"><a name="l00425"></a><span class="lineno">  425</span>&#160;  <span class="keywordflow">return</span> curl_easy_getinfo(curl_, info, argp);</div>
 <div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;}</div>
@@ -541,6 +558,8 @@ Usage</h1>
       </table>
 </div><div class="memdoc">
 <p>Get response content. </p><dl class="section return"><dt>Returns</dt><dd>response bytes (<code>char</code> used because it's the type used within <em>libcurl</em>) </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8cpp_source.html#l00270">270</a> of file <a class="el" href="webclient_8cpp_source.html">webclient.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;                                                        {</div>
 <div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;  <span class="keywordflow">return</span> writeBuffer_.data;</div>
 <div class="line"><a name="l00272"></a><span class="lineno">  272</span>&#160;}</div>
@@ -549,7 +568,7 @@ Usage</h1>
 <div id="dynsection-3-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-3-content" class="dyncontent" style="display:none;">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1WebClient_a77a4e0190a4f207b969cb63b6ba38ccc_icgraph.svg" width="100%" height="541"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1WebClient_a77a4e0190a4f207b969cb63b6ba38ccc_icgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 
@@ -570,6 +589,8 @@ Usage</h1>
       </table>
 </div><div class="memdoc">
 <p>Get reponse header. </p><dl class="section return"><dt>Returns</dt><dd>raw response headers as a single byte array. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8cpp_source.html#l00274">274</a> of file <a class="el" href="webclient_8cpp_source.html">webclient.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;                                                          {</div>
 <div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;  <span class="keywordflow">return</span> headerBuffer_;</div>
 <div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;}</div>
@@ -599,6 +620,8 @@ Usage</h1>
       </table>
 </div><div class="memdoc">
 <p>Return full <a class="el" href="structsss_1_1URL.html" title="URL type.">URL</a>. </p><dl class="section return"><dt>Returns</dt><dd>endpoint + url parameters </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8cpp_source.html#l00268">268</a> of file <a class="el" href="webclient_8cpp_source.html">webclient.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;{ <span class="keywordflow">return</span> url_; }</div>
 </div><!-- fragment -->
 </div>
@@ -619,6 +642,8 @@ Usage</h1>
 </div><div class="memdoc">
 <p>Send request.</p>
 <dl class="section return"><dt>Returns</dt><dd><code>false</code> if error, retrieve error message through WebClient::ErroMsg </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8cpp_source.html#l00165">165</a> of file <a class="el" href="webclient_8cpp_source.html">webclient.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;                     {</div>
 <div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">bool</span> ret = Status(curl_easy_perform(curl_));</div>
 <div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;  curl_easy_getinfo(curl_, CURLINFO_RESPONSE_CODE, &amp;responseCode_);</div>
@@ -656,6 +681,8 @@ Usage</h1>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8cpp_source.html#l00202">202</a> of file <a class="el" href="webclient_8cpp_source.html">webclient.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;                                             {</div>
 <div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;  headers_ = headers;</div>
 <div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;  <span class="keywordflow">if</span> (curlHeaderList_) {</div>
@@ -712,6 +739,8 @@ Usage</h1>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8cpp_source.html#l00222">222</a> of file <a class="el" href="webclient_8cpp_source.html">webclient.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;                                                              {</div>
 <div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;  method_ = ToUpper(method);</div>
 <div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;  <span class="keywordflow">if</span> (method_ == <span class="stringliteral">&quot;GET&quot;</span>) {</div>
@@ -777,6 +806,8 @@ Usage</h1>
 
 <p>Passthrough to <code>curl_easy_setopt</code>. </p>
 <p><a href="https://curl.se/libcurl/c/curl_easy_setopt.html">https://curl.se/libcurl/c/curl_easy_setopt.html</a> </p>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8cpp_source.html#l00419">419</a> of file <a class="el" href="webclient_8cpp_source.html">webclient.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;                                                          {</div>
 <div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;  <span class="keywordflow">return</span> curl_easy_setopt(curl_, option, argp);</div>
 <div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;}</div>
@@ -804,6 +835,8 @@ Usage</h1>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8cpp_source.html#l00197">197</a> of file <a class="el" href="webclient_8cpp_source.html">webclient.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;                                             {</div>
 <div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;  path_ = path;</div>
 <div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;  BuildURL();</div>
@@ -840,6 +873,8 @@ Usage</h1>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8cpp_source.html#l00261">261</a> of file <a class="el" href="webclient_8cpp_source.html">webclient.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00261"></a><span class="lineno">  261</span>&#160;                                                 {</div>
 <div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;  curl_easy_setopt(curl_, CURLOPT_POSTFIELDSIZE, data.size());</div>
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;  curl_easy_setopt(curl_, CURLOPT_COPYPOSTFIELDS, data.c_str());</div>
@@ -887,6 +922,8 @@ Usage</h1>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8cpp_source.html#l00286">286</a> of file <a class="el" href="webclient_8cpp_source.html">webclient.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00286"></a><span class="lineno">  286</span>&#160;                                                         {</div>
 <div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;  <span class="keywordflow">if</span> (curl_easy_setopt(curl_, CURLOPT_READFUNCTION, f) != CURLE_OK)</div>
 <div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
@@ -926,6 +963,8 @@ Usage</h1>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8cpp_source.html#l00217">217</a> of file <a class="el" href="webclient_8cpp_source.html">webclient.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;                                                  {</div>
 <div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;  params_ = params;</div>
 <div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;  BuildURL();</div>
@@ -962,6 +1001,8 @@ Usage</h1>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8cpp_source.html#l00181">181</a> of file <a class="el" href="webclient_8cpp_source.html">webclient.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;                                           {</div>
 <div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;  url_ = url;</div>
 <div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;  <span class="keyword">const</span> <span class="keyword">auto</span> res = curl_easy_setopt(curl_, CURLOPT_URL, url_.c_str());</div>
@@ -996,14 +1037,16 @@ Usage</h1>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8cpp_source.html#l00249">249</a> of file <a class="el" href="webclient_8cpp_source.html">webclient.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;                                                         {</div>
 <div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;  urlEncodedPostData_ = <a class="code" href="group__Internal.html#ga0f079ace8729714b3949eabe22f228c9">UrlEncode</a>(postData);</div>
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;  curl_easy_setopt(curl_, CURLOPT_POSTFIELDSIZE, urlEncodedPostData_.size());</div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;  curl_easy_setopt(curl_, CURLOPT_COPYPOSTFIELDS, urlEncodedPostData_.c_str());</div>
 <div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;}</div>
-<div class="ttc" id="agroup__Internal_html_ga0f079ace8729714b3949eabe22f228c9"><div class="ttname"><a href="group__Internal.html#ga0f079ace8729714b3949eabe22f228c9">sss::UrlEncode</a></div><div class="ttdeci">std::string UrlEncode(const std::string &amp;s)</div><div class="ttdef"><b>Definition:</b> url_utility.cpp:69</div></div>
+<div class="ttc" id="agroup__Internal_html_ga0f079ace8729714b3949eabe22f228c9"><div class="ttname"><a href="group__Internal.html#ga0f079ace8729714b3949eabe22f228c9">sss::UrlEncode</a></div><div class="ttdeci">std::string UrlEncode(const std::string &amp;s)</div><div class="ttdef"><b>Definition:</b> <a href="url__utility_8cpp_source.html#l00069">url_utility.cpp:69</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="group__Internal.html#ga6e3db8d156313abef7e2c966df1a3d7c">sss::UrlEncode()</a>.</p>
+<p class="reference">References <a class="el" href="url__utility_8cpp_source.html#l00091">sss::UrlEncode()</a>.</p>
 <div id="dynsection-12" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-12-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-12-summary" class="dynsummary" style="display:block;">
@@ -1044,13 +1087,15 @@ Usage</h1>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8cpp_source.html#l00255">255</a> of file <a class="el" href="webclient_8cpp_source.html">webclient.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;                                                               {</div>
 <div class="line"><a name="l00256"></a><span class="lineno">  256</span>&#160;  urlEncodedPostData_ = <a class="code" href="group__Internal.html#ga0f079ace8729714b3949eabe22f228c9">UrlEncode</a>(postData);</div>
 <div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;  curl_easy_setopt(curl_, CURLOPT_POSTFIELDSIZE, urlEncodedPostData_.size());</div>
 <div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;  curl_easy_setopt(curl_, CURLOPT_COPYPOSTFIELDS, urlEncodedPostData_.c_str());</div>
 <div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="group__Internal.html#ga0f079ace8729714b3949eabe22f228c9">sss::UrlEncode()</a>.</p>
+<p class="reference">References <a class="el" href="url__utility_8cpp_source.html#l00069">sss::UrlEncode()</a>.</p>
 <div id="dynsection-14" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-14-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-14-summary" class="dynsummary" style="display:block;">
@@ -1094,6 +1139,8 @@ Usage</h1>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8cpp_source.html#l00278">278</a> of file <a class="el" href="webclient_8cpp_source.html">webclient.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;                                                           {</div>
 <div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;  <span class="keywordflow">if</span> (curl_easy_setopt(curl_, CURLOPT_WRITEFUNCTION, f) != CURLE_OK)</div>
 <div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
@@ -1144,6 +1191,8 @@ Usage</h1>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8cpp_source.html#l00173">173</a> of file <a class="el" href="webclient_8cpp_source.html">webclient.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;                                                          {</div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;  <span class="keywordflow">return</span> Status(curl_easy_setopt(curl_, CURLOPT_SSL_VERIFYPEER,</div>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;                                 verifyPeer ? 1L : 0L)) &amp;&amp;</div>
@@ -1168,6 +1217,8 @@ Usage</h1>
       </table>
 </div><div class="memdoc">
 <p>Return status code from last executed request. </p><dl class="section return"><dt>Returns</dt><dd>HTTP status (20*, 30*, 40*, 50*). </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8cpp_source.html#l00266">266</a> of file <a class="el" href="webclient_8cpp_source.html">webclient.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;{ <span class="keywordflow">return</span> responseCode_; }</div>
 </div><!-- fragment -->
 </div>
@@ -1214,6 +1265,8 @@ Usage</h1>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if successful, <code>false</code> otherwise </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8cpp_source.html#l00314">314</a> of file <a class="el" href="webclient_8cpp_source.html">webclient.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;                                                  {</div>
 <div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;  <span class="keywordflow">if</span> (size == 0)</div>
 <div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
@@ -1229,10 +1282,10 @@ Usage</h1>
 <div class="line"><a name="l00327"></a><span class="lineno">  327</span>&#160;  <a class="code" href="classsss_1_1WebClient.html#af6233ffd7b294e1e7e606e838dd44e9e">SetMethod</a>(<span class="stringliteral">&quot;PUT&quot;</span>, size);</div>
 <div class="line"><a name="l00328"></a><span class="lineno">  328</span>&#160;  <span class="keywordflow">return</span> <a class="code" href="classsss_1_1WebClient.html#aa1d7484f0e09242ce53b24f9648ce50e">Send</a>();</div>
 <div class="line"><a name="l00329"></a><span class="lineno">  329</span>&#160;}</div>
-<div class="ttc" id="aclasssss_1_1WebClient_html_aa1d7484f0e09242ce53b24f9648ce50e"><div class="ttname"><a href="classsss_1_1WebClient.html#aa1d7484f0e09242ce53b24f9648ce50e">sss::WebClient::Send</a></div><div class="ttdeci">bool Send()</div><div class="ttdef"><b>Definition:</b> webclient.cpp:165</div></div>
-<div class="ttc" id="aclasssss_1_1WebClient_html_af6233ffd7b294e1e7e606e838dd44e9e"><div class="ttname"><a href="classsss_1_1WebClient.html#af6233ffd7b294e1e7e606e838dd44e9e">sss::WebClient::SetMethod</a></div><div class="ttdeci">void SetMethod(const std::string &amp;method, size_t size=0)</div><div class="ttdef"><b>Definition:</b> webclient.cpp:222</div></div>
+<div class="ttc" id="aclasssss_1_1WebClient_html_aa1d7484f0e09242ce53b24f9648ce50e"><div class="ttname"><a href="classsss_1_1WebClient.html#aa1d7484f0e09242ce53b24f9648ce50e">sss::WebClient::Send</a></div><div class="ttdeci">bool Send()</div><div class="ttdef"><b>Definition:</b> <a href="webclient_8cpp_source.html#l00165">webclient.cpp:165</a></div></div>
+<div class="ttc" id="aclasssss_1_1WebClient_html_af6233ffd7b294e1e7e606e838dd44e9e"><div class="ttname"><a href="classsss_1_1WebClient.html#af6233ffd7b294e1e7e606e838dd44e9e">sss::WebClient::SetMethod</a></div><div class="ttdeci">void SetMethod(const std::string &amp;method, size_t size=0)</div><div class="ttdef"><b>Definition:</b> <a href="webclient_8cpp_source.html#l00222">webclient.cpp:222</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1WebClient.html#aa1d7484f0e09242ce53b24f9648ce50e">Send()</a>, and <a class="el" href="classsss_1_1WebClient.html#af6233ffd7b294e1e7e606e838dd44e9e">SetMethod()</a>.</p>
+<p class="reference">References <a class="el" href="webclient_8cpp_source.html#l00165">Send()</a>, and <a class="el" href="webclient_8cpp_source.html#l00222">SetMethod()</a>.</p>
 <div id="dynsection-16" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-16-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-16-summary" class="dynsummary" style="display:block;">
@@ -1287,6 +1340,8 @@ Usage</h1>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if successful, <code>false</code> otherwise </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8cpp_source.html#l00294">294</a> of file <a class="el" href="webclient_8cpp_source.html">webclient.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;                                                               {</div>
 <div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;  <span class="keyword">const</span> <span class="keywordtype">size_t</span> size = fsize ? fsize : FileSize(fname);</div>
 <div class="line"><a name="l00296"></a><span class="lineno">  296</span>&#160;  FILE *file = fopen(fname.c_str(), <span class="stringliteral">&quot;rb&quot;</span>);</div>
@@ -1306,10 +1361,10 @@ Usage</h1>
 <div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;  }</div>
 <div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;  <span class="keywordflow">return</span> result;</div>
 <div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;}</div>
-<div class="ttc" id="aclasssss_1_1WebClient_html_a88dbcc61562e84aa9ebf1eabf887ac28"><div class="ttname"><a href="classsss_1_1WebClient.html#a88dbcc61562e84aa9ebf1eabf887ac28">sss::WebClient::SetReadFunction</a></div><div class="ttdeci">bool SetReadFunction(ReadFunction f, void *userData)</div><div class="ttdef"><b>Definition:</b> webclient.cpp:286</div></div>
-<div class="ttc" id="aclasssss_1_1WebClient_html_a93d66d3941f37ec425bcdf0eef3836e4"><div class="ttname"><a href="classsss_1_1WebClient.html#a93d66d3941f37ec425bcdf0eef3836e4">sss::WebClient::ErrorMsg</a></div><div class="ttdeci">std::string ErrorMsg() const</div><div class="ttdef"><b>Definition:</b> webclient.cpp:416</div></div>
+<div class="ttc" id="aclasssss_1_1WebClient_html_a88dbcc61562e84aa9ebf1eabf887ac28"><div class="ttname"><a href="classsss_1_1WebClient.html#a88dbcc61562e84aa9ebf1eabf887ac28">sss::WebClient::SetReadFunction</a></div><div class="ttdeci">bool SetReadFunction(ReadFunction f, void *userData)</div><div class="ttdef"><b>Definition:</b> <a href="webclient_8cpp_source.html#l00286">webclient.cpp:286</a></div></div>
+<div class="ttc" id="aclasssss_1_1WebClient_html_a93d66d3941f37ec425bcdf0eef3836e4"><div class="ttname"><a href="classsss_1_1WebClient.html#a93d66d3941f37ec425bcdf0eef3836e4">sss::WebClient::ErrorMsg</a></div><div class="ttdeci">std::string ErrorMsg() const</div><div class="ttdef"><b>Definition:</b> <a href="webclient_8cpp_source.html#l00416">webclient.cpp:416</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1WebClient.html#a93d66d3941f37ec425bcdf0eef3836e4">ErrorMsg()</a>, <a class="el" href="classsss_1_1WebClient.html#aa1d7484f0e09242ce53b24f9648ce50e">Send()</a>, <a class="el" href="classsss_1_1WebClient.html#af6233ffd7b294e1e7e606e838dd44e9e">SetMethod()</a>, and <a class="el" href="classsss_1_1WebClient.html#a88dbcc61562e84aa9ebf1eabf887ac28">SetReadFunction()</a>.</p>
+<p class="reference">References <a class="el" href="webclient_8cpp_source.html#l00416">ErrorMsg()</a>, <a class="el" href="webclient_8cpp_source.html#l00165">Send()</a>, <a class="el" href="webclient_8cpp_source.html#l00222">SetMethod()</a>, and <a class="el" href="webclient_8cpp_source.html#l00286">SetReadFunction()</a>.</p>
 <div id="dynsection-18" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-18-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-18-summary" class="dynsummary" style="display:block;">
@@ -1363,6 +1418,8 @@ Usage</h1>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if successful, <code>false</code> otherwise </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8cpp_source.html#l00331">331</a> of file <a class="el" href="webclient_8cpp_source.html">webclient.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;                                        {</div>
 <div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160; </div>
 <div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;  size = size ? size : FileSize(fname);</div>
@@ -1387,9 +1444,9 @@ Usage</h1>
 <div class="line"><a name="l00353"></a><span class="lineno">  353</span>&#160;  }</div>
 <div class="line"><a name="l00354"></a><span class="lineno">  354</span>&#160;  <span class="keywordflow">return</span> result;</div>
 <div class="line"><a name="l00355"></a><span class="lineno">  355</span>&#160;}</div>
-<div class="ttc" id="agroup__Internal_html_ga27be61dcbd5f768458bdc07f4583103d"><div class="ttname"><a href="group__Internal.html#ga27be61dcbd5f768458bdc07f4583103d">sss::ReadFile</a></div><div class="ttdeci">size_t ReadFile(void *ptr, size_t size, size_t nmemb, void *userdata)</div><div class="ttdoc">Read from file.</div><div class="ttdef"><b>Definition:</b> webclient.cpp:105</div></div>
+<div class="ttc" id="agroup__Internal_html_ga27be61dcbd5f768458bdc07f4583103d"><div class="ttname"><a href="group__Internal.html#ga27be61dcbd5f768458bdc07f4583103d">sss::ReadFile</a></div><div class="ttdeci">size_t ReadFile(void *ptr, size_t size, size_t nmemb, void *userdata)</div><div class="ttdoc">Read from file.</div><div class="ttdef"><b>Definition:</b> <a href="webclient_8cpp_source.html#l00105">webclient.cpp:105</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1WebClient.html#a93d66d3941f37ec425bcdf0eef3836e4">ErrorMsg()</a>, <a class="el" href="group__Internal.html#ga27be61dcbd5f768458bdc07f4583103d">sss::ReadFile()</a>, <a class="el" href="classsss_1_1WebClient.html#aa1d7484f0e09242ce53b24f9648ce50e">Send()</a>, <a class="el" href="classsss_1_1WebClient.html#af6233ffd7b294e1e7e606e838dd44e9e">SetMethod()</a>, and <a class="el" href="classsss_1_1WebClient.html#a88dbcc61562e84aa9ebf1eabf887ac28">SetReadFunction()</a>.</p>
+<p class="reference">References <a class="el" href="webclient_8cpp_source.html#l00416">ErrorMsg()</a>, <a class="el" href="webclient_8cpp_source.html#l00105">sss::ReadFile()</a>, <a class="el" href="webclient_8cpp_source.html#l00165">Send()</a>, <a class="el" href="webclient_8cpp_source.html#l00222">SetMethod()</a>, and <a class="el" href="webclient_8cpp_source.html#l00286">SetReadFunction()</a>.</p>
 <div id="dynsection-19" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-19-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-19-summary" class="dynsummary" style="display:block;">
@@ -1451,6 +1508,8 @@ Usage</h1>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if successful, <code>false</code> otherwise </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8cpp_source.html#l00384">384</a> of file <a class="el" href="webclient_8cpp_source.html">webclient.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00385"></a><span class="lineno">  385</span>&#160;                                          {</div>
 <div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;<span class="preprocessor">#ifndef __APPLE__</span></div>
 <div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;  <span class="keywordtype">int</span> fd = open(fname.c_str(), O_RDONLY | O_LARGEFILE);</div>
@@ -1481,9 +1540,9 @@ Usage</h1>
 <div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;  }</div>
 <div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;  <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a name="l00414"></a><span class="lineno">  414</span>&#160;}</div>
-<div class="ttc" id="aclasssss_1_1WebClient_html_ae7b1f77bd4ae44585f2d49ea493bdcc5"><div class="ttname"><a href="classsss_1_1WebClient.html#ae7b1f77bd4ae44585f2d49ea493bdcc5">sss::WebClient::UploadDataFromBuffer</a></div><div class="ttdeci">bool UploadDataFromBuffer(const char *data, size_t offset, size_t size)</div><div class="ttdoc">Upload data from memory buffer.</div><div class="ttdef"><b>Definition:</b> webclient.cpp:314</div></div>
+<div class="ttc" id="aclasssss_1_1WebClient_html_ae7b1f77bd4ae44585f2d49ea493bdcc5"><div class="ttname"><a href="classsss_1_1WebClient.html#ae7b1f77bd4ae44585f2d49ea493bdcc5">sss::WebClient::UploadDataFromBuffer</a></div><div class="ttdeci">bool UploadDataFromBuffer(const char *data, size_t offset, size_t size)</div><div class="ttdoc">Upload data from memory buffer.</div><div class="ttdef"><b>Definition:</b> <a href="webclient_8cpp_source.html#l00314">webclient.cpp:314</a></div></div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1WebClient.html#ae7b1f77bd4ae44585f2d49ea493bdcc5">UploadDataFromBuffer()</a>.</p>
+<p class="reference">References <a class="el" href="webclient_8cpp_source.html#l00314">UploadDataFromBuffer()</a>.</p>
 <div id="dynsection-21" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-21-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-21-summary" class="dynsummary" style="display:block;">
@@ -1537,6 +1596,8 @@ Usage</h1>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if successful, <code>false</code> otherwise </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="webclient_8cpp_source.html#l00357">357</a> of file <a class="el" href="webclient_8cpp_source.html">webclient.cpp</a>.</p>
 <div class="fragment"><div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;                                                  {</div>
 <div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;<span class="preprocessor">#ifndef __APPLE__</span></div>
 <div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;  <span class="keywordtype">int</span> file = open(fname.c_str(), S_IRGRP | O_LARGEFILE);</div>
@@ -1563,7 +1624,7 @@ Usage</h1>
 <div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;  <span class="keywordflow">return</span> result;</div>
 <div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;}</div>
 </div><!-- fragment -->
-<p class="reference">References <a class="el" href="classsss_1_1WebClient.html#a93d66d3941f37ec425bcdf0eef3836e4">ErrorMsg()</a>, <a class="el" href="classsss_1_1WebClient.html#aa1d7484f0e09242ce53b24f9648ce50e">Send()</a>, <a class="el" href="classsss_1_1WebClient.html#af6233ffd7b294e1e7e606e838dd44e9e">SetMethod()</a>, and <a class="el" href="classsss_1_1WebClient.html#a88dbcc61562e84aa9ebf1eabf887ac28">SetReadFunction()</a>.</p>
+<p class="reference">References <a class="el" href="webclient_8cpp_source.html#l00416">ErrorMsg()</a>, <a class="el" href="webclient_8cpp_source.html#l00165">Send()</a>, <a class="el" href="webclient_8cpp_source.html#l00222">SetMethod()</a>, and <a class="el" href="webclient_8cpp_source.html#l00286">SetReadFunction()</a>.</p>
 <div id="dynsection-22" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-22-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-22-summary" class="dynsummary" style="display:block;">
@@ -1576,8 +1637,8 @@ Usage</h1>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>/home/ugovaretto/projects/uv-cpp/s3client/repo/lib/include/<a class="el" href="webclient_8h.html">webclient.h</a></li>
-<li>/home/ugovaretto/projects/uv-cpp/s3client/repo/lib/src/<a class="el" href="webclient_8cpp.html">webclient.cpp</a></li>
+<li>/home/ugovaretto/projects/uv-cpp/s3client/repo/lib/include/<a class="el" href="webclient_8h_source.html">webclient.h</a></li>
+<li>/home/ugovaretto/projects/uv-cpp/s3client/repo/lib/src/<a class="el" href="webclient_8cpp_source.html">webclient.cpp</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

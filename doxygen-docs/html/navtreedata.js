@@ -59,6 +59,7 @@ var NAVTREE =
     [ "Data Structures", "annotated.html", [
       [ "Data Structures", "annotated.html", "annotated_dup" ],
       [ "Data Structure Index", "classes.html", null ],
+      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Data Fields", "functions.html", [
         [ "All", "functions.html", null ],
         [ "Functions", "functions_func.html", null ],
@@ -71,7 +72,8 @@ var NAVTREE =
       [ "File List", "files.html", "files_dup" ],
       [ "Globals", "globals.html", [
         [ "All", "globals.html", null ],
-        [ "Functions", "globals_func.html", null ]
+        [ "Functions", "globals_func.html", null ],
+        [ "Typedefs", "globals_type.html", null ]
       ] ]
     ] ]
   ] ]
@@ -79,8 +81,9 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"annotated.html",
-"md__home_ugovaretto_projects_uv_cpp_s3client_repo_apps_presign.html#autotoc_md5"
+"abort-multipart-upload-test_8cpp_source.html",
+"classsss_1_1api_1_1S3Api.html#a872e80e356e8c404a9b0739d95a0af41",
+"s3-api_8cpp_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['url_227',['URL',['../structsss_1_1URL.html',1,'sss']]]
+  ['params_272',['Params',['../structParams.html',1,'']]],
+  ['pathvisitor_273',['PathVisitor',['../classPathVisitor.html',1,'']]]
 ];

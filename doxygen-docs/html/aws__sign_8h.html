@@ -105,8 +105,8 @@ $(document).ready(function(){initNavTree('aws__sign_8h.html',''); initResizable(
 
 <p>Public interface to signing URLs and HTTP headers with the S3v4 protocol standard.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="common_8h.html">common.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="url__utility_8h.html">url_utility.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="common_8h_source.html">common.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="url__utility_8h_source.html">url_utility.h</a>&quot;</code><br />
 <code>#include &lt;string&gt;</code><br />
 </div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Include dependency graph for aws_sign.h:</div>
@@ -121,17 +121,19 @@ $(document).ready(function(){initNavTree('aws__sign_8h.html',''); initResizable(
 <div id="dynsection-1-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-1-content" class="dyncontent" style="display:none;">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="aws__sign_8h__dep__incl.svg" width="100%" height="584"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="aws__sign_8h__dep__incl.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
-</div><table class="memberdecls">
+</div>
+<p><a href="aws__sign_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsss_1_1ComputeSignatureConfig.html">sss::ComputeSignatureConfig</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameters for calls to ComputeSignature and SignHeaders function.  <a href="structsss_1_1ComputeSignatureConfig.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Arguments for ComputeSignature and SignHeaders functions.  <a href="structsss_1_1ComputeSignatureConfig.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsss_1_1S3SignUrlConfig.html">sss::S3SignUrlConfig</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parameters for calls to SignedURL function.  <a href="structsss_1_1S3SignUrlConfig.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Arguments to SignedURL function.  <a href="structsss_1_1S3SignUrlConfig.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsss_1_1Signature.html">sss::Signature</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structsss_1_1Signature.html" title="Signature information.">Signature</a> information.  <a href="structsss_1_1Signature.html#details">More...</a><br /></td></tr>
@@ -139,18 +141,20 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga904d511ec786b87644cc90dc96dd8f3f"><td class="memItemLeft" align="right" valign="top">Signature&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Sign.html#ga904d511ec786b87644cc90dc96dd8f3f">sss::ComputeSignature</a> (const ComputeSignatureConfig &amp;)</td></tr>
-<tr class="memdesc:ga904d511ec786b87644cc90dc96dd8f3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute signature.  <a href="group__Sign.html#ga904d511ec786b87644cc90dc96dd8f3f">More...</a><br /></td></tr>
-<tr class="separator:ga904d511ec786b87644cc90dc96dd8f3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaaeb7f183b807aa05237023d855841246"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Sign.html#gaaeb7f183b807aa05237023d855841246">sss::SignedURL</a> (const S3SignUrlConfig &amp;)</td></tr>
-<tr class="memdesc:gaaeb7f183b807aa05237023d855841246"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate presigned <a class="el" href="structsss_1_1URL.html" title="URL type.">URL</a>.  <a href="group__Sign.html#gaaeb7f183b807aa05237023d855841246">More...</a><br /></td></tr>
-<tr class="separator:gaaeb7f183b807aa05237023d855841246"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga532598da479904609d6c02e4c2a1311a"><td class="memItemLeft" align="right" valign="top">Signature&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Sign.html#ga532598da479904609d6c02e4c2a1311a">sss::ComputeSignature</a> (const ComputeSignatureConfig &amp;cfg)</td></tr>
+<tr class="memdesc:ga532598da479904609d6c02e4c2a1311a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute signature.  <a href="group__Sign.html#ga532598da479904609d6c02e4c2a1311a">More...</a><br /></td></tr>
+<tr class="separator:ga532598da479904609d6c02e4c2a1311a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4673984e16f07dfa7481af910969beb5"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Sign.html#ga4673984e16f07dfa7481af910969beb5">sss::SignedURL</a> (const S3SignUrlConfig &amp;cfg)</td></tr>
+<tr class="memdesc:ga4673984e16f07dfa7481af910969beb5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generate presigned <a class="el" href="structsss_1_1URL.html" title="URL type.">URL</a>.  <a href="group__Sign.html#ga4673984e16f07dfa7481af910969beb5">More...</a><br /></td></tr>
+<tr class="separator:ga4673984e16f07dfa7481af910969beb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3ae8e18ef70752b7369fca66c40c526b"><td class="memItemLeft" align="right" valign="top">Headers&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Sign.html#ga3ae8e18ef70752b7369fca66c40c526b">sss::SignHeaders</a> (const ComputeSignatureConfig &amp;cfg)</td></tr>
 <tr class="memdesc:ga3ae8e18ef70752b7369fca66c40c526b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sign headers.  <a href="group__Sign.html#ga3ae8e18ef70752b7369fca66c40c526b">More...</a><br /></td></tr>
 <tr class="separator:ga3ae8e18ef70752b7369fca66c40c526b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Public interface to signing URLs and HTTP headers with the S3v4 protocol standard. </p>
+
+<p class="definition">Definition in file <a class="el" href="aws__sign_8h_source.html">aws_sign.h</a>.</p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

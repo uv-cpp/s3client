@@ -36,7 +36,7 @@
 <!-- Node4 -->
 <g id="node4" class="node">
 <title>Node4</title>
-<g id="a_node4"><a xlink:href="group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5" target="_top" xlink:title=" ">
+<g id="a_node4"><a xlink:href="group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5" target="_top" xlink:title="Extract and return HTTP headers as key&#45;value pairs.">
 <polygon fill="none" stroke="black" points="212,-0.5 212,-19.5 313,-19.5 313,-0.5 212,-0.5"/>
 <text text-anchor="middle" x="262.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::HTTPHeaders</text>
 </a>

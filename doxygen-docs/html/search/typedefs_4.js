@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['readfunction_404',['ReadFunction',['../classsss_1_1WebClient.html#aa631ae58bc0c12c33f44083c8a6d09fc',1,'sss::WebClient']]]
+  ['map_500',['Map',['../group__Types.html#gadb51ebb99d8e67b505941f6d9230891c',1,'sss']]],
+  ['metadatamap_501',['MetaDataMap',['../group__Types.html#ga70b971dea7826eb6b2da9a3c03045da2',1,'sss']]]
 ];

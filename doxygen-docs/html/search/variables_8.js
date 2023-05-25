@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['signature_393',['signature',['../structsss_1_1Signature.html#a4ccd4970cec485b401b59e4140110c08',1,'sss::Signature']]],
-  ['signedheadersstr_394',['signedHeadersStr',['../structsss_1_1Signature.html#a1aaeb84fef7c805391d42b7348c22d6f',1,'sss::Signature']]],
-  ['signurl_395',['signUrl',['../structsss_1_1S3ClientConfig.html#a2e7a3c168e43fa135f8ac3e14ae9bc01',1,'sss::S3ClientConfig::signUrl()'],['../structsss_1_1api_1_1S3Api_1_1SendParams.html#a912d3c331657a12c08c2377d3ca4576a',1,'sss::api::S3Api::SendParams::signUrl()']]]
+  ['key_472',['key',['../structsss_1_1S3SignUrlConfig.html#a21a675b2d8eea9fcba454f314e63ed87',1,'sss::S3SignUrlConfig::key()'],['../structsss_1_1S3ClientConfig.html#a87f8fe3fb78b8b2132a02a3870aa6e33',1,'sss::S3ClientConfig::key()'],['../structsss_1_1S3DataTransferConfig.html#a69dc03ccb7bc12dfc20e8bdd137dc75a',1,'sss::S3DataTransferConfig::key()'],['../structsss_1_1api_1_1S3Api_1_1SendParams.html#a542f9452a964a861378c89e2d90420ac',1,'sss::api::S3Api::SendParams::key()']]]
 ];

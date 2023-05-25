@@ -57,7 +57,7 @@ var sectionId = 'dynsection-11';
 <!-- Node1 -->
 <g id="node1" class="node">
 <title>Node1</title>
-<g id="a_node1"><a xlink:title=" ">
+<g id="a_node1"><a xlink:title="Download object into file.">
 <polygon fill="#bfbfbf" stroke="black" points="0,-33 0,-63 121,-63 121,-33 0,-33"/>
 <text text-anchor="start" x="8" y="-51" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::GetFile</text>
 <text text-anchor="middle" x="60.5" y="-40" font-family="Helvetica,sans-Serif" font-size="10.00">Object</text>
@@ -67,7 +67,7 @@ var sectionId = 'dynsection-11';
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31" target="_top" xlink:title="[WebClient::Config]">
+<g id="a_node2"><a xlink:href="classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31" target="_top" xlink:title="Configure instance.">
 <polygon fill="none" stroke="black" points="157,-228.5 157,-247.5 275,-247.5 275,-228.5 157,-228.5"/>
 <text text-anchor="middle" x="216" y="-235.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::Config</text>
 </a>
@@ -218,7 +218,7 @@ var sectionId = 'dynsection-11';
 <!-- Node15 -->
 <g id="node15" class="node">
 <title>Node15</title>
-<g id="a_node15"><a xlink:href="classsss_1_1WebClient.html#afc3b7a92568fbb1ea447918920ca266e" target="_top" xlink:title="Set endpoint: &#160;&lt;proto&gt;://&lt;server&gt;:&lt;port&gt;">
+<g id="a_node15"><a xlink:href="classsss_1_1WebClient.html#afc3b7a92568fbb1ea447918920ca266e" target="_top" xlink:title="Set endpoint: &lt;proto&gt;://&lt;server&gt;:&lt;port&gt;">
 <polygon fill="none" stroke="black" points="311,-418.5 311,-437.5 454,-437.5 454,-418.5 311,-418.5"/>
 <text text-anchor="middle" x="382.5" y="-425.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::WebClient::SetEndpoint</text>
 </a>

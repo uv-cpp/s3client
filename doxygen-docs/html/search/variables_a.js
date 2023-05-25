@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['urlencodepostparams_397',['urlEncodePostParams',['../structsss_1_1api_1_1S3Api_1_1SendParams.html#af99ea89f2e18e4f3c86e919223e98bce',1,'sss::api::S3Api::SendParams']]]
+  ['offset_475',['offset',['../structsss_1_1S3DataTransferConfig.html#a6dd49f43ae5e61f94a2522f1e2cb8865',1,'sss::S3DataTransferConfig']]],
+  ['outfile_476',['outfile',['../structsss_1_1S3ClientConfig.html#a878a275729369d4ceacc9820c01b7533',1,'sss::S3ClientConfig']]]
 ];

@@ -48,7 +48,7 @@ if (edges && edges.length) {
 <script type="text/javascript">
 var viewWidth = 1152;
 var viewHeight = 534;
-var sectionId = 'dynsection-22';
+var sectionId = 'dynsection-23';
 </script>
 <script xlink:href="svgpan.js"/>
 <svg id="graph" class="graph">
@@ -57,7 +57,7 @@ var sectionId = 'dynsection-22';
 <!-- Node1 -->
 <g id="node1" class="node">
 <title>Node1</title>
-<g id="a_node1"><a xlink:title=" ">
+<g id="a_node1"><a xlink:title="List objects by sending a ListObjectsV2 request.">
 <polygon fill="#bfbfbf" stroke="black" points="0,-228.5 0,-247.5 151,-247.5 151,-228.5 0,-228.5"/>
 <text text-anchor="middle" x="75.5" y="-235.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::ListObjectsV2</text>
 </a>
@@ -81,7 +81,7 @@ var sectionId = 'dynsection-22';
 <!-- Node4 -->
 <g id="node4" class="node">
 <title>Node4</title>
-<g id="a_node4"><a xlink:href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889" target="_top" xlink:title=" ">
+<g id="a_node4"><a xlink:href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889" target="_top" xlink:title="Send request.">
 <polygon fill="none" stroke="black" points="210,-209.5 210,-228.5 322,-228.5 322,-209.5 210,-209.5"/>
 <text text-anchor="middle" x="266" y="-216.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::Send</text>
 </a>
@@ -111,7 +111,7 @@ var sectionId = 'dynsection-22';
 <!-- Node5 -->
 <g id="node5" class="node">
 <title>Node5</title>
-<g id="a_node5"><a xlink:href="classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31" target="_top" xlink:title="[WebClient::Config]">
+<g id="a_node5"><a xlink:href="classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31" target="_top" xlink:title="Configure instance.">
 <polygon fill="none" stroke="black" points="408,-209.5 408,-228.5 526,-228.5 526,-209.5 408,-209.5"/>
 <text text-anchor="middle" x="467" y="-216.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::Config</text>
 </a>
@@ -308,7 +308,7 @@ var sectionId = 'dynsection-22';
 <!-- Node18 -->
 <g id="node18" class="node">
 <title>Node18</title>
-<g id="a_node18"><a xlink:href="classsss_1_1WebClient.html#afc3b7a92568fbb1ea447918920ca266e" target="_top" xlink:title="Set endpoint: &#160;&lt;proto&gt;://&lt;server&gt;:&lt;port&gt;">
+<g id="a_node18"><a xlink:href="classsss_1_1WebClient.html#afc3b7a92568fbb1ea447918920ca266e" target="_top" xlink:title="Set endpoint: &lt;proto&gt;://&lt;server&gt;:&lt;port&gt;">
 <polygon fill="none" stroke="black" points="589,-342.5 589,-361.5 732,-361.5 732,-342.5 589,-342.5"/>
 <text text-anchor="middle" x="660.5" y="-349.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::WebClient::SetEndpoint</text>
 </a>

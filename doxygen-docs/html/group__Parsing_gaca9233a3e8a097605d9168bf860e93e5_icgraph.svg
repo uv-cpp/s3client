@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="node1" class="node">
 <title>Node1</title>
-<g id="a_node1"><a xlink:title=" ">
+<g id="a_node1"><a xlink:title="Extract and return HTTP headers as key&#45;value pairs.">
 <polygon fill="#bfbfbf" stroke="black" points="374,-57.5 374,-76.5 475,-76.5 475,-57.5 374,-57.5"/>
 <text text-anchor="middle" x="424.5" y="-64.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::HTTPHeaders</text>
 </a>
@@ -51,7 +51,7 @@
 <!-- Node4 -->
 <g id="node4" class="node">
 <title>Node4</title>
-<g id="a_node4"><a xlink:href="classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22" target="_top" xlink:title=" ">
+<g id="a_node4"><a xlink:href="classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22" target="_top" xlink:title="Send HeadObject request.">
 <polygon fill="none" stroke="black" points="193,-19.5 193,-38.5 334,-38.5 334,-19.5 193,-19.5"/>
 <text text-anchor="middle" x="263.5" y="-26.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::HeadObject</text>
 </a>
@@ -66,7 +66,7 @@
 <!-- Node5 -->
 <g id="node5" class="node">
 <title>Node5</title>
-<g id="a_node5"><a xlink:href="classsss_1_1api_1_1S3Api.html#a872e80e356e8c404a9b0739d95a0af41" target="_top" xlink:title="[WebClient::Config]">
+<g id="a_node5"><a xlink:href="classsss_1_1api_1_1S3Api.html#a872e80e356e8c404a9b0739d95a0af41" target="_top" xlink:title="Return object size.">
 <polygon fill="none" stroke="black" points="0,-38.5 0,-57.5 153,-57.5 153,-38.5 0,-38.5"/>
 <text text-anchor="middle" x="76.5" y="-45.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::GetObjectSize</text>
 </a>
@@ -81,7 +81,7 @@
 <!-- Node6 -->
 <g id="node6" class="node">
 <title>Node6</title>
-<g id="a_node6"><a xlink:href="classsss_1_1api_1_1S3Api.html#aa3f7a3001bdad58c7b0c04cbd0dc3236" target="_top" xlink:title=" ">
+<g id="a_node6"><a xlink:href="classsss_1_1api_1_1S3Api.html#aa3f7a3001bdad58c7b0c04cbd0dc3236" target="_top" xlink:title="Check if key exists.">
 <polygon fill="none" stroke="black" points="8,-0.5 8,-19.5 145,-19.5 145,-0.5 8,-0.5"/>
 <text text-anchor="middle" x="76.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::TestObject</text>
 </a>

@@ -11,7 +11,7 @@
 <!-- Node1 -->
 <g id="node1" class="node">
 <title>Node1</title>
-<g id="a_node1"><a xlink:title=" ">
+<g id="a_node1"><a xlink:title="Complete multipart upload.">
 <polygon fill="#bfbfbf" stroke="black" points="0,-204 0,-234 131,-234 131,-204 0,-204"/>
 <text text-anchor="start" x="8" y="-222" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::Complete</text>
 <text text-anchor="middle" x="65.5" y="-211" font-family="Helvetica,sans-Serif" font-size="10.00">MultipartUpload</text>
@@ -36,7 +36,7 @@
 <!-- Node4 -->
 <g id="node4" class="node">
 <title>Node4</title>
-<g id="a_node4"><a xlink:href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889" target="_top" xlink:title=" ">
+<g id="a_node4"><a xlink:href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889" target="_top" xlink:title="Send request.">
 <polygon fill="none" stroke="black" points="190,-209.5 190,-228.5 302,-228.5 302,-209.5 190,-209.5"/>
 <text text-anchor="middle" x="246" y="-216.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::Send</text>
 </a>
@@ -51,7 +51,7 @@
 <!-- Node26 -->
 <g id="node26" class="node">
 <title>Node26</title>
-<g id="a_node26"><a xlink:href="group__Parsing.html#gacf486071ed8bd3e6f76fe9ee23639bde" target="_top" xlink:title=" ">
+<g id="a_node26"><a xlink:href="group__Parsing.html#gacf486071ed8bd3e6f76fe9ee23639bde" target="_top" xlink:title="Extract and return content of XML tag.">
 <polygon fill="none" stroke="black" points="209,-171.5 209,-190.5 283,-190.5 283,-171.5 209,-171.5"/>
 <text text-anchor="middle" x="246" y="-178.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::XMLTag</text>
 </a>
@@ -81,7 +81,7 @@
 <!-- Node5 -->
 <g id="node5" class="node">
 <title>Node5</title>
-<g id="a_node5"><a xlink:href="classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31" target="_top" xlink:title="[WebClient::Config]">
+<g id="a_node5"><a xlink:href="classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31" target="_top" xlink:title="Configure instance.">
 <polygon fill="none" stroke="black" points="388,-209.5 388,-228.5 506,-228.5 506,-209.5 388,-209.5"/>
 <text text-anchor="middle" x="447" y="-216.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::Config</text>
 </a>
@@ -278,7 +278,7 @@
 <!-- Node18 -->
 <g id="node18" class="node">
 <title>Node18</title>
-<g id="a_node18"><a xlink:href="classsss_1_1WebClient.html#afc3b7a92568fbb1ea447918920ca266e" target="_top" xlink:title="Set endpoint: &#160;&lt;proto&gt;://&lt;server&gt;:&lt;port&gt;">
+<g id="a_node18"><a xlink:href="classsss_1_1WebClient.html#afc3b7a92568fbb1ea447918920ca266e" target="_top" xlink:title="Set endpoint: &lt;proto&gt;://&lt;server&gt;:&lt;port&gt;">
 <polygon fill="none" stroke="black" points="569,-342.5 569,-361.5 712,-361.5 712,-342.5 569,-342.5"/>
 <text text-anchor="middle" x="640.5" y="-349.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::WebClient::SetEndpoint</text>
 </a>

@@ -1,5 +1,7 @@
 var lib_2include_2utility_8h =
 [
+    [ "Dict", "lib_2include_2utility_8h.html#gaa658064bf1905272942c8d2f7ffc63f6", null ],
+    [ "Toml", "lib_2include_2utility_8h.html#ga5d754ac7a5792643701ae6aa22d5ea7c", null ],
     [ "begin", "lib_2include_2utility_8h.html#ga0aa7f3b15d2ebf9b597a1b5ba38ae8ac", null ],
     [ "end", "lib_2include_2utility_8h.html#ga4f73053571587e79eb3db628f5e6ef99", null ],
     [ "FileSize", "lib_2include_2utility_8h.html#a7466aaf7905509bbeff80785a67d4859", null ],

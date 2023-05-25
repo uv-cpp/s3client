@@ -1,13 +1,9 @@
 var searchData=
 [
-  ['parseheaders_305',['ParseHeaders',['../group__Internal.html#gab5b85dd69c3bfe70d89c96b77b5b46f2',1,'sss']]],
-  ['parseparams_306',['ParseParams',['../group__Internal.html#ga2b8b08c2a4994a87377d83ccfa9a6a53',1,'sss']]],
-  ['parsetomlfile_307',['ParseTomlFile',['../lib_2include_2utility_8h.html#afaf7d810ee7626a814d7cbe790dce4ab',1,'sss']]],
-  ['parseurl_308',['ParseURL',['../group__Internal.html#ga7160aa316f2c6633467b47588263c690',1,'sss']]],
-  ['parsexmlmultipathtext_309',['ParseXMLMultiPathText',['../group__Parsing.html#ga47cda9fb9518e4bb48a79de69ffa2d8e',1,'xml_path.h']]],
-  ['parsexmlpath_310',['ParseXMLPath',['../group__Parsing.html#gacf271316bde50a40dba0a85b94fe0f00',1,'xml_path.h']]],
-  ['parsexmlpathelementstext_311',['ParseXMLPathElementsText',['../group__Parsing.html#ga6f44ce3f3d0eff5d7cbe8cc4af96182a',1,'xml_path.h']]],
-  ['print_5fhash_312',['print_hash',['../group__Hash.html#gab67535e651cd6086262eaff33afb9e2c',1,'sha256::print_hash()'],['../group__Hash.html#gabbd4ca806ab3ab35436f9718a596d15b',1,'md5::print_hash()']]],
-  ['putfileobject_313',['PutFileObject',['../classsss_1_1api_1_1S3Api.html#ab7affe0834f5892b393e731783b7ccac',1,'sss::api::S3Api']]],
-  ['putobject_314',['PutObject',['../classsss_1_1api_1_1S3Api.html#a6ee9092a67e32ed994c6d7bd6a3f712c',1,'sss::api::S3Api::PutObject(const std::string &amp;bucket, const std::string &amp;key, const CharArray &amp;buffer, Headers headers={{}}, const std::string &amp;payloadHash={})'],['../classsss_1_1api_1_1S3Api.html#acf14c65d821e89d85dd5a72ba911122d',1,'sss::api::S3Api::PutObject(const std::string &amp;bucket, const std::string &amp;key, const char *buffer, size_t size, Headers headers={{}}, const std::string &amp;payloadHash={})']]]
+  ['operator_20bool_374',['operator bool',['../structsss_1_1BucketValidation.html#a6989feac32209396319426646dbfef1d',1,'sss::BucketValidation']]],
+  ['operator_3d_375',['operator=',['../classXMLOStream.html#a3bee23b15734c25bd10933778d16a4c3',1,'XMLOStream']]],
+  ['operator_5b_5d_376',['operator[]',['../classXMLOStream.html#aea809d5f60ee1220d74650ac34618fbc',1,'XMLOStream::operator[](const std::string &amp;s)'],['../classXMLOStream.html#a84c138883600333866311130be6a1fa1',1,'XMLOStream::operator[](MoveAction a)'],['../classXMLIStream.html#a73805895a754646bfe6237f1300e3108',1,'XMLIStream::operator[](const std::string &amp;p) const']]],
+  ['string_377',['string',['../classXMLIStream.html#a362ea18cfb97f903d35a0cd98aa02905',1,'XMLIStream']]],
+  ['vector_3c_20std_3a_3astring_20_3e_378',['vector&lt; std::string &gt;',['../classXMLIStream.html#a0f09f04040adc73515071a473c49845a',1,'XMLIStream']]],
+  ['vector_3c_20xmlrecord_20_3e_379',['vector&lt; XMLRecord &gt;',['../classXMLIStream.html#a6f4e7e9c8e4b31d89840f6d5fd560333',1,'XMLIStream']]]
 ];

@@ -52,7 +52,7 @@
 <!-- Node4 -->
 <g id="node4" class="node">
 <title>Node4</title>
-<g id="a_node4"><a xlink:href="classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22" target="_top" xlink:title=" ">
+<g id="a_node4"><a xlink:href="classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22" target="_top" xlink:title="Send HeadObject request.">
 <polygon fill="none" stroke="black" points="193,-50 193,-69 334,-69 334,-50 193,-50"/>
 <text text-anchor="middle" x="263.5" y="-57" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::HeadObject</text>
 </a>
@@ -67,7 +67,7 @@
 <!-- Node7 -->
 <g id="node7" class="node">
 <title>Node7</title>
-<g id="a_node7"><a xlink:href="classsss_1_1api_1_1S3Api.html#ab7affe0834f5892b393e731783b7ccac" target="_top" xlink:title=" ">
+<g id="a_node7"><a xlink:href="classsss_1_1api_1_1S3Api.html#ab7affe0834f5892b393e731783b7ccac" target="_top" xlink:title="Upload file to object.">
 <polygon fill="none" stroke="black" points="203.5,-0.5 203.5,-30.5 323.5,-30.5 323.5,-0.5 203.5,-0.5"/>
 <text text-anchor="start" x="211.5" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::PutFile</text>
 <text text-anchor="middle" x="263.5" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">Object</text>
@@ -83,7 +83,7 @@
 <!-- Node5 -->
 <g id="node5" class="node">
 <title>Node5</title>
-<g id="a_node5"><a xlink:href="classsss_1_1api_1_1S3Api.html#a872e80e356e8c404a9b0739d95a0af41" target="_top" xlink:title="[WebClient::Config]">
+<g id="a_node5"><a xlink:href="classsss_1_1api_1_1S3Api.html#a872e80e356e8c404a9b0739d95a0af41" target="_top" xlink:title="Return object size.">
 <polygon fill="none" stroke="black" points="0,-69 0,-88 153,-88 153,-69 0,-69"/>
 <text text-anchor="middle" x="76.5" y="-76" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::GetObjectSize</text>
 </a>
@@ -98,7 +98,7 @@
 <!-- Node6 -->
 <g id="node6" class="node">
 <title>Node6</title>
-<g id="a_node6"><a xlink:href="classsss_1_1api_1_1S3Api.html#aa3f7a3001bdad58c7b0c04cbd0dc3236" target="_top" xlink:title=" ">
+<g id="a_node6"><a xlink:href="classsss_1_1api_1_1S3Api.html#aa3f7a3001bdad58c7b0c04cbd0dc3236" target="_top" xlink:title="Check if key exists.">
 <polygon fill="none" stroke="black" points="8,-31 8,-50 145,-50 145,-31 8,-31"/>
 <text text-anchor="middle" x="76.5" y="-38" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::TestObject</text>
 </a>

@@ -95,16 +95,61 @@ $(document).ready(function(){initNavTree('structsss_1_1api_1_1S3Api_1_1ListObjec
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
 <div class="title">sss::api::S3Api::ListObjectV2Config Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;s3-api.h&gt;</code></p>
+<p><code>ListObjectsV2</code> request See <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html">https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html</a>  
+ <a href="structsss_1_1api_1_1S3Api_1_1ListObjectV2Config.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="s3-api_8h_source.html">s3-api.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Data Fields</h2></td></tr>
+<tr class="memitem:afeb31ce7c7fa015703bd90129be738a4"><td class="memItemLeft" align="right" valign="top"><a id="afeb31ce7c7fa015703bd90129be738a4"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>continuationToken</b></td></tr>
+<tr class="separator:afeb31ce7c7fa015703bd90129be738a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4477b3f6cec8546ecba5958b636fae7e"><td class="memItemLeft" align="right" valign="top"><a id="a4477b3f6cec8546ecba5958b636fae7e"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>delimiter</b></td></tr>
+<tr class="separator:a4477b3f6cec8546ecba5958b636fae7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab4bf5a4bff508256826b13999fc04622"><td class="memItemLeft" align="right" valign="top"><a id="ab4bf5a4bff508256826b13999fc04622"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>encodingType</b></td></tr>
+<tr class="separator:ab4bf5a4bff508256826b13999fc04622"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2315c8a22760eaef42c420969fe560e6"><td class="memItemLeft" align="right" valign="top"><a id="a2315c8a22760eaef42c420969fe560e6"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>fetchOwner</b></td></tr>
+<tr class="separator:a2315c8a22760eaef42c420969fe560e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7a0f070510e7e395ad4d3bf49dcf677"><td class="memItemLeft" align="right" valign="top"><a id="af7a0f070510e7e395ad4d3bf49dcf677"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>maxKeys</b></td></tr>
+<tr class="separator:af7a0f070510e7e395ad4d3bf49dcf677"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc30d964a11f9c32480d929fcbdb698d"><td class="memItemLeft" align="right" valign="top"><a id="abc30d964a11f9c32480d929fcbdb698d"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>prefix</b></td></tr>
+<tr class="separator:abc30d964a11f9c32480d929fcbdb698d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c34a9a29dd26a811a369237a81df31d"><td class="memItemLeft" align="right" valign="top"><a id="a9c34a9a29dd26a811a369237a81df31d"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>startAfter</b></td></tr>
+<tr class="separator:a9c34a9a29dd26a811a369237a81df31d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><code>ListObjectsV2</code> request <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html">https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html</a> </p>
+<div class="textblock"><p><code>ListObjectsV2</code> request See <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html">https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html</a> </p>
+<div class="fragment"><div class="line"><span class="keyword">struct </span>ListObjectV2Config {</div>
+<div class="line">  std::string continuationToken;</div>
+<div class="line">  std::string delimiter;</div>
+<div class="line">  std::string encodingType;</div>
+<div class="line">  std::string fetchOwner;</div>
+<div class="line">  <span class="keywordtype">size_t</span> maxKeys;</div>
+<div class="line">  std::string prefix;</div>
+<div class="line">  std::string startAfter;</div>
+<div class="line">  <span class="comment">// default member initializer for &#39;maxKeys&#39; needed within definition of</span></div>
+<div class="line">  <span class="comment">// enclosing class &#39;S3Api&#39; outside of member functions const</span></div>
+<div class="line">  <span class="comment">// ListObjectV2Config &amp;config = ListObjectV2Config{}</span></div>
+<div class="line">  ListObjectV2Config() : maxKeys(0) {}</div>
+<div class="line">};</div>
+</div><!-- fragment --> 
+<p class="definition">Definition at line <a class="el" href="s3-api_8h_source.html#l00209">209</a> of file <a class="el" href="s3-api_8h_source.html">s3-api.h</a>.</p>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
-<li>/home/ugovaretto/projects/uv-cpp/s3client/repo/lib/include/<a class="el" href="s3-api_8h.html">s3-api.h</a></li>
+<li>/home/ugovaretto/projects/uv-cpp/s3client/repo/lib/include/<a class="el" href="s3-api_8h_source.html">s3-api.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

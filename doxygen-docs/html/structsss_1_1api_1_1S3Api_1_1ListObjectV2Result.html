@@ -95,16 +95,38 @@ $(document).ready(function(){initNavTree('structsss_1_1api_1_1S3Api_1_1ListObjec
 </div>
 
 <div class="header">
+  <div class="summary">
+<a href="#pub-attribs">Data Fields</a>  </div>
   <div class="headertitle">
 <div class="title">sss::api::S3Api::ListObjectV2Result Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p><code>#include &lt;s3-api.h&gt;</code></p>
+<p><code>ListObjectsV2</code> response. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html">https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html</a>  
+ <a href="structsss_1_1api_1_1S3Api_1_1ListObjectV2Result.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="s3-api_8h_source.html">s3-api.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Data Fields</h2></td></tr>
+<tr class="memitem:ae83ae08c68257a236a627943645f4b43"><td class="memItemLeft" align="right" valign="top"><a id="ae83ae08c68257a236a627943645f4b43"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>truncated</b></td></tr>
+<tr class="separator:ae83ae08c68257a236a627943645f4b43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9e48d7752f23acc3e81467696b216ded"><td class="memItemLeft" align="right" valign="top"><a id="a9e48d7752f23acc3e81467696b216ded"></a>
+std::vector&lt; ObjectInfo &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>keys</b></td></tr>
+<tr class="separator:a9e48d7752f23acc3e81467696b216ded"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><code>ListObjectsV2</code> response. <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html">https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html</a> </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="structsss_1_1api_1_1ObjectInfo.html">ObjectInfo</a> </dd></dl>
+<div class="textblock"><p><code>ListObjectsV2</code> response. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html">https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html</a> </p>
+<dl class="section see"><dt>See also</dt><dd>ObjectInfo <div class="fragment"><div class="line"><span class="keyword">struct </span>ListObjectV2Result {</div>
+<div class="line">  <span class="keywordtype">bool</span> truncated;</div>
+<div class="line">  std::vector&lt;ObjectInfo&gt; keys;</div>
+<div class="line">};</div>
+</div><!-- fragment --> </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="s3-api_8h_source.html#l00231">231</a> of file <a class="el" href="s3-api_8h_source.html">s3-api.h</a>.</p>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
-<li>/home/ugovaretto/projects/uv-cpp/s3client/repo/lib/include/<a class="el" href="s3-api_8h.html">s3-api.h</a></li>
+<li>/home/ugovaretto/projects/uv-cpp/s3client/repo/lib/include/<a class="el" href="s3-api_8h_source.html">s3-api.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
