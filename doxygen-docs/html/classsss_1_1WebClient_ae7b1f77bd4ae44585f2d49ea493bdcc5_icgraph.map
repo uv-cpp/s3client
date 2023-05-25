@@ -1,0 +1,24 @@
+<map id="sss::WebClient::UploadDataFromBuffer" name="sss::WebClient::UploadDataFromBuffer">
+<area shape="rect" id="node1" title="Upload data from memory buffer." alt="" coords="764,475,952,516"/>
+<area shape="rect" id="node2" href="$classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889" title="Send request." alt="" coords="540,457,689,483"/>
+<area shape="rect" id="node22" href="$classsss_1_1WebClient.html#ab5af9d8e7c424e49fab04f0d9d59b489" title="Upload file starting from offset using unbuffered memory mapping of file." alt="" coords="513,507,716,534"/>
+<area shape="rect" id="node3" href="$classsss_1_1api_1_1S3Api.html#a4ea265566c3c4335ec01201cdc4410c6" title="Abort multipart upload." alt="" coords="261,5,461,47"/>
+<area shape="rect" id="node4" href="$classsss_1_1api_1_1S3Api.html#a98f999a216121118dd569c7ef0c28ff3" title="Complete multipart upload." alt="" coords="274,71,449,112"/>
+<area shape="rect" id="node5" href="$classsss_1_1api_1_1S3Api.html#ad890bd1ecfc978df24b2c3ed641e4081" title="Create bucket." alt="" coords="262,137,461,163"/>
+<area shape="rect" id="node6" href="$classsss_1_1api_1_1S3Api.html#a1796fafda3d90a4292a611ce1999433b" title="Create multipart upload." alt="" coords="257,188,465,229"/>
+<area shape="rect" id="node7" href="$classsss_1_1api_1_1S3Api.html#a3d63825d1916e4ba3ca13122c7660603" title="Delete bucket." alt="" coords="262,254,461,281"/>
+<area shape="rect" id="node8" href="$classsss_1_1api_1_1S3Api.html#a14a75f15eb71fbba8639673100768b67" title="Delete object." alt="" coords="264,305,459,331"/>
+<area shape="rect" id="node9" href="$classsss_1_1api_1_1S3Api.html#a3b53152bf39143843a4033aa4a1b3fa0" title=" " alt="" coords="261,355,461,382"/>
+<area shape="rect" id="node10" href="$classsss_1_1api_1_1S3Api.html#af61465d92c0a94aa82ae863fc2a776a0" title="Download object data." alt="" coords="272,406,451,433"/>
+<area shape="rect" id="node11" href="$classsss_1_1api_1_1S3Api.html#ae548966dc38f328fc45ee1500f5caf5b" title="Return bucket&#39;s Access Control List." alt="" coords="263,457,460,483"/>
+<area shape="rect" id="node12" href="$classsss_1_1api_1_1S3Api.html#aa4a2b1cc2c89a52d1aa89e571b785db2" title=" " alt="" coords="266,507,457,534"/>
+<area shape="rect" id="node13" href="$classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22" title="Send HeadObject request." alt="" coords="267,558,455,585"/>
+<area shape="rect" id="node16" href="$classsss_1_1api_1_1S3Api.html#a81e30673c06b609a2ee6e6bfd9130ca6" title="List buckets." alt="" coords="267,609,455,635"/>
+<area shape="rect" id="node17" href="$classsss_1_1api_1_1S3Api.html#a3f00f611cd210a58ac6e8c0555984433" title="List objects by sending a ListObjectsV2 request." alt="" coords="261,659,462,686"/>
+<area shape="rect" id="node18" href="$classsss_1_1api_1_1S3Api.html#aa35e9b1cc7661cd9bb0d5f2de6cbbc7d" title="Set Access Control Policy for bucket." alt="" coords="262,710,461,737"/>
+<area shape="rect" id="node19" href="$classsss_1_1api_1_1S3Api.html#a2cc08fb777cfc4d24c40bea1cde967e7" title="Set Access Control Policy." alt="" coords="263,761,459,787"/>
+<area shape="rect" id="node20" href="$classsss_1_1api_1_1S3Api.html#a0473917e4d25a4a6fca40d097e4299d6" title=" " alt="" coords="287,811,436,838"/>
+<area shape="rect" id="node21" href="$classsss_1_1api_1_1S3Api.html#a23223ee1fb701c55af2d942dbf261ae2" title="Check if bucket exist." alt="" coords="269,862,454,889"/>
+<area shape="rect" id="node14" href="$classsss_1_1api_1_1S3Api.html#a872e80e356e8c404a9b0739d95a0af41" title="Return object size." alt="" coords="5,533,209,559"/>
+<area shape="rect" id="node15" href="$classsss_1_1api_1_1S3Api.html#aa3f7a3001bdad58c7b0c04cbd0dc3236" title="Check if key exists." alt="" coords="16,583,199,610"/>
+</map>

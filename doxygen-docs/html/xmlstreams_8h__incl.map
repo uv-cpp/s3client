@@ -1,0 +1,27 @@
+<map id="/home/ugovaretto/projects/uv&#45;cpp/s3client/repo/lib/include/xmlstreams.h" name="/home/ugovaretto/projects/uv&#45;cpp/s3client/repo/lib/include/xmlstreams.h">
+<area shape="rect" id="node1" title="xml parser and generator." alt="" coords="1217,5,1390,61"/>
+<area shape="rect" id="node2" href="$s3-api_8h.html" title="declarations of S3Api class." alt="" coords="826,109,894,136"/>
+<area shape="rect" id="node6" title=" " alt="" coords="780,483,835,509"/>
+<area shape="rect" id="node10" title=" " alt="" coords="965,408,1024,435"/>
+<area shape="rect" id="node23" title=" " alt="" coords="1302,109,1385,136"/>
+<area shape="rect" id="node24" title=" " alt="" coords="1410,109,1488,136"/>
+<area shape="rect" id="node25" title=" " alt="" coords="1513,109,1574,136"/>
+<area shape="rect" id="node3" href="$aws__sign_8h.html" title="Public interface to signing URLs and HTTP headers with the S3v4 protocol standard." alt="" coords="734,259,822,285"/>
+<area shape="rect" id="node14" href="$response__parser_8h.html" title="Functions to parse XML and HTTP headers." alt="" coords="1049,333,1177,360"/>
+<area shape="rect" id="node16" href="$s3-client_8h.html" title="declaration of functions and data types for sending S3 requests, signing URLs and downloading and upl..." alt="" coords="818,184,901,211"/>
+<area shape="rect" id="node17" href="$webclient_8h.html" title="declaration of WebClient class wrapping libcurl to send web requests." alt="" coords="456,259,544,285"/>
+<area shape="rect" id="node4" href="$common_8h.html" title="Common definitions." alt="" coords="728,408,810,435"/>
+<area shape="rect" id="node7" href="$url__utility_8h.html" title="Internal utility functions to process and parse text and URLs and create S3 signature keys." alt="" coords="537,333,620,360"/>
+<area shape="rect" id="node5" title=" " alt="" coords="486,483,532,509"/>
+<area shape="rect" id="node8" title=" " alt="" coords="386,483,461,509"/>
+<area shape="rect" id="node9" title=" " alt="" coords="530,408,602,435"/>
+<area shape="rect" id="node11" href="$lib_2include_2utility_8h.html" title="internal utility functions" alt="" coords="291,408,354,435"/>
+<area shape="rect" id="node12" title=" " alt="" coords="283,483,362,509"/>
+<area shape="rect" id="node13" title=" " alt="" coords="148,483,259,509"/>
+<area shape="rect" id="node15" title=" " alt="" coords="1048,408,1103,435"/>
+<area shape="rect" id="node18" title=" " alt="" coords="32,333,111,360"/>
+<area shape="rect" id="node19" title=" " alt="" coords="135,333,219,360"/>
+<area shape="rect" id="node20" title=" " alt="" coords="244,333,294,360"/>
+<area shape="rect" id="node21" title=" " alt="" coords="318,333,380,360"/>
+<area shape="rect" id="node22" title=" " alt="" coords="404,333,462,360"/>
+</map>

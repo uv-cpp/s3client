@@ -1,0 +1,6 @@
+<map id="sss::WebClient::ErrorMsg" name="sss::WebClient::ErrorMsg">
+<area shape="rect" id="node1" title=" " alt="" coords="235,71,407,98"/>
+<area shape="rect" id="node2" href="$classsss_1_1api_1_1S3Api.html#ab7affe0834f5892b393e731783b7ccac" title="Upload file to object." alt="" coords="16,5,176,47"/>
+<area shape="rect" id="node3" href="$classsss_1_1WebClient.html#ad038e41cfc902f6e49754c52a9a71992" title="Upload file." alt="" coords="5,71,187,98"/>
+<area shape="rect" id="node4" href="$classsss_1_1WebClient.html#accb4e986d73bb44149918fa0043ec43b" title="Upload file starting from offset using unbuffered I/O read." alt="" coords="5,123,187,164"/>
+</map>
