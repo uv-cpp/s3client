@@ -1,9 +1,0 @@
-<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" title=" " alt="" coords="5,132,91,159"/>
-<area shape="rect" id="node2" href="$classDOMToDictVisitor.html" title=" " alt="" coords="139,5,267,32"/>
-<area shape="rect" id="node3" href="$classFindVisitor.html" title=" " alt="" coords="161,56,245,83"/>
-<area shape="rect" id="node4" href="$classMultiPathVisitor.html" title=" " alt="" coords="145,107,260,133"/>
-<area shape="rect" id="node5" href="$classMultiVisitor.html" title=" " alt="" coords="159,157,246,184"/>
-<area shape="rect" id="node6" href="$classPathVisitor.html" title=" " alt="" coords="159,208,246,235"/>
-<area shape="rect" id="node7" href="$classToTextVisitor.html" title=" " alt="" coords="153,259,252,285"/>
-</map>
