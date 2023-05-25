@@ -45,11 +45,8 @@
 
 /// \addtogroup Types
 /// @{
-/// Representaion of an XML tree with no repeated tags (maps to record with no
-/// repeated fields) as {path to text element, text element} tuples stored into
-/// map object.
-/// E.g.
-/// \code{.xml} <tag1>
+/// Representaion of an XML tree as {path to text element, text element} tuples
+/// stored into map object. E.g. \code{.xml} <tag1>
 ///   <tag1_1>
 ///     text 1 1
 ///   </tat1_1>
@@ -65,14 +62,11 @@
 ///   {"/tag1/tag1_2", "text 1 2"}
 /// };
 /// \endcode
-/// Note that in case of repeated tag names only the contemf of the last one
-/// will be stored, ideally having multiple tags with the same name i.e.
-/// a record with multiple fields with the same name should be reported as
-/// an error condition.
 using XMLRecord = std::unordered_map<std::string, std::string>;
 /// Array of XML records
 /// \see XMLRecord
 using XMLRecords = std::vector<XMLRecord>;
+
 /// Result of an XML query operation
 ///
 /// - Path to text element: return \c std::string
@@ -283,6 +277,7 @@ public:
   /// to sbtrees under path if it does not start with \c '/'
   ///
   /// \return reference to current instance
+  /// \see RecordList
   const XMLIStream &operator[](const std::string &p) const {
     // return all text elements under path
     if (p.front() == '/') {

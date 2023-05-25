@@ -148,6 +148,29 @@ std::vector<std::string> ParseXMLMultiPathText(const std::string &xml,
  *   };
  * \endcode
  *
+ * Transpose operation:
+ *
+ * FROM:
+ * \code
+ * /bucket/creation/date  date1
+ *                        date2
+ *                        date3
+ * /bucket/name   name1
+ *                name2
+ * \endcode
+ *
+ * TO:
+ * \code
+ * /bucket/creation/date  date1
+ * /bucket/name           name1
+ *
+ * /bucket/creation/date  date2
+ * /bucket/name           name2
+ *
+ * /bucket/creation/date  date3
+ * /bucket/name           ""
+ * \endcode
+ *
  * \param[in] prefix XML path to record data.
  *
  * \param[in] domMap XML document transformed into {"path", "text"} map through
