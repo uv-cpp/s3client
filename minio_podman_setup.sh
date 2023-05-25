@@ -43,8 +43,10 @@
 if (($# == 0))
 then
   echo "Run minio with podman and update mc configuration with new credentials"
-  echo "usage: $0 <minio alias name> <data path>"
+  echo "usage: $0 <minio alias name> <data path> [env_vars_file]"
   echo
+  echo "If 'env_vars_file' is specified the commands to set the environment variables"
+  echo "for access, secret and url are stored inside file 'env_vars_file"
   echo "Data path is created if it does not exist"
   echo "S3CLIENT_TEST_SECRET and S3CLIENT_TEST_ACCESS env variables contain generated access and secret"
   echo "An entry is added into $HOME/.mc/config.json"

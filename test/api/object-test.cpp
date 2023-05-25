@@ -136,4 +136,5 @@ int main(int argc, char **argv) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
   /// [DeleteBucket]
+  return 0;
 }

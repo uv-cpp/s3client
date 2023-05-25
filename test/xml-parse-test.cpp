@@ -109,6 +109,16 @@ void ParseXMLMultiPathTest() {
   // cout << XMLToText(doc, true, 0) << endl;
 }
 
+void ParseRecordList() {
+  auto r =
+      RecordList("/listallmybucketsresult/buckets", DOMToDict(listBuckets));
+  for (auto i : r) {
+    cout << string(10, '=') << endl;
+    for (auto kv : i) {
+      cout << kv.first << ": " << kv.second << endl;
+    }
+  }
+}
 //@todo turn into test using shorter xml text
 void PrintDOMToDict() {
   unordered_map<string, vector<string>> d = DOMToDict(listBuckets);
@@ -163,6 +173,7 @@ int main(int, char **) {
   cout << "ParseXMLTagMultiPathTest: Pass" << endl;
   GenerateAclXMLTest();
   cout << "GenerateAclXMLTest: Pass" << endl;
+  // ParseRecordList();
   // PrintDOMToDict();
   return 0;
 }
