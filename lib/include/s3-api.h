@@ -52,19 +52,38 @@ namespace api {
  * @{
  */
 
-/// XML -> C++ mapping of \c ListBuckets/Buckets response.
-/// https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html
+/// \brief XML -> C++ mapping of \c ListBuckets/Buckets response.
+/// See https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html
+/// \code{.cpp}
+/// struct BucketInfo {
+///  std::string name;
+///  std::string creationDate;
+/// };
+/// \endcode
 struct BucketInfo {
   std::string name;
-  std::string creationDate; //@todo replace with std::tm
+  std::string creationDate;
 };
 
-/// XML -> C++ mapping of \c ListObjectsV2/Contents response.
-/// https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html
+/// \brief XML -> C++ mapping of \c ListObjectsV2/Contents response.
+/// See https://docs.aws.amazon.com/AmazonS3/latest/API/API_Object.html
+/// \code{.cpp}
+/// struct ObjectInfo {
+///   std::string checksumAlgo;
+///   std::string key;
+///   std::string lastModified;
+///   ETag etag;
+///   size_t size;
+///   std::string storageClass;
+///   // ObjectOwner
+///   std::string ownerDisplayName;
+///   std::string ownerID;
+/// };
+/// \encode
 struct ObjectInfo {
   std::string checksumAlgo;
   std::string key;
-  std::string lastModified; //@todo replace with std:tm
+  std::string lastModified;
   ETag etag;
   size_t size;
   std::string storageClass;
@@ -73,8 +92,24 @@ struct ObjectInfo {
   std::string ownerID;
 };
 
-/// XML -> C++ mapping of \c Grantee
-/// https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAcl.html
+/// \brief XML -> C++ mapping of \c Grante record
+/// See https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAcl.html
+/// \code{.cpp}
+/// struct Grant {
+///   struct Grantee {
+///     std::string displayName;
+///     std::string emailAddress;
+///     std::string id;
+///     std::string xsiType;
+///     std::string uri;
+///     bool Empty() const {
+///       return uri.empty() && xsiType.empty() && id.empty() &&
+///              emailAddress.empty() && displayName.empty();
+///     }
+///   } grantee;
+///   std::string permission;
+/// };
+/// \endcode
 struct Grant {
   struct Grantee {
     std::string displayName;
@@ -90,8 +125,15 @@ struct Grant {
   std::string permission;
 };
 
-/// XML -> C++ mapping of \c AccessControlPolicy
+/// \brief XML -> C++ mapping of \c AccessControlPolicy
 /// https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAcl.html
+/// \code{.cpp}
+/// struct AccessControlPolicy {
+///   std::string ownerDisplayName;
+///   std::string ownerID;
+///   std::vector<Grant> grants;
+/// };
+/// \endcode
 struct AccessControlPolicy {
   std::string ownerDisplayName;
   std::string ownerID;
@@ -108,7 +150,7 @@ struct AccessControlPolicy {
  *
  * Also includes higher level methods to simplify access to the API.
  *
- * When sending requests, the fields specified as URL prameters are are passed
+ * When sending requests, the fields specified as URL prameters are passed
  * to methods as C++ structs and sent as part of the request, but in most cases
  * the optional parameters sent as HTTP header fields are not sent along, it is
  * therefore required to explicitly pass them in the \c headers parameter.
@@ -126,10 +168,10 @@ struct AccessControlPolicy {
  * Currently exceptions are being used to report errors, work is ongoing to
  * move to result types similar to Rust's \c Result<ResultT,ErrorT>.
  *
- * All methods that send request throw:
+ * All methods that send requests throw:
  *
  *  - \c std::runtime_error in case of errors sending the request
- *  - \c std::logic_error when the returned response
+ *  - \c std::logic_error when the returned response code is >= 400
  *
  *
  * \section ex1 Examples
@@ -147,8 +189,23 @@ struct AccessControlPolicy {
  */
 class S3Api {
 public:
-  /// \c ListObjectsV2 request
-  /// https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html
+  /// \brief \c ListObjectsV2 request
+  /// See https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html
+  /// \code{.cpp}
+  /// struct ListObjectV2Config {
+  ///   std::string continuationToken;
+  ///   std::string delimiter;
+  ///   std::string encodingType;
+  ///   std::string fetchOwner;
+  ///   size_t maxKeys;
+  ///   std::string prefix;
+  ///   std::string startAfter;
+  ///   // default member initializer for 'maxKeys' needed within definition of
+  ///   // enclosing class 'S3Api' outside of member functions const
+  ///   // ListObjectV2Config &config = ListObjectV2Config{}
+  ///   ListObjectV2Config() : maxKeys(0) {}
+  /// };
+  /// \endcode
   struct ListObjectV2Config {
     std::string continuationToken;
     std::string delimiter;
@@ -162,30 +219,38 @@ public:
     // ListObjectV2Config &config = ListObjectV2Config{}
     ListObjectV2Config() : maxKeys(0) {}
   };
-  /// \c ListObjectsV2 response.
-  /// https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html
+  /// \brief \c ListObjectsV2 response.
+  /// See https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html
   /// \see ObjectInfo
+  /// \code{.cpp}
+  /// struct ListObjectV2Result {
+  ///   bool truncated;
+  ///   std::vector<ObjectInfo> keys;
+  /// };
+  /// \endcode
   struct ListObjectV2Result {
     bool truncated;
     std::vector<ObjectInfo> keys;
   };
-  /// Send request parameters.
+  /// \brief Send request parameters.
   /// \see Send(const SendParams &p)
   /// \see Config
   struct SendParams {
-    std::string method = "GET";
-    std::string bucket;
-    std::string key;
-    Parameters params;
-    Headers headers;
+    std::string method = "GET"; ///< HTTP method
+    std::string bucket;         ///< bucket name
+    std::string key;            ///< key name
+    Parameters params;          ///< url parameters as {key, value} map
+    Headers headers; ///< HTTP headers as {header name, header value} map
     std::string region = "us-east-1";
-    std::string signUrl; ///< URL used for signing request headers
-    std::string payloadHash;
-    const std::string &postData = "";
+    std::string signUrl;     ///< URL used for signing request headers
+    std::string payloadHash; ///< payload hash, leave empty if no hash available
+    const std::string &postData = ""; ///< text data to be posted
     bool urlEncodePostParams = false; ///< if \true URL-encode \c postData else
                                       ///< send postData without encoding first
-    const char *uploadData = nullptr;
-    size_t uploadDataSize = 0;
+    const char *uploadData =
+        nullptr; ///< pointer to data to upload in the request body as part of a
+                 ///< \c PUT request
+    size_t uploadDataSize = 0; ///< size of data to upoad
   };
 
 public:
@@ -217,16 +282,16 @@ public:
         webClient_(std::move(other.webClient_)) {}
 
 public:
-  /// Check if bucket exist.
+  /// \brief Check if bucket exist.
   /// \param[in] bucket bucket name
   /// \return \c true if bucket exist, \c false otherwise
   bool TestBucket(const std::string &bucket);
-  /// Check if key exists.
+  /// \brief Check if key exists.
   /// \param[in] bucket bucket name
   /// \param[in] key key name
   /// \return \c true if key exists, \c false otherwise
   bool TestObject(const std::string &bucket, const std::string &key);
-  /// Clear data and reset read and write functions
+  /// \brief Clear data and reset read and write functions
   void Clear() {
     webClient_.SetPath("");
     webClient_.SetHeaders({{}});
@@ -235,7 +300,7 @@ public:
     webClient_.ClearBuffers();
     webClient_.ResetRWFunctions();
   }
-  /// Send request.
+  /// \brief Send request.
   /// \param[in] p send parameters \see SendParams
   /// \return reference to \c this \c S3Api instance.
   /// \throws std::runtime_error in case of error sending request
@@ -265,7 +330,7 @@ public:
     /// [WebClient::Send]
   }
 
-  /// Configure instance.
+  /// \brief Configure instance.
   /// \param[in] p configuration \see SendParams
   WebClient &Config(const SendParams &p);
 
@@ -292,9 +357,9 @@ public:
 
   // High level API
 public:
-  /// I/O mode used for reading and writing data from/to files.
+  /// \brief I/O mode used for reading and writing data from/to files.
   enum FileIOMode { BUFFERED, UNBUFFERED, MEMORY_MAPPED };
-  /// Download object into file.
+  /// \brief Download object into file.
   /// \param[in] outFileName output file name
   /// \param[in] bucket bucket name
   /// \param[in] key key name
@@ -307,7 +372,7 @@ public:
                      size_t beginReadOffset = 0, size_t endReadOffset = 0,
                      Headers headers = {{}});
 
-  /// Upload file to object.
+  /// \brief Upload file to object.
   ///
   /// \param[in] infileName input file name
   ///
@@ -326,7 +391,7 @@ public:
                      size_t readSize = 0, Headers headers = {{}},
                      const std::string &payloadHash = {});
 
-  /// Upload file part.
+  /// \brief Upload file part.
   /// Invoke after calling CreateMultipartUpload and before calling
   /// CompleteMultipartUpload.
   ///
@@ -360,7 +425,7 @@ public:
                       Headers headers = {{}},
                       const std::string &payloadHash = {});
 
-  /// Return object size
+  /// \brief Return object size
   ///
   /// \param[in] bucket bucket name
   /// \param[in] key key name
@@ -369,14 +434,14 @@ public:
 
   // API
 public:
-  /// Abort multipart upload
+  /// \brief Abort multipart upload
   /// \param[in] bucket bucket name
   /// \param[in] key key name
   /// \param[in] uploadId upload id returned by CreateMultipartUpload
   void AbortMultipartUpload(const std::string &bucket, const std::string &key,
                             const UploadId &uploadId);
 
-  /// Complete multipart upload
+  /// \brief Complete multipart upload
   /// \param[in] uid upload id returned by CreateMultipartUpload
   /// \param[in] bucket bucket name
   /// \param[in] key key name
@@ -388,14 +453,14 @@ public:
                                const std::string &key,
                                const std::vector<ETag> &etags);
 
-  /// Create bucket
+  /// \brief Create bucket
   ///
   /// \param[in] bucket bucket name
   ///
   /// \param[in] headers optional HTTP headers as {name, value} map
   void CreateBucket(const std::string &bucket, const Headers &headers = {{}});
 
-  /// Create multipart upload
+  /// \brief Create multipart upload
   ///
   /// \param[in] bucket bucket name
   ///
@@ -408,7 +473,7 @@ public:
                                  const std::string &key, size_t partSize = 0,
                                  Headers headers = {});
 
-  /// Delete bucket
+  /// \brief Delete bucket
   ///
   /// \param[in] bucket bucket name
   ///
@@ -417,7 +482,7 @@ public:
   /// \param[in] headers optional HTTP headers as {name, value} map
   void DeleteBucket(const std::string &bucket, const Headers &headers = {{}});
 
-  /// Delete object
+  /// \brief Delete object
   ///
   /// \param[in] bucket bucket name
   ///
@@ -436,7 +501,7 @@ public:
   /// \return Acess Control Policy \see AccessControlPolicy
   AccessControlPolicy GetBucketAcl(const std::string &bucket);
 
-  /// Download object data
+  /// \brief Download object data
   ///
   /// \param[in] bucket bucket name
   ///
@@ -454,7 +519,7 @@ public:
                              size_t beginReadOffset = 0,
                              size_t endReadOffset = 0, Headers = {{}});
 
-  /// Download object data into \c vector<char>
+  /// \brief Download object data into \c vector<char>
   ///
   /// \param[in] bucket bucket name
   ///
@@ -475,7 +540,7 @@ public:
                  size_t beginReadOffset = 0, size_t endReadOffset = 0,
                  Headers headers = {{}});
 
-  /// Download object data into \c char buffer
+  /// \brief Download object data into \c char buffer
   ///
   /// \param[in] bucket bucket name
   ///
@@ -496,7 +561,7 @@ public:
                  size_t beginReadOffset = 0, size_t endReadOffset = 0,
                  Headers headers = {{}});
 
-  /// Return bucket's Access Control List
+  /// \brief Return bucket's Access Control List
   /// \param bucket bucket name
   /// \param key key name
   /// \return Acess Control Policy \see AccessControlPolicy
@@ -512,7 +577,7 @@ public:
   /// \return HTTP headers as {http header name, value} map
   Headers HeadBucket(const std::string &bucket, const Headers &headers = {{}});
 
-  /// Send \c HeadObject request
+  /// \brief Send \c HeadObject request
   ///
   /// \param[in] bucket bucket name
   ///
@@ -525,7 +590,7 @@ public:
   Headers HeadObject(const std::string &bucket, const std::string &key,
                      const Headers & = {{}});
 
-  /// List buckets
+  /// \brief List buckets
   ///
   /// \param[in] headers optional http headers as {name, value} map sent along
   /// with request
@@ -533,7 +598,7 @@ public:
   /// \return bucket list \see BucketInfo
   std::vector<BucketInfo> ListBuckets(const Headers &headers = {{}});
 
-  /// List objects by sending a \c ListObjectsV2 request
+  /// \brief List objects by sending a \c ListObjectsV2 request
   ///
   /// \param[in] bucket bucket name
   ///
@@ -553,13 +618,13 @@ public:
   //                                 const std::string &key, const UploadId
   //                                 &uid, int max_parts);
 
-  /// Set Access Control Policy for bucket.
+  /// \brief Set Access Control Policy for bucket.
   ///
   /// \param[in] bucket bucket name
   ///
   /// \param[in] acl Acess Control Policy \see AccessControlPolicy
   void PutBucketAcl(const std::string &bucket, const AccessControlPolicy &acl);
-  /// Upload data to object by sending a \c PutObject request
+  /// \brief Upload data to object by sending a \c PutObject request
   /// \param[in] bucket bucket name
   ///
   /// \param[in] key key name
@@ -575,7 +640,7 @@ public:
                  const CharArray &buffer, Headers headers = {{}},
                  const std::string &payloadHash = {});
 
-  /// Upload data to object by sending a \c PutObject request
+  /// \brief Upload data to object by sending a \c PutObject request
   /// \param[in] bucket bucket name
   ///
   /// \param[in] key key name
@@ -591,14 +656,14 @@ public:
                  const char *buffer, size_t size, Headers headers = {{}},
                  const std::string &payloadHash = {});
 
-  /// Set Access Control Policy
+  /// \brief Set Access Control Policy
   /// \param bucket[in] bucket name
   /// \param key[in] key name
   /// \param acl[in] access control policy \see AccessControlPolicy
   void PutObjectAcl(const std::string &bucket, const std::string &key,
                     const AccessControlPolicy &acl);
 
-  /// Upload part
+  /// \brief Upload part
   ///
   /// \param[in] bucket bucket name
   ///

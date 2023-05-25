@@ -43,19 +43,20 @@
  * \addtogroup Parsing
  * @{
  */
-/// Return text inside XML tags.
+/// \brief Return text inside XML tags.
 ///
 /// \param[in] xml XML text.
 /// \param[in] element name of XML tag to search for.
 /// \return XML text element.
 std::string FindElementText(const std::string &xml, const std::string &element);
-/// Extract text under XML path.
+/// \brief Extract text under XML path.
 ///
 /// \param[in] XML text.
 /// \param[in] path path to XML tag in the format "/tag1/tag11/tag112...".
 /// \return XML text element.
 std::string ParseXMLPath(const std::string &xml, const std::string &path);
-/// Multilevel parsing function: return all elements matching path under prefix.
+/// \brief Multilevel parsing function: return all elements matching path under
+/// prefix.
 ///
 /// E.g.
 ///
@@ -78,7 +79,7 @@ std::vector<std::string> ParseXMLMultiPathText(const std::string &xml,
                                                const std::string &prefixPpath,
                                                const std::string &suffixPath);
 
-/** Extract records from DOM Map. \see DOMToDict.
+/** \brief Extract records from DOM Map. \see DOMToDict.
  * A record is defined as a map with:
  *   - key = path to tag element containing text element in the format
  *   "/tag1/tag2/..."
@@ -160,7 +161,7 @@ std::vector<std::unordered_map<std::string, std::string>> RecordList(
     const std::string &prefix,
     const std::unordered_map<std::string, std::vector<std::string>> &domMap);
 
-/// Return all elements at location grouped by element name
+/// \brief Return all elements at location grouped by element name
 ///
 /// \b Input
 /// \code{.xml}
@@ -196,7 +197,7 @@ std::vector<std::unordered_map<std::string, std::string>> RecordList(
 std::unordered_map<std::string, std::vector<std::string>>
 ParseXMLPathElementsText(const std::string &xml, const std::string &path);
 
-/// Convert XML text to {path, text element array} map.
+/// \brief Convert XML text to {path, text element array} map.
 /// \b Input
 /// \code{.xml}
 /// <tag1>
@@ -226,8 +227,8 @@ ParseXMLPathElementsText(const std::string &xml, const std::string &path);
 std::unordered_map<std::string, std::vector<std::string>>
 DOMToDict(const std::string &xml);
 
-/// Return map of {subpaths with same prefix, {list of text elements under
-/// subpaths}}
+/// \brief Return map of {subpaths with same prefix, {list of text elements
+/// under subpaths}}
 ///
 /// \b Input
 /// \code{.cpp}
@@ -254,7 +255,7 @@ std::unordered_map<std::string, std::vector<std::string>> ExtractSubPaths(
     const std::string &prefix,
     const std::unordered_map<std::string, std::vector<std::string>> &domMap);
 
-/// Translate from DOM to text, replacing matching keywords with values
+/// \brief Transform DOM into text, replacing matching keywords with values
 /// specified in {keyword => value} map.
 ///
 /// \param[in] doc XML document in \c tinyxml2 format
@@ -274,7 +275,7 @@ std::string XMLToText(const tinyxml2::XMLDocument &doc, bool header = true,
                       char eol_ = '\n', int indent = 2,
                       std::unordered_map<std::string, std::string> kv = {});
 
-/// Create XML tree from path format and place it under
+/// \brief Create XML tree from path format and place it under
 /// passed element.
 /// I.e. from {"/tag1/tag2", "text"} to "<tag1><tag2>text</tag2></tag1>"
 ///
@@ -285,12 +286,12 @@ tinyxml2::XMLElement *CreatePath(tinyxml2::XMLElement *n,
                                  const std::string &path,
                                  const std::string &text = "");
 
-/// Create XML tree from path format and place inside document instance.
+/// \brief Create XML tree from path format and place inside document instance.
 tinyxml2::XMLElement *CreatePath(tinyxml2::XMLDocument &doc,
                                  const std::string &path,
                                  const std::string &text = "");
 
-/// Create multiple XML trees under element. Invokes CreatePath multiple
+/// \brief Create multiple XML trees under element. Invokes CreatePath multiple
 /// times passing {path, text} value at each invocation.
 ///
 /// \param[in] n root element
@@ -301,7 +302,7 @@ tinyxml2::XMLElement *
 CreatePaths(tinyxml2::XMLElement *n, const std::string &path,
             const std::vector<std::pair<std::string, std::string>> &paths);
 
-/// Create multiple XML trees inside \c tynyxml2 XML document.
+/// \brief Create multiple XML trees inside \c tynyxml2 XML document.
 /// Invokes CreatePath multiple times passing {path, text} value at each
 /// invocation.
 ///

@@ -74,7 +74,7 @@ int main(int argc, char **argv) {
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
-  /// [ListBuckets]
+  /// [GetBucketAcl]
   action = "GetBucketAcl";
   try {
     S3Api s3(cfg.access, cfg.secret, cfg.url);
@@ -89,6 +89,7 @@ int main(int argc, char **argv) {
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
+  /// [GetBucketAcl]
   /// [ListBuckets]
   action = "ListBuckets";
   try {

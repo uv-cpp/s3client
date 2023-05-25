@@ -31,7 +31,7 @@
  * POSSIBILITY OF SUCH DAMAGE.
  ******************************************************************************/
 /**
- * file xmlstreams.h
+ * \file xmlstreams.h
  * \brief xml parser and generator.
  */
 #pragma once
@@ -133,7 +133,7 @@ public:
   /// Move up or down one level in tree or rewind to root.
   enum MoveAction { UP, DOWN, REWIND };
   /// Move up
-  /// \param level number of parents to traverse, default is one
+  /// \param[in] level number of parents to traverse, default is one
   void Up(int level = 1) {
     if (!cur_) {
       throw std::logic_error("Cannot pop, Null element");
@@ -144,7 +144,7 @@ public:
     for (; level; cur_ = cur_->Parent()->ToElement(), level--)
       ;
   }
-  /// Down
+  /// Move down after setting text
   /// Set \c down_ flag: pointer to current node will be moved to child after
   /// next insertion
   void Down() { down_ = true; }
