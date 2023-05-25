@@ -35,8 +35,9 @@
 #The data directory is created if it does not exist
 #Usind default ports 9000 (API) and 9090 (admin)
 #Requires s3-gen-credentials to be built and accessible through PATH variable 
-
-#Access and secret keys are stored into environmnt variables
+#
+# Example, invoking from <root>/build directory, storing env vars into env.vars file:
+# PATH=build/debug:$PATH ../minio_run_server.sh s3test ~/tmp/s3test env.vars
 
 #check command line parameters
 if (($# == 0))
@@ -52,7 +53,7 @@ then
   echo "Access and secret keys are the username and password for the minio console"
   exit 0
 fi
-if (($# != 2))
+if (($# < 2))
 then
   echo "Error - invalid number of arguments"
   echo "usage: $0 <minio alias name> <data path>"
@@ -96,6 +97,14 @@ if [ $? -ne 0 ]; then
   echo "Error running 'mc alias set'"
   exit 2
 fi
+echo "set env variables"
 echo export S3CLIENT_TEST_ACCESS=$ACCESS
 echo export S3CLIENT_TEST_SECRET=$SECRET
 echo export S3CLIENT_TEST_URL=$URL
+if (($# == 3)); then
+  echo "Writing env variables to file $3"
+  echo "export S3CLIENT_TEST_ACCESS=$ACCESS" > $3
+  echo "export S3CLIENT_TEST_SECRET=$SECRET" >> $3
+  echo "export S3CLIENT_TEST_URL=$URL" >> $3
+  echo "Execute source $3 to set env variables"
+fi

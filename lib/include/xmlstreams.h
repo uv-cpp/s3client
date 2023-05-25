@@ -45,11 +45,11 @@
 
 /// \addtogroup Types
 /// @{
-/// Represenation of an XML tree as {path to text element, text element}
-/// tuples stored into map object.
+/// Representaion of an XML tree with no repeated tags (maps to record with no
+/// repeated fields) as {path to text element, text element} tuples stored into
+/// map object.
 /// E.g.
-/// \code{.xml}
-/// <tag1>
+/// \code{.xml} <tag1>
 ///   <tag1_1>
 ///     text 1 1
 ///   </tat1_1>
@@ -60,13 +60,18 @@
 /// \endcode
 /// is represented as
 /// \code{.cpp}
-/// unordered_map rec {
+/// unordered_map<string, string> rec {
 ///   {"/tag1/tag1_1", "text 1 1"},
 ///   {"/tag1/tag1_2", "text 1 2"}
 /// };
 /// \endcode
+/// Note that in case of repeated tag names only the contemf of the last one
+/// will be stored, ideally having multiple tags with the same name i.e.
+/// a record with multiple fields with the same name should be reported as
+/// an error condition.
 using XMLRecord = std::unordered_map<std::string, std::string>;
 /// Array of XML records
+/// \see XMLRecord
 using XMLRecords = std::vector<XMLRecord>;
 /// Result of an XML query operation
 ///
@@ -76,6 +81,8 @@ using XMLRecords = std::vector<XMLRecord>;
 /// std::string>>
 /// - \c false in case element not found, used internally to signal "not found"
 /// condition
+///
+/// \see XMLRecords
 using XMLResult =
     std::variant<bool, std::string, std::vector<std::string>, XMLRecords>;
 /// @}
@@ -266,14 +273,15 @@ private:
  *
  * \see XMLResult
  *
- *
  */
 class XMLIStream {
 public:
   /// Extract array of text elements under specified path or
   /// list of records in the form `map<path to text element, text element>`.
+  ///
   /// \param[in] p path to text elements if path starts with \c '/' or
   /// to sbtrees under path if it does not start with \c '/'
+  ///
   /// \return reference to current instance
   const XMLIStream &operator[](const std::string &p) const {
     // return all text elements under path
@@ -299,6 +307,7 @@ public:
     }
     return *this;
   }
+  /// \return current element text or empty string
   operator std::string() const {
     if (auto p = std::get_if<std::string>(&v_)) {
       return *p;
@@ -306,7 +315,7 @@ public:
       return "";
     }
   }
-
+  /// \return array of text elements or empty array
   operator std::vector<std::string>() const {
     if (auto p = std::get_if<std::vector<std::string>>(&v_)) {
       return *p;
@@ -314,6 +323,7 @@ public:
       return {};
     }
   }
+  /// \return array of parsed records or empty array
   operator std::vector<XMLRecord>() const {
     if (auto p = std::get_if<std::vector<XMLRecord>>(&v_)) {
       return *p;
@@ -321,6 +331,8 @@ public:
       return {};
     }
   }
+  /// Constructor
+  /// \param[in] xml xml text
   XMLIStream(const std::string &xml) : dd_(DOMToDict(xml)) {}
 
 private:
@@ -329,7 +341,10 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
+/// Extract string from map
+/// \param[in] r XMLRecord instance \see XMLRecord
+/// \param[in] path key in the form "/tag1/tag11..."
+/// \return text or empty string if text not found or empty
 inline std::string Get(const XMLRecord &r, const std::string &path) {
   auto i = r.find(path);
   return i == end(r) ? std::string() : i->second;
