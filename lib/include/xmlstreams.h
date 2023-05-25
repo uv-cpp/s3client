@@ -45,8 +45,37 @@
 
 /// \addtogroup Types
 /// @{
+/// Represenation of an XML tree as {path to text element, text element}
+/// tuples stored into map object.
+/// E.g.
+/// \code{.xml}
+/// <tag1>
+///   <tag1_1>
+///     text 1 1
+///   </tat1_1>
+///   <tag1_2>
+///     text 1 2
+///   </tag1_2>
+/// </tag1>
+/// \endcode
+/// is represented as
+/// \code{.cpp}
+/// unordered_map rec {
+///   {"/tag1/tag1_1", "text 1 1"},
+///   {"/tag1/tag1_2", "text 1 2"}
+/// };
+/// \endcode
 using XMLRecord = std::unordered_map<std::string, std::string>;
+/// Array of XML records
 using XMLRecords = std::vector<XMLRecord>;
+/// Result of an XML query operation
+///
+/// - Path to text element: return \c std::string
+/// - Path to array of text elements: return \c std::vector<std::string>
+/// - Path to array of XML subtrees: std::vector<std::unordered_map<std::string,
+/// std::string>>
+/// - \c false in case element not found, used internally to signal "not found"
+/// condition
 using XMLResult =
     std::variant<bool, std::string, std::vector<std::string>, XMLRecords>;
 /// @}
@@ -227,6 +256,15 @@ private:
  *  \endcode
  *  under the specifed path.
  *
+ * This class stores data of different types inside a \c variant object and
+ * extracts the value when the class instance is converted to a type during
+ * assignment operations.
+ *
+ * Since the returned types all have empty values, if the path or text is not
+ * found an empty \c std::string, \c std::vector or \c std::unordered_map
+ * is returned.
+ *
+ * \see XMLResult
  *
  *
  */
