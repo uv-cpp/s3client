@@ -47,7 +47,23 @@ namespace sss {
  * \brief AWS S3v4 signing functions.
  * @{
  */
-/// \brief Parameters for calls to ComputeSignature and SignHeaders function
+/// \brief Arguments for ComputeSignature and SignHeaders functions
+/// \code{.cpp}
+/// struct ComputeSignatureConfig {
+///   std::string access;
+///   std::string secret;
+///   std::string endpoint;
+///   std::string method;
+///   std::string bucket;
+///   std::string key;
+///   std::string payloadHash; ///< if empty "UNSIGNED-PAYLOAD" is sent instead
+///   Parameters parameters;
+///   Headers headers;
+///   std::string region = "us-east";
+///   std::string service = "s3";
+///   Time dates;
+/// };
+/// \endcode
 struct ComputeSignatureConfig {
   std::string access;
   std::string secret;
@@ -63,19 +79,19 @@ struct ComputeSignatureConfig {
   Time dates;
 };
 
-/// \brief Parameters for calls to SignedURL function.
+/// \brief Arguments to SignedURL function.
 struct S3SignUrlConfig {
-  std::string access;
-  std::string secret;
-  std::string endpoint;
-  int expiration = 0; ///< expiration time in seconds  @todo Unsigned!
-  std::string method;
-  std::string bucket;
-  std::string key;
-  Parameters params; ///< URL parameters: "param1=val1;param2=var2"
-  Headers headers;   ///< Headers: "header1:content1;header2:content2..."
-  std::string region = "us-east";
-  Time dates;
+  std::string access;   ///< access
+  std::string secret;   ///< secret
+  std::string endpoint; ///< endpoint url
+  int expiration = 0;   ///< expiration time in seconds  @todo Unsigned!
+  std::string method;   ///< HTTP method
+  std::string bucket;   ///< bucket name
+  std::string key;      ///< key name
+  Parameters params;    ///< URL parameters: "param1=val1;param2=var2"
+  Headers headers;      ///< Headers: "header1:content1;header2:content2..."
+  std::string region = "us-east"; ///< AWS region
+  Time dates;                     ///< Dates used to sign request \see Time
 };
 
 /// \brief Signature information
@@ -110,12 +126,15 @@ struct Signature {
 /// \code{.sh}
 /// Sign,Sign request,1
 /// \endcode
-Signature ComputeSignature(const ComputeSignatureConfig &);
+/// \param[in] cfg argumets \see ComputeSignatureConfig
+/// \return signature information to be added to header to sign \see Signature
+Signature ComputeSignature(const ComputeSignatureConfig &cfg);
 
 /// \brief Generate presigned URL.
 /// \see S3SignUrlConfig
+/// \param[in] cfg arguments \see S3SignUrlConfig
 /// \return signed URL.
-std::string SignedURL(const S3SignUrlConfig &);
+std::string SignedURL(const S3SignUrlConfig &cfg);
 
 /** \brief Sign headers.
  *
