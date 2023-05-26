@@ -42,7 +42,7 @@
 #include <string>
 #include <variant>
 #include <vector>
-
+#include <sstream>
 /// \addtogroup Types
 /// @{
 /// Representaion of an XML tree as {path to text element, text element} tuples
