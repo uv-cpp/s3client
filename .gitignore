@@ -18,3 +18,4 @@ bin
 doxygen-docs
 repo
 doxygen*
+.nojekyll
