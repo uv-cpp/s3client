@@ -9,11 +9,22 @@ Each test driver contains multiple tests whose output is in *CSV* format:
 
 `<test name>,<result = `1` for pass | `0` for fail>,<blank | optional error message>`
 
-To test locally, a script (`minio_setup.sh`) in the root folder is provided which downloads and runs *minio* server with *podman*.
+To test locally, two scripts to run *minio* are provided in the root folder:
+- `minio_podman_setup.sh`:  downloads and runs *minio* server with *podman*
+- `minio_run_server.sh`: runs the pre-installed *minio* server
 
-It is also possible to test everything except for the `ListBuckets` API call using the
-free `play.min.io` service.
+The scripts print and optionally store into a file the url, access and secret to use.
+
+Both scripts require the following arguments:
+- *instance name*: *minio* instance name; added into `.mc/config.json`
+- *storage path*: directory where data are stored
+- (optional): file name where code to set environment variable is written
+
+
+It is also possible to test everything  using the free `play.min.io` service.
+Credentials for `play.min.ui` should already be present in the `.mc/config.json` file
+created by the *minio* client.
 
 Each test driver will first check that an S3 endpoint is available and accessible and report an error in case of failure. 
-The test drivers will create buckets named `sss-api-test-` + timestamp.
+The test drivers will create buckets and objects named `sss-api-test-` + timestamp.
 
