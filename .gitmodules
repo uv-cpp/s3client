@@ -1,9 +1,6 @@
 [submodule "dep/Lyra"]
 	path = dep/Lyra
 	url = https://github.com/bfgroup/Lyra
-[submodule "dep/hash"]
-	path = dep/hash
-	url = https://github.com/ugovaretto-codex/hash.git
 [submodule "doc/doxygen-awesome"]
 	path = doc/doxygen-awesome
 	url = https://github.com/jothepro/doxygen-awesome-css.git

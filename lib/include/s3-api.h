@@ -139,8 +139,6 @@ struct AccessControlPolicy {
   std::string ownerID;
   std::vector<Grant> grants;
 };
-//@todo
-// struct PartInfo {};
 
 /**
  * \brief S3 Client inteface.
