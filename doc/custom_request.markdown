@@ -4,8 +4,8 @@ The provided functions and classes only support a basic subset of
 the AWS; all the methods simply invoke the `S3Api::Send` method and return
 the parsed response.
 
-The only value added by the current implementation (and other simlar C++ clients) 
-is the parsing of the XML response in cases where data is not returned in headers.
+The main value of the current implementation (and other simlar C++ clients) 
+is the generation and parsing of XML text in addition to S3v4 signing.
 However, client code will most likely need to translate from the returned
 objects to their own domain-specific internal representation and it might
 therefore be easier to just parse the XML directly.
@@ -30,7 +30,7 @@ range based loops)
 We wold like to add the ability to tag buckets using code like:
 
 ```cpp
-  TagsMap tags = {{"tag1", "value1"}, {"tag2", "value2"}};
+  TagMap tags = {{"tag1", "value1"}, {"tag2", "value2"}};
   S3Api s(access, secret, endpointUrl);
   TagBucket(s3, "MyBucket", tags);
 ```
@@ -38,7 +38,7 @@ and read the tags with:
 
 ```cpp
   S3Api s3(access, secret, endpointUrl);
-  TagsMap tags = BucketTags(s3, bucket);
+  TagMap tags = BucketTags(s3, bucket);
   assert(tags["tags1"] == "value1" && tags["tags2"] == "value2");
 ```
 
@@ -69,7 +69,7 @@ x-amz-expected-bucket-owner: ExpectedBucketOwner
 ```
 C++ implementation:
 
-```.cpp
+```cpp
 using namespace sss;
 using namespace api;
 using XML = std::string;
@@ -116,7 +116,7 @@ XML response body:
 
 [AWS Action](https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketTagging.html)
 
-```.xml
+```xml
 HTTP/1.1 200
 <?xml version="1.0" encoding="UTF-8"?>
 <Tagging>
@@ -131,15 +131,14 @@ HTTP/1.1 200
 
 C++ implementation:
 
-```.cpp
+```cpp
 using namespace sss;
 using namespace api;
 using XML = std::string;
 using TagMap = std::unordered_map<std::string, std::string>;
 ```
 
-```.cpp
-
+```cpp
 // parse XML text and return {key, value} tag map
 TagMap ParseTaggingResponse(const XML& xml) {
   if(xml.empty()) {
