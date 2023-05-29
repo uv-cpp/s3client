@@ -81,7 +81,7 @@ using TagMap = std::unordered_map<std::string, std::string>;
 std::pair<SendParams, XML> 
 GeneratePutBucketTaggingRequest(const std::string& bucket, 
                                 const TagMap& tags,
-                                const Headers& headers = {}) {
+                                const Headers& headers) {
   XMLDocument doc;
   XMLOStream os(doc);
   os["tagging/tagset"]; // <Tagging><TagSet>
@@ -93,7 +93,7 @@ GeneratePutBucketTaggingRequest(const std::string& bucket,
   }
   return {{.method = "GET",
            .bucket = bucket,
-           .params = {{"tagging", ""}}
+           .params = {{"tagging", ""}},
            .headers = headers},
           os}; // automatic conversion to string  
 }

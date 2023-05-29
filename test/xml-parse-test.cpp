@@ -36,12 +36,18 @@
 #include <cassert>
 #include <iostream>
 #include <iterator>
+#include <unordered_map>
 
 #include "s3-api.h"
 namespace sss {
 namespace api {
 std::string GenerateAclXML(const AccessControlPolicy &);
-}
+using TagMap = std::unordered_map<std::string, std::string>;
+std::pair<S3Api::SendParams, std::string>
+GeneratePutBucketTaggingRequest(const std::string &bucket, const TagMap &tags,
+                                const Headers &headers);
+TagMap ParseTaggingResponse(const std::string &xml);
+} // namespace api
 } // namespace sss
 using namespace sss;
 using namespace std;
@@ -162,6 +168,23 @@ void GenerateAclXMLTest() {
   auto xml = api::GenerateAclXML(acl);
   assert(xml == ACL);
 }
+static const char *TAGGING =
+    "<?xml version=\"1.0\" encoding=\"utf-8\"?>"
+    "<Tagging xmlns=\" http : // s3.amazonaws.com/doc/2006-03-01/\">"
+    "   <TagSet>"
+    "      <Tag>"
+    "         <Key>string</Key>"
+    "         <Value>string</Value>"
+    "      </Tag>"
+    "   </TagSet>"
+    "</Tagging>";
+void TaggingXMLTest() {
+  api::TagMap tags = {{"key1", "value1"}, {"key2", "value2"}};
+  auto r = api::GeneratePutBucketTaggingRequest("MyBucket", tags, {});
+  auto m = api::ParseTaggingResponse(r.second);
+  assert(m["key1"] == "value1" && m["key2"] == "value2");
+}
+
 int main(int, char **) {
   ParseXMLTagTest();
   cout << "XMLTagTest: Pass" << endl;
@@ -173,6 +196,8 @@ int main(int, char **) {
   cout << "ParseXMLTagMultiPathTest: Pass" << endl;
   GenerateAclXMLTest();
   cout << "GenerateAclXMLTest: Pass" << endl;
+  TaggingXMLTest();
+  cout << "TaggingXMLTest: Pass" << endl;
   // ParseRecordList();
   // PrintDOMToDict();
   return 0;

@@ -181,7 +181,6 @@ AccessControlPolicy ParseACL(const std::string &xml) {
   return res;
 }
 //-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
 /// [GenerateAclXML]
 std::string GenerateAclXML(const AccessControlPolicy &acl) {
   XMLDocument doc;
@@ -243,5 +242,50 @@ std::string GenerateAclXML(const AccessControlPolicy &acl) {
   return os.XMLText();
 }
 /// [GenerateAclXML]
+
+//-----------------------------------------------------------------------------
+using TagMap = unordered_map<std::string, std::string>;
+std::pair<S3Api::SendParams, std::string> 
+GeneratePutBucketTaggingRequest(const std::string& bucket, 
+                                const TagMap& tags,
+                                const Headers& headers = {}) {
+  XMLDocument doc;
+  XMLOStream os(doc);
+  os["tagging/tagset"]; // <Tagging><TagSet>
+  for(auto kv: tags) {
+    os["tag"]; // <Tag>
+    os["key"] = kv.first; // <Key>
+    os["value"] = kv.second; // <Value>
+    os["/"]; // </Tag>
+  }
+  return {{.method = "GET",
+           .bucket = bucket,
+           .params = {{"tagging", ""}},
+           .headers = headers},
+          os.XMLText()}; // automatic conversion to string  
+}
+
+//-----------------------------------------------------------------------------
+TagMap ParseTaggingResponse(const std::string& xml) {
+  if(xml.empty()) {
+    return {};
+  }
+  XMLIStream is(xml);
+  // return all the <tag></tag> elements
+  XMLRecords r = is["tagging/tagset/tag"];
+  TagMap m;
+  for(auto i: r) {
+    const auto k = Get(i,"/key");
+    if(k.empty()) {
+      continue;
+    }
+    const auto v = Get(i, "/value");
+    if(v.empty()) {
+      continue;
+    }
+    m[k] = v;
+  }
+  return m;
+}
 } // namespace api
 } // namespace sss
