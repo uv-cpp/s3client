@@ -1,0 +1,18 @@
+<map id="sss::api::S3Api::Config" name="sss::api::S3Api::Config">
+<area shape="rect" id="node1" title="Configure instance." alt="" coords="5,284,163,311"/>
+<area shape="rect" id="node2" href="$classsss_1_1api_1_1S3Api.html#a1a4e05ac14390c7f42feef2c26e22031" title=" " alt="" coords="225,56,387,83"/>
+<area shape="rect" id="node3" href="$classsss_1_1api_1_1S3Api.html#a3718745d3b940462ae9f3b78f773b3a6" title="Clear data and reset read and write functions." alt="" coords="231,157,381,184"/>
+<area shape="rect" id="node8" href="$classsss_1_1WebClient.html#a75890c14fbe4a4bbac61718a4f3c064d" title=" " alt="" coords="472,5,660,32"/>
+<area shape="rect" id="node9" href="$classsss_1_1WebClient.html#a12b5db6b8c667024557ab58059d39994" title=" " alt="" coords="483,208,649,235"/>
+<area shape="rect" id="node11" href="$classsss_1_1WebClient.html#a9bf978d95b79728f6d60fc2bdb4fe546" title=" " alt="" coords="451,259,681,285"/>
+<area shape="rect" id="node12" href="$classsss_1_1api_1_1S3Api.html#a70f1068d07e1d4c1be164e0cb9328cc0" title=" " alt="" coords="221,309,391,336"/>
+<area shape="rect" id="node13" href="$classsss_1_1api_1_1S3Api.html#acfffe29254323fb41231787a0afb7edc" title=" " alt="" coords="227,360,385,387"/>
+<area shape="rect" id="node14" href="$classsss_1_1WebClient.html#afc3b7a92568fbb1ea447918920ca266e" title="Set endpoint: &lt;proto&gt;://&lt;server&gt;:&lt;port&gt;" alt="" coords="211,411,401,437"/>
+<area shape="rect" id="node15" href="$classsss_1_1WebClient.html#af6233ffd7b294e1e7e606e838dd44e9e" title=" " alt="" coords="215,461,397,488"/>
+<area shape="rect" id="node16" href="$group__Sign.html#ga3ae8e18ef70752b7369fca66c40c526b" title="Sign headers." alt="" coords="243,512,369,539"/>
+<area shape="rect" id="node4" href="$classsss_1_1WebClient.html#a381f5715b7a2f19a0d4414d278874bae" title="Clear internal buffers." alt="" coords="470,56,662,83"/>
+<area shape="rect" id="node5" href="$classsss_1_1WebClient.html#a96837f149bb473853a6523d096a25c56" title="Reset read/write functions to default." alt="" coords="449,107,683,133"/>
+<area shape="rect" id="node10" href="$classsss_1_1WebClient.html#a51ce0ecf6487b6a43072643fe4f4cb4e" title=" " alt="" coords="469,157,663,184"/>
+<area shape="rect" id="node6" href="$classsss_1_1WebClient.html#a88dbcc61562e84aa9ebf1eabf887ac28" title=" " alt="" coords="731,77,951,104"/>
+<area shape="rect" id="node7" href="$classsss_1_1WebClient.html#a002876073b3869a9b9a9d709d14f1d7e" title=" " alt="" coords="756,129,925,170"/>
+</map>
