@@ -98,5 +98,25 @@ void S3Api::PutBucketAcl(const string &bucket, const AccessControlPolicy &acl) {
                         .uploadDataSize = xml.size()})
                       .GetContentText();
 }
+//------------------------------------------------------------------------------
+TagMap ParseTaggingResponse(const std::string &xml);
+TagMap S3Api::GetBucketTagging(const string &bucket) {
+  auto r =
+      Send({.method = "GET", .bucket = bucket, .params = {{"tagging", ""}}})
+          .GetContentText();
+  return ParseTaggingResponse(r);
+}
+
+//------------------------------------------------------------------------------
+std::pair<S3Api::SendParams, std::string>
+GeneratePutBucketTaggingRequest(const std::string &bucket, const TagMap &tags,
+                                const Headers &headers);
+void S3Api::PutBucketTagging(const string &bucket,
+                             const TagMap &tags, const Headers &headers) {
+  auto r = GeneratePutBucketTaggingRequest(bucket, tags, headers);
+  r.first.uploadData = r.second.c_str();
+  r.first.uploadDataSize = r.second.size();
+  Send(r.first);
+}
 } // namespace api
 } // namespace sss

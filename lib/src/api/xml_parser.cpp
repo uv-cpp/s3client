@@ -244,48 +244,74 @@ std::string GenerateAclXML(const AccessControlPolicy &acl) {
 /// [GenerateAclXML]
 
 //-----------------------------------------------------------------------------
-using TagMap = unordered_map<std::string, std::string>;
-std::pair<S3Api::SendParams, std::string> 
-GeneratePutBucketTaggingRequest(const std::string& bucket, 
-                                const TagMap& tags,
-                                const Headers& headers = {}) {
+std::pair<S3Api::SendParams, std::string>
+GeneratePutBucketTaggingRequest(const std::string &bucket, const TagMap &tags,
+                                const Headers &headers = {}) {
   XMLDocument doc;
   XMLOStream os(doc);
-  os["tagging/tagset"]; // <Tagging><TagSet>
-  for(auto kv: tags) {
-    os["tag"]; // <Tag>
-    os["key"] = kv.first; // <Key>
-    os["value"] = kv.second; // <Value>
-    os["/"]; // </Tag>
+  //@warning: different S3 implementations might have different capitalisation
+  // requirements e.g. MINIO version RELEASE.2022-11-17T23-20-09Z
+  // supports lowercase for ListObjectsV2 but requires CamelCase for tagging!!
+  os["Tagging/TagSet"]; // <Tagging><TagSet>
+  for (auto kv : tags) {
+    os["Tag"];               // <Tag>
+    os["Key"] = kv.first;    // <Key>
+    os["Value"] = kv.second; // <Value>
+    os["/"];                 // </Tag>
   }
-  return {{.method = "GET",
+  return {{.method = "PUT",
            .bucket = bucket,
            .params = {{"tagging", ""}},
            .headers = headers},
-          os.XMLText()}; // automatic conversion to string  
+          os.XMLText()};
 }
 
 //-----------------------------------------------------------------------------
-TagMap ParseTaggingResponse(const std::string& xml) {
-  if(xml.empty()) {
+TagMap ParseTaggingResponse(const std::string &xml) {
+  if (xml.empty()) {
     return {};
   }
   XMLIStream is(xml);
   // return all the <tag></tag> elements
   XMLRecords r = is["tagging/tagset/tag"];
   TagMap m;
-  for(auto i: r) {
-    const auto k = Get(i,"/key");
-    if(k.empty()) {
+  for (auto i : r) {
+    const auto k = Get(i, "/key");
+    if (k.empty()) {
       continue;
     }
     const auto v = Get(i, "/value");
-    if(v.empty()) {
+    if (v.empty()) {
       continue;
     }
     m[k] = v;
   }
   return m;
+}
+
+//-----------------------------------------------------------------------------
+std::pair<S3Api::SendParams, std::string>
+GeneratePutObjectTaggingRequest(const std::string &bucket,
+                                const std::string &key, const TagMap &tags,
+                                const Headers &headers) {
+  XMLDocument doc;
+  XMLOStream os(doc);
+  //@warning: different S3 implementations might have different capitalisation
+  // requirements e.g. MINIO version RELEASE.2022-11-17T23-20-09Z
+  // supports lowercase for ListObjectsV2 but requires CamelCase for tagging!!
+  os["Tagging/TagSet"]; // <Tagging><TagSet>
+  for (auto kv : tags) {
+    os["Tag"];               // <Tag>
+    os["Key"] = kv.first;    // <Key>
+    os["Value"] = kv.second; // <Value>
+    os["/"];                 // </Tag>
+  }
+  return {{.method = "PUT",
+           .bucket = bucket,
+           .key = key,
+           .params = {{"tagging", ""}},
+           .headers = headers},
+          os.XMLText()};
 }
 } // namespace api
 } // namespace sss

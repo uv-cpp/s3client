@@ -242,5 +242,29 @@ void S3Api::PutObjectAcl(const string &bucket, const string &key,
                         .uploadDataSize = xml.size()})
                       .GetContentText();
 }
+
+//------------------------------------------------------------------------------
+TagMap ParseTaggingResponse(const std::string &xml);
+TagMap S3Api::GetObjectTagging(const string &bucket, const string &key) {
+  auto r = Send({.method = "GET",
+                 .bucket = bucket,
+                 .key = key,
+                 .params = {{"tagging", ""}}})
+               .GetContentText();
+  return ParseTaggingResponse(r);
+}
+
+//------------------------------------------------------------------------------
+std::pair<S3Api::SendParams, std::string>
+GeneratePutObjectTaggingRequest(const std::string &bucket,
+                                const std::string &key, const TagMap &tags,
+                                const Headers &headers);
+void S3Api::PutObjectTagging(const string &bucket, const string &key,
+                             const TagMap &tags, const Headers &headers) {
+  auto r = GeneratePutObjectTaggingRequest(bucket, key, tags, headers);
+  r.first.uploadData = r.second.c_str();
+  r.first.uploadDataSize = r.second.size();
+  Send(r.first);
+}
 } // namespace api
 } // namespace sss

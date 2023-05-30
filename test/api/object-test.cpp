@@ -115,6 +115,24 @@ int main(int argc, char **argv) {
   } catch (const exception &e) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
+
+  action = "Put/GetObjectTagging";
+  try {
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
+    TagMap tags = {{"tag1", "value1"}, {"tag2", "value2"}};
+    s3.PutObjectTagging(bucketName, objName, tags);
+    auto t = s3.GetObjectTagging(bucketName, objName);
+    if(t != tags) {
+      if(t.empty()) {
+        throw logic_error("No tag set");
+      }
+      throw logic_error("Tags do not match");
+    }
+    TestOutput(action, true, TEST_PREFIX);
+  } catch (const exception &e) {
+    TestOutput(action, false, e.what());
+  }
+
   /// [GetObject]
   /// [DeleteOject]
   action = "DeleteObject";

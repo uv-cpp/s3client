@@ -84,14 +84,17 @@ GeneratePutBucketTaggingRequest(const std::string& bucket,
                                 const Headers& headers) {
   XMLDocument doc;
   XMLOStream os(doc);
-  os["tagging/tagset"]; // <Tagging><TagSet>
+  //@warning: different S3 implementations might have different capitalisation
+  // requirements e.g. MINIO version RELEASE.2022-11-17T23-20-09Z
+  // supports lowercase for ListObjectsV2 but requires CamelCase for tagging!!
+  os["Tagging/TagSet"]; // <Tagging><TagSet>
   for(auto kv: tags) {
-    os["tag"]; // <Tag>
-    os["key"] = kv.first; // <Key>
-    os["value"] = kv.second; // <Value>
+    os["Tag"]; // <Tag>
+    os["Key"] = kv.first; // <Key>
+    os["Value"] = kv.second; // <Value>
     os["/"]; // </Tag>
   }
-  return {{.method = "GET",
+  return {{.method = "PUT",
            .bucket = bucket,
            .params = {{"tagging", ""}},
            .headers = headers},

@@ -42,6 +42,7 @@
 #include "response_parser.h"
 #include "s3-client.h"
 #include "webclient.h"
+#include <map>
 
 namespace sss {
 
@@ -140,6 +141,9 @@ struct AccessControlPolicy {
   std::vector<Grant> grants;
 };
 
+/// \brief {name, value} map representing bucket or object tags.
+/// \ingroup Types
+using TagMap = std::unordered_map<std::string, std::string>;
 /**
  * \brief S3 Client inteface.
  *
@@ -499,6 +503,11 @@ public:
   /// \return Acess Control Policy \see AccessControlPolicy
   AccessControlPolicy GetBucketAcl(const std::string &bucket);
 
+  /// \brief Return bucket tags
+  /// \param[in] bucket bucket name
+  /// \return `tag name => tag value` map
+  TagMap GetBucketTagging(const std::string &bucket);
+
   /// \brief Download object data
   ///
   /// \param[in] bucket bucket name
@@ -565,6 +574,12 @@ public:
   /// \return Acess Control Policy \see AccessControlPolicy
   AccessControlPolicy GetObjectAcl(const std::string &bucket,
                                    const std::string &key);
+  /// \brief Return object tags
+  /// \param[in] bucket bucket name
+  /// \param[in] key key name
+  /// \return `tag name => tag value` map
+  TagMap GetObjectTagging(const std::string &bucket, const std::string &key);
+
   /// Send \c HeadBucket request
   ///
   /// \param[in] bucket bucket name
@@ -622,6 +637,14 @@ public:
   ///
   /// \param[in] acl Acess Control Policy \see AccessControlPolicy
   void PutBucketAcl(const std::string &bucket, const AccessControlPolicy &acl);
+
+  /// Tag bucket
+  /// \param[in] bucket bucket name
+  /// \param[in] tags tag map: {tag name => tag value}
+  /// \param[in] http headers as {header name, header value} map
+  void PutBucketTagging(const std::string &bucket, const TagMap &tags,
+                        const Headers &headers = {});
+
   /// \brief Upload data to object by sending a \c PutObject request
   /// \param[in] bucket bucket name
   ///
@@ -661,6 +684,14 @@ public:
   void PutObjectAcl(const std::string &bucket, const std::string &key,
                     const AccessControlPolicy &acl);
 
+  /// \brief Set object tags
+  /// \param[in] bucket bucket name
+  /// \param[in] key key name
+  /// \param[in] tags tag map
+  /// \param[in] headers http headers as {header name, header value} map
+  void PutObjectTagging(const std::string &bucket, const std::string &key,
+                        const TagMap &tags, const Headers &headers = {});
+
   /// \brief Upload part
   ///
   /// \param[in] bucket bucket name
@@ -699,6 +730,10 @@ public:
   /// \return response body
   const std::vector<char> &GetResponseBody() const {
     return webClient_.GetResponseBody();
+  }
+  /// \return response body as text
+  std::string GetResponseText() const {
+    return webClient_.GetContentText();
   }
   /// \return {header name, header value} map
   Headers GetResponseHeaders() const {
