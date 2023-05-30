@@ -96,7 +96,8 @@ $(document).ready(function(){initNavTree('s3-api_8h.html',''); initResizable(); 
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Data Structures</a>  </div>
+<a href="#nested-classes">Data Structures</a> &#124;
+<a href="#typedef-members">Typedefs</a>  </div>
   <div class="headertitle">
 <div class="title">s3-api.h File Reference</div>  </div>
 </div><!--header-->
@@ -109,6 +110,7 @@ $(document).ready(function(){initNavTree('s3-api_8h.html',''); initResizable(); 
 <code>#include &quot;<a class="el" href="response__parser_8h.html">response_parser.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="s3-client_8h.html">s3-client.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="webclient_8h.html">webclient.h</a>&quot;</code><br />
+<code>#include &lt;map&gt;</code><br />
 </div><div class="textblock"><div id="dynsection-0" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-0-trigger" src="closed.png" alt="+"/> Include dependency graph for s3-api.h:</div>
 <div id="dynsection-0-summary" class="dynsummary" style="display:block;">
@@ -149,6 +151,13 @@ Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html">sss::api::S3Api::SendParams</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send request parameters.  <a href="structsss_1_1api_1_1S3Api_1_1SendParams.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga015acfebdfb3bb4732f30d455f5fc635"><td class="memItemLeft" align="right" valign="top">
+using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__Types.html#ga015acfebdfb3bb4732f30d455f5fc635">sss::api::TagMap</a> = std::unordered_map&lt; std::string, std::string &gt;</td></tr>
+<tr class="memdesc:ga015acfebdfb3bb4732f30d455f5fc635"><td class="mdescLeft">&#160;</td><td class="mdescRight">{name, value} map representing bucket or object tags. <br /></td></tr>
+<tr class="separator:ga015acfebdfb3bb4732f30d455f5fc635"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>declarations of <code>S3Api</code> class. </p>

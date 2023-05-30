@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['xmlistream_270',['XMLIStream',['../classXMLIStream.html',1,'']]],
-  ['xmlostream_271',['XMLOStream',['../classXMLOStream.html',1,'']]]
+  ['xmlistream_274',['XMLIStream',['../classXMLIStream.html',1,'']]],
+  ['xmlostream_275',['XMLOStream',['../classXMLOStream.html',1,'']]]
 ];
