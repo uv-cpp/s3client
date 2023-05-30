@@ -1,15 +1,10 @@
 <map id="sss::WebClient::GetResponseBody" name="sss::WebClient::GetResponseBody">
-<area shape="rect" id="node1" title=" " alt="" coords="539,289,768,315"/>
-<area shape="rect" id="node2" href="$classsss_1_1WebClient.html#ac9e82fc4b56b142d91f9b104f5266f91" title="Get response body as text." alt="" coords="271,238,481,265"/>
-<area shape="rect" id="node12" href="$classsss_1_1api_1_1S3Api.html#af61465d92c0a94aa82ae863fc2a776a0" title="Download object data." alt="" coords="287,289,465,315"/>
-<area shape="rect" id="node13" href="$classsss_1_1api_1_1S3Api.html#a83364bc622245c0396a3bbc46399baf4" title=" " alt="" coords="261,339,491,366"/>
-<area shape="rect" id="node3" href="$classsss_1_1api_1_1S3Api.html#a98f999a216121118dd569c7ef0c28ff3" title="Complete multipart upload." alt="" coords="22,5,197,47"/>
-<area shape="rect" id="node4" href="$classsss_1_1api_1_1S3Api.html#a1796fafda3d90a4292a611ce1999433b" title="Create multipart upload." alt="" coords="5,71,213,112"/>
-<area shape="rect" id="node5" href="$classsss_1_1api_1_1S3Api.html#a3b53152bf39143843a4033aa4a1b3fa0" title=" " alt="" coords="9,137,209,163"/>
-<area shape="rect" id="node6" href="$classsss_1_1api_1_1S3Api.html#ae548966dc38f328fc45ee1500f5caf5b" title="Return bucket&#39;s Access Control List." alt="" coords="11,187,208,214"/>
-<area shape="rect" id="node7" href="$classsss_1_1api_1_1S3Api.html#aa4a2b1cc2c89a52d1aa89e571b785db2" title=" " alt="" coords="14,238,205,265"/>
-<area shape="rect" id="node8" href="$classsss_1_1api_1_1S3Api.html#a81e30673c06b609a2ee6e6bfd9130ca6" title="List buckets." alt="" coords="15,289,203,315"/>
-<area shape="rect" id="node9" href="$classsss_1_1api_1_1S3Api.html#a3f00f611cd210a58ac6e8c0555984433" title="List objects by sending a ListObjectsV2 request." alt="" coords="9,339,210,366"/>
-<area shape="rect" id="node10" href="$classsss_1_1api_1_1S3Api.html#aa35e9b1cc7661cd9bb0d5f2de6cbbc7d" title="Set Access Control Policy for bucket." alt="" coords="10,390,209,417"/>
-<area shape="rect" id="node11" href="$classsss_1_1api_1_1S3Api.html#a2cc08fb777cfc4d24c40bea1cde967e7" title="Set Access Control Policy." alt="" coords="11,441,207,467"/>
+<area shape="rect" id="node1" title=" " alt="" coords="634,120,863,145"/>
+<area shape="rect" id="node2" href="$classsss_1_1WebClient.html#ac9e82fc4b56b142d91f9b104f5266f91" title="Get response body as text." alt="" coords="367,70,577,96"/>
+<area shape="rect" id="node7" href="$classsss_1_1api_1_1S3Api.html#af61465d92c0a94aa82ae863fc2a776a0" title="Download object data." alt="" coords="384,120,561,145"/>
+<area shape="rect" id="node8" href="$classsss_1_1api_1_1S3Api.html#ae41728446ec775637fc871322b77d050" title=" " alt="" coords="358,169,586,195"/>
+<area shape="rect" id="node3" href="$classsss_1_1api_1_1S3Api.html#a1796fafda3d90a4292a611ce1999433b" title="Create multipart upload." alt="" coords="103,5,310,46"/>
+<area shape="rect" id="node4" href="$classsss_1_1api_1_1S3Api.html#a81e30673c06b609a2ee6e6bfd9130ca6" title="List buckets." alt="" coords="113,70,300,96"/>
+<area shape="rect" id="node6" href="$classsss_1_1api_1_1S3Api.html#a3f00f611cd210a58ac6e8c0555984433" title="List objects by sending a ListObjectsV2 request." alt="" coords="106,120,307,145"/>
+<area shape="rect" id="node5" href="$bucket-test_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627" title="Bucket tests." alt="" coords="5,70,55,96"/>
 </map>

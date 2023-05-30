@@ -1,4 +1,6 @@
 <map id="sss::WebClient::GetHeaderText" name="sss::WebClient::GetHeaderText">
-<area shape="rect" id="node1" title=" " alt="" coords="5,13,212,39"/>
-<area shape="rect" id="node2" href="$classsss_1_1WebClient.html#a0b9b001ddc7ce778a613250e27e50731" title=" " alt="" coords="260,5,459,47"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,55,212,80"/>
+<area shape="rect" id="node2" href="$group__Ranges.html#ga0aa7f3b15d2ebf9b597a1b5ba38ae8ac" title="return iterator at start position" alt="" coords="318,5,400,31"/>
+<area shape="rect" id="node3" href="$group__Ranges.html#ga4f73053571587e79eb3db628f5e6ef99" title="return iterator at end position" alt="" coords="323,55,395,80"/>
+<area shape="rect" id="node4" href="$classsss_1_1WebClient.html#a0b9b001ddc7ce778a613250e27e50731" title=" " alt="" coords="260,105,458,145"/>
 </map>

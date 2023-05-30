@@ -1,7 +1,7 @@
 var group__S3Client =
 [
-    [ "S3Credentials", "structsss_1_1S3Credentials.html", null ],
-    [ "S3ClientConfig", "structsss_1_1S3ClientConfig.html", [
+    [ "sss::S3Credentials", "structsss_1_1S3Credentials.html", null ],
+    [ "sss::S3ClientConfig", "structsss_1_1S3ClientConfig.html", [
       [ "accessKey", "structsss_1_1S3ClientConfig.html#a25413b98b2e9cc4a652053649177be44", null ],
       [ "bucket", "structsss_1_1S3ClientConfig.html#a80ab1f3109bad41f0b94f2d658b99234", null ],
       [ "data", "structsss_1_1S3ClientConfig.html#aceec5181d8cad0fd9de7b8cd4706da18", null ],
@@ -15,7 +15,7 @@ var group__S3Client =
       [ "secretKey", "structsss_1_1S3ClientConfig.html#aac46983d1d43b2f9d11518ec09887b8b", null ],
       [ "signUrl", "structsss_1_1S3ClientConfig.html#a2e7a3c168e43fa135f8ac3e14ae9bc01", null ]
     ] ],
-    [ "S3DataTransferConfig", "structsss_1_1S3DataTransferConfig.html", [
+    [ "sss::S3DataTransferConfig", "structsss_1_1S3DataTransferConfig.html", [
       [ "accessKey", "structsss_1_1S3DataTransferConfig.html#aab0c082fca93e265d3901b66746cb31f", null ],
       [ "bucket", "structsss_1_1S3DataTransferConfig.html#a092110bde25c145705fe1db8b166edc0", null ],
       [ "data", "structsss_1_1S3DataTransferConfig.html#a847bd9aa39e91d7db6eb498502008286", null ],
@@ -31,15 +31,15 @@ var group__S3Client =
       [ "secretKey", "structsss_1_1S3DataTransferConfig.html#a2778f47dbf697de2924340690f7ee370", null ],
       [ "size", "structsss_1_1S3DataTransferConfig.html#a5a8fbd1ee4cb5674c40c44c2e6d21530", null ]
     ] ],
-    [ "BucketValidation", "structsss_1_1BucketValidation.html", [
+    [ "sss::BucketValidation", "structsss_1_1BucketValidation.html", [
       [ "operator bool", "structsss_1_1BucketValidation.html#a6989feac32209396319426646dbfef1d", null ],
       [ "error", "structsss_1_1BucketValidation.html#a8b6cb36c36c7cd9b7f2baf3a883d15ba", null ],
       [ "valid", "structsss_1_1BucketValidation.html#a6e539458808d2d5777eb7e5f4fdbc8bb", null ]
     ] ],
-    [ "Download", "group__S3Client.html#gad9e1cbb4715a672101995636897814e4", null ],
-    [ "GetS3Credentials", "group__S3Client.html#ga7e21b1aa81a654a3c634724912c69383", null ],
-    [ "SendS3Request", "group__S3Client.html#gaba88d66bdabd9d5d15bc07a3ce387c50", null ],
-    [ "Upload", "group__S3Client.html#gac5f34efe8d5fde67f9c2c006742d6f85", null ],
-    [ "Validate", "group__S3Client.html#gad8bcfb380e91093fec44517e1eddc939", null ],
-    [ "ValidateBucket", "group__S3Client.html#ga1d738375a9c819164ebd50ce9ead8ce2", null ]
+    [ "sss::Download", "group__S3Client.html#gad9e1cbb4715a672101995636897814e4", null ],
+    [ "sss::GetS3Credentials", "group__S3Client.html#ga7e21b1aa81a654a3c634724912c69383", null ],
+    [ "sss::SendS3Request", "group__S3Client.html#gaba88d66bdabd9d5d15bc07a3ce387c50", null ],
+    [ "sss::Upload", "group__S3Client.html#gac5f34efe8d5fde67f9c2c006742d6f85", null ],
+    [ "sss::Validate", "group__S3Client.html#gad8bcfb380e91093fec44517e1eddc939", null ],
+    [ "sss::ValidateBucket", "group__S3Client.html#ga1d738375a9c819164ebd50ce9ead8ce2", null ]
 ];

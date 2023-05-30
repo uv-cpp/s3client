@@ -6,5 +6,5 @@ var response__parser_8h =
     [ "TrimETag", "response__parser_8h.html#gab31b67eec4fc7c00367031debd298fd8", null ],
     [ "XMLTag", "response__parser_8h.html#gacf486071ed8bd3e6f76fe9ee23639bde", null ],
     [ "XMLTagPath", "response__parser_8h.html#gaddaff0aa8a7f3ad2e60f73e16fc3ce11", null ],
-    [ "XMLTags", "response__parser_8h.html#gad3c529a92548fc2acddaef5f1797405f", null ]
+    [ "XMLTags", "response__parser_8h.html#gabb6c22034ff7357c481d51660b33df17", null ]
 ];

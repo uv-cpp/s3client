@@ -1,28 +1,36 @@
 <map id="sss::api::S3Api::HeadBucket" name="sss::api::S3Api::HeadBucket">
-<area shape="rect" id="node1" title=" " alt="" coords="5,191,196,217"/>
-<area shape="rect" id="node2" href="$classsss_1_1WebClient.html#ac9e82fc4b56b142d91f9b104f5266f91" title="Get response body as text." alt="" coords="244,60,455,87"/>
-<area shape="rect" id="node4" href="$group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5" title="Extract and return HTTP headers as key&#45;value pairs." alt="" coords="282,191,417,217"/>
-<area shape="rect" id="node5" href="$classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889" title="Send request." alt="" coords="275,401,424,428"/>
-<area shape="rect" id="node3" href="$classsss_1_1WebClient.html#a77a4e0190a4f207b969cb63b6ba38ccc" title=" " alt="" coords="503,5,732,32"/>
-<area shape="rect" id="node6" href="$classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31" title="Configure instance." alt="" coords="539,401,696,428"/>
-<area shape="rect" id="node15" href="$classsss_1_1WebClient.html#a51ce0ecf6487b6a43072643fe4f4cb4e" title=" " alt="" coords="1038,173,1233,200"/>
-<area shape="rect" id="node22" href="$group__Internal.html#ga2b8b08c2a4994a87377d83ccfa9a6a53" title=" " alt="" coords="552,637,683,664"/>
-<area shape="rect" id="node23" href="$classsss_1_1WebClient.html#aa1d7484f0e09242ce53b24f9648ce50e" title=" " alt="" coords="801,680,950,707"/>
-<area shape="rect" id="node24" href="$classsss_1_1WebClient.html#a7dfd984b33a29686fb0355b65b620e99" title=" " alt="" coords="514,57,721,98"/>
-<area shape="rect" id="node26" href="$classsss_1_1WebClient.html#ae7b1f77bd4ae44585f2d49ea493bdcc5" title="Upload data from memory buffer." alt="" coords="523,521,711,562"/>
-<area shape="rect" id="node7" href="$classsss_1_1api_1_1S3Api.html#a1a4e05ac14390c7f42feef2c26e22031" title=" " alt="" coords="794,275,957,301"/>
-<area shape="rect" id="node8" href="$classsss_1_1api_1_1S3Api.html#a3718745d3b940462ae9f3b78f773b3a6" title="Clear data and reset read and write functions." alt="" coords="800,376,951,403"/>
-<area shape="rect" id="node13" href="$classsss_1_1WebClient.html#a75890c14fbe4a4bbac61718a4f3c064d" title=" " alt="" coords="1041,300,1229,327"/>
-<area shape="rect" id="node14" href="$classsss_1_1WebClient.html#a12b5db6b8c667024557ab58059d39994" title=" " alt="" coords="1052,452,1219,479"/>
-<area shape="rect" id="node16" href="$classsss_1_1WebClient.html#a9bf978d95b79728f6d60fc2bdb4fe546" title=" " alt="" coords="1020,503,1251,529"/>
-<area shape="rect" id="node17" href="$classsss_1_1api_1_1S3Api.html#a70f1068d07e1d4c1be164e0cb9328cc0" title=" " alt="" coords="790,579,961,605"/>
-<area shape="rect" id="node18" href="$classsss_1_1api_1_1S3Api.html#acfffe29254323fb41231787a0afb7edc" title=" " alt="" coords="797,173,954,200"/>
-<area shape="rect" id="node19" href="$classsss_1_1WebClient.html#afc3b7a92568fbb1ea447918920ca266e" title="Set endpoint: &lt;proto&gt;://&lt;server&gt;:&lt;port&gt;" alt="" coords="780,224,971,251"/>
-<area shape="rect" id="node20" href="$classsss_1_1WebClient.html#af6233ffd7b294e1e7e606e838dd44e9e" title=" " alt="" coords="784,629,967,656"/>
-<area shape="rect" id="node21" href="$group__Sign.html#ga3ae8e18ef70752b7369fca66c40c526b" title="Sign headers." alt="" coords="812,477,939,504"/>
-<area shape="rect" id="node9" href="$classsss_1_1WebClient.html#a381f5715b7a2f19a0d4414d278874bae" title="Clear internal buffers." alt="" coords="1039,401,1231,428"/>
-<area shape="rect" id="node10" href="$classsss_1_1WebClient.html#a96837f149bb473853a6523d096a25c56" title="Reset read/write functions to default." alt="" coords="1019,351,1252,377"/>
-<area shape="rect" id="node11" href="$classsss_1_1WebClient.html#a88dbcc61562e84aa9ebf1eabf887ac28" title=" " alt="" coords="1300,321,1520,348"/>
-<area shape="rect" id="node12" href="$classsss_1_1WebClient.html#a002876073b3869a9b9a9d709d14f1d7e" title=" " alt="" coords="1325,373,1495,414"/>
-<area shape="rect" id="node25" href="$group__Internal.html#ga6e3db8d156313abef7e2c966df1a3d7c" title=" " alt="" coords="819,64,931,91"/>
+<area shape="rect" id="node1" title=" " alt="" coords="5,555,196,581"/>
+<area shape="rect" id="node2" href="$group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5" title="Extract and return HTTP headers as key&#45;value pairs." alt="" coords="251,530,385,556"/>
+<area shape="rect" id="node3" href="$classsss_1_1api_1_1S3Api.html#ad09581bf28c4bbbcbb71b329959ec1ae" title="Send request." alt="" coords="244,579,392,605"/>
+<area shape="rect" id="node4" href="$classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31" title="Configure instance." alt="" coords="465,307,621,333"/>
+<area shape="rect" id="node13" href="$classsss_1_1WebClient.html#a51ce0ecf6487b6a43072643fe4f4cb4e" title=" " alt="" coords="951,6,1145,32"/>
+<area shape="rect" id="node28" href="$lib_2include_2utility_8h.html#ab314781bb3f053ef5325b50f3a1b74f8" title=" " alt="" coords="1272,607,1371,633"/>
+<area shape="rect" id="node30" href="$group__ErrorHandling.html#ga781648957bfce0bbc86cbdbff94e28a6" title=" " alt="" coords="484,719,603,745"/>
+<area shape="rect" id="node31" href="$group__Internal.html#ga2b8b08c2a4994a87377d83ccfa9a6a53" title=" " alt="" coords="479,769,608,794"/>
+<area shape="rect" id="node32" href="$classsss_1_1WebClient.html#aa1d7484f0e09242ce53b24f9648ce50e" title=" " alt="" coords="715,554,863,580"/>
+<area shape="rect" id="node33" href="$classsss_1_1WebClient.html#a7dfd984b33a29686fb0355b65b620e99" title=" " alt="" coords="440,655,646,695"/>
+<area shape="rect" id="node34" href="$classsss_1_1WebClient.html#ae7b1f77bd4ae44585f2d49ea493bdcc5" title="Upload data from memory buffer." alt="" coords="450,489,637,530"/>
+<area shape="rect" id="node5" href="$classsss_1_1api_1_1S3Api.html#aea9741d60e74775ccd4de1c2c58f64fa" title=" " alt="" coords="708,54,870,80"/>
+<area shape="rect" id="node6" href="$classsss_1_1api_1_1S3Api.html#a3718745d3b940462ae9f3b78f773b3a6" title="Clear data and reset read and write functions." alt="" coords="714,155,864,181"/>
+<area shape="rect" id="node11" href="$classsss_1_1WebClient.html#a75890c14fbe4a4bbac61718a4f3c064d" title=" " alt="" coords="954,58,1142,84"/>
+<area shape="rect" id="node12" href="$classsss_1_1WebClient.html#a12b5db6b8c667024557ab58059d39994" title=" " alt="" coords="965,206,1131,232"/>
+<area shape="rect" id="node14" href="$classsss_1_1WebClient.html#a9bf978d95b79728f6d60fc2bdb4fe546" title=" " alt="" coords="933,255,1163,281"/>
+<area shape="rect" id="node15" href="$classsss_1_1api_1_1S3Api.html#a25a999d87c121627166fc0a896f536c7" title=" " alt="" coords="704,357,874,382"/>
+<area shape="rect" id="node16" href="$classsss_1_1api_1_1S3Api.html#a6f518c16679e99f119966b36ac28463f" title=" " alt="" coords="711,406,867,432"/>
+<area shape="rect" id="node17" href="$classsss_1_1WebClient.html#afc3b7a92568fbb1ea447918920ca266e" title="Set endpoint: &lt;proto&gt;://&lt;server&gt;:&lt;port&gt;" alt="" coords="694,455,884,481"/>
+<area shape="rect" id="node18" href="$classsss_1_1WebClient.html#af6233ffd7b294e1e7e606e838dd44e9e" title=" " alt="" coords="698,505,880,530"/>
+<area shape="rect" id="node20" href="$group__Sign.html#ga3ae8e18ef70752b7369fca66c40c526b" title="Sign headers." alt="" coords="726,307,852,333"/>
+<area shape="rect" id="node7" href="$classsss_1_1WebClient.html#a381f5715b7a2f19a0d4414d278874bae" title="Clear internal buffers." alt="" coords="952,107,1144,133"/>
+<area shape="rect" id="node8" href="$classsss_1_1WebClient.html#a96837f149bb473853a6523d096a25c56" title="Reset read/write functions to default." alt="" coords="932,157,1164,182"/>
+<area shape="rect" id="node9" href="$classsss_1_1WebClient.html#a88dbcc61562e84aa9ebf1eabf887ac28" title=" " alt="" coords="1212,99,1431,125"/>
+<area shape="rect" id="node10" href="$classsss_1_1WebClient.html#a002876073b3869a9b9a9d709d14f1d7e" title=" " alt="" coords="1238,149,1406,190"/>
+<area shape="rect" id="node19" href="$lib_2include_2utility_8h.html#ae153c064d6f1beda845702f67605b20e" title=" " alt="" coords="1272,534,1371,560"/>
+<area shape="rect" id="node21" href="$group__Ranges.html#ga0aa7f3b15d2ebf9b597a1b5ba38ae8ac" title="return iterator at start position" alt="" coords="1281,214,1362,240"/>
+<area shape="rect" id="node22" href="$group__Sign.html#ga532598da479904609d6c02e4c2a1311a" title="Compute signature." alt="" coords="969,410,1127,436"/>
+<area shape="rect" id="node24" href="$group__Ranges.html#ga4f73053571587e79eb3db628f5e6ef99" title="return iterator at end position" alt="" coords="1286,263,1357,289"/>
+<area shape="rect" id="node23" href="$group__Internal.html#ga74c69f25ce04876e114759c0023b2a12" title=" " alt="" coords="1238,411,1405,437"/>
+<area shape="rect" id="node25" href="$group__Internal.html#ga50353a351a93b1213dc4e5211c767d85" title=" " alt="" coords="1269,461,1375,486"/>
+<area shape="rect" id="node26" href="$group__Internal.html#ga990dfaae4abc6bf20a28f9772b7bcd16" title="Byte to hex string conversion." alt="" coords="1285,313,1359,338"/>
+<area shape="rect" id="node27" href="$group__Internal.html#ga7160aa316f2c6633467b47588263c690" title=" " alt="" coords="1266,362,1377,388"/>
+<area shape="rect" id="node29" href="$group__Internal.html#ga0f079ace8729714b3949eabe22f228c9" title=" " alt="" coords="1266,658,1377,684"/>
 </map>
