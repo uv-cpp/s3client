@@ -78,7 +78,7 @@ using TagMap = std::unordered_map<std::string, std::string>;
 
 ```cpp
 // return SendParams and XML request body
-std::pair<SendParams, XML> 
+S3Api::SendParams 
 GeneratePutBucketTaggingRequest(const std::string& bucket, 
                                 const TagMap& tags,
                                 const Headers& headers) {
@@ -94,11 +94,11 @@ GeneratePutBucketTaggingRequest(const std::string& bucket,
     os["Value"] = kv.second; // <Value>
     os["/"]; // </Tag>
   }
-  return {{.method = "PUT",
-           .bucket = bucket,
-           .params = {{"tagging", ""}},
-           .headers = headers},
-          os}; // automatic conversion to string  
+  return {.method = "PUT",
+          .bucket = bucket,
+          .params = {{"tagging", ""}},
+          .headers = headers,
+          .uploadData = os.XMLText()};
 }
 ```
 
@@ -107,9 +107,7 @@ GeneratePutBucketTaggingRequest(const std::string& bucket,
 void TagBucket(S3Api& s3, const std::string& bucket,
                const TagMap& tags, const Headers& headers) {
   auto args = GeneratePutBucketRequest(bucket, tags, headers);
-  args.uploadData = args.second.c_str();
-  args.uploadDataSize = args.second.size();
-  s3.Send(args.first, args.second);
+  s3.Send(args);
 }
 ```
 
