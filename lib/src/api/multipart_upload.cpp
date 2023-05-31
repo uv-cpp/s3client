@@ -170,7 +170,7 @@ ETag S3Api::CompleteMultipartUpload(const UploadId &uid, const string &bucket,
                          .bucket = bucket,
                          .key = key,
                          .params = params,
-                         .postData = postData});
+                         .uploadData = postData});
   string etag = XMLTag(wc.GetContentText(), "ETag");
   if (etag.empty()) {
     throw logic_error("Empty ETag");

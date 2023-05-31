@@ -252,10 +252,10 @@ public:
     std::string region = "us-east-1";
     std::string signUrl;     ///< URL used for signing request headers
     std::string payloadHash; ///< payload hash, leave empty if no hash available
-    const std::string postData;       ///< text data to be posted
-    bool urlEncodePostParams = false; ///< if \true URL-encode \c postData else
-                                      ///< send postData without encoding first
-    /// Data to upload either a \c string or a pointer to memory buffer,
+    bool urlEncodePostParams = false; ///< if \true URL-encode \c uploadData else
+                                      ///< send \c uploadData without encoding first
+    /// Data to upload through \c POST or \c PUT methods;
+    /// either a \c string or a pointer to memory buffer,
     /// initialised to first type
     std::variant<std::string, ReadBuffer> uploadData;
   };
@@ -327,11 +327,11 @@ public:
         webClient_.UploadDataFromBuffer(s->c_str(), 0, s->size());
       }
     } else if (ToLower(p.method) == "post") {
-      if (!p.postData.empty()) {
+      if (auto s = std::get_if<std::string>(&p.uploadData)) {
         if (p.urlEncodePostParams) {
-          webClient_.SetUrlEncodedPostData(ParseParams(p.postData.data()));
+          webClient_.SetUrlEncodedPostData(ParseParams(*s));
         } else {
-          webClient_.SetPostData(p.postData);
+          webClient_.SetPostData(*s);
         }
       }
       webClient_.Send();
@@ -749,11 +749,7 @@ public:
 
 private:
   bool HasData(const SendParams &params) {
-    if (!params.postData.empty()) {
-      return true;
-    }
     bool hasData = false;
-
     if (auto p = std::get_if<ReadBuffer>(&params.uploadData)) {
       hasData = p->size > 0 && p->pData != nullptr;
     } else if (auto p = std::get_if<std::string>(&params.uploadData)) {
