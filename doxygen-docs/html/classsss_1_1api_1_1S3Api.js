@@ -2,6 +2,7 @@ var classsss_1_1api_1_1S3Api =
 [
     [ "ListObjectV2Config", "structsss_1_1api_1_1S3Api_1_1ListObjectV2Config.html", null ],
     [ "ListObjectV2Result", "structsss_1_1api_1_1S3Api_1_1ListObjectV2Result.html", null ],
+    [ "ReadBuffer", "structsss_1_1api_1_1S3Api_1_1ReadBuffer.html", null ],
     [ "SendParams", "structsss_1_1api_1_1S3Api_1_1SendParams.html", "structsss_1_1api_1_1S3Api_1_1SendParams" ],
     [ "FileIOMode", "classsss_1_1api_1_1S3Api.html#acf181b732741a8582598182a0298c21b", null ],
     [ "S3Api", "classsss_1_1api_1_1S3Api.html#af60525ee5baebfe10eea4b78392c7f71", null ],

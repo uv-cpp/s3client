@@ -137,18 +137,10 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a733fdb2b7a4798fb7540b2f3c7511123">payloadHash</a></td></tr>
 <tr class="memdesc:a733fdb2b7a4798fb7540b2f3c7511123"><td class="mdescLeft">&#160;</td><td class="mdescRight">payload hash, leave empty if no hash available <br /></td></tr>
 <tr class="separator:a733fdb2b7a4798fb7540b2f3c7511123"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adccc6ec9adc0044fa653f9973b7940cd"><td class="memItemLeft" align="right" valign="top"><a id="adccc6ec9adc0044fa653f9973b7940cd"></a>
-const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#adccc6ec9adc0044fa653f9973b7940cd">postData</a> = &quot;&quot;</td></tr>
-<tr class="memdesc:adccc6ec9adc0044fa653f9973b7940cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">text data to be posted <br /></td></tr>
-<tr class="separator:adccc6ec9adc0044fa653f9973b7940cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af99ea89f2e18e4f3c86e919223e98bce"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#af99ea89f2e18e4f3c86e919223e98bce">urlEncodePostParams</a> = false</td></tr>
 <tr class="separator:af99ea89f2e18e4f3c86e919223e98bce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99168e28e72daa605a7d5e1d63966c7f"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a99168e28e72daa605a7d5e1d63966c7f">uploadData</a></td></tr>
-<tr class="separator:a99168e28e72daa605a7d5e1d63966c7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a1e53307e4a7f0c7975f23d870e7f04"><td class="memItemLeft" align="right" valign="top"><a id="a5a1e53307e4a7f0c7975f23d870e7f04"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a5a1e53307e4a7f0c7975f23d870e7f04">uploadDataSize</a> = 0</td></tr>
-<tr class="memdesc:a5a1e53307e4a7f0c7975f23d870e7f04"><td class="mdescLeft">&#160;</td><td class="mdescRight">size of data to upoad <br /></td></tr>
-<tr class="separator:a5a1e53307e4a7f0c7975f23d870e7f04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e03a74f08cff00c22f9a22b078fce86"><td class="memItemLeft" align="right" valign="top">std::variant&lt; std::string, <a class="el" href="structsss_1_1api_1_1S3Api_1_1ReadBuffer.html">ReadBuffer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a7e03a74f08cff00c22f9a22b078fce86">uploadData</a></td></tr>
+<tr class="separator:a7e03a74f08cff00c22f9a22b078fce86"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Send request parameters. </p>
@@ -156,20 +148,18 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="st
 <dd>
 <a class="el" href="classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31" title="Configure instance.">Config</a> </dd></dl>
 </div><h2 class="groupheader">Field Documentation</h2>
-<a id="a99168e28e72daa605a7d5e1d63966c7f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a99168e28e72daa605a7d5e1d63966c7f">&#9670;&nbsp;</a></span>uploadData</h2>
+<a id="a7e03a74f08cff00c22f9a22b078fce86"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e03a74f08cff00c22f9a22b078fce86">&#9670;&nbsp;</a></span>uploadData</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const char* sss::api::S3Api::SendParams::uploadData</td>
+          <td class="memname">std::variant&lt;std::string, <a class="el" href="structsss_1_1api_1_1S3Api_1_1ReadBuffer.html">ReadBuffer</a>&gt; sss::api::S3Api::SendParams::uploadData</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=</div>
-<div class="line">        <span class="keyword">nullptr</span></div>
-</div><!-- fragment --><p>pointer to data to upload in the request body as part of a <code>PUT</code> request </p>
+<p>Data to upload through <code>POST</code> or <code>PUT</code> methods; either a <code>string</code> or a pointer to memory buffer, initialised to first type </p>
 
 </div>
 </div>
@@ -184,7 +174,7 @@ size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="st
         </tr>
       </table>
 </div><div class="memdoc">
-<p>if \true URL-encode <code>postData</code> else send postData without encoding first </p>
+<p>if \true URL-encode <code>uploadData</code> else send <code>uploadData</code> without encoding first </p>
 
 </div>
 </div>

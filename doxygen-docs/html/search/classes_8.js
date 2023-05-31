@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['webclient_276',['WebClient',['../classsss_1_1WebClient.html',1,'sss']]]
+  ['url_275',['URL',['../structsss_1_1URL.html',1,'sss']]]
 ];

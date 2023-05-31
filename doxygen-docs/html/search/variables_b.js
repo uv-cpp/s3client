@@ -4,7 +4,6 @@ var searchData=
   ['partsperjob_472',['partsPerJob',['../structsss_1_1S3DataTransferConfig.html#a0fafc811ce2721b522012a8ef4f098eb',1,'sss::S3DataTransferConfig']]],
   ['payloadhash_473',['payloadHash',['../structsss_1_1api_1_1S3Api_1_1SendParams.html#a733fdb2b7a4798fb7540b2f3c7511123',1,'sss::api::S3Api::SendParams::payloadHash()'],['../structsss_1_1ComputeSignatureConfig.html#a8b7c502fa573fc0479c5355a7dc1da89',1,'sss::ComputeSignatureConfig::payloadHash()'],['../structsss_1_1S3DataTransferConfig.html#ab0a735d423ba0989fc9fd1cb634a78a2',1,'sss::S3DataTransferConfig::payloadHash()']]],
   ['port_474',['port',['../group__Internal.html#ga5966da20a8fb229e134cc31a47fba669',1,'sss::URL']]],
-  ['postdata_475',['postData',['../structsss_1_1api_1_1S3Api_1_1SendParams.html#adccc6ec9adc0044fa653f9973b7940cd',1,'sss::api::S3Api::SendParams']]],
-  ['proto_476',['proto',['../group__Internal.html#gaf1fb78e7747b1e5de41c6585f0f093ec',1,'sss::URL']]],
-  ['proxyurl_477',['proxyUrl',['../structsss_1_1S3DataTransferConfig.html#a3cdf2c33a78efd23fa7c9b515fdfae9a',1,'sss::S3DataTransferConfig']]]
+  ['proto_475',['proto',['../group__Internal.html#gaf1fb78e7747b1e5de41c6585f0f093ec',1,'sss::URL']]],
+  ['proxyurl_476',['proxyUrl',['../structsss_1_1S3DataTransferConfig.html#a3cdf2c33a78efd23fa7c9b515fdfae9a',1,'sss::S3DataTransferConfig']]]
 ];

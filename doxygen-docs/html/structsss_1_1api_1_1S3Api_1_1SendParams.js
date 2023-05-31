@@ -6,9 +6,7 @@ var structsss_1_1api_1_1S3Api_1_1SendParams =
     [ "method", "structsss_1_1api_1_1S3Api_1_1SendParams.html#a201e22ddcfd847d297cbeadcd299296b", null ],
     [ "params", "structsss_1_1api_1_1S3Api_1_1SendParams.html#a1a2fd2387abb6d88e8b149870bbb4722", null ],
     [ "payloadHash", "structsss_1_1api_1_1S3Api_1_1SendParams.html#a733fdb2b7a4798fb7540b2f3c7511123", null ],
-    [ "postData", "structsss_1_1api_1_1S3Api_1_1SendParams.html#adccc6ec9adc0044fa653f9973b7940cd", null ],
     [ "signUrl", "structsss_1_1api_1_1S3Api_1_1SendParams.html#a912d3c331657a12c08c2377d3ca4576a", null ],
-    [ "uploadData", "structsss_1_1api_1_1S3Api_1_1SendParams.html#a99168e28e72daa605a7d5e1d63966c7f", null ],
-    [ "uploadDataSize", "structsss_1_1api_1_1S3Api_1_1SendParams.html#a5a1e53307e4a7f0c7975f23d870e7f04", null ],
+    [ "uploadData", "structsss_1_1api_1_1S3Api_1_1SendParams.html#a7e03a74f08cff00c22f9a22b078fce86", null ],
     [ "urlEncodePostParams", "structsss_1_1api_1_1S3Api_1_1SendParams.html#af99ea89f2e18e4f3c86e919223e98bce", null ]
 ];
