@@ -43,6 +43,7 @@
 #include "s3-client.h"
 #include "webclient.h"
 #include <map>
+#include <variant>
 
 namespace sss {
 
@@ -234,6 +235,11 @@ public:
     bool truncated;
     std::vector<ObjectInfo> keys;
   };
+  /// \brief Memory buffer used in SendParams
+  struct ReadBuffer {
+    size_t size = 0;
+    const char *pData = nullptr;
+  };
   /// \brief Send request parameters.
   /// \see Send(const SendParams &p)
   /// \see Config
@@ -246,13 +252,12 @@ public:
     std::string region = "us-east-1";
     std::string signUrl;     ///< URL used for signing request headers
     std::string payloadHash; ///< payload hash, leave empty if no hash available
-    const std::string &postData = ""; ///< text data to be posted
+    const std::string postData;       ///< text data to be posted
     bool urlEncodePostParams = false; ///< if \true URL-encode \c postData else
                                       ///< send postData without encoding first
-    const char *uploadData =
-        nullptr; ///< pointer to data to upload in the request body as part of a
-                 ///< \c PUT request
-    size_t uploadDataSize = 0; ///< size of data to upoad
+    /// Data to upload either a \c string or a pointer to memory buffer,
+    /// initialised to first type
+    std::variant<std::string, ReadBuffer> uploadData;
   };
 
 public:
@@ -310,11 +315,17 @@ public:
   const WebClient &Send(const SendParams &p) {
     /// [WebClient::Send]
     Config(p);
+    if (!HasData(p)) {
+      webClient_.Send();
+      HandleError(webClient_);
+      return webClient_;
+    }
     if (ToLower(p.method) == "put") {
-      if (p.uploadData)
-        webClient_.UploadDataFromBuffer(p.uploadData, 0, p.uploadDataSize);
-      else
-        webClient_.Send();
+      if (auto b = std::get_if<ReadBuffer>(&p.uploadData)) {
+        webClient_.UploadDataFromBuffer(b->pData, 0, b->size);
+      } else if (auto s = std::get_if<std::string>(&p.uploadData)) {
+        webClient_.UploadDataFromBuffer(s->c_str(), 0, s->size());
+      }
     } else if (ToLower(p.method) == "post") {
       if (!p.postData.empty()) {
         if (p.urlEncodePostParams) {
@@ -323,8 +334,6 @@ public:
           webClient_.SetPostData(p.postData);
         }
       }
-      webClient_.Send();
-    } else {
       webClient_.Send();
     }
     HandleError(webClient_);
@@ -732,12 +741,26 @@ public:
     return webClient_.GetResponseBody();
   }
   /// \return response body as text
-  std::string GetResponseText() const {
-    return webClient_.GetContentText();
-  }
+  std::string GetResponseText() const { return webClient_.GetContentText(); }
   /// \return {header name, header value} map
   Headers GetResponseHeaders() const {
     return HTTPHeaders(webClient_.GetHeaderText());
+  }
+
+private:
+  bool HasData(const SendParams &params) {
+    if (!params.postData.empty()) {
+      return true;
+    }
+    bool hasData = false;
+
+    if (auto p = std::get_if<ReadBuffer>(&params.uploadData)) {
+      hasData = p->size > 0 && p->pData != nullptr;
+    } else if (auto p = std::get_if<std::string>(&params.uploadData)) {
+      hasData = !p->empty();
+    }
+
+    return hasData;
   }
 
 private:

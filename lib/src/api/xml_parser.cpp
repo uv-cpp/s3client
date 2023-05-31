@@ -244,7 +244,7 @@ std::string GenerateAclXML(const AccessControlPolicy &acl) {
 /// [GenerateAclXML]
 
 //-----------------------------------------------------------------------------
-std::pair<S3Api::SendParams, std::string>
+S3Api::SendParams
 GeneratePutBucketTaggingRequest(const std::string &bucket, const TagMap &tags,
                                 const Headers &headers = {}) {
   XMLDocument doc;
@@ -259,11 +259,11 @@ GeneratePutBucketTaggingRequest(const std::string &bucket, const TagMap &tags,
     os["Value"] = kv.second; // <Value>
     os["/"];                 // </Tag>
   }
-  return {{.method = "PUT",
+  return {.method = "PUT",
            .bucket = bucket,
            .params = {{"tagging", ""}},
-           .headers = headers},
-          os.XMLText()};
+           .headers = headers,
+          .uploadData = os.XMLText()};
 }
 
 //-----------------------------------------------------------------------------
@@ -290,10 +290,10 @@ TagMap ParseTaggingResponse(const std::string &xml) {
 }
 
 //-----------------------------------------------------------------------------
-std::pair<S3Api::SendParams, std::string>
-GeneratePutObjectTaggingRequest(const std::string &bucket,
-                                const std::string &key, const TagMap &tags,
-                                const Headers &headers) {
+S3Api::SendParams GeneratePutObjectTaggingRequest(const std::string &bucket,
+                                                  const std::string &key,
+                                                  const TagMap &tags,
+                                                  const Headers &headers) {
   XMLDocument doc;
   XMLOStream os(doc);
   //@warning: different S3 implementations might have different capitalisation
@@ -306,12 +306,12 @@ GeneratePutObjectTaggingRequest(const std::string &bucket,
     os["Value"] = kv.second; // <Value>
     os["/"];                 // </Tag>
   }
-  return {{.method = "PUT",
-           .bucket = bucket,
-           .key = key,
-           .params = {{"tagging", ""}},
-           .headers = headers},
-          os.XMLText()};
+  return {.method = "PUT",
+          .bucket = bucket,
+          .key = key,
+          .params = {{"tagging", ""}},
+          .headers = headers,
+          .uploadData = os.XMLText()};
 }
 } // namespace api
 } // namespace sss

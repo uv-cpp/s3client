@@ -59,8 +59,7 @@ ETag S3Api::PutObject(const std::string &bucket, const std::string &key,
                          .key = key,
                          .headers = headers,
                          .payloadHash = payloadHash,
-                         .uploadData = buffer.data(),
-                         .uploadDataSize = buffer.size()});
+                         .uploadData = ReadBuffer{buffer.size(), buffer.data()}});
   const string etag = HTTPHeader(wc.GetHeaderText(), "ETag");
   if (etag.empty()) {
     throw runtime_error("Missing ETag");
@@ -79,8 +78,7 @@ ETag S3Api::PutObject(const std::string &bucket, const std::string &key,
                          .key = key,
                          .headers = headers,
                          .payloadHash = payloadHash,
-                         .uploadData = buffer,
-                         .uploadDataSize = size});
+                         .uploadData = ReadBuffer{size, buffer}});
   const string etag = HTTPHeader(wc.GetHeaderText(), "ETag");
   if (etag.empty()) {
     throw runtime_error("Missing ETag");
@@ -238,8 +236,7 @@ void S3Api::PutObjectAcl(const string &bucket, const string &key,
                         .bucket = bucket,
                         .key = key,
                         .params = {{"acl", ""}},
-                        .uploadData = xml.c_str(),
-                        .uploadDataSize = xml.size()})
+                        .uploadData = xml})
                       .GetContentText();
 }
 
@@ -255,16 +252,14 @@ TagMap S3Api::GetObjectTagging(const string &bucket, const string &key) {
 }
 
 //------------------------------------------------------------------------------
-std::pair<S3Api::SendParams, std::string>
+S3Api::SendParams
 GeneratePutObjectTaggingRequest(const std::string &bucket,
                                 const std::string &key, const TagMap &tags,
                                 const Headers &headers);
 void S3Api::PutObjectTagging(const string &bucket, const string &key,
                              const TagMap &tags, const Headers &headers) {
   auto r = GeneratePutObjectTaggingRequest(bucket, key, tags, headers);
-  r.first.uploadData = r.second.c_str();
-  r.first.uploadDataSize = r.second.size();
-  Send(r.first);
+  Send(r);
 }
 } // namespace api
 } // namespace sss

@@ -82,6 +82,7 @@ ETag DoUploadFilePart(S3Api &s3, const string &fileName, size_t offset,
                           .bucket = bucket,
                           .key = key,
                           .params = params,
+                          .headers = headers,
                           .payloadHash = payloadHash});
     switch (mode) {
     case S3Api::BUFFERED:
@@ -131,8 +132,8 @@ ETag DoUploadPart(S3Api &s3, const string &bucket, const string &key,
                               .bucket = bucket,
                               .key = key,
                               .params = params,
-                              .uploadData = data,
-                              .uploadDataSize = size});
+                              .headers = headers,
+                              .uploadData = S3Api::ReadBuffer{size, data}});
 
     string etag = HTTPHeader(wc.GetHeaderText(), "Etag");
     if (etag.empty()) {
@@ -164,6 +165,7 @@ ETag S3Api::CompleteMultipartUpload(const UploadId &uid, const string &bucket,
 
   Parameters params = {{"uploadId", uid}};
   const string postData = BuildEndUploadXML(etags);
+      cout << "POST..." << endl;
   const auto &wc = Send({.method = "POST",
                          .bucket = bucket,
                          .key = key,
