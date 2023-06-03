@@ -12,7 +12,7 @@ Specify method, bucket name and key and expiration time of 10k seconds.
 export PRESIGN=`build/s3-presign -a $S3CLIENT_TEST_ACCESS -s $S3CLIENT_TEST_SECRET -e $S3CLIENT_TEST_URL -m "PUT" -x 10000 -b buck -k xxx`
 ```
 ### Upload object
-Invoke `curl` and specify custom metadata field.
+Invoke `curl` and specify custom metadata field by adding an `x-amz-meta-` header.
 ```
 curl $PRESIGN -X PUT -F "file=@CMakeCache.txt" -H "x-amz-meta-mymeta:123"
 ```
@@ -23,7 +23,7 @@ Invoke *HEAD* operation on uploaded object and read metadata.
 build/s3-client -a $S3CLIENT_TEST_ACCESS -s $S3CLIENT_TEST_SECRET -e $S3CLIENT_TEST_URL -b buck -k xxx -m HEAD
 ```
 
-Output
+**Output**
 ```
 HTTP/1.1 200 OK
 Accept-Ranges: bytes
@@ -40,11 +40,11 @@ X-Amz-Id-2: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
 X-Amz-Request-Id: 1756B8D2388779A5
 X-Content-Type-Options: nosniff
 X-Xss-Protection: 1; mode=block
-
-!!!!
+```
+```
 x-amz-meta-mymeta: 123 <===
-!!!!
-
+```
+```
 Date: Mon, 17 Apr 2023 12:32:03 GMT
 ```
 

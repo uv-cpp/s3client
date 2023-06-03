@@ -4,8 +4,7 @@ C++ client library and tools.
 Originally developed to test *Ceph* object storage, parallel transfers between 
 Lustre and *Ceph* on high speed networks, and learn the S3 API.
 
-All the code is tested on MacOS (x86 and ARM) and Linux SuSE and Ubuntu,
-x86 only. 
+All the code is tested on Linux SuSE and Ubuntu, x86 only and MacOS (x86 and ARM). 
 
 ## Library
 
@@ -17,10 +16,10 @@ S3 API accessible through the `libs3client` library, see `s3-api.h` and
 
 Check out the `app` and `test` folders for usage examples.
 
-A small subset of the S3 action is implemented, but any request can be sent 
+A small subset of the S3 actions is implemented, but any request can be sent 
 through the `S3API::Send` method and `SendS3Request` function.
 
-XML requests and responses can be generated and parsed using the provide 
+XML requests and responses can be generated and parsed using the provided
 high-level XML parsing and generation functions;
 see `Parsing` module in the Doxygen-generated API documentation or look into the
 `xml_path.h` and `test/xml-parse-test.cpp` files.
@@ -86,22 +85,26 @@ under `${CMAKE_INSTALL_PREFIX}/bin`.
 
 By default the library and all the command line tools and the S3 API extensions are built.
 
-To disable building the command line tools set `APPS=OFF`.
+To disable building the command line tools set `APPS=OFF`, when this option is disabled,
+no external dependencies are required other than *libcurl*.
 
 ## Test
 
 In order to test the tools and API you need access to an S3 storage service.
-One option is to use the free *play.min.io* service, another option is to 
-configure a local instance of the *minio* server.
+One option is to use the free *play.min.io* service; other options are to 
+configure a local instance of the *minio* server or use an AWS S3 account.
+
+When testing with an AWS S3 account extract credentials from file `.aws/credentials`
+and use the url: `https://s3.<region e.g. us-east-1>.amazonaws.com` as the endpoint.
 
 The access and secret keys for *play.min.io* are stored inside the
-`~/.mc/config.json` files configured after installing the the
+`~/.mc/config.json` file configured after installing the
 [minio client](https://min.io/docs/minio/linux/reference/minio-mc.html).
 
-The script `minio_podman_setup.sh` downloads configures and runs a minio server instance
-inside a contatiner using *podman*.
+The script `minio_podman_setup.sh` downloads configures and runs a *minio* server instance
+inside a container using *podman*.
 
-Run the script after building all the applications and making sure that
+Run the script after building all the applications, making sure that
 the `s3-gen-credentials` executable is findable through the `PATH` variable.
 
 
@@ -123,8 +126,10 @@ chmod u+x ./minio_run_server.sh
 ./minio_run_server.sh myalias ~/tmp/minio_data
 ```
 
-Both scripts ouput access, secret and URL which should be stored into 
-environment variables.
+Both scripts output access, secret and URL which should be stored into 
+environment variables, the optional third argument to the scripts is the name of
+the file where environment variables are stored: use `source` <filename> to set
+all environment variables.
 
 The `test` directory includes tests for the high level interface and the S3 API.
 
@@ -134,15 +139,34 @@ secret and endpoint URL information.
 The provided `.sh` scripts inside the `test` directory can run all the tests
 at once.
 
-## License
+## Parallel data transfer
 
-This software is distributed under the BSD three-clause license and has
-dependencies on the following software libraries:
+The following considerations apply to the transfer of single large files
+over fast connections only (at least 10 Gib/s) and to S3 services able
+to ingest data at GiB/s rate.
 
-* *libcurl* - distributed unded the curl license, derived from MIT/X
-* *Lyra*, by Rene Rivera - distributed under the Boost license version 1.0
-* *Tinyxml2* - zlib (included in source tree)
-* *Doxygen Awesome* - MIT 
+Parallel reads and writes from/to flash memory are faster than serial 
+ones, but with spinning disks the overall performance might not be 
+impacted by transferring data in parallel and even cause a slowdown.
+
+### Lustre
+
+Lustre allows users to control the striping configuration.
+
+When transferring from *Lustre* make sure that the stripe
+size is as close as possible to a multiple of the part size.
+Use: `lfs getstripe <filename>` to retrieve the stripe size.
+
+When downloading data to *Lustre* make sure that the stripe size
+for the directory is a multiple of the part size or create a file
+with the desired stripe size first using the `lfs setstripe` command.
+
+### Others
+
+*RAID* configurations and other parallel filesystems, like *GPFS* or *BeeGFS*
+have preconfigured stripe/block sizes, please do refer to your system configuration
+before configuring the number of tasks and parts per task.
+
 
 ## Sending S3 requests
 
@@ -309,6 +333,8 @@ Date: Mon, 05 Dec 2022 08:10:53 GMT
 
 Command line:
 
+Pass data on the command line after the `-v` parameters.
+
 ```sh
 s3-client -a $S3TEST_ACCESS -s $S3TEST_SECRET -e $S3TEST_URL \
           -b bucket1 -k variable_name -v "10,20,30" -m put
@@ -371,12 +397,12 @@ Command line
 
 ```
 s3-upload -a $S3_ACCESS -s $S3_SECRET -e $S3_URL -f myfile \
-          -b bucket2 -k key -j $NUM_JOBS -n $PARTS_PER_JOBS -r $NUM_RETRIES
+          -b bucket2 -k key -j $NUM_JOBS -n $PARTS_PER_JOB -r $NUM_RETRIES
 ```
 
 C++
 
-Extracted from the file transfer tests.
+Extracted from the file-transfer tests.
 
 ```cpp
 ...
@@ -413,12 +439,12 @@ Command line
 
 ```
 s3-download -a $S3_ACCESS -s $S3_SECRET -e $S3_URL -f myfile \
-            -b bucket2 -k key -j $NUM_JOBS -n $PARTS_PER_JOBS -r $NUM_RETRIES
+            -b bucket2 -k key -j $NUM_JOBS -n $PARTS_PER_JOB -r $NUM_RETRIES
 ```
 
 C++
 
-Extracted from the file transfer tests.
+Extracted from the file-transfer tests.
 
 ```cpp
 ...
@@ -459,23 +485,14 @@ to ingest data at GiB/s rate.
 
 Parallel reads and writes from/to flash memory are faster than serial 
 ones, but with spinning disks the overall performance might not be 
-impacted by trasferring data in parallel and even cause a slowdown.
+impacted by transferring data in parallel and even cause a slowdown.
 
-### Lustre
+## License
 
-Lustre allows users to control the striping configuration.
+This software is distributed under the BSD three-clause license and has
+dependencies on the following software libraries:
 
-When transferring from *Lustre* make sure that the stripe
-size is as close as possible to a multiple of the part size.
-Use: `lfs getstripe <filename>` to retrieve the stripe size.
-
-Whe downloading data to *Lustre* make sure that the stripe size
-for the directory is a multiple of the part size or create a file
-with the desired stripe size first using the `lfs setstripe` command.
-
-### Others
-
-*RAID* configurations and other parallel filesystems, like *GPFS* or *BeeGFS*
-have preconfigured stripe/block sizes, please do refer to your system configuration
-before configuring the number of tasks and parts per task.
-
+* *libcurl* - distributed under the curl license, derived from MIT/X
+* *Lyra* - distributed under the Boost license version 1.0
+* *Tinyxml2* - zlib (included in source tree)
+* *Doxygen Awesome* - MIT 

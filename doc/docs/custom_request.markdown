@@ -1,10 +1,14 @@
 # Creating custom requests
 
 The provided functions and classes only support a basic subset of
-the AWS; all the methods simply invoke the `S3Api::Send` method and return
+the AWS API; all the methods simply invoke the `S3Api::Send` method and return
 the parsed response.
+The preference is to avoid creating a fat interface with all the currently
+supported actions exposed as class methods which makes it impossible to extend
+the interface, and instead add free functions receiving a context argument
+and the relevant parameters to implement additional requests.
 
-The main value of the current implementation (and other simlar C++ clients) 
+The main value of the current implementation (and other similar C++ clients) 
 is the generation and parsing of XML text in addition to S3v4 signing.
 However, client code will most likely need to translate from the returned
 objects to their own domain-specific internal representation and it might
@@ -15,7 +19,7 @@ can be sent using this library by:
 
 1. creating a function that returns
     - request parameters as an `S3Api::SendParams` instance
-    - request body as text in XML formant if required
+    - request body as text in XML format if required
 2. sending the request using the `S3Api::Send` method
 3. creating a function that returns the parsed response body and HTTP headers
     - HTTP headers are already parsed and stored into a `map` object
@@ -72,7 +76,6 @@ C++ implementation:
 ```cpp
 using namespace sss;
 using namespace api;
-using XML = std::string;
 using TagMap = std::unordered_map<std::string, std::string>;
 ```
 
@@ -135,7 +138,6 @@ C++ implementation:
 ```cpp
 using namespace sss;
 using namespace api;
-using XML = std::string;
 using TagMap = std::unordered_map<std::string, std::string>;
 ```
 
@@ -149,6 +151,8 @@ TagMap ParseTaggingResponse(const XML& xml) {
   // return all the <tag></tag> elements
   XMLRecords r = is["tagging/tagset/tag"];
   TagMap m;
+  // the `Get` function returns either the value in a
+  // `map` instance or the empty string if the key is not found
   for(auto i: r) {
     const auto k = Get(i,"/key");
     if(k.empty()) {
