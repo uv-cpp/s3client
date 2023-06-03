@@ -165,7 +165,6 @@ ETag S3Api::CompleteMultipartUpload(const UploadId &uid, const string &bucket,
 
   Parameters params = {{"uploadId", uid}};
   const string postData = BuildEndUploadXML(etags);
-      cout << "POST..." << endl;
   const auto &wc = Send({.method = "POST",
                          .bucket = bucket,
                          .key = key,
