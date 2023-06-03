@@ -1,4 +1,4 @@
-# Creating custom requests
+# Implementing custom requests
 
 The provided functions and classes only support a basic subset of
 the AWS API; all the methods simply invoke the `S3Api::Send` method and return

@@ -54,12 +54,13 @@ ETag S3Api::PutObject(const std::string &bucket, const std::string &key,
                       const string &payloadHash) {
 
   headers.insert({"content-length", to_string(buffer.size())});
-  const auto &wc = Send({.method = "PUT",
-                         .bucket = bucket,
-                         .key = key,
-                         .headers = headers,
-                         .payloadHash = payloadHash,
-                         .uploadData = ReadBuffer{buffer.size(), buffer.data()}});
+  const auto &wc =
+      Send({.method = "PUT",
+            .bucket = bucket,
+            .key = key,
+            .headers = headers,
+            .payloadHash = payloadHash,
+            .uploadData = ReadBuffer{buffer.size(), buffer.data()}});
   const string etag = HTTPHeader(wc.GetHeaderText(), "ETag");
   if (etag.empty()) {
     throw runtime_error("Missing ETag");
@@ -252,14 +253,25 @@ TagMap S3Api::GetObjectTagging(const string &bucket, const string &key) {
 }
 
 //------------------------------------------------------------------------------
-S3Api::SendParams
-GeneratePutObjectTaggingRequest(const std::string &bucket,
-                                const std::string &key, const TagMap &tags,
-                                const Headers &headers);
+S3Api::SendParams GeneratePutObjectTaggingRequest(const std::string &bucket,
+                                                  const std::string &key,
+                                                  const TagMap &tags,
+                                                  const Headers &headers);
 void S3Api::PutObjectTagging(const string &bucket, const string &key,
                              const TagMap &tags, const Headers &headers) {
   auto r = GeneratePutObjectTaggingRequest(bucket, key, tags, headers);
   Send(r);
+}
+
+//------------------------------------------------------------------------------
+void S3Api::DeleteObjectTagging(const std::string &bucket,
+                                const std::string &key,
+                                const Headers &headers) {
+  Send({.method = "DELETE",
+        .bucket = bucket,
+        .key = key,
+        .params = {{"tagging", ""}},
+        .headers = headers});
 }
 } // namespace api
 } // namespace sss

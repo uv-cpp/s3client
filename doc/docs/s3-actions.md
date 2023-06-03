@@ -1,6 +1,13 @@
 # S3 Actions
 
-## Implemented
+The library includes high level actions such as *donwload to file* and 
+some of the default S3 Actions listed here:
+
+Future actions will be implemented as free functions accepting an `S3Api` 
+context. It is already possible to implement all the available actions using the
+current methods and functions; see `doc/docs/custom_requests.markdown`.
+
+## Implemented (23)
 
 * AbortMultipartUpload
 * CompleteMultipartUpload
@@ -8,31 +15,34 @@
 * CreateMultipartUpload
 * DeleteBucket
 * DeleteBucketTagging
-* DeleteObjectTagging
 * DeleteObject
+* DeleteObjectTagging
+* GetBucketAcl
 * GetBucketTagging
 * GetObject
+* GetObjectAcl
 * GetObjectTagging
 * HeadBucket
 * HeadObject
 * ListBuckets
 * ListObjectsV2
+* PutBucketAcl
 * PutBucketTagging
 * PutObject
+* PutObjectAcl
 * PutObjectTagging
 * UploadPart
 
-## In progress
+## In progress (6)
 
 * CopyObject
 * DeleteObjects
-* GetBucketAcl
-* GetObjectAcl
 * GetObjectAttributes
-* PutBucketAcl
-* PutObjectAc
+* PutBucketVersioning
+* GetBucketVersioning
+* SelectObjectContent
 
-## All
+## All (133)
 
 * AbortMultipartUpload
 * CompleteMultipartUpload

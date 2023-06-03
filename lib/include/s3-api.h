@@ -252,8 +252,9 @@ public:
     std::string region = "us-east-1";
     std::string signUrl;     ///< URL used for signing request headers
     std::string payloadHash; ///< payload hash, leave empty if no hash available
-    bool urlEncodePostParams = false; ///< if \true URL-encode \c uploadData else
-                                      ///< send \c uploadData without encoding first
+    bool urlEncodePostParams =
+        false; ///< if \true URL-encode \c uploadData else
+               ///< send \c uploadData without encoding first
     /// Data to upload through \c POST or \c PUT methods;
     /// either a \c string or a pointer to memory buffer,
     /// initialised to first type
@@ -499,13 +500,23 @@ public:
   ///
   /// \param[in] key key name
   ///
-  /// \param[in] optional http headers as {name, value} map sent along with
+  /// \param[in] headers optional http headers as {name, value} map sent along with
   /// request
   void DeleteObject(const std::string &bucket, const std::string &key,
-                    const Headers & = {{}});
-  // @todo
-  // bool DeleteObjects(const std::string &bucket,
-  //                    const std::vector<std::string> &objects);
+                    const Headers &headers = {});
+
+  /// \brief Remove all tags from bucket
+  /// \param[in] bucket bucket name
+  /// \param[in] headers optional http headers as {name, value} map
+  void DeleteBucketTagging(const std::string &bucket,
+                           const Headers &headers = {});
+
+  /// \brief Remove all tags from object
+  /// \param[in] bucket bucket name
+  /// \param[in] key name
+  /// \param[in] headers optional http headers as {name, value} map
+  void DeleteObjectTagging(const std::string &bucket, const std::string& key,
+                           const Headers &headers = {});
 
   /// Return bucket's Access Control List
   /// \param bucket bucket name
@@ -744,7 +755,7 @@ public:
   std::string GetResponseText() const { return webClient_.GetContentText(); }
 
   /// \brief Get returned HTTP headers.
-  /// Use this method to retrieve additional information e.g. \c versionId 
+  /// Use this method to retrieve additional information e.g. \c versionId
   /// after sending a request
   /// \return {header name, header value} map
   Headers GetResponseHeaders() const {

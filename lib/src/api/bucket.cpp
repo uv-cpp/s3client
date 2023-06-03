@@ -107,13 +107,23 @@ TagMap S3Api::GetBucketTagging(const string &bucket) {
 }
 
 //------------------------------------------------------------------------------
-S3Api::SendParams
-GeneratePutBucketTaggingRequest(const std::string &bucket, const TagMap &tags,
-                                const Headers &headers);
-void S3Api::PutBucketTagging(const string &bucket,
-                             const TagMap &tags, const Headers &headers) {
+S3Api::SendParams GeneratePutBucketTaggingRequest(const std::string &bucket,
+                                                  const TagMap &tags,
+                                                  const Headers &headers);
+void S3Api::PutBucketTagging(const string &bucket, const TagMap &tags,
+                             const Headers &headers) {
   auto r = GeneratePutBucketTaggingRequest(bucket, tags, headers);
   Send(r);
 }
+
+//------------------------------------------------------------------------------
+void S3Api::DeleteBucketTagging(const std::string &bucket,
+                                const Headers &headers) {
+  Send({.method = "DELETE",
+        .bucket = bucket,
+        .params = {{"tagging", ""}},
+        .headers = headers});
+}
+
 } // namespace api
 } // namespace sss
