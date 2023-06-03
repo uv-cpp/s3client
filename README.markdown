@@ -21,8 +21,16 @@ through the `S3API::Send` method and `SendS3Request` function.
 
 XML requests and responses can be generated and parsed using the provided
 high-level XML parsing and generation functions;
-see `Parsing` module in the Doxygen-generated API documentation or look into the
+see the `Parsing` module in the Doxygen-generated API documentation or look into the
 `xml_path.h` and `test/xml-parse-test.cpp` files.
+
+In the interest of keeping the interface simple:
+  - additional header parameters should be passed as required to the different 
+    methods instead of relying on mapped C++ types
+  - additional information returned by the various requests should be extracted
+    from headers and body through the \c S3Api::GetResponseText
+    (returns \c std::string instance) and \c S3Api::GetResponseHeaders 
+    (returns \c map instance) method
 
 Parallel upload and download works best when reading/writing from SSDs or RAID &
 parallel file-systems with `stripe size = N * (part size)`.

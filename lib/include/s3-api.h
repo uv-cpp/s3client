@@ -742,6 +742,10 @@ public:
   }
   /// \return response body as text
   std::string GetResponseText() const { return webClient_.GetContentText(); }
+
+  /// \brief Get returned HTTP headers.
+  /// Use this method to retrieve additional information e.g. \c versionId 
+  /// after sending a request
   /// \return {header name, header value} map
   Headers GetResponseHeaders() const {
     return HTTPHeaders(webClient_.GetHeaderText());
@@ -755,7 +759,6 @@ private:
     } else if (auto p = std::get_if<std::string>(&params.uploadData)) {
       hasData = !p->empty();
     }
-
     return hasData;
   }
 

@@ -80,6 +80,22 @@ int main(int argc, char **argv) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
   /// [HedObject]
+  /// [GetObjectAcl]
+  action = "GetObjectAcl";
+  try {
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
+    auto accessPolicy = s3.GetObjectAcl(bucketName, objName);
+    if (accessPolicy.grants.empty()) {
+      throw logic_error("Empty Grants list");
+    }
+    if (accessPolicy.grants.front().permission != "FULL_CONTROL") {
+      throw logic_error("permission not equal to 'FULL_CONTROL'");
+    }
+    TestOutput(action, true, TEST_PREFIX);
+  } catch (const exception &e) {
+    TestOutput(action, false, TEST_PREFIX, e.what());
+  }
+  /// [GetObjectAcl]
   /// [ListObjectsV2]
   action = "ListObjectsV2";
   try {
@@ -122,8 +138,8 @@ int main(int argc, char **argv) {
     TagMap tags = {{"tag1", "value1"}, {"tag2", "value2"}};
     s3.PutObjectTagging(bucketName, objName, tags);
     auto t = s3.GetObjectTagging(bucketName, objName);
-    if(t != tags) {
-      if(t.empty()) {
+    if (t != tags) {
+      if (t.empty()) {
         throw logic_error("No tag set");
       }
       throw logic_error("Tags do not match");

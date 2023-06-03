@@ -7,30 +7,30 @@
 * CreateBucket
 * CreateMultipartUpload
 * DeleteBucket
+* DeleteBucketTagging
+* DeleteObjectTagging
 * DeleteObject
+* GetBucketTagging
 * GetObject
+* GetObjectTagging
 * HeadBucket
 * HeadObject
 * ListBuckets
 * ListObjectsV2
+* PutBucketTagging
 * PutObject
+* PutObjectTagging
 * UploadPart
 
 ## In progress
 
 * CopyObject
-* DeleteBucketTagging
 * DeleteObjects
-* DeleteObjectTagging
 * GetBucketAcl
-* GetBucketTagging
 * GetObjectAcl
 * GetObjectAttributes
-* ListMultipartUploads
-* ListParts
 * PutBucketAcl
-* PutBucketTagging
-* PutObjectAcl
+* PutObjectAc
 
 ## All
 
