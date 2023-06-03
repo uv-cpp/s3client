@@ -132,49 +132,49 @@ struct S3DataTransferConfig {
 ///
 /// \return S3Credentials instance \see S3Credentials
 S3Credentials GetS3Credentials(const std::string &fileName,
-                               std::string awsProfile) {
-  //------------------------------------------------------------------------------
-  /// \brief Returned from ValidateBucket function.
-  struct BucketValidation {
-    bool valid = false; ///< \c true if bucket name valid, \c false otherwise
-    std::string error;  ///< error message if not valid
-    /// \return value of \c valid
-    operator bool() const { return valid; }
-  };
-  /// \brief Validate bucket name.
-  /// Bucket name restrictions: see
-  /// https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-s3-bucket-naming-requirements.html
-  /// \param[in] name bucket name
-  /// \return \c true if valid \c false + error message if invalid
-  BucketValidation ValidateBucket(const std::string name);
-  /// \brief Translate metadata (key,value) pairs to \c amz- format and return
-  /// header map which can be merged with other headers using the
-  /// \c std::map::merge method, since C++17.
-  Headers ToMeta(const std::map<std::string, std::string> &metaData);
-  /// \brief Validate S3 client request parameters.
-  void Validate(const S3ClientConfig &s);
-  /// \brief Send S3 request to endpoint.
-  WebClient SendS3Request(S3ClientConfig cfg);
-  /// \brief Parallel upload
-  /// If \c cfg.data not \c NULL data is read from memory, from file
-  /// specified in \c cfg.file instead.
-  /// \param[in] cfg data transfer configuration, \see S3DataTransferConfig
-  /// \param[in] sync if `sync==true` perform serial transfer
-  ETag Upload(const S3DataTransferConfig &cfg, const MetaDataMap &mm = {},
-              bool sync = false);
-  /// \brief Parallel upload
-  /// If \c cfg.data not \c NULL data is written into \c cfg.data buffer,
-  /// to file specified in \c cfg.file instead.
-  /// \param[in] cfg data transfer configuration, \see S3DataTransferConfig
-  /// \param[in] sync if `sync==true` perform serial transfer
-  void Download(const S3DataTransferConfig &cfg, bool sync = false);
-  /// \brief Read S3 credentials from file.
-  /// \param[in] fileName name of configuration file in AWS TOML format
-  /// \param[in] awsProfile profile
-  S3Credentials GetS3Credentials(const std::string &fileName,
-                                 std::string awsProfile);
-  /**
-   * @}
-   */
+                               std::string awsProfile);
+//------------------------------------------------------------------------------
+/// \brief Returned from ValidateBucket function.
+struct BucketValidation {
+  bool valid = false; ///< \c true if bucket name valid, \c false otherwise
+  std::string error;  ///< error message if not valid
+  /// \return value of \c valid
+  operator bool() const { return valid; }
+};
+/// \brief Validate bucket name.
+/// Bucket name restrictions: see
+/// https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-s3-bucket-naming-requirements.html
+/// \param[in] name bucket name
+/// \return \c true if valid \c false + error message if invalid
+BucketValidation ValidateBucket(const std::string name);
+/// \brief Translate metadata (key,value) pairs to \c amz- format and return
+/// header map which can be merged with other headers using the
+/// \c std::map::merge method, since C++17.
+Headers ToMeta(const std::map<std::string, std::string> &metaData);
+/// \brief Validate S3 client request parameters.
+void Validate(const S3ClientConfig &s);
+/// \brief Send S3 request to endpoint.
+WebClient SendS3Request(S3ClientConfig cfg);
+/// \brief Parallel upload
+/// If \c cfg.data not \c NULL data is read from memory, from file
+/// specified in \c cfg.file instead.
+/// \param[in] cfg data transfer configuration, \see S3DataTransferConfig
+/// \param[in] sync if `sync==true` perform serial transfer
+ETag Upload(const S3DataTransferConfig &cfg, const MetaDataMap &mm = {},
+            bool sync = false);
+/// \brief Parallel upload
+/// If \c cfg.data not \c NULL data is written into \c cfg.data buffer,
+/// to file specified in \c cfg.file instead.
+/// \param[in] cfg data transfer configuration, \see S3DataTransferConfig
+/// \param[in] sync if `sync==true` perform serial transfer
+void Download(const S3DataTransferConfig &cfg, bool sync = false);
+/// \brief Read S3 credentials from file.
+/// \param[in] fileName name of configuration file in AWS TOML format
+/// \param[in] awsProfile profile
+S3Credentials GetS3Credentials(const std::string &fileName,
+                               std::string awsProfile);
+/**
+ * @}
+ */
 
 } // namespace sss
