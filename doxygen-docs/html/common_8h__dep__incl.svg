@@ -58,10 +58,10 @@ var sectionId = 'dynsection-1';
 <g id="node1" class="node">
 <title>Node1</title>
 <g id="a_node1"><a xlink:title="Common definitions.">
-<polygon fill="#bfbfbf" stroke="black" points="397.5,-390.5 397.5,-431.5 527.5,-431.5 527.5,-390.5 397.5,-390.5"/>
-<text text-anchor="start" x="405.5" y="-419.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
-<text text-anchor="start" x="405.5" y="-408.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/lib</text>
-<text text-anchor="middle" x="462.5" y="-397.5" font-family="Helvetica,sans-Serif" font-size="10.00">/include/common.h</text>
+<polygon fill="#bfbfbf" stroke="black" points="401.5,-390.5 401.5,-431.5 531.5,-431.5 531.5,-390.5 401.5,-390.5"/>
+<text text-anchor="start" x="409.5" y="-419.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
+<text text-anchor="start" x="409.5" y="-408.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/lib</text>
+<text text-anchor="middle" x="466.5" y="-397.5" font-family="Helvetica,sans-Serif" font-size="10.00">/include/common.h</text>
 </a>
 </g>
 </g>
@@ -69,109 +69,109 @@ var sectionId = 'dynsection-1';
 <g id="node2" class="node">
 <title>Node2</title>
 <g id="a_node2"><a xlink:href="aws__sign_8h.html" target="_top" xlink:title="Public interface to signing URLs and HTTP headers with the S3v4 protocol standard.">
-<polygon fill="none" stroke="black" points="305.5,-234.5 305.5,-275.5 435.5,-275.5 435.5,-234.5 305.5,-234.5"/>
-<text text-anchor="start" x="313.5" y="-263.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
-<text text-anchor="start" x="313.5" y="-252.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/lib</text>
-<text text-anchor="middle" x="370.5" y="-241.5" font-family="Helvetica,sans-Serif" font-size="10.00">/include/aws_sign.h</text>
+<polygon fill="none" stroke="black" points="309.5,-234.5 309.5,-275.5 439.5,-275.5 439.5,-234.5 309.5,-234.5"/>
+<text text-anchor="start" x="317.5" y="-263.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
+<text text-anchor="start" x="317.5" y="-252.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/lib</text>
+<text text-anchor="middle" x="374.5" y="-241.5" font-family="Helvetica,sans-Serif" font-size="10.00">/include/aws_sign.h</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node2 -->
 <g id="edge1" class="edge">
 <title>Node1&#45;&gt;Node2</title>
-<path fill="none" stroke="midnightblue" d="M445.51,-381.56C427.16,-350.85 398.4,-302.71 382.35,-275.83"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="442.71,-383.71 450.85,-390.5 448.72,-380.12 442.71,-383.71"/>
+<path fill="none" stroke="midnightblue" d="M449.51,-381.56C431.16,-350.85 402.4,-302.71 386.35,-275.83"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="446.71,-383.71 454.85,-390.5 452.72,-380.12 446.71,-383.71"/>
 </g>
 <!-- Node3 -->
 <g id="node3" class="node">
 <title>Node3</title>
 <g id="a_node3"><a xlink:href="s3-client_8h.html" target="_top" xlink:title="declaration of functions and data types for sending S3 requests, signing URLs and downloading and upl...">
-<polygon fill="none" stroke="black" points="303.5,-156.5 303.5,-197.5 433.5,-197.5 433.5,-156.5 303.5,-156.5"/>
-<text text-anchor="start" x="311.5" y="-185.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
-<text text-anchor="start" x="311.5" y="-174.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/lib</text>
-<text text-anchor="middle" x="368.5" y="-163.5" font-family="Helvetica,sans-Serif" font-size="10.00">/include/s3&#45;client.h</text>
+<polygon fill="none" stroke="black" points="307.5,-156.5 307.5,-197.5 437.5,-197.5 437.5,-156.5 307.5,-156.5"/>
+<text text-anchor="start" x="315.5" y="-185.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
+<text text-anchor="start" x="315.5" y="-174.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/lib</text>
+<text text-anchor="middle" x="372.5" y="-163.5" font-family="Helvetica,sans-Serif" font-size="10.00">/include/s3&#45;client.h</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node3 -->
 <g id="edge11" class="edge">
 <title>Node1&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M411.89,-385.25C372.34,-362.81 320.23,-325.65 296.5,-276 288.45,-259.16 288.3,-250.77 296.5,-234 303.87,-218.92 317.49,-206.73 330.91,-197.62"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="410.69,-388.59 421.13,-390.36 414.07,-382.46 410.69,-388.59"/>
+<path fill="none" stroke="midnightblue" d="M415.89,-385.25C376.34,-362.81 324.23,-325.65 300.5,-276 292.45,-259.16 292.3,-250.77 300.5,-234 307.87,-218.92 321.49,-206.73 334.91,-197.62"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="414.69,-388.59 425.13,-390.36 418.07,-382.46 414.69,-388.59"/>
 </g>
 <!-- Node11 -->
 <g id="node11" class="node">
 <title>Node11</title>
 <g id="a_node11"><a xlink:href="url__utility_8h.html" target="_top" xlink:title="Internal utility functions to process and parse text and URLs and create S3 signature keys.">
-<polygon fill="none" stroke="black" points="122.5,-312.5 122.5,-353.5 252.5,-353.5 252.5,-312.5 122.5,-312.5"/>
-<text text-anchor="start" x="130.5" y="-341.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
-<text text-anchor="start" x="130.5" y="-330.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/lib</text>
-<text text-anchor="middle" x="187.5" y="-319.5" font-family="Helvetica,sans-Serif" font-size="10.00">/include/url_utility.h</text>
+<polygon fill="none" stroke="black" points="126.5,-312.5 126.5,-353.5 256.5,-353.5 256.5,-312.5 126.5,-312.5"/>
+<text text-anchor="start" x="134.5" y="-341.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
+<text text-anchor="start" x="134.5" y="-330.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/lib</text>
+<text text-anchor="middle" x="191.5" y="-319.5" font-family="Helvetica,sans-Serif" font-size="10.00">/include/url_utility.h</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node11 -->
 <g id="edge12" class="edge">
 <title>Node1&#45;&gt;Node11</title>
-<path fill="none" stroke="midnightblue" d="M387.66,-389.32C345.44,-377.65 293.2,-363.21 252.68,-352.01"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="386.76,-392.7 397.33,-391.99 388.62,-385.95 386.76,-392.7"/>
+<path fill="none" stroke="midnightblue" d="M391.66,-389.32C349.44,-377.65 297.2,-363.21 256.68,-352.01"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="390.76,-392.7 401.33,-391.99 392.62,-385.95 390.76,-392.7"/>
 </g>
 <!-- Node12 -->
 <g id="node12" class="node">
 <title>Node12</title>
 <g id="a_node12"><a xlink:href="webclient_8h.html" target="_top" xlink:title="declaration of WebClient class wrapping libcurl to send web requests.">
-<polygon fill="none" stroke="black" points="453.5,-234.5 453.5,-275.5 583.5,-275.5 583.5,-234.5 453.5,-234.5"/>
-<text text-anchor="start" x="461.5" y="-263.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
-<text text-anchor="start" x="461.5" y="-252.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/lib</text>
-<text text-anchor="middle" x="518.5" y="-241.5" font-family="Helvetica,sans-Serif" font-size="10.00">/include/webclient.h</text>
+<polygon fill="none" stroke="black" points="457.5,-234.5 457.5,-275.5 587.5,-275.5 587.5,-234.5 457.5,-234.5"/>
+<text text-anchor="start" x="465.5" y="-263.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
+<text text-anchor="start" x="465.5" y="-252.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/lib</text>
+<text text-anchor="middle" x="522.5" y="-241.5" font-family="Helvetica,sans-Serif" font-size="10.00">/include/webclient.h</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node12 -->
 <g id="edge22" class="edge">
 <title>Node1&#45;&gt;Node12</title>
-<path fill="none" stroke="midnightblue" d="M473.13,-380.77C484.31,-350.02 501.6,-302.47 511.29,-275.83"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="469.72,-379.9 469.59,-390.5 476.3,-382.29 469.72,-379.9"/>
+<path fill="none" stroke="midnightblue" d="M477.13,-380.77C488.31,-350.02 505.6,-302.47 515.29,-275.83"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="473.72,-379.9 473.59,-390.5 480.3,-382.29 473.72,-379.9"/>
 </g>
 <!-- Node13 -->
 <g id="node13" class="node">
 <title>Node13</title>
 <g id="a_node13"><a xlink:href="webclient_8cpp.html" target="_top" xlink:title="implementation of WebClient class, wrapper around libcurl">
-<polygon fill="none" stroke="black" points="546.5,-156.5 546.5,-197.5 676.5,-197.5 676.5,-156.5 546.5,-156.5"/>
-<text text-anchor="start" x="554.5" y="-185.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
-<text text-anchor="start" x="554.5" y="-174.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/lib</text>
-<text text-anchor="middle" x="611.5" y="-163.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/webclient.cpp</text>
+<polygon fill="none" stroke="black" points="550.5,-156.5 550.5,-197.5 680.5,-197.5 680.5,-156.5 550.5,-156.5"/>
+<text text-anchor="start" x="558.5" y="-185.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
+<text text-anchor="start" x="558.5" y="-174.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/lib</text>
+<text text-anchor="middle" x="615.5" y="-163.5" font-family="Helvetica,sans-Serif" font-size="10.00">/src/webclient.cpp</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node13 -->
 <g id="edge23" class="edge">
 <title>Node1&#45;&gt;Node13</title>
-<path fill="none" stroke="midnightblue" d="M497.23,-384C527.3,-359.53 569.48,-320.13 592.5,-276 605.49,-251.11 609.65,-218.48 610.95,-197.87"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="494.72,-381.52 489.09,-390.5 499.09,-386.99 494.72,-381.52"/>
+<path fill="none" stroke="midnightblue" d="M501.23,-384C531.3,-359.53 573.48,-320.13 596.5,-276 609.49,-251.11 613.65,-218.48 614.95,-197.87"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="498.72,-381.52 493.09,-390.5 503.09,-386.99 498.72,-381.52"/>
 </g>
 <!-- Node14 -->
 <g id="node14" class="node">
 <title>Node14</title>
 <g id="a_node14"><a xlink:href="response__parser_8h.html" target="_top" xlink:title="Functions to parse XML and HTTP headers.">
-<polygon fill="none" stroke="black" points="640,-312.5 640,-353.5 773,-353.5 773,-312.5 640,-312.5"/>
-<text text-anchor="start" x="648" y="-341.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
-<text text-anchor="start" x="648" y="-330.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/lib</text>
-<text text-anchor="middle" x="706.5" y="-319.5" font-family="Helvetica,sans-Serif" font-size="10.00">/include/response_parser.h</text>
+<polygon fill="none" stroke="black" points="644,-312.5 644,-353.5 777,-353.5 777,-312.5 644,-312.5"/>
+<text text-anchor="start" x="652" y="-341.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
+<text text-anchor="start" x="652" y="-330.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/lib</text>
+<text text-anchor="middle" x="710.5" y="-319.5" font-family="Helvetica,sans-Serif" font-size="10.00">/include/response_parser.h</text>
 </a>
 </g>
 </g>
 <!-- Node1&#45;&gt;Node14 -->
 <g id="edge20" class="edge">
 <title>Node1&#45;&gt;Node14</title>
-<path fill="none" stroke="midnightblue" d="M534.92,-387.44C569.55,-376.66 610.61,-363.87 643.88,-353.51"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="533.84,-384.11 525.34,-390.43 535.92,-390.8 533.84,-384.11"/>
+<path fill="none" stroke="midnightblue" d="M538.92,-387.44C573.55,-376.66 614.61,-363.87 647.88,-353.51"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="537.84,-384.11 529.34,-390.43 539.92,-390.8 537.84,-384.11"/>
 </g>
 <!-- Node2&#45;&gt;Node3 -->
 <g id="edge2" class="edge">
 <title>Node2&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M369.72,-224.3C369.48,-215.3 369.23,-205.65 369.01,-197.51"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="366.22,-224.52 369.98,-234.43 373.22,-224.34 366.22,-224.52"/>
+<path fill="none" stroke="midnightblue" d="M373.72,-224.3C373.48,-215.3 373.23,-205.65 373.01,-197.51"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="370.22,-224.52 373.98,-234.43 377.22,-224.34 370.22,-224.52"/>
 </g>
 <!-- Node8 -->
 <g id="node8" class="node">
@@ -187,25 +187,25 @@ var sectionId = 'dynsection-1';
 <!-- Node2&#45;&gt;Node8 -->
 <g id="edge10" class="edge">
 <title>Node2&#45;&gt;Node8</title>
-<path fill="none" stroke="midnightblue" d="M403.6,-228.41C432.15,-207.15 475.03,-177.08 515.5,-156 542.83,-141.76 574.62,-129.14 601.55,-119.5"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="401.48,-225.63 395.59,-234.44 405.68,-231.23 401.48,-225.63"/>
+<path fill="none" stroke="midnightblue" d="M407.91,-228.32C436.49,-207.13 479.26,-177.21 519.5,-156 546.23,-141.92 577.31,-129.27 603.57,-119.58"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="405.8,-225.53 399.88,-234.32 409.99,-231.14 405.8,-225.53"/>
 </g>
 <!-- Node4 -->
 <g id="node4" class="node">
 <title>Node4</title>
-<g id="a_node4"><a xlink:href="apps_2s3-client_8cpp.html" target="_top" xlink:title="Send S3v4&#45;signed requests to S3 andpoint and print raw responses.">
-<polygon fill="none" stroke="black" points="149,-78.5 149,-119.5 280,-119.5 280,-78.5 149,-78.5"/>
-<text text-anchor="start" x="157" y="-107.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
-<text text-anchor="start" x="157" y="-96.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/apps</text>
-<text text-anchor="middle" x="214.5" y="-85.5" font-family="Helvetica,sans-Serif" font-size="10.00">/s3&#45;client.cpp</text>
+<g id="a_node4"><a xlink:href="presign__url_8cpp.html" target="_top" xlink:title="Presign URL.">
+<polygon fill="none" stroke="black" points="447,-78.5 447,-119.5 578,-119.5 578,-78.5 447,-78.5"/>
+<text text-anchor="start" x="455" y="-107.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
+<text text-anchor="start" x="455" y="-96.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/apps</text>
+<text text-anchor="middle" x="512.5" y="-85.5" font-family="Helvetica,sans-Serif" font-size="10.00">/presign_url.cpp</text>
 </a>
 </g>
 </g>
 <!-- Node3&#45;&gt;Node4 -->
 <g id="edge3" class="edge">
 <title>Node3&#45;&gt;Node4</title>
-<path fill="none" stroke="midnightblue" d="M319.68,-151.91C298.51,-141.46 274.03,-129.38 254.02,-119.51"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="318.32,-155.14 328.84,-156.43 321.42,-148.86 318.32,-155.14"/>
+<path fill="none" stroke="midnightblue" d="M417.4,-151.63C436.53,-141.24 458.54,-129.29 476.57,-119.51"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="415.67,-148.58 408.55,-156.43 419.01,-154.73 415.67,-148.58"/>
 </g>
 <!-- Node5 -->
 <g id="node5" class="node">
@@ -221,25 +221,25 @@ var sectionId = 'dynsection-1';
 <!-- Node3&#45;&gt;Node5 -->
 <g id="edge4" class="edge">
 <title>Node3&#45;&gt;Node5</title>
-<path fill="none" stroke="midnightblue" d="M366.55,-146.3C365.95,-137.3 365.32,-127.65 364.78,-119.51"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="363.06,-146.68 367.21,-156.43 370.05,-146.22 363.06,-146.68"/>
+<path fill="none" stroke="midnightblue" d="M368.98,-146.3C367.92,-137.3 366.77,-127.65 365.81,-119.51"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="365.53,-146.91 370.18,-156.43 372.48,-146.09 365.53,-146.91"/>
 </g>
 <!-- Node6 -->
 <g id="node6" class="node">
 <title>Node6</title>
-<g id="a_node6"><a xlink:href="presign__url_8cpp.html" target="_top" xlink:title="Presign URL.">
-<polygon fill="none" stroke="black" points="447,-78.5 447,-119.5 578,-119.5 578,-78.5 447,-78.5"/>
-<text text-anchor="start" x="455" y="-107.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
-<text text-anchor="start" x="455" y="-96.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/apps</text>
-<text text-anchor="middle" x="512.5" y="-85.5" font-family="Helvetica,sans-Serif" font-size="10.00">/presign_url.cpp</text>
+<g id="a_node6"><a xlink:href="apps_2s3-client_8cpp.html" target="_top" xlink:title="Send S3v4&#45;signed requests to S3 andpoint and print raw responses.">
+<polygon fill="none" stroke="black" points="149,-78.5 149,-119.5 280,-119.5 280,-78.5 149,-78.5"/>
+<text text-anchor="start" x="157" y="-107.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
+<text text-anchor="start" x="157" y="-96.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/apps</text>
+<text text-anchor="middle" x="214.5" y="-85.5" font-family="Helvetica,sans-Serif" font-size="10.00">/s3&#45;client.cpp</text>
 </a>
 </g>
 </g>
 <!-- Node3&#45;&gt;Node6 -->
 <g id="edge5" class="edge">
 <title>Node3&#45;&gt;Node6</title>
-<path fill="none" stroke="midnightblue" d="M414.68,-151.63C434.36,-141.24 457,-129.29 475.54,-119.51"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="412.79,-148.67 405.58,-156.43 416.06,-154.86 412.79,-148.67"/>
+<path fill="none" stroke="midnightblue" d="M322.71,-152.05C300.91,-141.57 275.67,-129.42 255.05,-119.51"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="321.28,-155.25 331.81,-156.43 324.32,-148.94 321.28,-155.25"/>
 </g>
 <!-- Node7 -->
 <g id="node7" class="node">
@@ -255,14 +255,14 @@ var sectionId = 'dynsection-1';
 <!-- Node3&#45;&gt;Node7 -->
 <g id="edge6" class="edge">
 <title>Node3&#45;&gt;Node7</title>
-<path fill="none" stroke="midnightblue" d="M293.33,-158.1C248.58,-147.33 190.72,-133.18 139.5,-120 136.79,-119.3 134.03,-118.59 131.25,-117.86"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="292.71,-161.55 303.25,-160.49 294.34,-154.74 292.71,-161.55"/>
+<path fill="none" stroke="midnightblue" d="M297.27,-158.48C251.56,-147.7 192.08,-133.42 139.5,-120 136.79,-119.31 134.03,-118.6 131.24,-117.87"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="296.56,-161.91 307.1,-160.8 298.17,-155.1 296.56,-161.91"/>
 </g>
 <!-- Node3&#45;&gt;Node8 -->
 <g id="edge7" class="edge">
 <title>Node3&#45;&gt;Node8</title>
-<path fill="none" stroke="midnightblue" d="M443.66,-157.05C485.96,-146.32 539.71,-132.57 587.5,-120 590.33,-119.26 593.22,-118.49 596.14,-117.72"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="442.56,-153.72 433.72,-159.57 444.28,-160.5 442.56,-153.72"/>
+<path fill="none" stroke="midnightblue" d="M447.65,-156.61C488.95,-145.9 541.08,-132.32 587.5,-120 590.33,-119.25 593.22,-118.48 596.14,-117.7"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="446.74,-153.23 437.93,-159.12 448.49,-160 446.74,-153.23"/>
 </g>
 <!-- Node9 -->
 <g id="node9" class="node">
@@ -301,50 +301,50 @@ var sectionId = 'dynsection-1';
 <!-- Node11&#45;&gt;Node2 -->
 <g id="edge15" class="edge">
 <title>Node11&#45;&gt;Node2</title>
-<path fill="none" stroke="midnightblue" d="M244.16,-308.47C269.63,-297.89 299.33,-285.56 323.53,-275.51"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="242.52,-305.36 234.63,-312.43 245.2,-311.82 242.52,-305.36"/>
+<path fill="none" stroke="midnightblue" d="M248.16,-308.47C273.63,-297.89 303.33,-285.56 327.53,-275.51"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="246.52,-305.36 238.63,-312.43 249.2,-311.82 246.52,-305.36"/>
 </g>
-<!-- Node11&#45;&gt;Node4 -->
+<!-- Node11&#45;&gt;Node6 -->
 <g id="edge13" class="edge">
-<title>Node11&#45;&gt;Node4</title>
-<path fill="none" stroke="midnightblue" d="M190.98,-302.11C196.58,-253.94 207.47,-160.44 212.2,-119.73"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="187.48,-301.88 189.8,-312.22 194.43,-302.69 187.48,-301.88"/>
+<title>Node11&#45;&gt;Node6</title>
+<path fill="none" stroke="midnightblue" d="M194.46,-302.11C199.24,-253.94 208.51,-160.44 212.54,-119.73"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="190.96,-301.92 193.46,-312.22 197.93,-302.61 190.96,-301.92"/>
 </g>
 <!-- Node11&#45;&gt;Node7 -->
 <g id="edge14" class="edge">
 <title>Node11&#45;&gt;Node7</title>
-<path fill="none" stroke="midnightblue" d="M172.42,-303.32C147.28,-255.52 97.46,-160.78 75.88,-119.73"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="169.35,-305 177.1,-312.22 175.54,-301.74 169.35,-305"/>
+<path fill="none" stroke="midnightblue" d="M175.92,-303.32C149.96,-255.52 98.51,-160.78 76.22,-119.73"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="172.91,-305.1 180.76,-312.22 179.06,-301.76 172.91,-305.1"/>
 </g>
 <!-- Node11&#45;&gt;Node12 -->
 <g id="edge16" class="edge">
 <title>Node11&#45;&gt;Node12</title>
-<path fill="none" stroke="midnightblue" d="M262.68,-316.64C314.04,-305.9 383.57,-290.86 444.5,-276 447.34,-275.31 450.25,-274.58 453.18,-273.84"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="261.74,-313.26 252.66,-318.73 263.17,-320.11 261.74,-313.26"/>
+<path fill="none" stroke="midnightblue" d="M266.68,-316.64C318.04,-305.9 387.57,-290.86 448.5,-276 451.34,-275.31 454.25,-274.58 457.18,-273.84"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="265.74,-313.26 256.66,-318.73 267.17,-320.11 265.74,-313.26"/>
 </g>
 <!-- Node12&#45;&gt;Node3 -->
 <g id="edge17" class="edge">
 <title>Node12&#45;&gt;Node3</title>
-<path fill="none" stroke="midnightblue" d="M470.95,-229.91C450.33,-219.46 426.49,-207.38 407,-197.51"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="469.37,-233.03 479.87,-234.43 472.53,-226.79 469.37,-233.03"/>
+<path fill="none" stroke="midnightblue" d="M474.95,-229.91C454.33,-219.46 430.49,-207.38 411,-197.51"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="473.37,-233.03 483.87,-234.43 476.53,-226.79 473.37,-233.03"/>
 </g>
 <!-- Node12&#45;&gt;Node8 -->
 <g id="edge18" class="edge">
 <title>Node12&#45;&gt;Node8</title>
-<path fill="none" stroke="midnightblue" d="M517.38,-224.11C518.11,-203.01 522.33,-175.19 537.5,-156 546.73,-144.33 576.91,-130.58 605.19,-119.63"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="513.88,-224.12 517.27,-234.16 520.88,-224.2 513.88,-224.12"/>
+<path fill="none" stroke="midnightblue" d="M521.45,-224.17C522.22,-203.09 526.45,-175.28 541.5,-156 555.29,-138.33 575.99,-126 596.32,-117.5"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="517.95,-224.16 521.33,-234.2 524.95,-224.24 517.95,-224.16"/>
 </g>
 <!-- Node12&#45;&gt;Node13 -->
 <g id="edge19" class="edge">
 <title>Node12&#45;&gt;Node13</title>
-<path fill="none" stroke="midnightblue" d="M550.24,-228.06C562.48,-218.06 576.25,-206.8 587.63,-197.51"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="547.98,-225.39 542.45,-234.43 552.41,-230.81 547.98,-225.39"/>
+<path fill="none" stroke="midnightblue" d="M554.24,-228.06C566.48,-218.06 580.25,-206.8 591.63,-197.51"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="551.98,-225.39 546.45,-234.43 556.41,-230.81 551.98,-225.39"/>
 </g>
 <!-- Node14&#45;&gt;Node8 -->
 <g id="edge21" class="edge">
 <title>Node14&#45;&gt;Node8</title>
-<path fill="none" stroke="midnightblue" d="M705.54,-302.25C703.8,-266.86 698.96,-206.24 685.5,-156 682.16,-143.54 676.55,-130.23 671.6,-119.72"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="702.05,-302.55 705.98,-312.38 709.04,-302.24 702.05,-302.55"/>
+<path fill="none" stroke="midnightblue" d="M710.05,-302.11C708.8,-266.57 704.43,-205.82 689.5,-156 685.69,-143.3 679.16,-129.98 673.35,-119.53"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="706.55,-302.39 710.34,-312.28 713.55,-302.19 706.55,-302.39"/>
 </g>
 </g>
 </svg>
