@@ -261,6 +261,12 @@ public:
     std::variant<std::string, ReadBuffer> uploadData;
   };
 
+  /// \brief versioning information
+  struct VersioningInfo {
+    bool enabled = false;   ///< \c true if enabled
+    bool mfaDelete = false; ///< \c true if MFA delete enabled
+  };
+
 public:
   /// Constructor.
   ///
@@ -379,10 +385,11 @@ public:
   /// \param[in] beginReadOffset offset of first byte to read from object
   /// \param[in] endReadOffset offset of last byte to read from object
   /// \param[in] headers optional headers
+  /// \param[in] versionId version id
   void GetFileObject(const std::string &outFileName, const std::string &bucket,
                      const std::string &key, size_t writeOffset = 0,
                      size_t beginReadOffset = 0, size_t endReadOffset = 0,
-                     Headers headers = {{}});
+                     Headers headers = {{}}, const std::string &versionId = "");
 
   /// \brief Upload file to object.
   ///
@@ -441,8 +448,10 @@ public:
   ///
   /// \param[in] bucket bucket name
   /// \param[in] key key name
+  /// \param[in] versionId version id
   /// \return object size
-  ssize_t GetObjectSize(const std::string &bucket, const std::string &key);
+  ssize_t GetObjectSize(const std::string &bucket, const std::string &key,
+                        const std::string &versionId = "");
 
   // API
 public:
@@ -470,7 +479,14 @@ public:
   /// \param[in] bucket bucket name
   ///
   /// \param[in] headers optional HTTP headers as {name, value} map
-  void CreateBucket(const std::string &bucket, const Headers &headers = {{}});
+  ///
+  /// \param[in] locationConstraint bucket location e.g. `ap-east-1` or `EU`
+  /// refer to the updated list on the AWS web site
+  ///
+  /// \return bucket location
+  std::string
+  CreateBucket(const std::string &bucket, const Headers &headers = {{}},
+               const std::string &locationConstraint = std::string());
 
   /// \brief Create multipart upload
   ///
@@ -500,10 +516,14 @@ public:
   ///
   /// \param[in] key key name
   ///
-  /// \param[in] headers optional http headers as {name, value} map sent along with
-  /// request
+  /// \param[in] headers optional http headers as {name, value} map sent along
+  /// with request
+  ///
+  /// \param[in] versionId version id, leave blank for latest version or in case
+  /// versioning is not enabled
   void DeleteObject(const std::string &bucket, const std::string &key,
-                    const Headers &headers = {});
+                    const Headers &headers = {},
+                    const std::string &versionId = "");
 
   /// \brief Remove all tags from bucket
   /// \param[in] bucket bucket name
@@ -515,7 +535,7 @@ public:
   /// \param[in] bucket bucket name
   /// \param[in] key name
   /// \param[in] headers optional http headers as {name, value} map
-  void DeleteObjectTagging(const std::string &bucket, const std::string& key,
+  void DeleteObjectTagging(const std::string &bucket, const std::string &key,
                            const Headers &headers = {});
 
   /// Return bucket's Access Control List
@@ -527,7 +547,13 @@ public:
   /// \param[in] bucket bucket name
   /// \return `tag name => tag value` map
   TagMap GetBucketTagging(const std::string &bucket);
-
+  /// \brief Retrieve versioning status
+  ///
+  /// \param[in] bucket bucket name
+  ///
+  /// \return versioning info: if enabled and if MFA delete enabled
+  /// \see VersioningInfo
+  VersioningInfo GetBucketVersioning(const std::string &bucket);
   /// \brief Download object data
   ///
   /// \param[in] bucket bucket name
@@ -541,10 +567,14 @@ public:
   /// \param[in] optional http headers as {name, value} map sent along with
   /// request
   ///
+  /// \param[in] versionId version id, leave blank for latest version or
+  /// in case versioning is not enabled
+  ///
   /// \return \c char array; \c char is the type used by \c libcurl
   const CharArray &GetObject(const std::string &bucket, const std::string &key,
                              size_t beginReadOffset = 0,
-                             size_t endReadOffset = 0, Headers = {{}});
+                             size_t endReadOffset = 0, Headers = {{}},
+                             const std::string &versionId = "");
 
   /// \brief Download object data into \c vector<char>
   ///
@@ -562,10 +592,13 @@ public:
   ///
   /// \param[in] optional http headers as {name, value} map sent along with
   /// request
+  ///
+  /// \param[in] versionId version id, leave blank for latest version or
+  /// in case versioning is not enabled
   void GetObject(const std::string &bucket, const std::string &key,
                  CharArray &outBuffer, size_t writeOffset,
                  size_t beginReadOffset = 0, size_t endReadOffset = 0,
-                 Headers headers = {{}});
+                 Headers headers = {{}}, const std::string &versionId = "");
 
   /// \brief Download object data into \c char buffer
   ///
@@ -583,10 +616,13 @@ public:
   ///
   /// \param[in] optional http headers as {name, value} map sent along with
   /// request
+  ///
+  /// \param[in] versionId version id, leave blank for latest version or
+  /// in case versioning is not enabled
   void GetObject(const std::string &bucket, const std::string &key,
                  char *outBuffer, size_t writeOffset,
                  size_t beginReadOffset = 0, size_t endReadOffset = 0,
-                 Headers headers = {{}});
+                 Headers headers = {{}}, const std::string &versionId = "");
 
   /// \brief Return bucket's Access Control List
   /// \param bucket bucket name
@@ -619,9 +655,12 @@ public:
   /// \param[in] optional http headers as {name, value} map sent along with
   /// request
   ///
+  /// \param[in] versionId version id, leave blank for latest version or in
+  /// case versioning is not enabled
+  ///
   /// \return HTTP headers as {http header name, value} map
   Headers HeadObject(const std::string &bucket, const std::string &key,
-                     const Headers & = {{}});
+                     const Headers & = {{}}, const std::string &versionId = "");
 
   /// \brief List buckets
   ///
@@ -658,13 +697,16 @@ public:
   /// \param[in] acl Acess Control Policy \see AccessControlPolicy
   void PutBucketAcl(const std::string &bucket, const AccessControlPolicy &acl);
 
-  /// Tag bucket
+  /// \brief Tag bucket
   /// \param[in] bucket bucket name
   /// \param[in] tags tag map: {tag name => tag value}
   /// \param[in] http headers as {header name, header value} map
   void PutBucketTagging(const std::string &bucket, const TagMap &tags,
                         const Headers &headers = {});
-
+  /// \brief Enable bucket versioning.
+  /// \param[in] bucket bucket name
+  /// \param[in] enables \c true to enable, \c false to disable
+  void PutBucketVersioning(const std::string &bucket, bool enabled);
   /// \brief Upload data to object by sending a \c PutObject request
   /// \param[in] bucket bucket name
   ///

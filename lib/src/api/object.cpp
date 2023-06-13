@@ -109,27 +109,38 @@ ETag S3Api::PutFileObject(const std::string &fileName,
 //------------------------------------------------------------------------------
 const CharArray &S3Api::GetObject(const std::string &bucket,
                                   const std::string &key, size_t begin,
-                                  size_t end, Headers headers) {
+                                  size_t end, Headers headers,
+                                  const string &versionId) {
 
   if (end > 0) {
     headers.insert(
         {"Range", "bytes=" + to_string(begin) + "-" + to_string(end)});
   }
-  const auto &wc =
-      Send({.method = "GET", .bucket = bucket, .key = key, .headers = headers});
+  auto params =
+      versionId.empty() ? Parameters{} : Parameters{{"versionId", versionId}};
+  const auto &wc = Send({.method = "GET",
+                         .bucket = bucket,
+                         .key = key,
+                         .params = params,
+                         .headers = headers});
   return wc.GetResponseBody();
 }
 
 //------------------------------------------------------------------------------
 void S3Api::GetObject(const std::string &bucket, const std::string &key,
                       CharArray &buffer, size_t offset, size_t begin,
-                      size_t end, Headers headers) {
+                      size_t end, Headers headers, const string &versionId) {
+  auto params =
+      versionId.empty() ? Parameters{} : Parameters{{"versionId", versionId}};
   if (end > 0) {
     headers.insert(
         {"Range", "bytes=" + to_string(begin) + "-" + to_string(end)});
   }
-  const auto &wc =
-      Send({.method = "GET", .bucket = bucket, .key = key, .headers = headers});
+  const auto &wc = Send({.method = "GET",
+                         .bucket = bucket,
+                         .key = key,
+                         .params = params,
+                         .headers = headers});
   const auto &bytes = wc.GetResponseBody();
   if (buffer.begin() + offset + bytes.size() >= buffer.end()) {
     throw range_error("Out buffer too small");
@@ -140,8 +151,10 @@ void S3Api::GetObject(const std::string &bucket, const std::string &key,
 //------------------------------------------------------------------------------
 void S3Api::GetObject(const std::string &bucket, const std::string &key,
                       char *buffer, size_t offset, size_t begin, size_t end,
-                      Headers headers) {
+                      Headers headers, const string &versionId) {
 
+  auto params =
+      versionId.empty() ? Parameters{} : Parameters{{"versionId", versionId}};
   if (end > 0) {
     headers.insert(
         {"Range", "bytes=" + to_string(begin) + "-" + to_string(end)});
@@ -156,7 +169,7 @@ void S3Api::GetObject(const std::string &bucket, const std::string &key,
 void S3Api::GetFileObject(const std::string &fileName,
                           const std::string &bucket, const std::string &key,
                           size_t offset, size_t begin, size_t end,
-                          Headers headers) {
+                          Headers headers, const string &versionId) {
 
   FILE *out = !filesystem::exists(fileName) ? fopen(fileName.c_str(), "wb")
                                             : fopen(fileName.c_str(), "r+b");
@@ -169,7 +182,13 @@ void S3Api::GetFileObject(const std::string &fileName,
     headers.insert(
         {"range", "bytes=" + to_string(begin) + "-" + to_string(end)});
   }
-  Config({.method = "GET", .bucket = bucket, .key = key, .headers = headers});
+  auto params =
+      versionId.empty() ? Parameters{} : Parameters{{"versionId", versionId}};
+  Config({.method = "GET",
+          .bucket = bucket,
+          .key = key,
+          .params = params,
+          .headers = headers});
   webClient_.SetWriteFunction(nullptr, out);
   webClient_.Send();
   fclose(out);
@@ -178,13 +197,21 @@ void S3Api::GetFileObject(const std::string &fileName,
 
 //------------------------------------------------------------------------------
 void S3Api::DeleteObject(const std::string &bucket, const std::string &key,
-                         const Headers &headers) {
-  Send({.method = "DELETE", .bucket = bucket, .key = key, .headers = headers});
+                         const Headers &headers, const string &versionId) {
+  auto params =
+      versionId.empty() ? Parameters{} : Parameters{{"versionId", versionId}};
+  Send({.method = "DELETE",
+        .bucket = bucket,
+        .key = key,
+        .params = params,
+        .headers = headers});
 }
 
 //------------------------------------------------------------------------------
 Headers S3Api::HeadObject(const std::string &bucket, const std::string &key,
-                          const Headers &headers) {
+                          const Headers &headers, const string &versionId) {
+  auto params =
+      versionId.empty() ? Parameters{} : Parameters{{"versionId", versionId}};
   const auto &wc = Send(
       {.method = "HEAD", .bucket = bucket, .key = key, .headers = headers});
   return HTTPHeaders(wc.GetHeaderText());

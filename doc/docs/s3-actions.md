@@ -7,7 +7,7 @@ Future actions will be implemented as free functions accepting an `S3Api`
 context. It is already possible to implement all the available actions using the
 current methods and functions; see `doc/docs/custom_requests.markdown`.
 
-## Implemented (23)
+## Implemented (25)
 
 * AbortMultipartUpload
 * CompleteMultipartUpload
@@ -19,6 +19,7 @@ current methods and functions; see `doc/docs/custom_requests.markdown`.
 * DeleteObjectTagging
 * GetBucketAcl
 * GetBucketTagging
+* GetBucketVersioning
 * GetObject
 * GetObjectAcl
 * GetObjectTagging
@@ -28,18 +29,17 @@ current methods and functions; see `doc/docs/custom_requests.markdown`.
 * ListObjectsV2
 * PutBucketAcl
 * PutBucketTagging
+* PutBucketVersiong
 * PutObject
 * PutObjectAcl
 * PutObjectTagging
 * UploadPart
 
-## In progress (6)
+## In progress (4)
 
 * CopyObject
 * DeleteObjects
 * GetObjectAttributes
-* PutBucketVersioning
-* GetBucketVersioning
 * SelectObjectContent
 
 ## All (133)

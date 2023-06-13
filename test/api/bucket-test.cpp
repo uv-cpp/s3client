@@ -66,6 +66,27 @@ int main(int argc, char **argv) {
     TestOutput(action, false, TEST_PREFIX, e.what());
   }
   /// [CreateBucket]
+  //
+  action = "Put/GetBucketVersioning";
+  try {
+    S3Api s3(cfg.access, cfg.secret, cfg.url);
+    s3.PutBucketVersioning(bucketName, true);
+    auto v = s3.GetBucketVersioning(bucketName);
+    if (!v.enabled) {
+      throw logic_error("PutBucketVersioning 'Enabled' returned 'OK' but "
+                        "versioning not enabled");
+    }
+    // reset versioning
+    s3.PutBucketVersioning(bucketName, false);
+    v = s3.GetBucketVersioning(bucketName);
+    if (v.enabled) {
+      throw logic_error("PutBucketVersioning 'Suspended' returned 'OK' but "
+                        "versioning not Suspended");
+    }
+  } catch (const exception &e) {
+    TestOutput(action, false, TEST_PREFIX, e.what());
+  }
+  //
   action = "HeadBucket";
   try {
     S3Api s3(cfg.access, cfg.secret, cfg.url);
@@ -96,8 +117,8 @@ int main(int argc, char **argv) {
     TagMap tags = {{"tag1", "value1"}, {"tag2", "value2"}};
     s3.PutBucketTagging(bucketName, tags);
     auto t = s3.GetBucketTagging(bucketName);
-    if(t != tags) {
-      if(t.empty()) {
+    if (t != tags) {
+      if (t.empty()) {
         throw logic_error("No tag set");
       }
       throw logic_error("Tags do not match");

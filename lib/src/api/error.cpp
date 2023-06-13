@@ -44,8 +44,10 @@ void HandleError(const WebClient &wc, const string &prefix) {
   }
 
   if (wc.StatusCode() >= 400) {
-    const string error = XMLTag(wc.GetContentText(), "Code");
-    throw logic_error(prefix + error);
+    const string errorCode = XMLTag(wc.GetContentText(), "Code");
+    const string errorMsg = XMLTag(wc.GetContentText(), "Message");
+    throw logic_error(prefix + " " + "Code: " + errorCode +
+                      " Message: " + errorMsg);
   }
 }
 } // namespace sss

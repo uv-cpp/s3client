@@ -70,11 +70,12 @@ WebClient &S3Api::Config(const SendParams &p) {
 }
 /// [WebClient::Config]
 
-ssize_t S3Api::GetObjectSize(const string &bucket, const string &key) {
+ssize_t S3Api::GetObjectSize(const string &bucket, const string &key,
+                             const string &versionId) {
   const bool caseInsensitive = false;
   try {
-    const string v =
-        GetValue(HeadObject(bucket, key), "length", caseInsensitive);
+    const string v = GetValue(HeadObject(bucket, key, {}, versionId), "length",
+                              caseInsensitive);
     // if object exists header should always be present, but just in case...
     return v.empty() ? -1 : stoll(v);
   } catch (...) {

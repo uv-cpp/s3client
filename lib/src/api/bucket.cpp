@@ -57,8 +57,33 @@ bool S3Api::TestBucket(const string &bucket) {
 }
 
 //------------------------------------------------------------------------------
-void S3Api::CreateBucket(const std::string &bucket, const Headers &headers) {
-  Send({.method = "PUT", .bucket = bucket, .headers = headers});
+string S3Api::CreateBucket(const std::string &bucket, const Headers &headers,
+                           const string &locationConstraint) {
+  const S3Api::SendParams reqParams = [&]() -> SendParams {
+    if (locationConstraint.empty()) {
+      return {.method = "PUT", .bucket = bucket, .headers = headers};
+    } else {
+      const string req =
+          string("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+                 "<CreateBucketConfiguration "
+                 "xmlns=\"http://s3.amazonaws.com/doc/2006-03-01/\">"
+                 "<LocationConstraint>") +
+          locationConstraint +
+          "</LocationConstraint></CreateBucketConfiguration>";
+      return {.method = "PUT",
+              .bucket = bucket,
+              .headers = headers,
+              .uploadData = req};
+    }
+  }();
+  auto &wc = Send(reqParams);
+  auto h = ParseHeaders(wc.GetHeaderText());
+  for (auto kv : h) {
+    if (ToLower(kv.first) == "location") {
+      return kv.second;
+    }
+  }
+  return "";
 }
 
 //------------------------------------------------------------------------------
@@ -125,5 +150,28 @@ void S3Api::DeleteBucketTagging(const std::string &bucket,
         .headers = headers});
 }
 
+//-----------------------------------------------------------------------------
+void S3Api::PutBucketVersioning(const string &bucket, bool enabled) {
+  const string req = string("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+                            "<VersioningConfiguration xmlns="
+                            "\"http://s3.amazonaws.com/doc/2006-03-01/\">"
+                            "<Status>") +
+                     (enabled ? "Enabled" : "Suspended") +
+                     "</Status></VersioningConfiguration>";
+
+  Send({.method = "PUT",
+        .bucket = bucket,
+        .params = {{"versioning", ""}},
+        .uploadData = req});
+}
+
+//-----------------------------------------------------------------------------
+S3Api::VersioningInfo S3Api::GetBucketVersioning(const string &bucket) {
+  auto xml =
+      Send({.method = "GET", .bucket = bucket, .params = {{"versioning", ""}}})
+          .GetContentText();
+  return {ToLower(XMLTag(xml, "status")) == "enabled",
+          ToLower(XMLTag(xml, "mfadelete")) == "enabled"};
+}
 } // namespace api
 } // namespace sss
