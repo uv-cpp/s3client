@@ -244,9 +244,9 @@ std::string GenerateAclXML(const AccessControlPolicy &acl) {
 /// [GenerateAclXML]
 
 //-----------------------------------------------------------------------------
-S3Api::SendParams
-GeneratePutBucketTaggingRequest(const std::string &bucket, const TagMap &tags,
-                                const Headers &headers = {}) {
+S3Api::SendParams GeneratePutBucketTaggingRequest(const std::string &bucket,
+                                                  const TagMap &tags,
+                                                  const Headers &headers = {}) {
   XMLDocument doc;
   XMLOStream os(doc);
   //@warning: different S3 implementations might have different capitalisation
@@ -260,9 +260,9 @@ GeneratePutBucketTaggingRequest(const std::string &bucket, const TagMap &tags,
     os["/"];                 // </Tag>
   }
   return {.method = "PUT",
-           .bucket = bucket,
-           .params = {{"tagging", ""}},
-           .headers = headers,
+          .bucket = bucket,
+          .params = {{"tagging", ""}},
+          .headers = headers,
           .uploadData = os.XMLText()};
 }
 
@@ -312,6 +312,73 @@ S3Api::SendParams GeneratePutObjectTaggingRequest(const std::string &bucket,
           .params = {{"tagging", ""}},
           .headers = headers,
           .uploadData = os.XMLText()};
+}
+
+//-----------------------------------------------------------------------------
+// <ListVersionsResult>
+//    <IsTruncated>boolean</IsTruncated>
+//    <KeyMarker>string</KeyMarker>
+//    <VersionIdMarker>string</VersionIdMarker>
+//    <NextKeyMarker>string</NextKeyMarker>
+//    <NextVersionIdMarker>string</NextVersionIdMarker>
+//    <Version>
+//       <ChecksumAlgorithm>string</ChecksumAlgorithm>
+//       ...
+//       <ETag>string</ETag>
+//       <IsLatest>boolean</IsLatest>
+//       <Key>string</Key>
+//       <LastModified>timestamp</LastModified>
+//       <Owner>
+//          <DisplayName>string</DisplayName>
+//          <ID>string</ID>
+//       </Owner>
+//       <Size>integer</Size>
+//       <StorageClass>string</StorageClass>
+//       <VersionId>string</VersionId>
+//    </Version>
+//    ...
+//    <DeleteMarker>
+//       <IsLatest>boolean</IsLatest>
+//       <Key>string</Key>
+//       <LastModified>timestamp</LastModified>
+//       <Owner>
+//          <DisplayName>string</DisplayName>
+//          <ID>string</ID>
+//       </Owner>
+//       <VersionId>string</VersionId>
+//    </DeleteMarker>
+//    ...
+//    <Name>string</Name>
+//    <Prefix>string</Prefix>
+//    <Delimiter>string</Delimiter>
+//    <MaxKeys>integer</MaxKeys>
+//    <CommonPrefixes>
+//       <Prefix>string</Prefix>
+//    </CommonPrefixes>
+//    ...
+//    <EncodingType>string</EncodingType>
+// </ListVersionsResult>
+
+pair<vector<string>, vector<string>>
+ParseListObjectVersions(const string &xml) {
+  XMLIStream is(xml);
+  vector<string> versions;
+  XMLRecords vs = is["ListVersionsResult/Version"];
+  for (auto i : vs) {
+    const auto v = Get(i, "/VersionId");
+    if (!v.empty()) {
+      versions.push_back(v);
+    }
+  }
+  XMLRecords ds = is["ListVersionsResult/DeleteMarker"];
+  vector<string> deleteMarkers;
+  for (auto i : ds) {
+    const auto d = Get(i, "/VersionId");
+    if (!d.empty()) {
+      deleteMarkers.push_back(d);
+    }
+  }
+  return {versions, deleteMarkers};
 }
 } // namespace api
 } // namespace sss

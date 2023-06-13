@@ -48,6 +48,8 @@ namespace api {
 S3Api::ListObjectV2Result ParseObjects(const std::string &xml);
 AccessControlPolicy ParseACL(const std::string &xml);
 std::string GenerateAclXML(const AccessControlPolicy &acl);
+std::pair<std::vector<std::string>, std::vector<std::string>>
+ParseListObjectVersions(const std::string &xml);
 //------------------------------------------------------------------------------
 ETag S3Api::PutObject(const std::string &bucket, const std::string &key,
                       const CharArray &buffer, Headers headers,
@@ -299,6 +301,17 @@ void S3Api::DeleteObjectTagging(const std::string &bucket,
         .key = key,
         .params = {{"tagging", ""}},
         .headers = headers});
+}
+
+//------------------------------------------------------------------------------
+S3Api::ObjectVersionInfo S3Api::ListObjectVersions(const string &bucket,
+                                                   const string &key) {
+  Send({.method = "GET",
+        .bucket = bucket,
+        .key = key,
+        .params = {{"versions", ""}}});
+  auto v = ParseListObjectVersions(GetResponseText());
+  return {v.first, v.second};
 }
 } // namespace api
 } // namespace sss

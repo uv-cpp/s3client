@@ -267,6 +267,13 @@ public:
     bool mfaDelete = false; ///< \c true if MFA delete enabled
   };
 
+  /// \brief object version history
+  struct ObjectVersionInfo {
+    std::vector<std::string> versions; ///< list of version ids
+    std::vector<std::string>
+        deleteMarkers; ///< list of version ids marked as deleted
+  };
+
 public:
   /// Constructor.
   ///
@@ -685,6 +692,16 @@ public:
   ListObjectsV2(const std::string &bucket,
                 const ListObjectV2Config &config = ListObjectV2Config{},
                 const Headers & = {{}});
+  /// \brief Return all versions and delete markers for object
+  ///
+  /// \param[in] bucket bucket name
+  ///
+  /// \key[in] key name
+  ///
+  /// \return list of versions and delete markers; delete markers
+  /// are version ids that have been marked as deleted \see ObjectVersionInfo
+  ObjectVersionInfo ListObjectVersions(const std::string &bucket,
+                                       const std::string &key);
   // @todo
   // std::vector<PartInfo> ListParts(const std::string &bucket,
   //                                 const std::string &key, const UploadId

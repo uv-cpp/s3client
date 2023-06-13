@@ -7,7 +7,7 @@ Future actions might be implemented as free functions accepting an `S3Api`
 context. It is already possible to implement all the available actions using the
 current methods and functions; see `doc/docs/custom_requests.markdown`.
 
-## Implemented (25)
+## Implemented (26)
 
 * AbortMultipartUpload
 * CompleteMultipartUpload
@@ -26,6 +26,7 @@ current methods and functions; see `doc/docs/custom_requests.markdown`.
 * HeadBucket
 * HeadObject
 * ListBuckets
+* ListObjectVersions
 * ListObjectsV2
 * PutBucketAcl
 * PutBucketTagging
