@@ -108,6 +108,7 @@ $(document).ready(function(){initNavTree('group__ErrorHandling.html',''); initRe
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga781648957bfce0bbc86cbdbff94e28a6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ErrorHandling.html#ga781648957bfce0bbc86cbdbff94e28a6">sss::HandleError</a> (const <a class="el" href="classsss_1_1WebClient.html">WebClient</a> &amp;wc, const std::string &amp;prefix=&quot;&quot;)</td></tr>
+<tr class="memdesc:ga781648957bfce0bbc86cbdbff94e28a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">handle errors when sending request receiving an <code>400</code> response  <a href="group__ErrorHandling.html#ga781648957bfce0bbc86cbdbff94e28a6">More...</a><br /></td></tr>
 <tr class="separator:ga781648957bfce0bbc86cbdbff94e28a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -138,7 +139,9 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Handle 400 by throwing <code>std::logic_error</code> or <code>std::runtime_error</code> </p><dl class="exception"><dt>Exceptions</dt><dd>
+
+<p>handle errors when sending request receiving an <code>400</code> response </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
   <table class="exception">
     <tr><td class="paramname">std::runtime_error</td><td>if request not sent </td></tr>
     <tr><td class="paramname">std::logic_error</td><td>if return code &gt;= 400 </td></tr>

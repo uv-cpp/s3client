@@ -116,7 +116,7 @@ $(document).ready(function(){initNavTree('md_docs_custom_request.html',''); init
 </ul>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md8"></a>
+<h1><a class="anchor" id="autotoc_md3"></a>
 Example: Bucket tagging</h1>
 <p>We wold like to add the ability to tag buckets using code like:</p>
 <div class="fragment"><div class="line"><a class="code" href="group__Types.html#ga015acfebdfb3bb4732f30d455f5fc635">TagMap</a> tags = {{<span class="stringliteral">&quot;tag1&quot;</span>, <span class="stringliteral">&quot;value1&quot;</span>}, {<span class="stringliteral">&quot;tag2&quot;</span>, <span class="stringliteral">&quot;value2&quot;</span>}};</div>
@@ -128,7 +128,7 @@ Example: Bucket tagging</h1>
 <div class="line"><a class="code" href="group__Types.html#ga015acfebdfb3bb4732f30d455f5fc635">TagMap</a> tags = BucketTags(s3, bucket);</div>
 <div class="line">assert(tags[<span class="stringliteral">&quot;tags1&quot;</span>] == <span class="stringliteral">&quot;value1&quot;</span> &amp;&amp; tags[<span class="stringliteral">&quot;tags2&quot;</span>] == <span class="stringliteral">&quot;value2&quot;</span>);</div>
 </div><!-- fragment --><p>In the next section we are going to implement the <code>TagBucket</code> and <code>BucketTags</code> functions.</p>
-<h2><a class="anchor" id="autotoc_md9"></a>
+<h2><a class="anchor" id="autotoc_md4"></a>
 &lt;tt&gt;TagBucket&lt;/tt&gt;: PutBucketTagging request</h2>
 <p>XML request body:</p>
 <p><a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketTagging.html">AWS Action</a></p>
@@ -181,7 +181,7 @@ Example: Bucket tagging</h1>
 <div class="line">  <span class="keyword">auto</span> args = GeneratePutBucketRequest(bucket, tags, headers);</div>
 <div class="line">  s3.Send(args);</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md10"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md5"></a>
 &lt;tt&gt;BucketTags&lt;/tt&gt;: GetBucketTagging response</h2>
 <p>XML response body:</p>
 <p><a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketTagging.html">AWS Action</a></p>

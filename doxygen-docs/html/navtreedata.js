@@ -32,33 +32,34 @@ var NAVTREE =
         [ "Compilation options", "index.html#autotoc_md18", null ]
       ] ],
       [ "Test", "index.html#autotoc_md19", null ],
-      [ "License", "index.html#autotoc_md20", null ],
-      [ "Sending S3 requests", "index.html#autotoc_md21", [
-        [ "List bucket content", "index.html#autotoc_md22", null ],
-        [ "Extract bytes 100-150 from object", "index.html#autotoc_md23", null ],
-        [ "Store data into object", "index.html#autotoc_md24", null ]
+      [ "Parallel data transfer", "index.html#autotoc_md20", [
+        [ "Lustre", "index.html#autotoc_md21", null ],
+        [ "Others", "index.html#autotoc_md22", null ]
       ] ],
-      [ "Parallel upload", "index.html#autotoc_md25", null ],
-      [ "Parallel file download", "index.html#autotoc_md26", null ],
-      [ "Parallel data transfer", "index.html#autotoc_md27", [
-        [ "Lustre", "index.html#autotoc_md28", null ],
-        [ "Others", "index.html#autotoc_md29", null ]
-      ] ]
+      [ "Sending S3 requests", "index.html#autotoc_md23", [
+        [ "List bucket content", "index.html#autotoc_md24", null ],
+        [ "Extract bytes 100-150 from object", "index.html#autotoc_md25", null ],
+        [ "Store data into object", "index.html#autotoc_md26", null ]
+      ] ],
+      [ "Parallel upload", "index.html#autotoc_md27", null ],
+      [ "Parallel file download", "index.html#autotoc_md28", null ],
+      [ "Parallel data transfer", "index.html#autotoc_md29", null ],
+      [ "License", "index.html#autotoc_md30", null ]
     ] ],
     [ "API Test", "md_docs_apitest.html", [
       [ "Configuration", "md_docs_apitest.html#autotoc_md1", null ]
     ] ],
     [ "Implementing custom requests", "md_docs_custom_request.html", [
-      [ "Example: Bucket tagging", "md_docs_custom_request.html#autotoc_md8", [
-        [ "<tt>TagBucket</tt>: PutBucketTagging request", "md_docs_custom_request.html#autotoc_md9", null ],
-        [ "<tt>BucketTags</tt>: GetBucketTagging response", "md_docs_custom_request.html#autotoc_md10", null ]
+      [ "Example: Bucket tagging", "md_docs_custom_request.html#autotoc_md3", [
+        [ "<tt>TagBucket</tt>: PutBucketTagging request", "md_docs_custom_request.html#autotoc_md4", null ],
+        [ "<tt>BucketTags</tt>: GetBucketTagging response", "md_docs_custom_request.html#autotoc_md5", null ]
       ] ]
     ] ],
     [ "Presign", "md_docs_presign.html", [
-      [ "Example: Upload object", "md_docs_presign.html#autotoc_md3", [
-        [ "Presign URL", "md_docs_presign.html#autotoc_md4", null ],
-        [ "Upload object", "md_docs_presign.html#autotoc_md5", null ],
-        [ "Verify upload", "md_docs_presign.html#autotoc_md6", null ]
+      [ "Example: Upload object", "md_docs_presign.html#autotoc_md7", [
+        [ "Presign URL", "md_docs_presign.html#autotoc_md8", null ],
+        [ "Upload object", "md_docs_presign.html#autotoc_md9", null ],
+        [ "Verify upload", "md_docs_presign.html#autotoc_md10", null ]
       ] ]
     ] ],
     [ "S3 Actions", "md_docs_s3_actions.html", [
