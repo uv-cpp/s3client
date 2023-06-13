@@ -1,5 +1,6 @@
 <map id="sss::XMLTag" name="sss::XMLTag">
-<area shape="rect" id="node1" title="Extract and return content of XML tag." alt="" coords="261,46,360,73"/>
+<area shape="rect" id="node1" title="Extract and return content of XML tag." alt="" coords="261,78,360,105"/>
 <area shape="rect" id="node2" href="$classsss_1_1api_1_1S3Api.html#a98f999a216121118dd569c7ef0c28ff3" title="Complete multipart upload." alt="" coords="22,5,197,47"/>
 <area shape="rect" id="node3" href="$classsss_1_1api_1_1S3Api.html#a1796fafda3d90a4292a611ce1999433b" title="Create multipart upload." alt="" coords="5,71,213,112"/>
+<area shape="rect" id="node4" href="$classsss_1_1api_1_1S3Api.html#a26387e640fa4d3c0715dc48f932ae410" title="Retrieve versioning status." alt="" coords="19,136,200,177"/>
 </map>

@@ -1,6 +1,6 @@
 <map id="sss::api::S3Api::TestObject" name="sss::api::S3Api::TestObject">
 <area shape="rect" id="node1" title="Check if key exists." alt="" coords="5,202,188,229"/>
-<area shape="rect" id="node2" href="$classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22" title="Send HeadObject request." alt="" coords="236,202,424,229"/>
+<area shape="rect" id="node2" href="$classsss_1_1api_1_1S3Api.html#a0382afb5f4a42d477af76ea322324ddd" title="Send HeadObject request." alt="" coords="236,202,424,229"/>
 <area shape="rect" id="node3" href="$classsss_1_1WebClient.html#a42af351286f1fa68c3385d81f0bc2015" title=" " alt="" coords="472,70,679,97"/>
 <area shape="rect" id="node5" href="$group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5" title="Extract and return HTTP headers as key&#45;value pairs." alt="" coords="508,202,643,229"/>
 <area shape="rect" id="node6" href="$classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889" title="Send request." alt="" coords="501,415,650,442"/>

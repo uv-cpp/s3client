@@ -1,8 +1,9 @@
 <map id="sss::WebClient::GetHeaderText" name="sss::WebClient::GetHeaderText">
-<area shape="rect" id="node1" title=" " alt="" coords="504,71,711,98"/>
-<area shape="rect" id="node2" href="$classsss_1_1api_1_1S3Api.html#a834e046a52178dcf540509df828b024f" title=" " alt="" coords="257,5,456,47"/>
-<area shape="rect" id="node3" href="$classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22" title="Send HeadObject request." alt="" coords="263,71,451,98"/>
-<area shape="rect" id="node6" href="$classsss_1_1api_1_1S3Api.html#ab7affe0834f5892b393e731783b7ccac" title="Upload file to object." alt="" coords="277,123,437,164"/>
-<area shape="rect" id="node4" href="$classsss_1_1api_1_1S3Api.html#a872e80e356e8c404a9b0739d95a0af41" title="Return object size." alt="" coords="5,46,209,73"/>
-<area shape="rect" id="node5" href="$classsss_1_1api_1_1S3Api.html#aa3f7a3001bdad58c7b0c04cbd0dc3236" title="Check if key exists." alt="" coords="16,97,199,123"/>
+<area shape="rect" id="node1" title=" " alt="" coords="504,93,711,120"/>
+<area shape="rect" id="node2" href="$classsss_1_1api_1_1S3Api.html#abea2ccea14a042c7c0d4b2ce5266ea5f" title="Create bucket." alt="" coords="257,5,456,32"/>
+<area shape="rect" id="node3" href="$classsss_1_1api_1_1S3Api.html#a834e046a52178dcf540509df828b024f" title="Get returned HTTP headers. Use this method to retrieve additional information e.g...." alt="" coords="257,57,456,98"/>
+<area shape="rect" id="node4" href="$classsss_1_1api_1_1S3Api.html#a0382afb5f4a42d477af76ea322324ddd" title="Send HeadObject request." alt="" coords="263,123,451,149"/>
+<area shape="rect" id="node7" href="$classsss_1_1api_1_1S3Api.html#ab7affe0834f5892b393e731783b7ccac" title="Upload file to object." alt="" coords="277,174,437,215"/>
+<area shape="rect" id="node5" href="$classsss_1_1api_1_1S3Api.html#ae6a826615a079564b77bb680b6b75a34" title="Return object size." alt="" coords="5,97,209,124"/>
+<area shape="rect" id="node6" href="$classsss_1_1api_1_1S3Api.html#aa3f7a3001bdad58c7b0c04cbd0dc3236" title="Check if key exists." alt="" coords="16,148,199,175"/>
 </map>

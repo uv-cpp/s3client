@@ -38,7 +38,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSS - S3 Toolkit
-   &#160;<span id="projectnumber">0.9.4</span>
+   &#160;<span id="projectnumber">0.9.5</span>
    </div>
    <div id="projectbrief">S3 client library and applications</div>
   </td>
@@ -101,7 +101,7 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="mainpage"></a> C++ client library and tools. Originally developed to test <em>Ceph</em> object storage, parallel transfers between Lustre and <em>Ceph</em> on high speed networks, and learn the S3 API.</p>
 <p>All the code is tested on MacOS (x86 and ARM) and Linux SuSE and Ubuntu, x86 only.</p>
-<h1><a class="anchor" id="autotoc_md11"></a>
+<h1><a class="anchor" id="autotoc_md15"></a>
 Library</h1>
 <ul>
 <li><code>libs3client</code>: high level functions to sign and send requests and perform parallel uploads/downloads.</li>
@@ -115,7 +115,7 @@ Library</h1>
 <p>When disabling S3v4 signing the library can be used as a generic HTTP client library.</p>
 <p>Work to enable multi-level asynchronous operations is ongoing: each thread will be using async I/O for sending multiple concurrent requests.</p>
 <p>Parallel upload/download using MPI and integration with ADIOS are being experimented as well in separate repositories.</p>
-<h1><a class="anchor" id="autotoc_md12"></a>
+<h1><a class="anchor" id="autotoc_md16"></a>
 Applications</h1>
 <ul>
 <li><code>s3-client</code>: send requests and print raw responses</li>
@@ -125,7 +125,7 @@ Applications</h1>
 <li><code>s3-gen-credentials</code>: generate access and secret keys</li>
 </ul>
 <p>Launch without arguments to see options.</p>
-<h1><a class="anchor" id="autotoc_md13"></a>
+<h1><a class="anchor" id="autotoc_md17"></a>
 Build and install</h1>
 <p>The <code>install.sh</code> script includes the code for checking out the code, building and installing to a user specified path. Just <a href="https://raw.githubusercontent.com/uv-cpp/s3client/main/install.sh">download</a> and run.</p>
 <div class="fragment"><div class="line">bash ./install.sh &lt;install path&gt;</div>
@@ -141,11 +141,11 @@ Build and install</h1>
 <li><code>make install</code></li>
 </ol>
 <p>Include files are found under <code>${CMAKE_INSTALL_PREFIX}/include/s3client</code>. The library is found under <code>${CMAKE_INSTALL_PREFIX}/lib</code> and the executables under <code>${CMAKE_INSTALL_PREFIX}/bin</code>.</p>
-<h2><a class="anchor" id="autotoc_md14"></a>
+<h2><a class="anchor" id="autotoc_md18"></a>
 Compilation options</h2>
 <p>By default the library and all the command line tools and the S3 API extensions are built.</p>
 <p>To disable building the command line tools set <code>APPS=OFF</code>.</p>
-<h1><a class="anchor" id="autotoc_md15"></a>
+<h1><a class="anchor" id="autotoc_md19"></a>
 Test</h1>
 <p>In order to test the tools and API you need access to an S3 storage service. One option is to use the free <em>play.min.io</em> service, another option is to configure a local instance of the <em>minio</em> server.</p>
 <p>The access and secret keys for <em>play.min.io</em> are stored inside the <code>~/.mc/config.json</code> files configured after installing the the <a href="https://min.io/docs/minio/linux/reference/minio-mc.html">minio client</a>.</p>
@@ -161,7 +161,7 @@ Test</h1>
 <p>The <code>test</code> directory includes tests for the high level interface and the S3 API.</p>
 <p>All tests require passing the name of the environment variables storing access, secret and endpoint URL information.</p>
 <p>The provided <code>.sh</code> scripts inside the <code>test</code> directory can run all the tests at once.</p>
-<h1><a class="anchor" id="autotoc_md16"></a>
+<h1><a class="anchor" id="autotoc_md20"></a>
 License</h1>
 <p>This software is distributed under the BSD three-clause license and has dependencies on the following software libraries:</p>
 <ul>
@@ -170,12 +170,12 @@ License</h1>
 <li><em>Tinyxml2</em> - zlib (included in source tree)</li>
 <li><em>Doxygen Awesome</em> - MIT</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md17"></a>
+<h1><a class="anchor" id="autotoc_md21"></a>
 Sending S3 requests</h1>
 <p>The <code>s3-client</code> application is just a wrapper around the <code>sss::SendS3Request</code> function.</p>
 <p>Sample requests are shown below, look here for a complete list:</p>
 <p><a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_Operations.html">https://docs.aws.amazon.com/AmazonS3/latest/API/API_Operations.html</a></p>
-<h2><a class="anchor" id="autotoc_md18"></a>
+<h2><a class="anchor" id="autotoc_md22"></a>
 List bucket content</h2>
 <p>Command line:</p>
 <div class="fragment"><div class="line">s3-client -a $S3TEST_ACCESS -s $S3TEST_SECRET -e $S3TEST_URL \</div>
@@ -263,7 +263,7 @@ List bucket content</h2>
 <div class="line">      &lt;StorageClass&gt;STANDARD&lt;/StorageClass&gt;</div>
 <div class="line">   &lt;/Contents&gt;</div>
 <div class="line">&lt;/ListBucketResult&gt;</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md19"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md23"></a>
 Extract bytes 100-150 from object</h2>
 <p>Command line:</p>
 <div class="fragment"><div class="line">s3-client -a $S3TEST_ACCESS -s $S3TEST_SECRET -e $S3TEST_URL \</div>
@@ -311,7 +311,7 @@ Extract bytes 100-150 from object</h2>
 <div class="line">X-Content-Type-Options: nosniff</div>
 <div class="line">X-Xss-Protection: 1; mode=block</div>
 <div class="line">Date: Mon, 05 Dec 2022 08:10:53 GMT</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md20"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md24"></a>
 Store data into object</h2>
 <p>Command line:</p>
 <div class="fragment"><div class="line">s3-client -a $S3TEST_ACCESS -s $S3TEST_SECRET -e $S3TEST_URL \</div>
@@ -356,7 +356,7 @@ Store data into object</h2>
 <div class="line">X-Content-Type-Options: nosniff</div>
 <div class="line">X-Xss-Protection: 1; mode=block</div>
 <div class="line">Date: Mon, 05 Dec 2022 08:22:55 GMT</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md21"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md25"></a>
 Parallel upload</h1>
 <p>Parallel uploads are supported from both file and memory in the API and command line application.</p>
 <p>Command line</p>
@@ -386,9 +386,9 @@ Parallel upload</h1>
 <div class="line">  } <span class="keywordflow">catch</span> (<span class="keyword">const</span> exception &amp;e) {</div>
 <div class="line">    TestOutput(action, <span class="keyword">false</span>, TEST_PREFIX, e.what());</div>
 <div class="line">  }</div>
-<div class="ttc" id="agroup__S3Client_html_gac5f34efe8d5fde67f9c2c006742d6f85"><div class="ttname"><a href="group__S3Client.html#gac5f34efe8d5fde67f9c2c006742d6f85">sss::Upload</a></div><div class="ttdeci">ETag Upload(const S3DataTransferConfig &amp;cfg, const MetaDataMap &amp;mm={}, bool sync=false)</div><div class="ttdoc">Parallel upload If cfg.data not NULL data is read from memory, from file specified in cfg....</div><div class="ttdef"><b>Definition:</b> upload-file.cpp:187</div></div>
+<div class="ttc" id="agroup__S3Client_html_gac5f34efe8d5fde67f9c2c006742d6f85"><div class="ttname"><a href="group__S3Client.html#gac5f34efe8d5fde67f9c2c006742d6f85">sss::Upload</a></div><div class="ttdeci">ETag Upload(const S3DataTransferConfig &amp;cfg, const MetaDataMap &amp;mm={}, bool sync=false)</div><div class="ttdoc">Parallel upload If cfg.data not NULL data is read from memory, from file specified in cfg....</div><div class="ttdef"><b>Definition:</b> upload.cpp:187</div></div>
 <div class="ttc" id="agroup__Types_html_ga9a03838eeab410fbc2118ed838d96bf5"><div class="ttname"><a href="group__Types.html#ga9a03838eeab410fbc2118ed838d96bf5">sss::CharArray</a></div><div class="ttdeci">std::vector&lt; char &gt; CharArray</div><div class="ttdoc">char array wrapping char* buffers used by libcurl</div><div class="ttdef"><b>Definition:</b> s3-client.h:51</div></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md22"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md26"></a>
 Parallel file download</h1>
 <p>Parallel downloads are supported to both file and memory in the API.</p>
 <p>Command line</p>
@@ -409,7 +409,7 @@ Parallel file download</h1>
 <div class="line">                              .endpoints = {cfg.url},</div>
 <div class="line">                              .jobs = NUM_JOBS,</div>
 <div class="line">                              .partsPerJob = CHUNKS_PER_JOB};</div>
-<div class="line">    <a class="code" href="group__S3Client.html#gad9e1cbb4715a672101995636897814e4">Download</a>(c);</div>
+<div class="line">    <a class="code" href="group__S3Client.html#gad1f1a2f87bed97738803060ec27a788d">Download</a>(c);</div>
 <div class="line">    FILE *fi = fopen(tmp.path.c_str(), <span class="stringliteral">&quot;rb&quot;</span>);</div>
 <div class="line">    vector&lt;char&gt; input(SIZE);</div>
 <div class="line">    <span class="keywordflow">if</span> (fread(input.data(), SIZE, 1, fi) != 1) {</div>
@@ -424,17 +424,17 @@ Parallel file download</h1>
 <div class="line">  } <span class="keywordflow">catch</span> (<span class="keyword">const</span> exception &amp;e) {</div>
 <div class="line">    TestOutput(action, <span class="keyword">false</span>, TEST_PREFIX, e.what());</div>
 <div class="line">  }</div>
-<div class="ttc" id="agroup__S3Client_html_gad9e1cbb4715a672101995636897814e4"><div class="ttname"><a href="group__S3Client.html#gad9e1cbb4715a672101995636897814e4">sss::Download</a></div><div class="ttdeci">void Download(const S3DataTransferConfig &amp;cfg, bool sync=false)</div><div class="ttdoc">Parallel upload If cfg.data not NULL data is written into cfg.data buffer, to file specified in cfg....</div><div class="ttdef"><b>Definition:</b> download-file.cpp:152</div></div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md23"></a>
+<div class="ttc" id="agroup__S3Client_html_gad1f1a2f87bed97738803060ec27a788d"><div class="ttname"><a href="group__S3Client.html#gad1f1a2f87bed97738803060ec27a788d">sss::Download</a></div><div class="ttdeci">void Download(const S3DataTransferConfig &amp;cfg, bool sync=false, const std::string &amp;versionId=&quot;&quot;)</div><div class="ttdoc">Parallel upload If cfg.data not NULL data is written into cfg.data buffer, to file specified in cfg....</div></div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md27"></a>
 Parallel data transfer</h1>
 <p>The following considerations apply to the transfer of single large files over fast connections only (at least 10 Gib/s) and to S3 services able to ingest data at GiB/s rate.</p>
 <p>Parallel reads and writes from/to flash memory are faster than serial ones, but with spinning disks the overall performance might not be impacted by trasferring data in parallel and even cause a slowdown.</p>
-<h2><a class="anchor" id="autotoc_md24"></a>
+<h2><a class="anchor" id="autotoc_md28"></a>
 Lustre</h2>
 <p>Lustre allows users to control the striping configuration.</p>
 <p>When transferring from <em>Lustre</em> make sure that the stripe size is as close as possible to a multiple of the part size. Use: <code>lfs getstripe &lt;filename&gt;</code> to retrieve the stripe size.</p>
 <p>Whe downloading data to <em>Lustre</em> make sure that the stripe size for the directory is a multiple of the part size or create a file with the desired stripe size first using the <code>lfs setstripe</code> command.</p>
-<h2><a class="anchor" id="autotoc_md25"></a>
+<h2><a class="anchor" id="autotoc_md29"></a>
 Others</h2>
 <p><em>RAID</em> configurations and other parallel filesystems, like <em>GPFS</em> or <em>BeeGFS</em> have preconfigured stripe/block sizes, please do refer to your system configuration before configuring the number of tasks and parts per task. </p>
 </div></div><!-- PageDoc -->

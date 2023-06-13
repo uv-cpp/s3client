@@ -38,7 +38,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSS - S3 Toolkit
-   &#160;<span id="projectnumber">0.9.4</span>
+   &#160;<span id="projectnumber">0.9.5</span>
    </div>
    <div id="projectbrief">S3 client library and applications</div>
   </td>
@@ -100,20 +100,20 @@ $(document).ready(function(){initNavTree('md_docs_presign.html',''); initResizab
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>All requests can be issued through standard web clients such as <code>curl</code> specifying a pre-signed url on the command line.</p>
-<h1><a class="anchor" id="autotoc_md7"></a>
+<h1><a class="anchor" id="autotoc_md3"></a>
 Example: Upload object</h1>
-<h2><a class="anchor" id="autotoc_md8"></a>
+<h2><a class="anchor" id="autotoc_md4"></a>
 Presign URL</h2>
 <p>Specify method, bucket name and key and expiration time of 10k seconds.</p>
 <div class="fragment"><div class="line">export PRESIGN=`build/s3-presign -a $S3CLIENT_TEST_ACCESS -s $S3CLIENT_TEST_SECRET -e $S3CLIENT_TEST_URL -m &quot;PUT&quot; -x 10000 -b buck -k xxx`</div>
-</div><!-- fragment --> <h2><a class="anchor" id="autotoc_md9"></a>
+</div><!-- fragment --> <h2><a class="anchor" id="autotoc_md5"></a>
 Upload object</h2>
-<p>Invoke <code>curl</code> and specify custom metadata field. </p><div class="fragment"><div class="line">curl $PRESIGN -X PUT -F &quot;file=@CMakeCache.txt&quot; -H &quot;x-amz-meta-mymeta:123&quot;</div>
-</div><!-- fragment --> <h2><a class="anchor" id="autotoc_md10"></a>
+<p>Invoke <code>curl</code> and specify custom metadata field by adding an <code>x-amz-meta-</code> header. </p><div class="fragment"><div class="line">curl $PRESIGN -X PUT -F &quot;file=@CMakeCache.txt&quot; -H &quot;x-amz-meta-mymeta:123&quot;</div>
+</div><!-- fragment --> <h2><a class="anchor" id="autotoc_md6"></a>
 Verify upload</h2>
 <p>Invoke <em>HEAD</em> operation on uploaded object and read metadata.</p>
 <div class="fragment"><div class="line">build/s3-client -a $S3CLIENT_TEST_ACCESS -s $S3CLIENT_TEST_SECRET -e $S3CLIENT_TEST_URL -b buck -k xxx -m HEAD</div>
-</div><!-- fragment --><p>Output </p><div class="fragment"><div class="line">HTTP/1.1 200 OK</div>
+</div><!-- fragment --><p><b>Output</b> </p><div class="fragment"><div class="line">HTTP/1.1 200 OK</div>
 <div class="line">Accept-Ranges: bytes</div>
 <div class="line">Content-Length: 16648</div>
 <div class="line">Content-Security-Policy: block-all-mixed-content</div>
@@ -128,12 +128,8 @@ Verify upload</h2>
 <div class="line">X-Amz-Request-Id: 1756B8D2388779A5</div>
 <div class="line">X-Content-Type-Options: nosniff</div>
 <div class="line">X-Xss-Protection: 1; mode=block</div>
-<div class="line"> </div>
-<div class="line">!!!!</div>
-<div class="line">x-amz-meta-mymeta: 123 &lt;===</div>
-<div class="line">!!!!</div>
-<div class="line"> </div>
-<div class="line">Date: Mon, 17 Apr 2023 12:32:03 GMT</div>
+</div><!-- fragment --> <div class="fragment"><div class="line">x-amz-meta-mymeta: 123 &lt;===</div>
+</div><!-- fragment --> <div class="fragment"><div class="line">Date: Mon, 17 Apr 2023 12:32:03 GMT</div>
 </div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

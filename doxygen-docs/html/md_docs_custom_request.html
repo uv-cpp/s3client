@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>SSS - S3 Toolkit: Creating custom requests</title>
+<title>SSS - S3 Toolkit: Implementing custom requests</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -38,7 +38,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSS - S3 Toolkit
-   &#160;<span id="projectnumber">0.9.4</span>
+   &#160;<span id="projectnumber">0.9.5</span>
    </div>
    <div id="projectbrief">S3 client library and applications</div>
   </td>
@@ -96,16 +96,16 @@ $(document).ready(function(){initNavTree('md_docs_custom_request.html',''); init
 
 <div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">Creating custom requests </div>  </div>
+<div class="title">Implementing custom requests </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The provided functions and classes only support a basic subset of the AWS; all the methods simply invoke the <code>S3Api::Send</code> method and return the parsed response.</p>
-<p>The main value of the current implementation (and other simlar C++ clients) is the generation and parsing of XML text in addition to S3v4 signing. However, client code will most likely need to translate from the returned objects to their own domain-specific internal representation and it might therefore be easier to just parse the XML directly.</p>
+<div class="textblock"><p>The provided functions and classes only support a basic subset of the AWS API; all the methods simply invoke the <code>S3Api::Send</code> method and return the parsed response. The preference is to avoid creating a fat interface with all the currently supported actions exposed as class methods which makes it impossible to extend the interface, and instead add free functions receiving a context argument and the relevant parameters to implement additional requests.</p>
+<p>The main value of the current implementation (and other similar C++ clients) is the generation and parsing of XML text in addition to S3v4 signing. However, client code will most likely need to translate from the returned objects to their own domain-specific internal representation and it might therefore be easier to just parse the XML directly.</p>
 <p>Any of the requests listed <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_Operations_Amazon_Simple_Storage_Service.html">here</a> can be sent using this library by:</p>
 <ol type="1">
 <li>creating a function that returns<ul>
 <li>request parameters as an <code>S3Api::SendParams</code> instance</li>
-<li>request body as text in XML formant if required</li>
+<li>request body as text in XML format if required</li>
 </ul>
 </li>
 <li>sending the request using the <code>S3Api::Send</code> method</li>
@@ -116,7 +116,7 @@ $(document).ready(function(){initNavTree('md_docs_custom_request.html',''); init
 </ul>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md3"></a>
+<h1><a class="anchor" id="autotoc_md8"></a>
 Example: Bucket tagging</h1>
 <p>We wold like to add the ability to tag buckets using code like:</p>
 <div class="fragment"><div class="line"><a class="code" href="group__Types.html#ga015acfebdfb3bb4732f30d455f5fc635">TagMap</a> tags = {{<span class="stringliteral">&quot;tag1&quot;</span>, <span class="stringliteral">&quot;value1&quot;</span>}, {<span class="stringliteral">&quot;tag2&quot;</span>, <span class="stringliteral">&quot;value2&quot;</span>}};</div>
@@ -128,7 +128,7 @@ Example: Bucket tagging</h1>
 <div class="line"><a class="code" href="group__Types.html#ga015acfebdfb3bb4732f30d455f5fc635">TagMap</a> tags = BucketTags(s3, bucket);</div>
 <div class="line">assert(tags[<span class="stringliteral">&quot;tags1&quot;</span>] == <span class="stringliteral">&quot;value1&quot;</span> &amp;&amp; tags[<span class="stringliteral">&quot;tags2&quot;</span>] == <span class="stringliteral">&quot;value2&quot;</span>);</div>
 </div><!-- fragment --><p>In the next section we are going to implement the <code>TagBucket</code> and <code>BucketTags</code> functions.</p>
-<h2><a class="anchor" id="autotoc_md4"></a>
+<h2><a class="anchor" id="autotoc_md9"></a>
 &lt;tt&gt;TagBucket&lt;/tt&gt;: PutBucketTagging request</h2>
 <p>XML request body:</p>
 <p><a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketTagging.html">AWS Action</a></p>
@@ -149,7 +149,6 @@ Example: Bucket tagging</h1>
 </div><!-- fragment --><p> C++ implementation:</p>
 <div class="fragment"><div class="line"><span class="keyword">using namespace </span>sss;</div>
 <div class="line"><span class="keyword">using namespace </span>api;</div>
-<div class="line"><span class="keyword">using</span> XML = std::string;</div>
 <div class="line"><span class="keyword">using</span> <a class="code" href="group__Types.html#ga015acfebdfb3bb4732f30d455f5fc635">TagMap</a> = std::unordered_map&lt;std::string, std::string&gt;;</div>
 </div><!-- fragment --><div class="fragment"><div class="line"><span class="comment">// return SendParams and XML request body</span></div>
 <div class="line">S3Api::SendParams </div>
@@ -182,7 +181,7 @@ Example: Bucket tagging</h1>
 <div class="line">  <span class="keyword">auto</span> args = GeneratePutBucketRequest(bucket, tags, headers);</div>
 <div class="line">  s3.Send(args);</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md5"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md10"></a>
 &lt;tt&gt;BucketTags&lt;/tt&gt;: GetBucketTagging response</h2>
 <p>XML response body:</p>
 <p><a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketTagging.html">AWS Action</a></p>
@@ -199,7 +198,6 @@ Example: Bucket tagging</h1>
 </div><!-- fragment --><p>C++ implementation:</p>
 <div class="fragment"><div class="line"><span class="keyword">using namespace </span>sss;</div>
 <div class="line"><span class="keyword">using namespace </span>api;</div>
-<div class="line"><span class="keyword">using</span> XML = std::string;</div>
 <div class="line"><span class="keyword">using</span> <a class="code" href="group__Types.html#ga015acfebdfb3bb4732f30d455f5fc635">TagMap</a> = std::unordered_map&lt;std::string, std::string&gt;;</div>
 </div><!-- fragment --><div class="fragment"><div class="line"><span class="comment">// parse XML text and return {key, value} tag map</span></div>
 <div class="line"><a class="code" href="group__Types.html#ga015acfebdfb3bb4732f30d455f5fc635">TagMap</a> ParseTaggingResponse(<span class="keyword">const</span> XML&amp; xml) {</div>
@@ -210,6 +208,8 @@ Example: Bucket tagging</h1>
 <div class="line">  <span class="comment">// return all the &lt;tag&gt;&lt;/tag&gt; elements</span></div>
 <div class="line">  <a class="code" href="group__Types.html#gac37b0f0f2a46a24a595c6a397f9265b9">XMLRecords</a> r = is[<span class="stringliteral">&quot;tagging/tagset/tag&quot;</span>];</div>
 <div class="line">  <a class="code" href="group__Types.html#ga015acfebdfb3bb4732f30d455f5fc635">TagMap</a> m;</div>
+<div class="line">  <span class="comment">// the `Get` function returns either the value in a</span></div>
+<div class="line">  <span class="comment">// `map` instance or the empty string if the key is not found</span></div>
 <div class="line">  <span class="keywordflow">for</span>(<span class="keyword">auto</span> i: r) {</div>
 <div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> k = <a class="code" href="group__Parsing.html#ga8a75f823e8de2f3d1b501bab6b6510f5">Get</a>(i,<span class="stringliteral">&quot;/key&quot;</span>);</div>
 <div class="line">    <span class="keywordflow">if</span>(k.empty()) {</div>

@@ -20,7 +20,7 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="classsss_1_1api_1_1S3Api.html#a834e046a52178dcf540509df828b024f" target="_top" xlink:title=" ">
+<g id="a_node2"><a xlink:href="classsss_1_1api_1_1S3Api.html#a834e046a52178dcf540509df828b024f" target="_top" xlink:title="Get returned HTTP headers. Use this method to retrieve additional information e.g....">
 <polygon fill="none" stroke="black" points="189,-96 189,-126 338,-126 338,-96 189,-96"/>
 <text text-anchor="start" x="197" y="-114" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::GetResponse</text>
 <text text-anchor="middle" x="263.5" y="-103" font-family="Helvetica,sans-Serif" font-size="10.00">Headers</text>
@@ -51,7 +51,7 @@
 <!-- Node4 -->
 <g id="node4" class="node">
 <title>Node4</title>
-<g id="a_node4"><a xlink:href="classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22" target="_top" xlink:title="Send HeadObject request.">
+<g id="a_node4"><a xlink:href="classsss_1_1api_1_1S3Api.html#a0382afb5f4a42d477af76ea322324ddd" target="_top" xlink:title="Send HeadObject request.">
 <polygon fill="none" stroke="black" points="193,-19.5 193,-38.5 334,-38.5 334,-19.5 193,-19.5"/>
 <text text-anchor="middle" x="263.5" y="-26.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::HeadObject</text>
 </a>
@@ -66,7 +66,7 @@
 <!-- Node5 -->
 <g id="node5" class="node">
 <title>Node5</title>
-<g id="a_node5"><a xlink:href="classsss_1_1api_1_1S3Api.html#a872e80e356e8c404a9b0739d95a0af41" target="_top" xlink:title="Return object size.">
+<g id="a_node5"><a xlink:href="classsss_1_1api_1_1S3Api.html#ae6a826615a079564b77bb680b6b75a34" target="_top" xlink:title="Return object size.">
 <polygon fill="none" stroke="black" points="0,-38.5 0,-57.5 153,-57.5 153,-38.5 0,-38.5"/>
 <text text-anchor="middle" x="76.5" y="-45.5" font-family="Helvetica,sans-Serif" font-size="10.00">sss::api::S3Api::GetObjectSize</text>
 </a>

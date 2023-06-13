@@ -38,7 +38,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSS - S3 Toolkit
-   &#160;<span id="projectnumber">0.9.4</span>
+   &#160;<span id="projectnumber">0.9.5</span>
    </div>
    <div id="projectbrief">S3 client library and applications</div>
   </td>
@@ -137,7 +137,7 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a733fdb2b7a4798fb7540b2f3c7511123">payloadHash</a></td></tr>
 <tr class="memdesc:a733fdb2b7a4798fb7540b2f3c7511123"><td class="mdescLeft">&#160;</td><td class="mdescRight">payload hash, leave empty if no hash available <br /></td></tr>
 <tr class="separator:a733fdb2b7a4798fb7540b2f3c7511123"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af99ea89f2e18e4f3c86e919223e98bce"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#af99ea89f2e18e4f3c86e919223e98bce">urlEncodePostParams</a> = false</td></tr>
+<tr class="memitem:af99ea89f2e18e4f3c86e919223e98bce"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#af99ea89f2e18e4f3c86e919223e98bce">urlEncodePostParams</a></td></tr>
 <tr class="separator:af99ea89f2e18e4f3c86e919223e98bce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e03a74f08cff00c22f9a22b078fce86"><td class="memItemLeft" align="right" valign="top">std::variant&lt; std::string, <a class="el" href="structsss_1_1api_1_1S3Api_1_1ReadBuffer.html">ReadBuffer</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a7e03a74f08cff00c22f9a22b078fce86">uploadData</a></td></tr>
 <tr class="separator:a7e03a74f08cff00c22f9a22b078fce86"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -170,11 +170,13 @@ std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool sss::api::S3Api::SendParams::urlEncodePostParams = false</td>
+          <td class="memname">bool sss::api::S3Api::SendParams::urlEncodePostParams</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>if \true URL-encode <code>uploadData</code> else send <code>uploadData</code> without encoding first </p>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">        <span class="keyword">false</span></div>
+</div><!-- fragment --><p>if \true URL-encode <code>uploadData</code> else send <code>uploadData</code> without encoding first </p>
 
 </div>
 </div>

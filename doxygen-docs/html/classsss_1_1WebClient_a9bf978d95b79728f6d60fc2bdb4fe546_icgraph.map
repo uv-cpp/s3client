@@ -1,31 +1,35 @@
 <map id="sss::WebClient::SetReqParameters" name="sss::WebClient::SetReqParameters">
-<area shape="rect" id="node1" title=" " alt="" coords="1127,523,1357,550"/>
-<area shape="rect" id="node2" href="$classsss_1_1api_1_1S3Api.html#a3718745d3b940462ae9f3b78f773b3a6" title="Clear data and reset read and write functions." alt="" coords="928,498,1079,525"/>
-<area shape="rect" id="node3" href="$classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31" title="Configure instance." alt="" coords="723,523,880,550"/>
-<area shape="rect" id="node4" href="$classsss_1_1api_1_1S3Api.html#a1196f1cb9ce1e5d69336e9b8dbb5d59c" title="Download object into file." alt="" coords="513,451,675,492"/>
-<area shape="rect" id="node5" href="$classsss_1_1api_1_1S3Api.html#ab7affe0834f5892b393e731783b7ccac" title="Upload file to object." alt="" coords="514,516,674,557"/>
-<area shape="rect" id="node6" href="$classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889" title="Send request." alt="" coords="519,582,669,609"/>
+<area shape="rect" id="node1" title=" " alt="" coords="1127,671,1357,698"/>
+<area shape="rect" id="node2" href="$classsss_1_1api_1_1S3Api.html#a3718745d3b940462ae9f3b78f773b3a6" title="Clear data and reset read and write functions." alt="" coords="928,646,1079,673"/>
+<area shape="rect" id="node3" href="$classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31" title="Configure instance." alt="" coords="723,671,880,698"/>
+<area shape="rect" id="node4" href="$classsss_1_1api_1_1S3Api.html#ac2848a787b6656ee031822a1ad698de4" title="Download object into file." alt="" coords="513,599,675,640"/>
+<area shape="rect" id="node5" href="$classsss_1_1api_1_1S3Api.html#ab7affe0834f5892b393e731783b7ccac" title="Upload file to object." alt="" coords="514,664,674,705"/>
+<area shape="rect" id="node6" href="$classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889" title="Send request." alt="" coords="519,730,669,757"/>
 <area shape="rect" id="node7" href="$classsss_1_1api_1_1S3Api.html#a4ea265566c3c4335ec01201cdc4410c6" title="Abort multipart upload." alt="" coords="261,5,461,47"/>
 <area shape="rect" id="node8" href="$classsss_1_1api_1_1S3Api.html#a98f999a216121118dd569c7ef0c28ff3" title="Complete multipart upload." alt="" coords="274,71,449,112"/>
-<area shape="rect" id="node9" href="$classsss_1_1api_1_1S3Api.html#ad890bd1ecfc978df24b2c3ed641e4081" title="Create bucket." alt="" coords="262,137,461,163"/>
+<area shape="rect" id="node9" href="$classsss_1_1api_1_1S3Api.html#abea2ccea14a042c7c0d4b2ce5266ea5f" title="Create bucket." alt="" coords="262,137,461,163"/>
 <area shape="rect" id="node10" href="$classsss_1_1api_1_1S3Api.html#a1796fafda3d90a4292a611ce1999433b" title="Create multipart upload." alt="" coords="257,188,465,229"/>
 <area shape="rect" id="node11" href="$classsss_1_1api_1_1S3Api.html#a3d63825d1916e4ba3ca13122c7660603" title="Delete bucket." alt="" coords="262,254,461,281"/>
-<area shape="rect" id="node12" href="$classsss_1_1api_1_1S3Api.html#a14a75f15eb71fbba8639673100768b67" title="Delete object." alt="" coords="264,305,459,331"/>
-<area shape="rect" id="node13" href="$classsss_1_1api_1_1S3Api.html#a3b53152bf39143843a4033aa4a1b3fa0" title=" " alt="" coords="261,355,461,382"/>
-<area shape="rect" id="node14" href="$classsss_1_1api_1_1S3Api.html#afdb9997dfbd29512cbfe8da9f0028cf8" title="Return bucket tags." alt="" coords="271,407,452,448"/>
-<area shape="rect" id="node15" href="$classsss_1_1api_1_1S3Api.html#af61465d92c0a94aa82ae863fc2a776a0" title="Download object data." alt="" coords="272,473,451,499"/>
-<area shape="rect" id="node16" href="$classsss_1_1api_1_1S3Api.html#ae548966dc38f328fc45ee1500f5caf5b" title="Return bucket&#39;s Access Control List." alt="" coords="263,523,460,550"/>
-<area shape="rect" id="node17" href="$classsss_1_1api_1_1S3Api.html#aceb12e50a72a7b9b3ca460c23671c586" title="Return object tags." alt="" coords="272,575,451,616"/>
-<area shape="rect" id="node18" href="$classsss_1_1api_1_1S3Api.html#aa4a2b1cc2c89a52d1aa89e571b785db2" title=" " alt="" coords="266,641,457,667"/>
-<area shape="rect" id="node19" href="$classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22" title="Send HeadObject request." alt="" coords="267,691,455,718"/>
-<area shape="rect" id="node22" href="$classsss_1_1api_1_1S3Api.html#a81e30673c06b609a2ee6e6bfd9130ca6" title="List buckets." alt="" coords="267,742,455,769"/>
-<area shape="rect" id="node23" href="$classsss_1_1api_1_1S3Api.html#a3f00f611cd210a58ac6e8c0555984433" title="List objects by sending a ListObjectsV2 request." alt="" coords="261,793,462,819"/>
-<area shape="rect" id="node24" href="$classsss_1_1api_1_1S3Api.html#aa35e9b1cc7661cd9bb0d5f2de6cbbc7d" title="Set Access Control Policy for bucket." alt="" coords="262,843,461,870"/>
-<area shape="rect" id="node25" href="$classsss_1_1api_1_1S3Api.html#ae0b480d21933d41f7ca992ca5abe3091" title=" " alt="" coords="271,895,451,936"/>
-<area shape="rect" id="node26" href="$classsss_1_1api_1_1S3Api.html#a2cc08fb777cfc4d24c40bea1cde967e7" title="Set Access Control Policy." alt="" coords="263,961,459,987"/>
-<area shape="rect" id="node27" href="$classsss_1_1api_1_1S3Api.html#ac098e2619080dde98a75b71af8f66eef" title="Set object tags." alt="" coords="273,1012,450,1053"/>
-<area shape="rect" id="node28" href="$classsss_1_1api_1_1S3Api.html#a0473917e4d25a4a6fca40d097e4299d6" title=" " alt="" coords="287,1078,436,1105"/>
-<area shape="rect" id="node29" href="$classsss_1_1api_1_1S3Api.html#a23223ee1fb701c55af2d942dbf261ae2" title="Check if bucket exist." alt="" coords="269,1129,454,1155"/>
-<area shape="rect" id="node20" href="$classsss_1_1api_1_1S3Api.html#a872e80e356e8c404a9b0739d95a0af41" title="Return object size." alt="" coords="5,666,209,693"/>
-<area shape="rect" id="node21" href="$classsss_1_1api_1_1S3Api.html#aa3f7a3001bdad58c7b0c04cbd0dc3236" title="Check if key exists." alt="" coords="16,717,199,743"/>
+<area shape="rect" id="node12" href="$classsss_1_1api_1_1S3Api.html#a062a3a07fb8ade39db1e46426ff939d8" title="Remove all tags from bucket." alt="" coords="262,305,461,347"/>
+<area shape="rect" id="node13" href="$classsss_1_1api_1_1S3Api.html#ade1a193696061cfc0e6dff4a6975f8b3" title="Delete object." alt="" coords="264,371,459,398"/>
+<area shape="rect" id="node14" href="$classsss_1_1api_1_1S3Api.html#a23419050019b63bc5548181344067f01" title="Remove all tags from object." alt="" coords="264,423,459,464"/>
+<area shape="rect" id="node15" href="$classsss_1_1api_1_1S3Api.html#a3b53152bf39143843a4033aa4a1b3fa0" title=" " alt="" coords="261,489,461,515"/>
+<area shape="rect" id="node16" href="$classsss_1_1api_1_1S3Api.html#afdb9997dfbd29512cbfe8da9f0028cf8" title="Return bucket tags." alt="" coords="271,540,452,581"/>
+<area shape="rect" id="node17" href="$classsss_1_1api_1_1S3Api.html#a26387e640fa4d3c0715dc48f932ae410" title="Retrieve versioning status." alt="" coords="271,605,452,647"/>
+<area shape="rect" id="node18" href="$classsss_1_1api_1_1S3Api.html#ae548966dc38f328fc45ee1500f5caf5b" title="Return bucket&#39;s Access Control List." alt="" coords="263,671,460,698"/>
+<area shape="rect" id="node19" href="$classsss_1_1api_1_1S3Api.html#aceb12e50a72a7b9b3ca460c23671c586" title="Return object tags." alt="" coords="272,723,451,764"/>
+<area shape="rect" id="node20" href="$classsss_1_1api_1_1S3Api.html#aa4a2b1cc2c89a52d1aa89e571b785db2" title=" " alt="" coords="266,789,457,815"/>
+<area shape="rect" id="node21" href="$classsss_1_1api_1_1S3Api.html#a0382afb5f4a42d477af76ea322324ddd" title="Send HeadObject request." alt="" coords="267,839,455,866"/>
+<area shape="rect" id="node24" href="$classsss_1_1api_1_1S3Api.html#a81e30673c06b609a2ee6e6bfd9130ca6" title="List buckets." alt="" coords="267,890,455,917"/>
+<area shape="rect" id="node25" href="$classsss_1_1api_1_1S3Api.html#a3f00f611cd210a58ac6e8c0555984433" title="List objects by sending a ListObjectsV2 request." alt="" coords="261,941,462,967"/>
+<area shape="rect" id="node26" href="$classsss_1_1api_1_1S3Api.html#a9695a76eb84d3e52800d037f1ef391aa" title="Return all versions and delete markers for object." alt="" coords="272,992,451,1033"/>
+<area shape="rect" id="node27" href="$classsss_1_1api_1_1S3Api.html#aa35e9b1cc7661cd9bb0d5f2de6cbbc7d" title="Set Access Control Policy for bucket." alt="" coords="262,1058,461,1085"/>
+<area shape="rect" id="node28" href="$classsss_1_1api_1_1S3Api.html#ae0b480d21933d41f7ca992ca5abe3091" title="Tag bucket." alt="" coords="271,1109,451,1151"/>
+<area shape="rect" id="node29" href="$classsss_1_1api_1_1S3Api.html#a11f96e3a1f9487688c824fea1831fe71" title="Enable bucket versioning." alt="" coords="271,1175,451,1216"/>
+<area shape="rect" id="node30" href="$classsss_1_1api_1_1S3Api.html#a2cc08fb777cfc4d24c40bea1cde967e7" title="Set Access Control Policy." alt="" coords="263,1241,459,1267"/>
+<area shape="rect" id="node31" href="$classsss_1_1api_1_1S3Api.html#ac098e2619080dde98a75b71af8f66eef" title="Set object tags." alt="" coords="273,1292,450,1333"/>
+<area shape="rect" id="node32" href="$classsss_1_1api_1_1S3Api.html#a0473917e4d25a4a6fca40d097e4299d6" title=" " alt="" coords="287,1358,436,1385"/>
+<area shape="rect" id="node33" href="$classsss_1_1api_1_1S3Api.html#a23223ee1fb701c55af2d942dbf261ae2" title="Check if bucket exist." alt="" coords="269,1409,454,1435"/>
+<area shape="rect" id="node22" href="$classsss_1_1api_1_1S3Api.html#ae6a826615a079564b77bb680b6b75a34" title="Return object size." alt="" coords="5,814,209,841"/>
+<area shape="rect" id="node23" href="$classsss_1_1api_1_1S3Api.html#aa3f7a3001bdad58c7b0c04cbd0dc3236" title="Check if key exists." alt="" coords="16,865,199,891"/>
 </map>

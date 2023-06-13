@@ -1,5 +1,5 @@
 <map id="sss::api::S3Api::PutBucketTagging" name="sss::api::S3Api::PutBucketTagging">
-<area shape="rect" id="node1" title=" " alt="" coords="5,509,185,550"/>
+<area shape="rect" id="node1" title="Tag bucket." alt="" coords="5,509,185,550"/>
 <area shape="rect" id="node2" href="$classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889" title="Send request." alt="" coords="233,516,383,543"/>
 <area shape="rect" id="node3" href="$classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31" title="Configure instance." alt="" coords="455,292,613,319"/>
 <area shape="rect" id="node12" href="$classsss_1_1WebClient.html#a51ce0ecf6487b6a43072643fe4f4cb4e" title=" " alt="" coords="943,39,1138,65"/>

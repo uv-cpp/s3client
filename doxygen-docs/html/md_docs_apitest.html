@@ -38,7 +38,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSS - S3 Toolkit
-   &#160;<span id="projectnumber">0.9.4</span>
+   &#160;<span id="projectnumber">0.9.5</span>
    </div>
    <div id="projectbrief">S3 client library and applications</div>
   </td>
@@ -102,20 +102,26 @@ $(document).ready(function(){initNavTree('md_docs_apitest.html',''); initResizab
 <div class="textblock"><h1><a class="anchor" id="autotoc_md1"></a>
 Configuration</h1>
 <p>All tests read the value of access, key and url endpoint from environment variables which need to be passed on the command line, e.g. <code>./bucket-test S3TEST_ACCESS S3TEST_SECRET S3TEST_URL</code>.</p>
-<p>Each test driver contains multiple tests whose output is in <em>CSV</em> format:</p>
+<p>Each test driver contains multiple tests printing output to <code>stdin</code> in <em>CSV</em> format:</p>
 <p><code>&lt;test name&gt;,&lt;result =</code>1<code>for pass |</code>0<code>for fail&gt;,&lt;blank | optional error message&gt;</code></p>
-<p>To test locally, two scripts to run <em>minio</em> are provided in the root folder:</p><ul>
-<li><code>minio_podman_setup.sh</code>: downloads and runs <em>minio</em> server with <em>podman</em></li>
-<li><code>minio_run_server.sh</code>: runs the pre-installed <em>minio</em> server</li>
-</ul>
-<p>The scripts print and optionally store into a file the url, access and secret to use.</p>
-<p>Both scripts require the following arguments:</p><ul>
-<li><em>instance name</em>: <em>minio</em> instance name; added into <code>.mc/config.json</code></li>
-<li><em>storage path</em>: directory where data are stored</li>
-<li>(optional): file name where code to set environment variable is written</li>
-</ul>
-<p>It is also possible to test everything using the free <code>play.min.io</code> service. Credentials for <code>play.min.ui</code> should already be present in the <code>.mc/config.json</code> file created by the <em>minio</em> client.</p>
-<p>Each test driver will first check that an S3 endpoint is available and accessible and report an error in case of failure. The test drivers will create buckets and objects named <code>sss-api-test-</code> + timestamp. </p>
+<p>and checks that an S3 endpoint is available and accessible and report an error in case of failure.</p>
+<p>The test drivers will create buckets and objects named <code>sss-api-test-</code> + timestamp.</p>
+<p>Tests require an S3 endpoint to be accessible.</p>
+<p>One option is to use the free <em>play.min.io</em> service; other options are to configure a local instance of the <em>minio</em> server or use an AWS S3 account.</p>
+<p>When testing with an AWS S3 account extract credentials from file <code>.aws/credentials</code> and use the url: <code><a href="https://s3">https://s3</a>.&lt;region e.g. us-east-1&gt;.amazonaws.com</code> as the endpoint.</p>
+<p>The access and secret keys for <em>play.min.io</em> are stored inside the <code>~/.mc/config.json</code> file configured after installing the <a href="https://min.io/docs/minio/linux/reference/minio-mc.html">minio client</a>.</p>
+<p>The script <code>minio_podman_setup.sh</code> downloads configures and runs a <em>minio</em> server instance inside a container using <em>podman</em>.</p>
+<p>Run the script after building all the applications, making sure that the <code>s3-gen-credentials</code> executable is findable through the <code>PATH</code> variable.</p>
+<p>Usage </p><div class="fragment"><div class="line">./minio_podman_setup.sh &lt;minio alias&gt; &lt;data path&gt;</div>
+</div><!-- fragment --><p> Run </p><div class="fragment"><div class="line">chmod u+x ./minio_podman_setup.sh</div>
+<div class="line">./minio_podman_setup.sh myalias ~/tmp/minio_data</div>
+</div><!-- fragment --><p>In cases where the <em>minio</em> server is already installed and available, you can invoke the <code>minio_run_server.sh</code> instead.</p>
+<div class="fragment"><div class="line">chmod u+x ./minio_run_server.sh</div>
+<div class="line">./minio_run_server.sh myalias ~/tmp/minio_data</div>
+</div><!-- fragment --><p>Both scripts output access, secret and URL which should be stored into environment variables, the optional third argument to the scripts is the name of the file where environment variables are stored: use <code>source</code> &lt;filename&gt; to set all environment variables.</p>
+<p>The <code>test</code> directory includes tests for the high level interface and the S3 API.</p>
+<p>All tests require passing the name of the environment variables storing access, secret and endpoint URL information.</p>
+<p>The provided <code>.sh</code> scripts inside the <code>test</code> directory can run all the tests at once. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

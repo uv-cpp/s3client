@@ -38,7 +38,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSS - S3 Toolkit
-   &#160;<span id="projectnumber">0.9.4</span>
+   &#160;<span id="projectnumber">0.9.5</span>
    </div>
    <div id="projectbrief">S3 client library and applications</div>
   </td>
@@ -117,11 +117,17 @@ Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsss_1_1api_1_1S3Api_1_1ListObjectV2Result.html">ListObjectV2Result</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>ListObjectsV2</code> response. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html">https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html</a>  <a href="structsss_1_1api_1_1S3Api_1_1ListObjectV2Result.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsss_1_1api_1_1S3Api_1_1ObjectVersionInfo.html">ObjectVersionInfo</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">object version history  <a href="structsss_1_1api_1_1S3Api_1_1ObjectVersionInfo.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsss_1_1api_1_1S3Api_1_1ReadBuffer.html">ReadBuffer</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Memory buffer used in <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html" title="Send request parameters.">SendParams</a>.  <a href="structsss_1_1api_1_1S3Api_1_1ReadBuffer.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html">SendParams</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send request parameters.  <a href="structsss_1_1api_1_1S3Api_1_1SendParams.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structsss_1_1api_1_1S3Api_1_1VersioningInfo.html">VersioningInfo</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">versioning information  <a href="structsss_1_1api_1_1S3Api_1_1VersioningInfo.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
@@ -164,50 +170,59 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="separator:a840772746fbb0a79c161037da7b24a31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0473917e4d25a4a6fca40d097e4299d6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a0473917e4d25a4a6fca40d097e4299d6">Send</a> (const <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html">SendParams</a> &amp;params, <a class="el" href="classsss_1_1WebClient.html#aa631ae58bc0c12c33f44083c8a6d09fc">WebClient::ReadFunction</a> sendFun, void *sendUserData, <a class="el" href="classsss_1_1WebClient.html#a690a1ff34462ed2d7b813e3e69b19d8c">WebClient::WriteFunction</a> receiveFun, void *receiveUserData)</td></tr>
 <tr class="separator:a0473917e4d25a4a6fca40d097e4299d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1196f1cb9ce1e5d69336e9b8dbb5d59c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a1196f1cb9ce1e5d69336e9b8dbb5d59c">GetFileObject</a> (const std::string &amp;outFileName, const std::string &amp;bucket, const std::string &amp;key, size_t writeOffset=0, size_t beginReadOffset=0, size_t endReadOffset=0, <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> headers={{}})</td></tr>
-<tr class="memdesc:a1196f1cb9ce1e5d69336e9b8dbb5d59c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Download object into file.  <a href="classsss_1_1api_1_1S3Api.html#a1196f1cb9ce1e5d69336e9b8dbb5d59c">More...</a><br /></td></tr>
-<tr class="separator:a1196f1cb9ce1e5d69336e9b8dbb5d59c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2848a787b6656ee031822a1ad698de4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#ac2848a787b6656ee031822a1ad698de4">GetFileObject</a> (const std::string &amp;outFileName, const std::string &amp;bucket, const std::string &amp;key, size_t writeOffset=0, size_t beginReadOffset=0, size_t endReadOffset=0, <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> headers={{}}, const std::string &amp;versionId=&quot;&quot;)</td></tr>
+<tr class="memdesc:ac2848a787b6656ee031822a1ad698de4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Download object into file.  <a href="classsss_1_1api_1_1S3Api.html#ac2848a787b6656ee031822a1ad698de4">More...</a><br /></td></tr>
+<tr class="separator:ac2848a787b6656ee031822a1ad698de4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab7affe0834f5892b393e731783b7ccac"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Types.html#ga5315a21a30a0f1f7095037d972003961">ETag</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#ab7affe0834f5892b393e731783b7ccac">PutFileObject</a> (const std::string &amp;infileName, const std::string &amp;bucket, const std::string &amp;key, size_t readOffset=0, size_t readSize=0, <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> headers={{}}, const std::string &amp;payloadHash={})</td></tr>
 <tr class="memdesc:ab7affe0834f5892b393e731783b7ccac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Upload file to object.  <a href="classsss_1_1api_1_1S3Api.html#ab7affe0834f5892b393e731783b7ccac">More...</a><br /></td></tr>
 <tr class="separator:ab7affe0834f5892b393e731783b7ccac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa8bcb6604830a045a7e29a0bc55c0f52"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Types.html#ga5315a21a30a0f1f7095037d972003961">ETag</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#aa8bcb6604830a045a7e29a0bc55c0f52">UploadFilePart</a> (const std::string &amp;inFileName, size_t readOffset, size_t readSize, const std::string &amp;bucket, const std::string &amp;key, const <a class="el" href="group__Types.html#gaa685e1aceba83607dc032d1dbe96d207">UploadId</a> &amp;uid, int partNum, <a class="el" href="classsss_1_1api_1_1S3Api.html#acf181b732741a8582598182a0298c21b">FileIOMode</a> iomode=BUFFERED, int maxRetries=1, <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> headers={{}}, const std::string &amp;payloadHash={})</td></tr>
 <tr class="memdesc:aa8bcb6604830a045a7e29a0bc55c0f52"><td class="mdescLeft">&#160;</td><td class="mdescRight">Upload file part. Invoke after calling CreateMultipartUpload and before calling CompleteMultipartUpload.  <a href="classsss_1_1api_1_1S3Api.html#aa8bcb6604830a045a7e29a0bc55c0f52">More...</a><br /></td></tr>
 <tr class="separator:aa8bcb6604830a045a7e29a0bc55c0f52"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a872e80e356e8c404a9b0739d95a0af41"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a872e80e356e8c404a9b0739d95a0af41">GetObjectSize</a> (const std::string &amp;bucket, const std::string &amp;key)</td></tr>
-<tr class="memdesc:a872e80e356e8c404a9b0739d95a0af41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return object size.  <a href="classsss_1_1api_1_1S3Api.html#a872e80e356e8c404a9b0739d95a0af41">More...</a><br /></td></tr>
-<tr class="separator:a872e80e356e8c404a9b0739d95a0af41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6a826615a079564b77bb680b6b75a34"><td class="memItemLeft" align="right" valign="top">ssize_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#ae6a826615a079564b77bb680b6b75a34">GetObjectSize</a> (const std::string &amp;bucket, const std::string &amp;key, const std::string &amp;versionId=&quot;&quot;)</td></tr>
+<tr class="memdesc:ae6a826615a079564b77bb680b6b75a34"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return object size.  <a href="classsss_1_1api_1_1S3Api.html#ae6a826615a079564b77bb680b6b75a34">More...</a><br /></td></tr>
+<tr class="separator:ae6a826615a079564b77bb680b6b75a34"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4ea265566c3c4335ec01201cdc4410c6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a4ea265566c3c4335ec01201cdc4410c6">AbortMultipartUpload</a> (const std::string &amp;bucket, const std::string &amp;key, const <a class="el" href="group__Types.html#gaa685e1aceba83607dc032d1dbe96d207">UploadId</a> &amp;uploadId)</td></tr>
 <tr class="memdesc:a4ea265566c3c4335ec01201cdc4410c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Abort multipart upload.  <a href="classsss_1_1api_1_1S3Api.html#a4ea265566c3c4335ec01201cdc4410c6">More...</a><br /></td></tr>
 <tr class="separator:a4ea265566c3c4335ec01201cdc4410c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a98f999a216121118dd569c7ef0c28ff3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Types.html#ga5315a21a30a0f1f7095037d972003961">ETag</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a98f999a216121118dd569c7ef0c28ff3">CompleteMultipartUpload</a> (const <a class="el" href="group__Types.html#gaa685e1aceba83607dc032d1dbe96d207">UploadId</a> &amp;uid, const std::string &amp;bucket, const std::string &amp;key, const std::vector&lt; <a class="el" href="group__Types.html#ga5315a21a30a0f1f7095037d972003961">ETag</a> &gt; &amp;etags)</td></tr>
 <tr class="memdesc:a98f999a216121118dd569c7ef0c28ff3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Complete multipart upload.  <a href="classsss_1_1api_1_1S3Api.html#a98f999a216121118dd569c7ef0c28ff3">More...</a><br /></td></tr>
 <tr class="separator:a98f999a216121118dd569c7ef0c28ff3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad890bd1ecfc978df24b2c3ed641e4081"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#ad890bd1ecfc978df24b2c3ed641e4081">CreateBucket</a> (const std::string &amp;bucket, const <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> &amp;headers={{}})</td></tr>
-<tr class="memdesc:ad890bd1ecfc978df24b2c3ed641e4081"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create bucket.  <a href="classsss_1_1api_1_1S3Api.html#ad890bd1ecfc978df24b2c3ed641e4081">More...</a><br /></td></tr>
-<tr class="separator:ad890bd1ecfc978df24b2c3ed641e4081"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abea2ccea14a042c7c0d4b2ce5266ea5f"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#abea2ccea14a042c7c0d4b2ce5266ea5f">CreateBucket</a> (const std::string &amp;bucket, const <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> &amp;headers={{}}, const std::string &amp;locationConstraint=std::string())</td></tr>
+<tr class="memdesc:abea2ccea14a042c7c0d4b2ce5266ea5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create bucket.  <a href="classsss_1_1api_1_1S3Api.html#abea2ccea14a042c7c0d4b2ce5266ea5f">More...</a><br /></td></tr>
+<tr class="separator:abea2ccea14a042c7c0d4b2ce5266ea5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1796fafda3d90a4292a611ce1999433b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Types.html#gaa685e1aceba83607dc032d1dbe96d207">UploadId</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a1796fafda3d90a4292a611ce1999433b">CreateMultipartUpload</a> (const std::string &amp;bucket, const std::string &amp;key, size_t partSize=0, <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> headers={})</td></tr>
 <tr class="memdesc:a1796fafda3d90a4292a611ce1999433b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create multipart upload.  <a href="classsss_1_1api_1_1S3Api.html#a1796fafda3d90a4292a611ce1999433b">More...</a><br /></td></tr>
 <tr class="separator:a1796fafda3d90a4292a611ce1999433b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3d63825d1916e4ba3ca13122c7660603"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a3d63825d1916e4ba3ca13122c7660603">DeleteBucket</a> (const std::string &amp;bucket, const <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> &amp;headers={{}})</td></tr>
 <tr class="memdesc:a3d63825d1916e4ba3ca13122c7660603"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete bucket.  <a href="classsss_1_1api_1_1S3Api.html#a3d63825d1916e4ba3ca13122c7660603">More...</a><br /></td></tr>
 <tr class="separator:a3d63825d1916e4ba3ca13122c7660603"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14a75f15eb71fbba8639673100768b67"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a14a75f15eb71fbba8639673100768b67">DeleteObject</a> (const std::string &amp;bucket, const std::string &amp;key, const <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> &amp;={{}})</td></tr>
-<tr class="memdesc:a14a75f15eb71fbba8639673100768b67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete object.  <a href="classsss_1_1api_1_1S3Api.html#a14a75f15eb71fbba8639673100768b67">More...</a><br /></td></tr>
-<tr class="separator:a14a75f15eb71fbba8639673100768b67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade1a193696061cfc0e6dff4a6975f8b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#ade1a193696061cfc0e6dff4a6975f8b3">DeleteObject</a> (const std::string &amp;bucket, const std::string &amp;key, const <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> &amp;headers={}, const std::string &amp;versionId=&quot;&quot;)</td></tr>
+<tr class="memdesc:ade1a193696061cfc0e6dff4a6975f8b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete object.  <a href="classsss_1_1api_1_1S3Api.html#ade1a193696061cfc0e6dff4a6975f8b3">More...</a><br /></td></tr>
+<tr class="separator:ade1a193696061cfc0e6dff4a6975f8b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a062a3a07fb8ade39db1e46426ff939d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a062a3a07fb8ade39db1e46426ff939d8">DeleteBucketTagging</a> (const std::string &amp;bucket, const <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> &amp;headers={})</td></tr>
+<tr class="memdesc:a062a3a07fb8ade39db1e46426ff939d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove all tags from bucket.  <a href="classsss_1_1api_1_1S3Api.html#a062a3a07fb8ade39db1e46426ff939d8">More...</a><br /></td></tr>
+<tr class="separator:a062a3a07fb8ade39db1e46426ff939d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23419050019b63bc5548181344067f01"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a23419050019b63bc5548181344067f01">DeleteObjectTagging</a> (const std::string &amp;bucket, const std::string &amp;key, const <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> &amp;headers={})</td></tr>
+<tr class="memdesc:a23419050019b63bc5548181344067f01"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove all tags from object.  <a href="classsss_1_1api_1_1S3Api.html#a23419050019b63bc5548181344067f01">More...</a><br /></td></tr>
+<tr class="separator:a23419050019b63bc5548181344067f01"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b53152bf39143843a4033aa4a1b3fa0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsss_1_1api_1_1AccessControlPolicy.html">AccessControlPolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a3b53152bf39143843a4033aa4a1b3fa0">GetBucketAcl</a> (const std::string &amp;bucket)</td></tr>
 <tr class="separator:a3b53152bf39143843a4033aa4a1b3fa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afdb9997dfbd29512cbfe8da9f0028cf8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Types.html#ga015acfebdfb3bb4732f30d455f5fc635">TagMap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#afdb9997dfbd29512cbfe8da9f0028cf8">GetBucketTagging</a> (const std::string &amp;bucket)</td></tr>
 <tr class="memdesc:afdb9997dfbd29512cbfe8da9f0028cf8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return bucket tags.  <a href="classsss_1_1api_1_1S3Api.html#afdb9997dfbd29512cbfe8da9f0028cf8">More...</a><br /></td></tr>
 <tr class="separator:afdb9997dfbd29512cbfe8da9f0028cf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af61465d92c0a94aa82ae863fc2a776a0"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="group__Types.html#ga9a03838eeab410fbc2118ed838d96bf5">CharArray</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#af61465d92c0a94aa82ae863fc2a776a0">GetObject</a> (const std::string &amp;bucket, const std::string &amp;key, size_t beginReadOffset=0, size_t endReadOffset=0, <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a>={{}})</td></tr>
-<tr class="memdesc:af61465d92c0a94aa82ae863fc2a776a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Download object data.  <a href="classsss_1_1api_1_1S3Api.html#af61465d92c0a94aa82ae863fc2a776a0">More...</a><br /></td></tr>
-<tr class="separator:af61465d92c0a94aa82ae863fc2a776a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a62695addc7c86b5fa73465d0d80ec1fa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a62695addc7c86b5fa73465d0d80ec1fa">GetObject</a> (const std::string &amp;bucket, const std::string &amp;key, <a class="el" href="group__Types.html#ga9a03838eeab410fbc2118ed838d96bf5">CharArray</a> &amp;outBuffer, size_t writeOffset, size_t beginReadOffset=0, size_t endReadOffset=0, <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> headers={{}})</td></tr>
-<tr class="memdesc:a62695addc7c86b5fa73465d0d80ec1fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Download object data into <code>vector&lt;char&gt;</code>  <a href="classsss_1_1api_1_1S3Api.html#a62695addc7c86b5fa73465d0d80ec1fa">More...</a><br /></td></tr>
-<tr class="separator:a62695addc7c86b5fa73465d0d80ec1fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0bb4e0b77028dadd78fcf5496ab6fca3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a0bb4e0b77028dadd78fcf5496ab6fca3">GetObject</a> (const std::string &amp;bucket, const std::string &amp;key, char *outBuffer, size_t writeOffset, size_t beginReadOffset=0, size_t endReadOffset=0, <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> headers={{}})</td></tr>
-<tr class="memdesc:a0bb4e0b77028dadd78fcf5496ab6fca3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Download object data into <code>char</code> buffer.  <a href="classsss_1_1api_1_1S3Api.html#a0bb4e0b77028dadd78fcf5496ab6fca3">More...</a><br /></td></tr>
-<tr class="separator:a0bb4e0b77028dadd78fcf5496ab6fca3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26387e640fa4d3c0715dc48f932ae410"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsss_1_1api_1_1S3Api_1_1VersioningInfo.html">VersioningInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a26387e640fa4d3c0715dc48f932ae410">GetBucketVersioning</a> (const std::string &amp;bucket)</td></tr>
+<tr class="memdesc:a26387e640fa4d3c0715dc48f932ae410"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieve versioning status.  <a href="classsss_1_1api_1_1S3Api.html#a26387e640fa4d3c0715dc48f932ae410">More...</a><br /></td></tr>
+<tr class="separator:a26387e640fa4d3c0715dc48f932ae410"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26b7eab2f8b9844f0277fe5a253db3ac"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="group__Types.html#ga9a03838eeab410fbc2118ed838d96bf5">CharArray</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a26b7eab2f8b9844f0277fe5a253db3ac">GetObject</a> (const std::string &amp;bucket, const std::string &amp;key, size_t beginReadOffset=0, size_t endReadOffset=0, <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a>={{}}, const std::string &amp;versionId=&quot;&quot;)</td></tr>
+<tr class="memdesc:a26b7eab2f8b9844f0277fe5a253db3ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Download object data.  <a href="classsss_1_1api_1_1S3Api.html#a26b7eab2f8b9844f0277fe5a253db3ac">More...</a><br /></td></tr>
+<tr class="separator:a26b7eab2f8b9844f0277fe5a253db3ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ef1dbb4c1ea95c5b9b83c1045b584f8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a4ef1dbb4c1ea95c5b9b83c1045b584f8">GetObject</a> (const std::string &amp;bucket, const std::string &amp;key, <a class="el" href="group__Types.html#ga9a03838eeab410fbc2118ed838d96bf5">CharArray</a> &amp;outBuffer, size_t writeOffset, size_t beginReadOffset=0, size_t endReadOffset=0, <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> headers={{}}, const std::string &amp;versionId=&quot;&quot;)</td></tr>
+<tr class="memdesc:a4ef1dbb4c1ea95c5b9b83c1045b584f8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Download object data into <code>vector&lt;char&gt;</code>  <a href="classsss_1_1api_1_1S3Api.html#a4ef1dbb4c1ea95c5b9b83c1045b584f8">More...</a><br /></td></tr>
+<tr class="separator:a4ef1dbb4c1ea95c5b9b83c1045b584f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84b0c469a3e9831f852d799d2c56bc40"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a84b0c469a3e9831f852d799d2c56bc40">GetObject</a> (const std::string &amp;bucket, const std::string &amp;key, char *outBuffer, size_t writeOffset, size_t beginReadOffset=0, size_t endReadOffset=0, <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> headers={{}}, const std::string &amp;versionId=&quot;&quot;)</td></tr>
+<tr class="memdesc:a84b0c469a3e9831f852d799d2c56bc40"><td class="mdescLeft">&#160;</td><td class="mdescRight">Download object data into <code>char</code> buffer.  <a href="classsss_1_1api_1_1S3Api.html#a84b0c469a3e9831f852d799d2c56bc40">More...</a><br /></td></tr>
+<tr class="separator:a84b0c469a3e9831f852d799d2c56bc40"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae548966dc38f328fc45ee1500f5caf5b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsss_1_1api_1_1AccessControlPolicy.html">AccessControlPolicy</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#ae548966dc38f328fc45ee1500f5caf5b">GetObjectAcl</a> (const std::string &amp;bucket, const std::string &amp;key)</td></tr>
 <tr class="memdesc:ae548966dc38f328fc45ee1500f5caf5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return bucket's Access Control List.  <a href="classsss_1_1api_1_1S3Api.html#ae548966dc38f328fc45ee1500f5caf5b">More...</a><br /></td></tr>
 <tr class="separator:ae548966dc38f328fc45ee1500f5caf5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -216,20 +231,27 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="separator:aceb12e50a72a7b9b3ca460c23671c586"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4a2b1cc2c89a52d1aa89e571b785db2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#aa4a2b1cc2c89a52d1aa89e571b785db2">HeadBucket</a> (const std::string &amp;bucket, const <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> &amp;headers={{}})</td></tr>
 <tr class="separator:aa4a2b1cc2c89a52d1aa89e571b785db2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc84a71b9a88b81afaa353ad17a91d22"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22">HeadObject</a> (const std::string &amp;bucket, const std::string &amp;key, const <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> &amp;={{}})</td></tr>
-<tr class="memdesc:abc84a71b9a88b81afaa353ad17a91d22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send <code>HeadObject</code> request.  <a href="classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22">More...</a><br /></td></tr>
-<tr class="separator:abc84a71b9a88b81afaa353ad17a91d22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0382afb5f4a42d477af76ea322324ddd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a0382afb5f4a42d477af76ea322324ddd">HeadObject</a> (const std::string &amp;bucket, const std::string &amp;key, const <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> &amp;={{}}, const std::string &amp;versionId=&quot;&quot;)</td></tr>
+<tr class="memdesc:a0382afb5f4a42d477af76ea322324ddd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send <code>HeadObject</code> request.  <a href="classsss_1_1api_1_1S3Api.html#a0382afb5f4a42d477af76ea322324ddd">More...</a><br /></td></tr>
+<tr class="separator:a0382afb5f4a42d477af76ea322324ddd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a81e30673c06b609a2ee6e6bfd9130ca6"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structsss_1_1api_1_1BucketInfo.html">BucketInfo</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a81e30673c06b609a2ee6e6bfd9130ca6">ListBuckets</a> (const <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> &amp;headers={{}})</td></tr>
 <tr class="memdesc:a81e30673c06b609a2ee6e6bfd9130ca6"><td class="mdescLeft">&#160;</td><td class="mdescRight">List buckets.  <a href="classsss_1_1api_1_1S3Api.html#a81e30673c06b609a2ee6e6bfd9130ca6">More...</a><br /></td></tr>
 <tr class="separator:a81e30673c06b609a2ee6e6bfd9130ca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f00f611cd210a58ac6e8c0555984433"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsss_1_1api_1_1S3Api_1_1ListObjectV2Result.html">ListObjectV2Result</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a3f00f611cd210a58ac6e8c0555984433">ListObjectsV2</a> (const std::string &amp;bucket, const <a class="el" href="structsss_1_1api_1_1S3Api_1_1ListObjectV2Config.html">ListObjectV2Config</a> &amp;config=<a class="el" href="structsss_1_1api_1_1S3Api_1_1ListObjectV2Config.html">ListObjectV2Config</a>{}, const <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> &amp;={{}})</td></tr>
 <tr class="memdesc:a3f00f611cd210a58ac6e8c0555984433"><td class="mdescLeft">&#160;</td><td class="mdescRight">List objects by sending a <code>ListObjectsV2</code> request.  <a href="classsss_1_1api_1_1S3Api.html#a3f00f611cd210a58ac6e8c0555984433">More...</a><br /></td></tr>
 <tr class="separator:a3f00f611cd210a58ac6e8c0555984433"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9695a76eb84d3e52800d037f1ef391aa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsss_1_1api_1_1S3Api_1_1ObjectVersionInfo.html">ObjectVersionInfo</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a9695a76eb84d3e52800d037f1ef391aa">ListObjectVersions</a> (const std::string &amp;bucket, const std::string &amp;key)</td></tr>
+<tr class="memdesc:a9695a76eb84d3e52800d037f1ef391aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Return all versions and delete markers for object.  <a href="classsss_1_1api_1_1S3Api.html#a9695a76eb84d3e52800d037f1ef391aa">More...</a><br /></td></tr>
+<tr class="separator:a9695a76eb84d3e52800d037f1ef391aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa35e9b1cc7661cd9bb0d5f2de6cbbc7d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#aa35e9b1cc7661cd9bb0d5f2de6cbbc7d">PutBucketAcl</a> (const std::string &amp;bucket, const <a class="el" href="structsss_1_1api_1_1AccessControlPolicy.html">AccessControlPolicy</a> &amp;acl)</td></tr>
 <tr class="memdesc:aa35e9b1cc7661cd9bb0d5f2de6cbbc7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Access Control Policy for bucket.  <a href="classsss_1_1api_1_1S3Api.html#aa35e9b1cc7661cd9bb0d5f2de6cbbc7d">More...</a><br /></td></tr>
 <tr class="separator:aa35e9b1cc7661cd9bb0d5f2de6cbbc7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0b480d21933d41f7ca992ca5abe3091"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#ae0b480d21933d41f7ca992ca5abe3091">PutBucketTagging</a> (const std::string &amp;bucket, const <a class="el" href="group__Types.html#ga015acfebdfb3bb4732f30d455f5fc635">TagMap</a> &amp;tags, const <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> &amp;headers={})</td></tr>
+<tr class="memdesc:ae0b480d21933d41f7ca992ca5abe3091"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tag bucket.  <a href="classsss_1_1api_1_1S3Api.html#ae0b480d21933d41f7ca992ca5abe3091">More...</a><br /></td></tr>
 <tr class="separator:ae0b480d21933d41f7ca992ca5abe3091"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11f96e3a1f9487688c824fea1831fe71"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a11f96e3a1f9487688c824fea1831fe71">PutBucketVersioning</a> (const std::string &amp;bucket, bool enabled)</td></tr>
+<tr class="memdesc:a11f96e3a1f9487688c824fea1831fe71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable bucket versioning.  <a href="classsss_1_1api_1_1S3Api.html#a11f96e3a1f9487688c824fea1831fe71">More...</a><br /></td></tr>
+<tr class="separator:a11f96e3a1f9487688c824fea1831fe71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6ee9092a67e32ed994c6d7bd6a3f712c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Types.html#ga5315a21a30a0f1f7095037d972003961">ETag</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a6ee9092a67e32ed994c6d7bd6a3f712c">PutObject</a> (const std::string &amp;bucket, const std::string &amp;key, const <a class="el" href="group__Types.html#ga9a03838eeab410fbc2118ed838d96bf5">CharArray</a> &amp;buffer, <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> headers={{}}, const std::string &amp;payloadHash={})</td></tr>
 <tr class="memdesc:a6ee9092a67e32ed994c6d7bd6a3f712c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Upload data to object by sending a <code>PutObject</code> request.  <a href="classsss_1_1api_1_1S3Api.html#a6ee9092a67e32ed994c6d7bd6a3f712c">More...</a><br /></td></tr>
 <tr class="separator:a6ee9092a67e32ed994c6d7bd6a3f712c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -258,6 +280,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a014e8431fd351f9994324527f74ba3e9"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a014e8431fd351f9994324527f74ba3e9">GetResponseText</a> () const</td></tr>
 <tr class="separator:a014e8431fd351f9994324527f74ba3e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a834e046a52178dcf540509df828b024f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classsss_1_1api_1_1S3Api.html#a834e046a52178dcf540509df828b024f">GetResponseHeaders</a> () const</td></tr>
+<tr class="memdesc:a834e046a52178dcf540509df828b024f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get returned HTTP headers. Use this method to retrieve additional information e.g. <code>versionId</code> after sending a request.  <a href="classsss_1_1api_1_1S3Api.html#a834e046a52178dcf540509df828b024f">More...</a><br /></td></tr>
 <tr class="separator:a834e046a52178dcf540509df828b024f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -342,8 +365,8 @@ Example</h1>
 <div class="line">    <a class="code" href="group__Types.html#ga015acfebdfb3bb4732f30d455f5fc635">TagMap</a> tags = {{<span class="stringliteral">&quot;tag1&quot;</span>, <span class="stringliteral">&quot;value1&quot;</span>}, {<span class="stringliteral">&quot;tag2&quot;</span>, <span class="stringliteral">&quot;value2&quot;</span>}};</div>
 <div class="line">    s3.PutObjectTagging(bucketName, objName, tags);</div>
 <div class="line">    <span class="keyword">auto</span> t = s3.GetObjectTagging(bucketName, objName);</div>
-<div class="line">    <span class="keywordflow">if</span>(t != tags) {</div>
-<div class="line">      <span class="keywordflow">if</span>(t.empty()) {</div>
+<div class="line">    <span class="keywordflow">if</span> (t != tags) {</div>
+<div class="line">      <span class="keywordflow">if</span> (t.empty()) {</div>
 <div class="line">        <span class="keywordflow">throw</span> logic_error(<span class="stringliteral">&quot;No tag set&quot;</span>);</div>
 <div class="line">      }</div>
 <div class="line">      <span class="keywordflow">throw</span> logic_error(<span class="stringliteral">&quot;Tags do not match&quot;</span>);</div>
@@ -638,14 +661,14 @@ Example</h1>
 
 </div>
 </div>
-<a id="ad890bd1ecfc978df24b2c3ed641e4081"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad890bd1ecfc978df24b2c3ed641e4081">&#9670;&nbsp;</a></span>CreateBucket()</h2>
+<a id="abea2ccea14a042c7c0d4b2ce5266ea5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abea2ccea14a042c7c0d4b2ce5266ea5f">&#9670;&nbsp;</a></span>CreateBucket()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void sss::api::S3Api::CreateBucket </td>
+          <td class="memname">string sss::api::S3Api::CreateBucket </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>bucket</em>, </td>
@@ -654,7 +677,13 @@ Example</h1>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> &amp;&#160;</td>
-          <td class="paramname"><em>headers</em> = <code>{{}}</code>&#160;</td>
+          <td class="paramname"><em>headers</em> = <code>{{}}</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>locationConstraint</em> = <code>std::string()</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -668,18 +697,20 @@ Example</h1>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bucket</td><td>bucket name</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">headers</td><td>optional HTTP headers as {name, value} map </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">headers</td><td>optional HTTP headers as {name, value} map</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">locationConstraint</td><td>bucket location e.g. <code>ap-east-1</code> or <code>EU</code> refer to the updated list on the AWS web site</td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>bucket location </dd></dl>
 
-<p class="reference">References <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a75626dcbb93c2d85dae72c30b76a5455">sss::api::S3Api::SendParams::bucket</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a0f1c928d7bf8e61a6506a0582179c54b">sss::api::S3Api::SendParams::headers</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a201e22ddcfd847d297cbeadcd299296b">sss::api::S3Api::SendParams::method</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
+<p class="reference">References <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a75626dcbb93c2d85dae72c30b76a5455">sss::api::S3Api::SendParams::bucket</a>, <a class="el" href="classsss_1_1WebClient.html#a42af351286f1fa68c3385d81f0bc2015">sss::WebClient::GetHeaderText()</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a0f1c928d7bf8e61a6506a0582179c54b">sss::api::S3Api::SendParams::headers</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a201e22ddcfd847d297cbeadcd299296b">sss::api::S3Api::SendParams::method</a>, <a class="el" href="group__Internal.html#gab5b85dd69c3bfe70d89c96b77b5b46f2">sss::ParseHeaders()</a>, <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>, and <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a7e03a74f08cff00c22f9a22b078fce86">sss::api::S3Api::SendParams::uploadData</a>.</p>
 <div id="dynsection-5" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-5-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-5-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-5-content" class="dyncontent" style="display:none;">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_ad890bd1ecfc978df24b2c3ed641e4081_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_abea2ccea14a042c7c0d4b2ce5266ea5f_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 
@@ -794,8 +825,55 @@ Example</h1>
 
 </div>
 </div>
-<a id="a14a75f15eb71fbba8639673100768b67"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a14a75f15eb71fbba8639673100768b67">&#9670;&nbsp;</a></span>DeleteObject()</h2>
+<a id="a062a3a07fb8ade39db1e46426ff939d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a062a3a07fb8ade39db1e46426ff939d8">&#9670;&nbsp;</a></span>DeleteBucketTagging()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sss::api::S3Api::DeleteBucketTagging </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>bucket</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> &amp;&#160;</td>
+          <td class="paramname"><em>headers</em> = <code>{}</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Remove all tags from bucket. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bucket</td><td>bucket name </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">headers</td><td>optional http headers as {name, value} map </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="reference">References <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a75626dcbb93c2d85dae72c30b76a5455">sss::api::S3Api::SendParams::bucket</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a0f1c928d7bf8e61a6506a0582179c54b">sss::api::S3Api::SendParams::headers</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a201e22ddcfd847d297cbeadcd299296b">sss::api::S3Api::SendParams::method</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a1a2fd2387abb6d88e8b149870bbb4722">sss::api::S3Api::SendParams::params</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
+<div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-8-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-8-content" class="dyncontent" style="display:none;">
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a062a3a07fb8ade39db1e46426ff939d8_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+</div>
+
+</div>
+</div>
+<a id="ade1a193696061cfc0e6dff4a6975f8b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade1a193696061cfc0e6dff4a6975f8b3">&#9670;&nbsp;</a></span>DeleteObject()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -816,7 +894,13 @@ Example</h1>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> &amp;&#160;</td>
-          <td class="paramname"><em>headers</em> = <code>{{}}</code>&#160;</td>
+          <td class="paramname"><em>headers</em> = <code>{}</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>versionId</em> = <code>&quot;&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -831,18 +915,73 @@ Example</h1>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bucket</td><td>bucket name</td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>key name</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">optional</td><td>http headers as {name, value} map sent along with request </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">headers</td><td>optional http headers as {name, value} map sent along with request</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">versionId</td><td>version id, leave blank for latest version or in case versioning is not enabled </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="reference">References <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a75626dcbb93c2d85dae72c30b76a5455">sss::api::S3Api::SendParams::bucket</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a0f1c928d7bf8e61a6506a0582179c54b">sss::api::S3Api::SendParams::headers</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a542f9452a964a861378c89e2d90420ac">sss::api::S3Api::SendParams::key</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a201e22ddcfd847d297cbeadcd299296b">sss::api::S3Api::SendParams::method</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
-<div id="dynsection-8" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-8-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-8-summary" class="dynsummary" style="display:block;">
+<p class="reference">References <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a75626dcbb93c2d85dae72c30b76a5455">sss::api::S3Api::SendParams::bucket</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a0f1c928d7bf8e61a6506a0582179c54b">sss::api::S3Api::SendParams::headers</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a542f9452a964a861378c89e2d90420ac">sss::api::S3Api::SendParams::key</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a201e22ddcfd847d297cbeadcd299296b">sss::api::S3Api::SendParams::method</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a1a2fd2387abb6d88e8b149870bbb4722">sss::api::S3Api::SendParams::params</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
+<div id="dynsection-9" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-9-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-8-content" class="dyncontent" style="display:none;">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a14a75f15eb71fbba8639673100768b67_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div id="dynsection-9-content" class="dyncontent" style="display:none;">
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_ade1a193696061cfc0e6dff4a6975f8b3_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+</div>
+
+</div>
+</div>
+<a id="a23419050019b63bc5548181344067f01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23419050019b63bc5548181344067f01">&#9670;&nbsp;</a></span>DeleteObjectTagging()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sss::api::S3Api::DeleteObjectTagging </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>bucket</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> &amp;&#160;</td>
+          <td class="paramname"><em>headers</em> = <code>{}</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Remove all tags from object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bucket</td><td>bucket name </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>name </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">headers</td><td>optional http headers as {name, value} map </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="reference">References <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a75626dcbb93c2d85dae72c30b76a5455">sss::api::S3Api::SendParams::bucket</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a0f1c928d7bf8e61a6506a0582179c54b">sss::api::S3Api::SendParams::headers</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a542f9452a964a861378c89e2d90420ac">sss::api::S3Api::SendParams::key</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a201e22ddcfd847d297cbeadcd299296b">sss::api::S3Api::SendParams::method</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a1a2fd2387abb6d88e8b149870bbb4722">sss::api::S3Api::SendParams::params</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
+<div id="dynsection-10" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-10-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-10-content" class="dyncontent" style="display:none;">
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a23419050019b63bc5548181344067f01_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 
@@ -871,11 +1010,11 @@ Example</h1>
 </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>endpoint <a class="el" href="structsss_1_1URL.html" title="URL type.">URL</a> </dd></dl>
-<div id="dynsection-9" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-9-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-9-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-11" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-11-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-9-content" class="dyncontent" style="display:none;">
+<div id="dynsection-11-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a70f1068d07e1d4c1be164e0cb9328cc0_icgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
@@ -907,11 +1046,11 @@ Example</h1>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="structsss_1_1api_1_1AccessControlPolicy.html" title="XML -&gt; C++ mapping of AccessControlPolicy https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBuck...">AccessControlPolicy</a> </dd></dl>
 
 <p class="reference">References <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a75626dcbb93c2d85dae72c30b76a5455">sss::api::S3Api::SendParams::bucket</a>, <a class="el" href="classsss_1_1WebClient.html#ac9e82fc4b56b142d91f9b104f5266f91">sss::WebClient::GetContentText()</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a201e22ddcfd847d297cbeadcd299296b">sss::api::S3Api::SendParams::method</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a1a2fd2387abb6d88e8b149870bbb4722">sss::api::S3Api::SendParams::params</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
-<div id="dynsection-10" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-10-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-10-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-12" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-12-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-10-content" class="dyncontent" style="display:none;">
+<div id="dynsection-12-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a3b53152bf39143843a4033aa4a1b3fa0_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
@@ -944,19 +1083,57 @@ Example</h1>
 <dl class="section return"><dt>Returns</dt><dd><code>tag name =&gt; tag value</code> map </dd></dl>
 
 <p class="reference">References <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a75626dcbb93c2d85dae72c30b76a5455">sss::api::S3Api::SendParams::bucket</a>, <a class="el" href="classsss_1_1WebClient.html#ac9e82fc4b56b142d91f9b104f5266f91">sss::WebClient::GetContentText()</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a201e22ddcfd847d297cbeadcd299296b">sss::api::S3Api::SendParams::method</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a1a2fd2387abb6d88e8b149870bbb4722">sss::api::S3Api::SendParams::params</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
-<div id="dynsection-11" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-11-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-11-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-13" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-13-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-11-content" class="dyncontent" style="display:none;">
+<div id="dynsection-13-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_afdb9997dfbd29512cbfe8da9f0028cf8_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 
 </div>
 </div>
-<a id="a1196f1cb9ce1e5d69336e9b8dbb5d59c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1196f1cb9ce1e5d69336e9b8dbb5d59c">&#9670;&nbsp;</a></span>GetFileObject()</h2>
+<a id="a26387e640fa4d3c0715dc48f932ae410"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26387e640fa4d3c0715dc48f932ae410">&#9670;&nbsp;</a></span>GetBucketVersioning()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structsss_1_1api_1_1S3Api_1_1VersioningInfo.html">S3Api::VersioningInfo</a> sss::api::S3Api::GetBucketVersioning </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>bucket</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Retrieve versioning status. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bucket</td><td>bucket name</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>versioning info: if enabled and if MFA delete enabled </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="structsss_1_1api_1_1S3Api_1_1VersioningInfo.html" title="versioning information">VersioningInfo</a> </dd></dl>
+
+<p class="reference">References <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a75626dcbb93c2d85dae72c30b76a5455">sss::api::S3Api::SendParams::bucket</a>, <a class="el" href="classsss_1_1WebClient.html#ac9e82fc4b56b142d91f9b104f5266f91">sss::WebClient::GetContentText()</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a201e22ddcfd847d297cbeadcd299296b">sss::api::S3Api::SendParams::method</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a1a2fd2387abb6d88e8b149870bbb4722">sss::api::S3Api::SendParams::params</a>, <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>, and <a class="el" href="group__Parsing.html#gacf486071ed8bd3e6f76fe9ee23639bde">sss::XMLTag()</a>.</p>
+<div id="dynsection-14" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-14-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-14-content" class="dyncontent" style="display:none;">
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a26387e640fa4d3c0715dc48f932ae410_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+</div>
+
+</div>
+</div>
+<a id="ac2848a787b6656ee031822a1ad698de4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2848a787b6656ee031822a1ad698de4">&#9670;&nbsp;</a></span>GetFileObject()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1001,7 +1178,13 @@ Example</h1>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a>&#160;</td>
-          <td class="paramname"><em>headers</em> = <code>{{}}</code>&#160;</td>
+          <td class="paramname"><em>headers</em> = <code>{{}}</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>versionId</em> = <code>&quot;&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1021,24 +1204,25 @@ Example</h1>
     <tr><td class="paramdir">[in]</td><td class="paramname">beginReadOffset</td><td>offset of first byte to read from object </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">endReadOffset</td><td>offset of last byte to read from object </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">headers</td><td>optional headers </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">versionId</td><td>version id </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="reference">References <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a75626dcbb93c2d85dae72c30b76a5455">sss::api::S3Api::SendParams::bucket</a>, <a class="el" href="classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31">Config()</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a0f1c928d7bf8e61a6506a0582179c54b">sss::api::S3Api::SendParams::headers</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a542f9452a964a861378c89e2d90420ac">sss::api::S3Api::SendParams::key</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a201e22ddcfd847d297cbeadcd299296b">sss::api::S3Api::SendParams::method</a>, <a class="el" href="classsss_1_1WebClient.html#aa1d7484f0e09242ce53b24f9648ce50e">sss::WebClient::Send()</a>, and <a class="el" href="classsss_1_1WebClient.html#a002876073b3869a9b9a9d709d14f1d7e">sss::WebClient::SetWriteFunction()</a>.</p>
-<div id="dynsection-12" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-12-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-12-summary" class="dynsummary" style="display:block;">
+<p class="reference">References <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a75626dcbb93c2d85dae72c30b76a5455">sss::api::S3Api::SendParams::bucket</a>, <a class="el" href="classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31">Config()</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a0f1c928d7bf8e61a6506a0582179c54b">sss::api::S3Api::SendParams::headers</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a542f9452a964a861378c89e2d90420ac">sss::api::S3Api::SendParams::key</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a201e22ddcfd847d297cbeadcd299296b">sss::api::S3Api::SendParams::method</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a1a2fd2387abb6d88e8b149870bbb4722">sss::api::S3Api::SendParams::params</a>, <a class="el" href="classsss_1_1WebClient.html#aa1d7484f0e09242ce53b24f9648ce50e">sss::WebClient::Send()</a>, and <a class="el" href="classsss_1_1WebClient.html#a002876073b3869a9b9a9d709d14f1d7e">sss::WebClient::SetWriteFunction()</a>.</p>
+<div id="dynsection-15" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-15-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-15-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-12-content" class="dyncontent" style="display:none;">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a1196f1cb9ce1e5d69336e9b8dbb5d59c_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div id="dynsection-15-content" class="dyncontent" style="display:none;">
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_ac2848a787b6656ee031822a1ad698de4_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 
 </div>
 </div>
-<a id="a0bb4e0b77028dadd78fcf5496ab6fca3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0bb4e0b77028dadd78fcf5496ab6fca3">&#9670;&nbsp;</a></span>GetObject() <span class="overload">[1/3]</span></h2>
+<a id="a84b0c469a3e9831f852d799d2c56bc40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84b0c469a3e9831f852d799d2c56bc40">&#9670;&nbsp;</a></span>GetObject() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1083,7 +1267,13 @@ Example</h1>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a>&#160;</td>
-          <td class="paramname"><em>headers</em> = <code>{{}}</code>&#160;</td>
+          <td class="paramname"><em>headers</em> = <code>{{}}</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>versionId</em> = <code>&quot;&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1102,25 +1292,16 @@ Example</h1>
     <tr><td class="paramdir">[in]</td><td class="paramname">writeOffset</td><td>offset in output buffer</td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">beginReadOffset</td><td>offset of first byte read from object</td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">endReadOffset</td><td>offset of last byte read from object</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">optional</td><td>http headers as {name, value} map sent along with request </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">optional</td><td>http headers as {name, value} map sent along with request</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">versionId</td><td>version id, leave blank for latest version or in case versioning is not enabled </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="reference">References <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a75626dcbb93c2d85dae72c30b76a5455">sss::api::S3Api::SendParams::bucket</a>, <a class="el" href="classsss_1_1WebClient.html#a77a4e0190a4f207b969cb63b6ba38ccc">sss::WebClient::GetResponseBody()</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a0f1c928d7bf8e61a6506a0582179c54b">sss::api::S3Api::SendParams::headers</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a542f9452a964a861378c89e2d90420ac">sss::api::S3Api::SendParams::key</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a201e22ddcfd847d297cbeadcd299296b">sss::api::S3Api::SendParams::method</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
-<div id="dynsection-13" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-13-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-13-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-13-content" class="dyncontent" style="display:none;">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a0bb4e0b77028dadd78fcf5496ab6fca3_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
-
-</div>
-</div>
-<a id="a62695addc7c86b5fa73465d0d80ec1fa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a62695addc7c86b5fa73465d0d80ec1fa">&#9670;&nbsp;</a></span>GetObject() <span class="overload">[2/3]</span></h2>
+<a id="a4ef1dbb4c1ea95c5b9b83c1045b584f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ef1dbb4c1ea95c5b9b83c1045b584f8">&#9670;&nbsp;</a></span>GetObject() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1165,7 +1346,13 @@ Example</h1>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a>&#160;</td>
-          <td class="paramname"><em>headers</em> = <code>{{}}</code>&#160;</td>
+          <td class="paramname"><em>headers</em> = <code>{{}}</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>versionId</em> = <code>&quot;&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1184,31 +1371,22 @@ Example</h1>
     <tr><td class="paramdir">[in]</td><td class="paramname">writeOffset</td><td>offset in output buffer</td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">beginReadOffset</td><td>offset of first byte read from object</td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">endReadOffset</td><td>offset of last byte read from object</td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">optional</td><td>http headers as {name, value} map sent along with request </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">optional</td><td>http headers as {name, value} map sent along with request</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">versionId</td><td>version id, leave blank for latest version or in case versioning is not enabled </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="reference">References <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a75626dcbb93c2d85dae72c30b76a5455">sss::api::S3Api::SendParams::bucket</a>, <a class="el" href="classsss_1_1WebClient.html#a77a4e0190a4f207b969cb63b6ba38ccc">sss::WebClient::GetResponseBody()</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a0f1c928d7bf8e61a6506a0582179c54b">sss::api::S3Api::SendParams::headers</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a542f9452a964a861378c89e2d90420ac">sss::api::S3Api::SendParams::key</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a201e22ddcfd847d297cbeadcd299296b">sss::api::S3Api::SendParams::method</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
-<div id="dynsection-14" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-14-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-14-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-14-content" class="dyncontent" style="display:none;">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a62695addc7c86b5fa73465d0d80ec1fa_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
-
-</div>
-</div>
-<a id="af61465d92c0a94aa82ae863fc2a776a0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af61465d92c0a94aa82ae863fc2a776a0">&#9670;&nbsp;</a></span>GetObject() <span class="overload">[3/3]</span></h2>
+<a id="a26b7eab2f8b9844f0277fe5a253db3ac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a26b7eab2f8b9844f0277fe5a253db3ac">&#9670;&nbsp;</a></span>GetObject() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="group__Types.html#ga9a03838eeab410fbc2118ed838d96bf5">CharArray</a> &amp; sss::api::S3Api::GetObject </td>
+          <td class="memname">const <a class="el" href="group__Types.html#ga9a03838eeab410fbc2118ed838d96bf5">CharArray</a>&amp; sss::api::S3Api::GetObject </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&#160;</td>
           <td class="paramname"><em>bucket</em>, </td>
@@ -1235,7 +1413,13 @@ Example</h1>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a>&#160;</td>
-          <td class="paramname"><em>headers</em> = <code>{{}}</code>&#160;</td>
+          <td class="paramname"> = <code>{{}}</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>versionId</em> = <code>&quot;&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1253,20 +1437,11 @@ Example</h1>
     <tr><td class="paramdir">[in]</td><td class="paramname">beginReadOffset</td><td>offset of first byte read from object</td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">endReadOffset</td><td>offset of last byte read from object</td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">optional</td><td>http headers as {name, value} map sent along with request</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">versionId</td><td>version id, leave blank for latest version or in case versioning is not enabled</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>char</code> array; <code>char</code> is the type used by <code>libcurl</code> </dd></dl>
-
-<p class="reference">References <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a75626dcbb93c2d85dae72c30b76a5455">sss::api::S3Api::SendParams::bucket</a>, <a class="el" href="classsss_1_1WebClient.html#a77a4e0190a4f207b969cb63b6ba38ccc">sss::WebClient::GetResponseBody()</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a0f1c928d7bf8e61a6506a0582179c54b">sss::api::S3Api::SendParams::headers</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a542f9452a964a861378c89e2d90420ac">sss::api::S3Api::SendParams::key</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a201e22ddcfd847d297cbeadcd299296b">sss::api::S3Api::SendParams::method</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
-<div id="dynsection-15" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-15-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-15-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-15-content" class="dyncontent" style="display:none;">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_af61465d92c0a94aa82ae863fc2a776a0_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</div>
 
 </div>
 </div>
@@ -1319,8 +1494,8 @@ Example</h1>
 
 </div>
 </div>
-<a id="a872e80e356e8c404a9b0739d95a0af41"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a872e80e356e8c404a9b0739d95a0af41">&#9670;&nbsp;</a></span>GetObjectSize()</h2>
+<a id="ae6a826615a079564b77bb680b6b75a34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6a826615a079564b77bb680b6b75a34">&#9670;&nbsp;</a></span>GetObjectSize()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1335,7 +1510,13 @@ Example</h1>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>key</em>&#160;</td>
+          <td class="paramname"><em>key</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>versionId</em> = <code>&quot;&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1351,18 +1532,19 @@ Example</h1>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bucket</td><td>bucket name </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>key name </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">versionId</td><td>version id </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>object size </dd></dl>
 
-<p class="reference">References <a class="el" href="group__Internal.html#gad39402e23f6ef63de04e903825a7271a">sss::GetValue()</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22">HeadObject()</a>.</p>
+<p class="reference">References <a class="el" href="group__Internal.html#gad39402e23f6ef63de04e903825a7271a">sss::GetValue()</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#a0382afb5f4a42d477af76ea322324ddd">HeadObject()</a>.</p>
 <div id="dynsection-17" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
   <img id="dynsection-17-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-17-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-17-content" class="dyncontent" style="display:none;">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a872e80e356e8c404a9b0739d95a0af41_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_ae6a826615a079564b77bb680b6b75a34_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 
@@ -1474,6 +1656,8 @@ Example</h1>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Get returned HTTP headers. Use this method to retrieve additional information e.g. <code>versionId</code> after sending a request. </p>
 <dl class="section return"><dt>Returns</dt><dd>{header name, header value} map </dd></dl>
 
 <p class="reference">References <a class="el" href="classsss_1_1WebClient.html#a42af351286f1fa68c3385d81f0bc2015">sss::WebClient::GetHeaderText()</a>, and <a class="el" href="group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5">sss::HTTPHeaders()</a>.</p>
@@ -1521,6 +1705,14 @@ Example</h1>
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a014e8431fd351f9994324527f74ba3e9_cgraph.svg" width="100%" height="300"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
+<div id="dynsection-22" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-22-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-22-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-22-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a014e8431fd351f9994324527f74ba3e9_icgraph.svg" width="462" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
+</div>
 
 </div>
 </div>
@@ -1560,19 +1752,19 @@ Example</h1>
 <dl class="section return"><dt>Returns</dt><dd>HTTP headers as {http header name, value} map </dd></dl>
 
 <p class="reference">References <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a75626dcbb93c2d85dae72c30b76a5455">sss::api::S3Api::SendParams::bucket</a>, <a class="el" href="classsss_1_1WebClient.html#ac9e82fc4b56b142d91f9b104f5266f91">sss::WebClient::GetContentText()</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a0f1c928d7bf8e61a6506a0582179c54b">sss::api::S3Api::SendParams::headers</a>, <a class="el" href="group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5">sss::HTTPHeaders()</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a201e22ddcfd847d297cbeadcd299296b">sss::api::S3Api::SendParams::method</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
-<div id="dynsection-22" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-22-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-22-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-23" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-23-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-23-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-22-content" class="dyncontent" style="display:none;">
+<div id="dynsection-23-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_aa4a2b1cc2c89a52d1aa89e571b785db2_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 
 </div>
 </div>
-<a id="abc84a71b9a88b81afaa353ad17a91d22"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abc84a71b9a88b81afaa353ad17a91d22">&#9670;&nbsp;</a></span>HeadObject()</h2>
+<a id="a0382afb5f4a42d477af76ea322324ddd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0382afb5f4a42d477af76ea322324ddd">&#9670;&nbsp;</a></span>HeadObject()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1593,7 +1785,13 @@ Example</h1>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const <a class="el" href="group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3">Headers</a> &amp;&#160;</td>
-          <td class="paramname"><em>headers</em> = <code>{{}}</code>&#160;</td>
+          <td class="paramname"> = <code>{{}}</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>versionId</em> = <code>&quot;&quot;</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1609,26 +1807,27 @@ Example</h1>
     <tr><td class="paramdir">[in]</td><td class="paramname">bucket</td><td>bucket name</td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">key</td><td>key name</td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">optional</td><td>http headers as {name, value} map sent along with request</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">versionId</td><td>version id, leave blank for latest version or in case versioning is not enabled</td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>HTTP headers as {http header name, value} map </dd></dl>
 
 <p class="reference">References <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a75626dcbb93c2d85dae72c30b76a5455">sss::api::S3Api::SendParams::bucket</a>, <a class="el" href="classsss_1_1WebClient.html#a42af351286f1fa68c3385d81f0bc2015">sss::WebClient::GetHeaderText()</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a0f1c928d7bf8e61a6506a0582179c54b">sss::api::S3Api::SendParams::headers</a>, <a class="el" href="group__Parsing.html#gaca9233a3e8a097605d9168bf860e93e5">sss::HTTPHeaders()</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a542f9452a964a861378c89e2d90420ac">sss::api::S3Api::SendParams::key</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a201e22ddcfd847d297cbeadcd299296b">sss::api::S3Api::SendParams::method</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
-<div id="dynsection-23" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-23-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-23-summary" class="dynsummary" style="display:block;">
-</div>
-<div id="dynsection-23-content" class="dyncontent" style="display:none;">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_abc84a71b9a88b81afaa353ad17a91d22_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
-</div>
 <div id="dynsection-24" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-24-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+  <img id="dynsection-24-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
 <div id="dynsection-24-summary" class="dynsummary" style="display:block;">
 </div>
 <div id="dynsection-24-content" class="dyncontent" style="display:none;">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_abc84a71b9a88b81afaa353ad17a91d22_icgraph.svg" width="451" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a0382afb5f4a42d477af76ea322324ddd_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+</div>
+<div id="dynsection-25" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-25-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-25-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-25-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a0382afb5f4a42d477af76ea322324ddd_icgraph.svg" width="451" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
 
@@ -1661,11 +1860,11 @@ Example</h1>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="structsss_1_1api_1_1BucketInfo.html" title="XML -&gt; C++ mapping of ListBuckets/Buckets response. See https://docs.aws.amazon.com/AmazonS3/latest/A...">BucketInfo</a> </dd></dl>
 
 <p class="reference">References <a class="el" href="classsss_1_1WebClient.html#ac9e82fc4b56b142d91f9b104f5266f91">sss::WebClient::GetContentText()</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a0f1c928d7bf8e61a6506a0582179c54b">sss::api::S3Api::SendParams::headers</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a201e22ddcfd847d297cbeadcd299296b">sss::api::S3Api::SendParams::method</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
-<div id="dynsection-25" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-25-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-25-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-26" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-26-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-26-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-25-content" class="dyncontent" style="display:none;">
+<div id="dynsection-26-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a81e30673c06b609a2ee6e6bfd9130ca6_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
@@ -1723,12 +1922,61 @@ Example</h1>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="structsss_1_1api_1_1S3Api_1_1ListObjectV2Result.html" title="ListObjectsV2 response. See https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2....">ListObjectV2Result</a> </dd></dl>
 
 <p class="reference">References <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a75626dcbb93c2d85dae72c30b76a5455">sss::api::S3Api::SendParams::bucket</a>, <a class="el" href="classsss_1_1WebClient.html#ac9e82fc4b56b142d91f9b104f5266f91">sss::WebClient::GetContentText()</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a0f1c928d7bf8e61a6506a0582179c54b">sss::api::S3Api::SendParams::headers</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a201e22ddcfd847d297cbeadcd299296b">sss::api::S3Api::SendParams::method</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a1a2fd2387abb6d88e8b149870bbb4722">sss::api::S3Api::SendParams::params</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
-<div id="dynsection-26" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-26-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-26-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-27" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-27-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-27-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-26-content" class="dyncontent" style="display:none;">
+<div id="dynsection-27-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a3f00f611cd210a58ac6e8c0555984433_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+</div>
+
+</div>
+</div>
+<a id="a9695a76eb84d3e52800d037f1ef391aa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9695a76eb84d3e52800d037f1ef391aa">&#9670;&nbsp;</a></span>ListObjectVersions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structsss_1_1api_1_1S3Api_1_1ObjectVersionInfo.html">S3Api::ObjectVersionInfo</a> sss::api::S3Api::ListObjectVersions </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>bucket</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>key</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Return all versions and delete markers for object. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bucket</td><td>bucket name</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>\key[in] key name</p>
+<dl class="section return"><dt>Returns</dt><dd>list of versions and delete markers; delete markers are version ids that have been marked as deleted </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="structsss_1_1api_1_1S3Api_1_1ObjectVersionInfo.html" title="object version history">ObjectVersionInfo</a> </dd></dl>
+
+<p class="reference">References <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a75626dcbb93c2d85dae72c30b76a5455">sss::api::S3Api::SendParams::bucket</a>, <a class="el" href="classsss_1_1api_1_1S3Api.html#a014e8431fd351f9994324527f74ba3e9">GetResponseText()</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a542f9452a964a861378c89e2d90420ac">sss::api::S3Api::SendParams::key</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a201e22ddcfd847d297cbeadcd299296b">sss::api::S3Api::SendParams::method</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a1a2fd2387abb6d88e8b149870bbb4722">sss::api::S3Api::SendParams::params</a>, and <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
+<div id="dynsection-28" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-28-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-28-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-28-content" class="dyncontent" style="display:none;">
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a9695a76eb84d3e52800d037f1ef391aa_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 
@@ -1771,11 +2019,11 @@ Example</h1>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="structsss_1_1api_1_1AccessControlPolicy.html" title="XML -&gt; C++ mapping of AccessControlPolicy https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBuck...">AccessControlPolicy</a> </dd></dl>
 
 <p class="reference">References <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a75626dcbb93c2d85dae72c30b76a5455">sss::api::S3Api::SendParams::bucket</a>, <a class="el" href="classsss_1_1WebClient.html#ac9e82fc4b56b142d91f9b104f5266f91">sss::WebClient::GetContentText()</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a201e22ddcfd847d297cbeadcd299296b">sss::api::S3Api::SendParams::method</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a1a2fd2387abb6d88e8b149870bbb4722">sss::api::S3Api::SendParams::params</a>, <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>, and <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a7e03a74f08cff00c22f9a22b078fce86">sss::api::S3Api::SendParams::uploadData</a>.</p>
-<div id="dynsection-27" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-27-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-27-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-29" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-29-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-29-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-27-content" class="dyncontent" style="display:none;">
+<div id="dynsection-29-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_aa35e9b1cc7661cd9bb0d5f2de6cbbc7d_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
@@ -1813,7 +2061,9 @@ Example</h1>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Tag bucket </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Tag bucket. </p>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">bucket</td><td>bucket name </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">tags</td><td>tag map: {tag name =&gt; tag value} </td></tr>
@@ -1823,12 +2073,59 @@ Example</h1>
 </dl>
 
 <p class="reference">References <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
-<div id="dynsection-28" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-28-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-28-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-30" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-30-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-30-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-28-content" class="dyncontent" style="display:none;">
+<div id="dynsection-30-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_ae0b480d21933d41f7ca992ca5abe3091_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+</div>
+
+</div>
+</div>
+<a id="a11f96e3a1f9487688c824fea1831fe71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11f96e3a1f9487688c824fea1831fe71">&#9670;&nbsp;</a></span>PutBucketVersioning()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void sss::api::S3Api::PutBucketVersioning </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>bucket</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>enabled</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Enable bucket versioning. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bucket</td><td>bucket name </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">enables</td><td><code>true</code> to enable, <code>false</code> to disable </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="reference">References <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a75626dcbb93c2d85dae72c30b76a5455">sss::api::S3Api::SendParams::bucket</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a201e22ddcfd847d297cbeadcd299296b">sss::api::S3Api::SendParams::method</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a1a2fd2387abb6d88e8b149870bbb4722">sss::api::S3Api::SendParams::params</a>, <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>, and <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a7e03a74f08cff00c22f9a22b078fce86">sss::api::S3Api::SendParams::uploadData</a>.</p>
+<div id="dynsection-31" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-31-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-31-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-31-content" class="dyncontent" style="display:none;">
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a11f96e3a1f9487688c824fea1831fe71_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 
@@ -1904,11 +2201,11 @@ Example</h1>
 <dl class="section return"><dt>Returns</dt><dd>ETag of uploaded object </dd></dl>
 
 <p class="reference">References <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a75626dcbb93c2d85dae72c30b76a5455">sss::api::S3Api::SendParams::bucket</a>, <a class="el" href="classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31">Config()</a>, <a class="el" href="classsss_1_1WebClient.html#a93d66d3941f37ec425bcdf0eef3836e4">sss::WebClient::ErrorMsg()</a>, <a class="el" href="classsss_1_1WebClient.html#a42af351286f1fa68c3385d81f0bc2015">sss::WebClient::GetHeaderText()</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a0f1c928d7bf8e61a6506a0582179c54b">sss::api::S3Api::SendParams::headers</a>, <a class="el" href="group__Parsing.html#ga020103649cb1ae997e00f10d72ad6acd">sss::HTTPHeader()</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a542f9452a964a861378c89e2d90420ac">sss::api::S3Api::SendParams::key</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a201e22ddcfd847d297cbeadcd299296b">sss::api::S3Api::SendParams::method</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a733fdb2b7a4798fb7540b2f3c7511123">sss::api::S3Api::SendParams::payloadHash</a>, and <a class="el" href="classsss_1_1WebClient.html#aac358c3660f8efeaa8d66186c3f95a7e">sss::WebClient::UploadFile()</a>.</p>
-<div id="dynsection-29" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-29-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-29-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-32" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-32-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-32-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-29-content" class="dyncontent" style="display:none;">
+<div id="dynsection-32-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_ab7affe0834f5892b393e731783b7ccac_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
@@ -2083,11 +2380,11 @@ Example</h1>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="structsss_1_1api_1_1AccessControlPolicy.html" title="XML -&gt; C++ mapping of AccessControlPolicy https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBuck...">AccessControlPolicy</a> </dd></dl>
 
 <p class="reference">References <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a75626dcbb93c2d85dae72c30b76a5455">sss::api::S3Api::SendParams::bucket</a>, <a class="el" href="classsss_1_1WebClient.html#ac9e82fc4b56b142d91f9b104f5266f91">sss::WebClient::GetContentText()</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a542f9452a964a861378c89e2d90420ac">sss::api::S3Api::SendParams::key</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a201e22ddcfd847d297cbeadcd299296b">sss::api::S3Api::SendParams::method</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a1a2fd2387abb6d88e8b149870bbb4722">sss::api::S3Api::SendParams::params</a>, <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>, and <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a7e03a74f08cff00c22f9a22b078fce86">sss::api::S3Api::SendParams::uploadData</a>.</p>
-<div id="dynsection-30" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-30-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-30-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-33" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-33-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-33-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-30-content" class="dyncontent" style="display:none;">
+<div id="dynsection-33-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a2cc08fb777cfc4d24c40bea1cde967e7_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
@@ -2144,11 +2441,11 @@ Example</h1>
 </dl>
 
 <p class="reference">References <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>.</p>
-<div id="dynsection-31" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-31-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-31-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-34" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-34-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-34-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-31-content" class="dyncontent" style="display:none;">
+<div id="dynsection-34-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_ac098e2619080dde98a75b71af8f66eef_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
@@ -2178,11 +2475,11 @@ Example</h1>
 </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>secret token </dd></dl>
-<div id="dynsection-32" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-32-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-32-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-35" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-35-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-35-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-32-content" class="dyncontent" style="display:none;">
+<div id="dynsection-35-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_acfffe29254323fb41231787a0afb7edc_icgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
@@ -2231,19 +2528,19 @@ Example</h1>
 </dl>
 
 <p class="reference">References <a class="el" href="classsss_1_1api_1_1S3Api.html#a840772746fbb0a79c161037da7b24a31">Config()</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a201e22ddcfd847d297cbeadcd299296b">sss::api::S3Api::SendParams::method</a>, <a class="el" href="group__Internal.html#ga2b8b08c2a4994a87377d83ccfa9a6a53">sss::ParseParams()</a>, <a class="el" href="classsss_1_1WebClient.html#aa1d7484f0e09242ce53b24f9648ce50e">sss::WebClient::Send()</a>, <a class="el" href="classsss_1_1WebClient.html#a51ce0ecf6487b6a43072643fe4f4cb4e">sss::WebClient::SetPostData()</a>, <a class="el" href="classsss_1_1WebClient.html#a7dfd984b33a29686fb0355b65b620e99">sss::WebClient::SetUrlEncodedPostData()</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a7e03a74f08cff00c22f9a22b078fce86">sss::api::S3Api::SendParams::uploadData</a>, <a class="el" href="classsss_1_1WebClient.html#ae7b1f77bd4ae44585f2d49ea493bdcc5">sss::WebClient::UploadDataFromBuffer()</a>, and <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#af99ea89f2e18e4f3c86e919223e98bce">sss::api::S3Api::SendParams::urlEncodePostParams</a>.</p>
-<div id="dynsection-33" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-33-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-33-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-36" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-36-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-36-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-33-content" class="dyncontent" style="display:none;">
+<div id="dynsection-36-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a02b4f0c95255f151beb72f0a6bdf5889_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
-<div id="dynsection-34" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-34-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-34-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-37" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-37-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-37-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-34-content" class="dyncontent" style="display:none;">
+<div id="dynsection-37-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a02b4f0c95255f151beb72f0a6bdf5889_icgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
@@ -2320,11 +2617,11 @@ Example</h1>
 </dl>
 
 <p class="reference">References <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>, <a class="el" href="classsss_1_1WebClient.html#a88dbcc61562e84aa9ebf1eabf887ac28">sss::WebClient::SetReadFunction()</a>, and <a class="el" href="classsss_1_1WebClient.html#a002876073b3869a9b9a9d709d14f1d7e">sss::WebClient::SetWriteFunction()</a>.</p>
-<div id="dynsection-35" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-35-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-35-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-38" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-38-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-38-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-35-content" class="dyncontent" style="display:none;">
+<div id="dynsection-38-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a0473917e4d25a4a6fca40d097e4299d6_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
@@ -2354,11 +2651,11 @@ Example</h1>
 </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>signing endpoint <a class="el" href="structsss_1_1URL.html" title="URL type.">URL</a> </dd></dl>
-<div id="dynsection-36" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-36-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
-<div id="dynsection-36-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-39" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-39-trigger" src="closed.png" alt="+"/> Here is the caller graph for this function:</div>
+<div id="dynsection-39-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-36-content" class="dyncontent" style="display:none;">
+<div id="dynsection-39-content" class="dyncontent" style="display:none;">
 <div class="center"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_ac8625078c491207079abda2a7732ecb1_icgraph.svg" width="407" height="52"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
 </div>
 </div>
@@ -2391,11 +2688,11 @@ Example</h1>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if bucket exist, <code>false</code> otherwise </dd></dl>
 
 <p class="reference">References <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a75626dcbb93c2d85dae72c30b76a5455">sss::api::S3Api::SendParams::bucket</a>, <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a201e22ddcfd847d297cbeadcd299296b">sss::api::S3Api::SendParams::method</a>, <a class="el" href="classsss_1_1api_1_1S3Api.html#a02b4f0c95255f151beb72f0a6bdf5889">Send()</a>, <a class="el" href="classsss_1_1api_1_1S3Api.html#ac8625078c491207079abda2a7732ecb1">SigningEndpoint()</a>, and <a class="el" href="structsss_1_1api_1_1S3Api_1_1SendParams.html#a912d3c331657a12c08c2377d3ca4576a">sss::api::S3Api::SendParams::signUrl</a>.</p>
-<div id="dynsection-37" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-37-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-37-summary" class="dynsummary" style="display:block;">
+<div id="dynsection-40" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-40-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-40-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-37-content" class="dyncontent" style="display:none;">
+<div id="dynsection-40-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_a23223ee1fb701c55af2d942dbf261ae2_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
@@ -2438,12 +2735,12 @@ Example</h1>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>true</code> if key exists, <code>false</code> otherwise </dd></dl>
 
-<p class="reference">References <a class="el" href="classsss_1_1api_1_1S3Api.html#abc84a71b9a88b81afaa353ad17a91d22">HeadObject()</a>.</p>
-<div id="dynsection-38" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
-  <img id="dynsection-38-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
-<div id="dynsection-38-summary" class="dynsummary" style="display:block;">
+<p class="reference">References <a class="el" href="classsss_1_1api_1_1S3Api.html#a0382afb5f4a42d477af76ea322324ddd">HeadObject()</a>.</p>
+<div id="dynsection-41" onclick="return toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;">
+  <img id="dynsection-41-trigger" src="closed.png" alt="+"/> Here is the call graph for this function:</div>
+<div id="dynsection-41-summary" class="dynsummary" style="display:block;">
 </div>
-<div id="dynsection-38-content" class="dyncontent" style="display:none;">
+<div id="dynsection-41-content" class="dyncontent" style="display:none;">
 <div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="classsss_1_1api_1_1S3Api_aa3f7a3001bdad58c7b0c04cbd0dc3236_cgraph.svg" width="100%" height="600"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>

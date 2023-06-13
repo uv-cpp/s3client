@@ -38,7 +38,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSS - S3 Toolkit
-   &#160;<span id="projectnumber">0.9.4</span>
+   &#160;<span id="projectnumber">0.9.5</span>
    </div>
    <div id="projectbrief">S3 client library and applications</div>
   </td>
@@ -106,29 +106,64 @@ $(document).ready(function(){initNavTree('apitest_8markdown.html',''); initResiz
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;All tests read the value of access, key and url endpoint from environment variables which need</div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;to be passed on the command line, e.g. `./bucket-test S3TEST_ACCESS S3TEST_SECRET S3TEST_URL`.</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160; </div>
-<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;Each test driver contains multiple tests whose output is in *CSV* format: </div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;Each test driver contains multiple tests printing output to `stdin` in *CSV* format: </div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160; </div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;`&lt;test name&gt;,&lt;result = `1` for pass | `0` for fail&gt;,&lt;blank | optional error message&gt;`</div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;To test locally, two scripts to run *minio* are provided in the root folder:</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;- `minio_podman_setup.sh`:  downloads and runs *minio* server with *podman*</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;- `minio_run_server.sh`: runs the pre-installed *minio* server</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;and checks that an S3 endpoint is available and accessible and report an error in case of failure. </div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160; </div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;The test drivers will create buckets and objects named `sss-api-test-` + timestamp.</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;The scripts print and optionally store into a file the url, access and secret to use.</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;Tests require an S3 endpoint to be accessible.</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160; </div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;Both scripts require the following arguments:</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;- *instance name*: *minio* instance name; added into `.mc/config.json`</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;- *storage path*: directory where data are stored</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;- (optional): file name where code to set environment variable is written</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160; </div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;One option is to use the free *play.min.io* service; other options are to </div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;configure a local instance of the *minio* server or use an AWS S3 account.</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;When testing with an AWS S3 account extract credentials from file `.aws/credentials`</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;and use the url: `https://s3.&lt;region e.g. us-east-1&gt;.amazonaws.com` as the endpoint.</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160; </div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;It is also possible to test everything  using the free `play.min.io` service.</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;Credentials for `play.min.ui` should already be present in the `.mc/config.json` file</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;created by the *minio* client.</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;The access and secret keys for *play.min.io* are stored inside the</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;`~/.mc/config.json` file configured after installing the</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;[minio client](https://min.io/docs/minio/linux/reference/minio-mc.html).</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160; </div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;Each test driver will first check that an S3 endpoint is available and accessible and report an error in case of failure. </div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;The test drivers will create buckets and objects named `sss-api-test-` + timestamp.</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;The script `minio_podman_setup.sh` downloads configures and runs a *minio* server instance</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;inside a container using *podman*.</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;Run the script after building all the applications, making sure that</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;the `s3-gen-credentials` executable is findable through the `PATH` variable.</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160; </div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;Usage</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;```sh</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;./minio_podman_setup.sh &lt;minio alias&gt; &lt;data path&gt;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;```</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;Run</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;```sh</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;chmod u+x ./minio_podman_setup.sh</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;./minio_podman_setup.sh myalias ~/tmp/minio_data</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;```</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;In cases where the *minio* server is already installed and available, you can </div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;invoke the `minio_run_server.sh` instead.</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160; </div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;```sh</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;chmod u+x ./minio_run_server.sh</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;./minio_run_server.sh myalias ~/tmp/minio_data</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;```</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;Both scripts output access, secret and URL which should be stored into </div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;environment variables, the optional third argument to the scripts is the name of</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;the file where environment variables are stored: use `source` &lt;filename&gt; to set</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;all environment variables.</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;The `test` directory includes tests for the high level interface and the S3 API.</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160; </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;All tests require passing the name of the environment variables storing access,</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;secret and endpoint URL information.</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;The provided `.sh` scripts inside the `test` directory can run all the tests</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;at once.</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -38,7 +38,7 @@
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">SSS - S3 Toolkit
-   &#160;<span id="projectnumber">0.9.4</span>
+   &#160;<span id="projectnumber">0.9.5</span>
    </div>
    <div id="projectbrief">S3 client library and applications</div>
   </td>
@@ -113,7 +113,7 @@ $(document).ready(function(){initNavTree('presign_8markdown.html',''); initResiz
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;export PRESIGN=`build/s3-presign -a $S3CLIENT_TEST_ACCESS -s $S3CLIENT_TEST_SECRET -e $S3CLIENT_TEST_URL -m &quot;PUT&quot; -x 10000 -b buck -k xxx`</div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;```</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;### Upload object</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;Invoke `curl` and specify custom metadata field.</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;Invoke `curl` and specify custom metadata field by adding an `x-amz-meta-` header.</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;```</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;curl $PRESIGN -X PUT -F &quot;file=@CMakeCache.txt&quot; -H &quot;x-amz-meta-mymeta:123&quot;</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;```</div>
@@ -124,7 +124,7 @@ $(document).ready(function(){initNavTree('presign_8markdown.html',''); initResiz
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;build/s3-client -a $S3CLIENT_TEST_ACCESS -s $S3CLIENT_TEST_SECRET -e $S3CLIENT_TEST_URL -b buck -k xxx -m HEAD</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;```</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160; </div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;Output</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;**Output**</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;```</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;HTTP/1.1 200 OK</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;Accept-Ranges: bytes</div>
@@ -141,11 +141,11 @@ $(document).ready(function(){initNavTree('presign_8markdown.html',''); initResiz
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;X-Amz-Request-Id: 1756B8D2388779A5</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;X-Content-Type-Options: nosniff</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;X-Xss-Protection: 1; mode=block</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160; </div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;!!!!</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;```</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;```</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;x-amz-meta-mymeta: 123 &lt;===</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;!!!!</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;```</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;```</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;Date: Mon, 17 Apr 2023 12:32:03 GMT</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;```</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>

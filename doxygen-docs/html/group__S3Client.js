@@ -36,7 +36,7 @@ var group__S3Client =
       [ "error", "structsss_1_1BucketValidation.html#a8b6cb36c36c7cd9b7f2baf3a883d15ba", null ],
       [ "valid", "structsss_1_1BucketValidation.html#a6e539458808d2d5777eb7e5f4fdbc8bb", null ]
     ] ],
-    [ "Download", "group__S3Client.html#gad9e1cbb4715a672101995636897814e4", null ],
+    [ "Download", "group__S3Client.html#gad1f1a2f87bed97738803060ec27a788d", null ],
     [ "GetS3Credentials", "group__S3Client.html#ga7e21b1aa81a654a3c634724912c69383", null ],
     [ "SendS3Request", "group__S3Client.html#gaba88d66bdabd9d5d15bc07a3ce387c50", null ],
     [ "Upload", "group__S3Client.html#gac5f34efe8d5fde67f9c2c006742d6f85", null ],
