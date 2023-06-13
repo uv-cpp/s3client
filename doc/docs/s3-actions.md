@@ -1,9 +1,9 @@
 # S3 Actions
 
-The library includes high level actions such as *donwload to file* and 
-some of the default S3 Actions listed here:
+The library includes high level actions such as *parallel download/upload to/from file* and 
+some of the default S3 Actions listed below.
 
-Future actions will be implemented as free functions accepting an `S3Api` 
+Future actions might be implemented as free functions accepting an `S3Api` 
 context. It is already possible to implement all the available actions using the
 current methods and functions; see `doc/docs/custom_requests.markdown`.
 

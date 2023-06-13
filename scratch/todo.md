@@ -4,6 +4,9 @@
 
 Actions to update:
 
+### PutBucketVersioning
+Enable versioning
+
 ### ListObjectVersions
 Returns metadata about all versions of the objects in a bucket. You can also use request parameters as selection criteria to return metadata about a subset of all the object...
 
