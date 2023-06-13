@@ -40,7 +40,7 @@ namespace sss {
  * @{
  */
 
-/// Handle 400 by throwing \c std::logic_error or \c std::runtime_error
+/// \brief handle errors when sending request receiving an \c 400 response
 /// \throws std::runtime_error if request not sent
 /// \throws std::logic_error if return code >= 400
 /// \param wc reference to WebClient instance

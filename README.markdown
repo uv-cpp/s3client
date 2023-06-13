@@ -279,6 +279,24 @@ Output:
 </ListBucketResult>
 ```
 
+Parse XML text using the included XML parsing framework:
+
+```cpp
+  // print all objects in bucket with "last modified" date 
+  XMLIStream is(req.GetContentText());
+  // when the key is not prefixed with '/' it extracts
+  // all the subtrees matching the prefix and stores 
+  // them into an array of map objects
+  XMLRecords r = is["listbucketresult/contents"];
+  for (const auto &i : r) {
+    cout << "--------------------------" << endl;
+    // prefixing the key with '/' extracts the text
+    // found at the location matching the path
+    cout << i["/key"] << endl;
+    cout << i["/lastmodified"] << endl;
+  }
+```
+
 ### Extract bytes 100-150 from object
 
 Command line:
