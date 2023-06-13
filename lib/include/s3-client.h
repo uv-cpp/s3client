@@ -167,7 +167,10 @@ ETag Upload(const S3DataTransferConfig &cfg, const MetaDataMap &mm = {},
 /// to file specified in \c cfg.file instead.
 /// \param[in] cfg data transfer configuration, \see S3DataTransferConfig
 /// \param[in] sync if `sync==true` perform serial transfer
-void Download(const S3DataTransferConfig &cfg, bool sync = false);
+/// \param[in] versionId version id or blank for latest version or
+/// in case versioning not enabled
+void Download(const S3DataTransferConfig &cfg, bool sync = false,
+              const std::string &versionId = "");
 /// \brief Read S3 credentials from file.
 /// \param[in] fileName name of configuration file in AWS TOML format
 /// \param[in] awsProfile profile

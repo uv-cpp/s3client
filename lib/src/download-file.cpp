@@ -56,33 +56,38 @@ int GetDownloadRetries() { return retriesG; }
 //-----------------------------------------------------------------------------
 void DownloadPart(S3Api &s3, const string &file, const string &bucket,
                   const string &key, size_t offset, size_t partSize,
-                  int maxRetries) {
+                  int maxRetries, const string &versionId) {
   try {
-    s3.GetFileObject(file, bucket, key, offset, offset, offset + partSize - 1);
+    s3.GetFileObject(file, bucket, key, offset, offset, offset + partSize - 1,
+                     {}, versionId);
   } catch (const exception &e) {
     if (retriesG++ > maxRetries)
       throw e;
     else
-      DownloadPart(s3, file, bucket, key, offset, partSize, maxRetries);
+      DownloadPart(s3, file, bucket, key, offset, partSize, maxRetries,
+                   versionId);
   }
 }
 
 //-----------------------------------------------------------------------------
 void DownloadPart(S3Api &s3, char *data, const string &bucket,
                   const string &key, size_t offset, size_t partSize,
-                  int maxRetries) {
+                  int maxRetries, const string &versionId) {
   try {
-    s3.GetObject(bucket, key, data, offset, offset, offset + partSize - 1);
+    s3.GetObject(bucket, key, data, offset, offset, offset + partSize - 1, {},
+                 versionId);
   } catch (const exception &e) {
     if (retriesG++ > maxRetries)
       throw e;
     else
-      DownloadPart(s3, data, bucket, key, offset, partSize, maxRetries);
+      DownloadPart(s3, data, bucket, key, offset, partSize, maxRetries,
+                   versionId);
   }
 }
 //-----------------------------------------------------------------------------
 void DownloadParts(const S3DataTransferConfig &cfg, size_t chunkSize,
-                   int firstPart, int lastPart, size_t objectSize, int jobId) {
+                   int firstPart, int lastPart, size_t objectSize, int jobId,
+                   const string &versionId) {
   size_t offset = jobId * chunkSize;
   chunkSize = min(chunkSize, objectSize - offset);
   const int numParts = lastPart - firstPart;
@@ -92,13 +97,14 @@ void DownloadParts(const S3DataTransferConfig &cfg, size_t chunkSize,
   for (int i = 0; i != numParts; ++i) {
     const size_t size = min(partSize, chunkSize - i * partSize);
     DownloadPart(s3, cfg.data ? cfg.data : cfg.file, cfg.bucket, cfg.key,
-                 offset, size, cfg.maxRetries);
+                 offset, size, cfg.maxRetries, versionId);
     offset += size;
   }
 }
 
 //-----------------------------------------------------------------------------
-void DownloadFile(const S3DataTransferConfig &cfg, bool sync) {
+void DownloadFile(const S3DataTransferConfig &cfg, bool sync,
+                  const string &versionId) {
   retriesG = 0;
   if (cfg.endpoints.empty()) {
     throw std::logic_error("No endpoint specified");
@@ -115,9 +121,10 @@ void DownloadFile(const S3DataTransferConfig &cfg, bool sync) {
   // send parts in parallel and store ETags
   vector<future<void>> dloads(cfg.jobs);
   for (int i = 0; i != cfg.jobs; ++i) {
-    dloads[i] = async(sync ? launch::deferred : launch::async, DownloadParts,
-                      cfg, perJobSize, i * cfg.partsPerJob,
-                      i * cfg.partsPerJob + cfg.partsPerJob, fileSize, i);
+    dloads[i] =
+        async(sync ? launch::deferred : launch::async, DownloadParts, cfg,
+              perJobSize, i * cfg.partsPerJob,
+              i * cfg.partsPerJob + cfg.partsPerJob, fileSize, i, versionId);
   }
   for (auto &i : dloads) {
     i.wait();
@@ -125,7 +132,8 @@ void DownloadFile(const S3DataTransferConfig &cfg, bool sync) {
 }
 
 //-----------------------------------------------------------------------------
-void DownloadData(const S3DataTransferConfig &cfg, bool sync) {
+void DownloadData(const S3DataTransferConfig &cfg, bool sync,
+                  const string &versionId) {
   retriesG = 0;
   if (!cfg.data) {
     throw logic_error("NULL data buffer");
@@ -139,9 +147,10 @@ void DownloadData(const S3DataTransferConfig &cfg, bool sync) {
   // send parts in parallel and store ETags
   vector<future<void>> dloads(cfg.jobs);
   for (int i = 0; i != cfg.jobs; ++i) {
-    dloads[i] = async(sync ? launch::deferred : launch::async, DownloadParts,
-                      cfg, perJobSize, i * cfg.partsPerJob,
-                      i * cfg.partsPerJob + cfg.partsPerJob, cfg.size, i);
+    dloads[i] =
+        async(sync ? launch::deferred : launch::async, DownloadParts, cfg,
+              perJobSize, i * cfg.partsPerJob,
+              i * cfg.partsPerJob + cfg.partsPerJob, cfg.size, i, versionId);
   }
   for (auto &i : dloads) {
     i.wait();
@@ -149,14 +158,15 @@ void DownloadData(const S3DataTransferConfig &cfg, bool sync) {
 }
 
 //-----------------------------------------------------------------------------
-void Download(const S3DataTransferConfig &cfg, bool sync) {
+void Download(const S3DataTransferConfig &cfg, bool sync,
+              const string &versionId) {
   if (!cfg.data && cfg.file.empty()) {
     throw logic_error("File name and data buffer pointer are both NULL");
   }
   if (cfg.data) {
-    DownloadData(cfg, sync);
+    DownloadData(cfg, sync, versionId);
   } else {
-    DownloadFile(cfg, sync);
+    DownloadFile(cfg, sync, versionId);
   }
 }
 } // namespace sss
