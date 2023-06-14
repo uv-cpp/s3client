@@ -7,10 +7,10 @@
 <area shape="rect" id="node13" href="$webclient_8cpp.html" title="implementation of WebClient class, wrapper around libcurl" alt="" coords="734,317,907,373"/>
 <area shape="rect" id="node14" href="$response__parser_8h.html" title="Functions to parse XML and HTTP headers." alt="" coords="859,109,1036,165"/>
 <area shape="rect" id="node8" href="$s3-api_8h.html" title="declarations of S3Api class." alt="" coords="801,421,974,477"/>
-<area shape="rect" id="node4" href="$apps_2s3-client_8cpp.html" title="Send S3v4&#45;signed requests to S3 andpoint and print raw responses." alt="" coords="204,421,379,477"/>
-<area shape="rect" id="node5" href="$parallel__upload_8cpp.html" title="Parallel upload to S3 service." alt="" coords="5,421,180,477"/>
-<area shape="rect" id="node6" href="$presign__url_8cpp.html" title="Presign URL." alt="" coords="403,421,577,477"/>
-<area shape="rect" id="node7" href="$parallel__download_8cpp.html" title="Parallel object download download from S3 service." alt="" coords="601,421,776,477"/>
+<area shape="rect" id="node4" href="$presign__url_8cpp.html" title="Presign URL." alt="" coords="601,421,776,477"/>
+<area shape="rect" id="node5" href="$apps_2s3-client_8cpp.html" title="Send S3v4&#45;signed requests to S3 andpoint and print raw responses." alt="" coords="204,421,379,477"/>
+<area shape="rect" id="node6" href="$parallel__upload_8cpp.html" title="Parallel upload to S3 service." alt="" coords="5,421,180,477"/>
+<area shape="rect" id="node7" href="$parallel__download_8cpp.html" title="Parallel object download download from S3 service." alt="" coords="403,421,577,477"/>
 <area shape="rect" id="node9" href="$bucket-test_8cpp.html" title="bucket tests" alt="" coords="702,525,875,581"/>
 <area shape="rect" id="node10" href="$xmlstreams_8h.html" title="xml parser and generator." alt="" coords="899,525,1073,581"/>
 </map>

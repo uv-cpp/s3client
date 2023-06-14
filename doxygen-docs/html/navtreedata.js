@@ -56,16 +56,16 @@ var NAVTREE =
       ] ]
     ] ],
     [ "Presign", "md_docs_presign.html", [
-      [ "Example: Upload object", "md_docs_presign.html#autotoc_md11", [
-        [ "Presign URL", "md_docs_presign.html#autotoc_md12", null ],
-        [ "Upload object", "md_docs_presign.html#autotoc_md13", null ],
-        [ "Verify upload", "md_docs_presign.html#autotoc_md14", null ]
+      [ "Example: Upload object", "md_docs_presign.html#autotoc_md7", [
+        [ "Presign URL", "md_docs_presign.html#autotoc_md8", null ],
+        [ "Upload object", "md_docs_presign.html#autotoc_md9", null ],
+        [ "Verify upload", "md_docs_presign.html#autotoc_md10", null ]
       ] ]
     ] ],
     [ "S3 Actions", "md_docs_s3_actions.html", [
-      [ "Implemented (26)", "md_docs_s3_actions.html#autotoc_md7", null ],
-      [ "In progress (4)", "md_docs_s3_actions.html#autotoc_md8", null ],
-      [ "All (133)", "md_docs_s3_actions.html#autotoc_md9", null ]
+      [ "Implemented (26)", "md_docs_s3_actions.html#autotoc_md12", null ],
+      [ "In progress (4)", "md_docs_s3_actions.html#autotoc_md13", null ],
+      [ "All (133)", "md_docs_s3_actions.html#autotoc_md14", null ]
     ] ],
     [ "Modules", "modules.html", "modules" ],
     [ "Data Structures", "annotated.html", [

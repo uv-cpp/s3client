@@ -22,11 +22,11 @@
 <!-- Node2 -->
 <g id="node2" class="node">
 <title>Node2</title>
-<g id="a_node2"><a xlink:href="sha256_8cpp.html" target="_top" xlink:title="Implementation of SHA256 algorithm.">
+<g id="a_node2"><a xlink:href="hmac256_8cpp.html" target="_top" xlink:title="implementation of HMAC hashing algorithm.">
 <polygon fill="none" stroke="black" points="0,-0.5 0,-41.5 130,-41.5 130,-0.5 0,-0.5"/>
 <text text-anchor="start" x="8" y="-29.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
 <text text-anchor="start" x="8" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/lib</text>
-<text text-anchor="middle" x="65" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">/hash/sha256.cpp</text>
+<text text-anchor="middle" x="65" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">/hash/hmac256.cpp</text>
 </a>
 </g>
 </g>
@@ -39,11 +39,11 @@
 <!-- Node3 -->
 <g id="node3" class="node">
 <title>Node3</title>
-<g id="a_node3"><a xlink:href="hmac256_8cpp.html" target="_top" xlink:title="implementation of HMAC hashing algorithm.">
+<g id="a_node3"><a xlink:href="sha256_8cpp.html" target="_top" xlink:title="Implementation of SHA256 algorithm.">
 <polygon fill="none" stroke="black" points="148,-0.5 148,-41.5 278,-41.5 278,-0.5 148,-0.5"/>
 <text text-anchor="start" x="156" y="-29.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
 <text text-anchor="start" x="156" y="-18.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/lib</text>
-<text text-anchor="middle" x="213" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">/hash/hmac256.cpp</text>
+<text text-anchor="middle" x="213" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">/hash/sha256.cpp</text>
 </a>
 </g>
 </g>
