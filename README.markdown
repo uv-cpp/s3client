@@ -288,7 +288,7 @@ Parse XML text using the included XML parsing framework:
   // all the subtrees matching the prefix and stores 
   // them into an array of map objects
   XMLRecords r = is["listbucketresult/contents"];
-  for (const auto &i : r) {
+  for (auto i : r) {
     cout << "--------------------------" << endl;
     // prefixing the key with '/' extracts the text
     // found at the location matching the path
