@@ -501,16 +501,6 @@ Extracted from the file-transfer tests.
   }
 ```
 
-## Parallel data transfer
-
-The following considerations apply to the transfer of single large files
-over fast connections only (at least 10 Gib/s) and to S3 services able
-to ingest data at GiB/s rate.
-
-Parallel reads and writes from/to flash memory are faster than serial 
-ones, but with spinning disks the overall performance might not be 
-impacted by transferring data in parallel and even cause a slowdown.
-
 ## License
 
 This software is distributed under the BSD three-clause license and has
