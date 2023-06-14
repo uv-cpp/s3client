@@ -278,10 +278,8 @@ List bucket content</h2>
 <div class="line"><span class="comment">// all the subtrees matching the prefix and stores </span></div>
 <div class="line"><span class="comment">// them into an array of map objects</span></div>
 <div class="line"><a class="code" href="group__Types.html#gac37b0f0f2a46a24a595c6a397f9265b9">XMLRecords</a> r = is[<span class="stringliteral">&quot;listbucketresult/contents&quot;</span>];</div>
-<div class="line"><span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;i : r) {</div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span> i : r) {</div>
 <div class="line">  cout &lt;&lt; <span class="stringliteral">&quot;--------------------------&quot;</span> &lt;&lt; endl;</div>
-<div class="line">  <span class="comment">// prefixing the key with &#39;/&#39; extracts the text</span></div>
-<div class="line">  <span class="comment">// found at the location matching the path</span></div>
 <div class="line">  cout &lt;&lt; i[<span class="stringliteral">&quot;/key&quot;</span>] &lt;&lt; endl;</div>
 <div class="line">  cout &lt;&lt; i[<span class="stringliteral">&quot;/lastmodified&quot;</span>] &lt;&lt; endl;</div>
 <div class="line">}</div>

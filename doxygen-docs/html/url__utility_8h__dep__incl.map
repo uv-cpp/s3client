@@ -1,7 +1,7 @@
 <map id="/home/ugovaretto/projects/uv&#45;cpp/s3client/repo/lib/include/url_utility.h" name="/home/ugovaretto/projects/uv&#45;cpp/s3client/repo/lib/include/url_utility.h">
 <area shape="rect" id="node1" title="Internal utility functions to process and parse text and URLs and create S3 signature keys." alt="" coords="326,5,499,61"/>
-<area shape="rect" id="node2" href="$apps_2s3-client_8cpp.html" title="Send S3v4&#45;signed requests to S3 andpoint and print raw responses." alt="" coords="5,317,180,373"/>
-<area shape="rect" id="node3" href="$parallel__upload_8cpp.html" title="Parallel upload to S3 service." alt="" coords="204,317,379,373"/>
+<area shape="rect" id="node2" href="$parallel__upload_8cpp.html" title="Parallel upload to S3 service." alt="" coords="5,317,180,373"/>
+<area shape="rect" id="node3" href="$apps_2s3-client_8cpp.html" title="Send S3v4&#45;signed requests to S3 andpoint and print raw responses." alt="" coords="204,317,379,373"/>
 <area shape="rect" id="node4" href="$aws__sign_8h.html" title="Public interface to signing URLs and HTTP headers with the S3v4 protocol standard." alt="" coords="397,109,570,165"/>
 <area shape="rect" id="node11" href="$webclient_8h.html" title="declaration of WebClient class wrapping libcurl to send web requests." alt="" coords="594,109,767,165"/>
 <area shape="rect" id="node5" href="$s3-client_8h.html" title="declaration of functions and data types for sending S3 requests, signing URLs and downloading and upl..." alt="" coords="403,213,577,269"/>
