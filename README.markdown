@@ -290,8 +290,6 @@ Parse XML text using the included XML parsing framework:
   XMLRecords r = is["listbucketresult/contents"];
   for (auto i : r) {
     cout << "--------------------------" << endl;
-    // prefixing the key with '/' extracts the text
-    // found at the location matching the path
     cout << i["/key"] << endl;
     cout << i["/lastmodified"] << endl;
   }
