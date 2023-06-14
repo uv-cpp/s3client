@@ -116,19 +116,19 @@ $(document).ready(function(){initNavTree('md_docs_custom_request.html',''); init
 </ul>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md3"></a>
+<h1><a class="anchor" id="autotoc_md12"></a>
 Example: Bucket tagging</h1>
 <p>We wold like to add the ability to tag buckets using code like:</p>
 <div class="fragment"><div class="line"><a class="code" href="group__Types.html#ga015acfebdfb3bb4732f30d455f5fc635">TagMap</a> tags = {{<span class="stringliteral">&quot;tag1&quot;</span>, <span class="stringliteral">&quot;value1&quot;</span>}, {<span class="stringliteral">&quot;tag2&quot;</span>, <span class="stringliteral">&quot;value2&quot;</span>}};</div>
 <div class="line">S3Api s(access, secret, endpointUrl);</div>
 <div class="line">TagBucket(s3, <span class="stringliteral">&quot;MyBucket&quot;</span>, tags);</div>
-<div class="ttc" id="agroup__Types_html_ga015acfebdfb3bb4732f30d455f5fc635"><div class="ttname"><a href="group__Types.html#ga015acfebdfb3bb4732f30d455f5fc635">sss::api::TagMap</a></div><div class="ttdeci">std::unordered_map&lt; std::string, std::string &gt; TagMap</div><div class="ttdoc">{name, value} map representing bucket or object tags.</div><div class="ttdef"><b>Definition:</b> s3-api.h:147</div></div>
+<div class="ttc" id="agroup__Types_html_ga015acfebdfb3bb4732f30d455f5fc635"><div class="ttname"><a href="group__Types.html#ga015acfebdfb3bb4732f30d455f5fc635">sss::api::TagMap</a></div><div class="ttdeci">std::unordered_map&lt; std::string, std::string &gt; TagMap</div><div class="ttdoc">{name, value} map representing bucket or object tags.</div><div class="ttdef"><b>Definition:</b> xml-parse-test.cpp:45</div></div>
 </div><!-- fragment --><p> and read the tags with:</p>
 <div class="fragment"><div class="line">S3Api s3(access, secret, endpointUrl);</div>
 <div class="line"><a class="code" href="group__Types.html#ga015acfebdfb3bb4732f30d455f5fc635">TagMap</a> tags = BucketTags(s3, bucket);</div>
 <div class="line">assert(tags[<span class="stringliteral">&quot;tags1&quot;</span>] == <span class="stringliteral">&quot;value1&quot;</span> &amp;&amp; tags[<span class="stringliteral">&quot;tags2&quot;</span>] == <span class="stringliteral">&quot;value2&quot;</span>);</div>
 </div><!-- fragment --><p>In the next section we are going to implement the <code>TagBucket</code> and <code>BucketTags</code> functions.</p>
-<h2><a class="anchor" id="autotoc_md4"></a>
+<h2><a class="anchor" id="autotoc_md13"></a>
 &lt;tt&gt;TagBucket&lt;/tt&gt;: PutBucketTagging request</h2>
 <p>XML request body:</p>
 <p><a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketTagging.html">AWS Action</a></p>
@@ -181,7 +181,7 @@ Example: Bucket tagging</h1>
 <div class="line">  <span class="keyword">auto</span> args = GeneratePutBucketRequest(bucket, tags, headers);</div>
 <div class="line">  s3.Send(args);</div>
 <div class="line">}</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md5"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md14"></a>
 &lt;tt&gt;BucketTags&lt;/tt&gt;: GetBucketTagging response</h2>
 <p>XML response body:</p>
 <p><a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketTagging.html">AWS Action</a></p>

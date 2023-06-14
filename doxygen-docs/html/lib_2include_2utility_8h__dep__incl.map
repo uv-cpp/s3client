@@ -7,8 +7,8 @@
 <area shape="rect" id="node5" href="$aws__sign_8h.html" title="Public interface to signing URLs and HTTP headers with the S3v4 protocol standard." alt="" coords="397,213,570,269"/>
 <area shape="rect" id="node6" href="$s3-client_8h.html" title="declaration of functions and data types for sending S3 requests, signing URLs and downloading and upl..." alt="" coords="403,317,577,373"/>
 <area shape="rect" id="node9" href="$s3-api_8h.html" title="declarations of S3Api class." alt="" coords="801,421,974,477"/>
-<area shape="rect" id="node7" href="$presign__url_8cpp.html" title="Presign URL." alt="" coords="403,421,577,477"/>
-<area shape="rect" id="node8" href="$parallel__download_8cpp.html" title="Parallel object download download from S3 service." alt="" coords="601,421,776,477"/>
+<area shape="rect" id="node7" href="$parallel__download_8cpp.html" title="Parallel object download download from S3 service." alt="" coords="403,421,577,477"/>
+<area shape="rect" id="node8" href="$presign__url_8cpp.html" title="Presign URL." alt="" coords="601,421,776,477"/>
 <area shape="rect" id="node10" href="$bucket-test_8cpp.html" title="bucket tests" alt="" coords="702,525,875,581"/>
 <area shape="rect" id="node11" href="$xmlstreams_8h.html" title="xml parser and generator." alt="" coords="899,525,1073,581"/>
 <area shape="rect" id="node13" href="$webclient_8cpp.html" title="implementation of WebClient class, wrapper around libcurl" alt="" coords="718,317,891,373"/>

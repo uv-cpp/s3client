@@ -2,8 +2,8 @@ var searchData=
 [
   ['enabled_42',['enabled',['../structsss_1_1api_1_1S3Api_1_1VersioningInfo.html#a0c320e3a3bc05b11a5af1797c5a6a5c0',1,'sss::api::S3Api::VersioningInfo']]],
   ['end_43',['end',['../group__Ranges.html#ga4f73053571587e79eb3db628f5e6ef99',1,'sss']]],
-  ['endpoint_44',['Endpoint',['../classsss_1_1api_1_1S3Api.html#a70f1068d07e1d4c1be164e0cb9328cc0',1,'sss::api::S3Api']]],
-  ['endpoint_45',['endpoint',['../structsss_1_1S3SignUrlConfig.html#a05afa750c0d4344a338f36b21490304b',1,'sss::S3SignUrlConfig::endpoint()'],['../structsss_1_1S3ClientConfig.html#a882a24f02b49adc8060c44a003a25be0',1,'sss::S3ClientConfig::endpoint()']]],
+  ['endpoint_44',['endpoint',['../structsss_1_1S3SignUrlConfig.html#a05afa750c0d4344a338f36b21490304b',1,'sss::S3SignUrlConfig::endpoint()'],['../structsss_1_1S3ClientConfig.html#a882a24f02b49adc8060c44a003a25be0',1,'sss::S3ClientConfig::endpoint()']]],
+  ['endpoint_45',['Endpoint',['../classsss_1_1api_1_1S3Api.html#a70f1068d07e1d4c1be164e0cb9328cc0',1,'sss::api::S3Api']]],
   ['endpoints_46',['endpoints',['../structsss_1_1S3DataTransferConfig.html#a8edd6bf858a4a3265e905d3db1727371',1,'sss::S3DataTransferConfig']]],
   ['error_47',['error',['../structsss_1_1BucketValidation.html#a8b6cb36c36c7cd9b7f2baf3a883d15ba',1,'sss::BucketValidation']]],
   ['errorhandling_48',['ErrorHandling',['../group__ErrorHandling.html',1,'']]],

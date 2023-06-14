@@ -15,7 +15,7 @@ var searchData=
   ['getobjectacl_68',['GetObjectAcl',['../classsss_1_1api_1_1S3Api.html#ae548966dc38f328fc45ee1500f5caf5b',1,'sss::api::S3Api']]],
   ['getobjectsize_69',['GetObjectSize',['../classsss_1_1api_1_1S3Api.html#ae6a826615a079564b77bb680b6b75a34',1,'sss::api::S3Api']]],
   ['getobjecttagging_70',['GetObjectTagging',['../classsss_1_1api_1_1S3Api.html#aceb12e50a72a7b9b3ca460c23671c586',1,'sss::api::S3Api']]],
-  ['getresponsebody_71',['GetResponseBody',['../classsss_1_1api_1_1S3Api.html#a83364bc622245c0396a3bbc46399baf4',1,'sss::api::S3Api::GetResponseBody()'],['../classsss_1_1WebClient.html#a77a4e0190a4f207b969cb63b6ba38ccc',1,'sss::WebClient::GetResponseBody() const']]],
+  ['getresponsebody_71',['GetResponseBody',['../classsss_1_1WebClient.html#a77a4e0190a4f207b969cb63b6ba38ccc',1,'sss::WebClient::GetResponseBody()'],['../classsss_1_1api_1_1S3Api.html#a83364bc622245c0396a3bbc46399baf4',1,'sss::api::S3Api::GetResponseBody()']]],
   ['getresponseheader_72',['GetResponseHeader',['../classsss_1_1WebClient.html#a0b9b001ddc7ce778a613250e27e50731',1,'sss::WebClient']]],
   ['getresponseheaders_73',['GetResponseHeaders',['../classsss_1_1api_1_1S3Api.html#a834e046a52178dcf540509df828b024f',1,'sss::api::S3Api']]],
   ['getresponsetext_74',['GetResponseText',['../classsss_1_1api_1_1S3Api.html#a014e8431fd351f9994324527f74ba3e9',1,'sss::api::S3Api']]],

@@ -449,10 +449,6 @@ Parallel file download</h1>
 <div class="line">  }</div>
 <div class="ttc" id="agroup__S3Client_html_gad1f1a2f87bed97738803060ec27a788d"><div class="ttname"><a href="group__S3Client.html#gad1f1a2f87bed97738803060ec27a788d">sss::Download</a></div><div class="ttdeci">void Download(const S3DataTransferConfig &amp;cfg, bool sync=false, const std::string &amp;versionId=&quot;&quot;)</div><div class="ttdoc">Parallel upload If cfg.data not NULL data is written into cfg.data buffer, to file specified in cfg....</div></div>
 </div><!-- fragment --><h1><a class="anchor" id="autotoc_md29"></a>
-Parallel data transfer</h1>
-<p>The following considerations apply to the transfer of single large files over fast connections only (at least 10 Gib/s) and to S3 services able to ingest data at GiB/s rate.</p>
-<p>Parallel reads and writes from/to flash memory are faster than serial ones, but with spinning disks the overall performance might not be impacted by transferring data in parallel and even cause a slowdown.</p>
-<h1><a class="anchor" id="autotoc_md30"></a>
 License</h1>
 <p>This software is distributed under the BSD three-clause license and has dependencies on the following software libraries:</p>
 <ul>

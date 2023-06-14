@@ -5,7 +5,7 @@ var searchData=
   ['hash_5fto_5ftext_81',['hash_to_text',['../group__Hash.html#gacd06028e095a659cf4fb69e9cf89f085',1,'md5::hash_to_text()'],['../group__Hash.html#gae4eddd1a99fd86a765d81c830c68c9f4',1,'sha256::hash_to_text()']]],
   ['hash_5futility_82',['Hash_Utility',['../group__Hash__Utility.html',1,'']]],
   ['headbucket_83',['HeadBucket',['../classsss_1_1api_1_1S3Api.html#aa4a2b1cc2c89a52d1aa89e571b785db2',1,'sss::api::S3Api']]],
-  ['headers_84',['headers',['../structsss_1_1S3ClientConfig.html#addf19fb521d4b525017efd4a8e16c195',1,'sss::S3ClientConfig::headers()'],['../structsss_1_1S3SignUrlConfig.html#a485ac9cf3cd495ec20dd87b49a63b688',1,'sss::S3SignUrlConfig::headers()'],['../structsss_1_1api_1_1S3Api_1_1SendParams.html#a0f1c928d7bf8e61a6506a0582179c54b',1,'sss::api::S3Api::SendParams::headers()']]],
+  ['headers_84',['headers',['../structsss_1_1api_1_1S3Api_1_1SendParams.html#a0f1c928d7bf8e61a6506a0582179c54b',1,'sss::api::S3Api::SendParams::headers()'],['../structsss_1_1S3ClientConfig.html#addf19fb521d4b525017efd4a8e16c195',1,'sss::S3ClientConfig::headers()'],['../structsss_1_1S3SignUrlConfig.html#a485ac9cf3cd495ec20dd87b49a63b688',1,'sss::S3SignUrlConfig::headers()']]],
   ['headers_85',['Headers',['../group__Types.html#ga715f63ab4ed0dae42d3337ff0a29d5d3',1,'sss']]],
   ['headobject_86',['HeadObject',['../classsss_1_1api_1_1S3Api.html#a0382afb5f4a42d477af76ea322324ddd',1,'sss::api::S3Api']]],
   ['hex_87',['Hex',['../group__Internal.html#ga990dfaae4abc6bf20a28f9772b7bcd16',1,'sss']]],
