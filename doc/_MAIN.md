@@ -8,7 +8,7 @@ All the code is tested on Linux SuSE and Ubuntu, x86 only and MacOS (x86 and ARM
 
 ## Library
 
-* `libs3client`: high level functions to sign and send requests and perform 
+* `libs3client`: high-level functions to sign and send requests and perform 
 parallel uploads/downloads.
 
 S3 API accessible through the `libs3client` library, see `s3-api.h` and 
@@ -16,21 +16,20 @@ S3 API accessible through the `libs3client` library, see `s3-api.h` and
 
 Check out the `app` and `test` folders for usage examples.
 
-A small subset of the S3 actions is implemented, but any request can be sent 
-through the `S3API::Send` method and `SendS3Request` function.
+Only a subset of the available S3 actions is implemented, but any request can be sent 
+through the `S3Api::Send` method and `SendS3Request` function.
 
 XML requests and responses can be generated and parsed using the provided
-high-level XML parsing and generation functions;
-see the `Parsing` module in the Doxygen-generated API documentation or look into the
-`xml_path.h` and `test/xml-parse-test.cpp` files.
+high-level XML parsing and generation functions. See the `Parsing` module in the 
+Doxygen-generated API documentation or look into the `xml_path.h` and 
+`test/xml-parse-test.cpp` files.
 
 In the interest of keeping the interface simple:
   - additional header parameters should be passed as required to the different 
     methods instead of relying on mapped C++ types
   - additional information returned by the various requests should be extracted
-    from headers and body through the \c S3Api::GetResponseText
-    (returns \c std::string instance) and \c S3Api::GetResponseHeaders 
-    (returns \c map instance) method
+    from headers and body through the  `S3Api::GetResponseText` and`S3Api::GetResponseHeaders` 
+    methods
 
 Parallel upload and download works best when reading/writing from SSDs or RAID &
 parallel file-systems with `stripe size = N * (part size)`.
@@ -52,16 +51,15 @@ experimented as well in separate repositories.
 * `s3-client`: send requests and print raw responses
 * `s3-presign`: generate pre-signed `URL`
 * `s3-upload`: (single file) parallel upload
-* `s3-download`: (singe file) parallel download
+* `s3-download`: (single file) parallel download
 * `s3-gen-credentials`: generate access and secret keys
 
 Launch without arguments to see options.
 
-
 ## Build and install
 
 The `install.sh` script includes the code for checking out the code, building
-and installing to a user specified path.
+and installing applications and libraries.
 Just [download](https://raw.githubusercontent.com/uv-cpp/s3client/main/install.sh)
 and run.
 
@@ -91,9 +89,9 @@ under `${CMAKE_INSTALL_PREFIX}/bin`.
 
 ### Compilation options
 
-By default the library and all the command line tools and the S3 API extensions are built.
+By default, the library, command line tools and the S3 API extensions are built.
 
-To disable building the command line tools set `APPS=OFF`, when this option is disabled,
+To disable building the command line tools set `APPS=OFF`; when this option is disabled,
 no external dependencies are required other than *libcurl*.
 
 ## Test
@@ -109,7 +107,7 @@ The access and secret keys for *play.min.io* are stored inside the
 `~/.mc/config.json` file configured after installing the
 [minio client](https://min.io/docs/minio/linux/reference/minio-mc.html).
 
-The script `minio_podman_setup.sh` downloads configures and runs a *minio* server instance
+The `minio_podman_setup.sh` script downloads configures and runs a *minio* server instance
 inside a container using *podman*.
 
 Run the script after building all the applications, making sure that
@@ -127,7 +125,7 @@ chmod u+x ./minio_podman_setup.sh
 ```
 
 In cases where the *minio* server is already installed and available, you can 
-invoke the `minio_run_server.sh` instead.
+invoke the `minio_run_server.sh` script instead.
 
 ```sh
 chmod u+x ./minio_run_server.sh
@@ -136,10 +134,10 @@ chmod u+x ./minio_run_server.sh
 
 Both scripts output access, secret and URL which should be stored into 
 environment variables, the optional third argument to the scripts is the name of
-the file where environment variables are stored: use `source` <filename> to set
+the file where environment variables are stored: use `source <filename>` to set
 all environment variables.
 
-The `test` directory includes tests for the high level interface and the S3 API.
+The `test` directory includes tests for the high-level interface and the S3 API.
 
 All tests require passing the name of the environment variables storing access,
 secret and endpoint URL information.
@@ -508,5 +506,5 @@ dependencies on the following software libraries:
 
 * *libcurl* - distributed under the curl license, derived from MIT/X
 * *Lyra* - distributed under the Boost license version 1.0
-* *Tinyxml2* - zlib (included in source tree)
+* *Tinyxml2* - zlib (included in the source tree)
 * *Doxygen Awesome* - MIT 
