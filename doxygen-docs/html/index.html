@@ -104,15 +104,15 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <h1><a class="anchor" id="autotoc_md15"></a>
 Library</h1>
 <ul>
-<li><code>libs3client</code>: high level functions to sign and send requests and perform parallel uploads/downloads.</li>
+<li><code>libs3client</code>: high-level functions to sign and send requests and perform parallel uploads/downloads.</li>
 </ul>
 <p>S3 API accessible through the <code>libs3client</code> library, see <code><a class="el" href="s3-api_8h.html" title="declarations of S3Api class.">s3-api.h</a></code> and <code><a class="el" href="s3-client_8h.html" title="declaration of functions and data types for sending S3 requests, signing URLs and downloading and upl...">s3-client.h</a></code> includes.</p>
 <p>Check out the <code>app</code> and <code>test</code> folders for usage examples.</p>
-<p>A small subset of the S3 actions is implemented, but any request can be sent through the <code>S3API::Send</code> method and <code>SendS3Request</code> function.</p>
-<p>XML requests and responses can be generated and parsed using the provided high-level XML parsing and generation functions; see the <code>Parsing</code> module in the Doxygen-generated API documentation or look into the <code>xml_path.h</code> and <code>test/xml-parse-test.cpp</code> files.</p>
+<p>Only a subset of the available S3 actions is implemented, but any request can be sent through the <code>S3Api::Send</code> method and <code>SendS3Request</code> function.</p>
+<p>XML requests and responses can be generated and parsed using the provided high-level XML parsing and generation functions. See the <code>Parsing</code> module in the Doxygen-generated API documentation or look into the <code>xml_path.h</code> and <code>test/xml-parse-test.cpp</code> files.</p>
 <p>In the interest of keeping the interface simple:</p><ul>
 <li>additional header parameters should be passed as required to the different methods instead of relying on mapped C++ types</li>
-<li>additional information returned by the various requests should be extracted from headers and body through the <code>S3Api::GetResponseText</code> (returns <code>std::string</code> instance) and <code>S3Api::GetResponseHeaders</code> (returns <code>map</code> instance) method</li>
+<li>additional information returned by the various requests should be extracted from headers and body through the <code>S3Api::GetResponseText</code> and<code>S3Api::GetResponseHeaders</code> methods</li>
 </ul>
 <p>Parallel upload and download works best when reading/writing from SSDs or RAID &amp; parallel file-systems with <code>stripe size = N * (part size)</code>.</p>
 <p>The code is <code>C++17</code> compliant.</p>
@@ -125,13 +125,13 @@ Applications</h1>
 <li><code>s3-client</code>: send requests and print raw responses</li>
 <li><code>s3-presign</code>: generate pre-signed <code>URL</code></li>
 <li><code>s3-upload</code>: (single file) parallel upload</li>
-<li><code>s3-download</code>: (singe file) parallel download</li>
+<li><code>s3-download</code>: (single file) parallel download</li>
 <li><code>s3-gen-credentials</code>: generate access and secret keys</li>
 </ul>
 <p>Launch without arguments to see options.</p>
 <h1><a class="anchor" id="autotoc_md17"></a>
 Build and install</h1>
-<p>The <code>install.sh</code> script includes the code for checking out the code, building and installing to a user specified path. Just <a href="https://raw.githubusercontent.com/uv-cpp/s3client/main/install.sh">download</a> and run.</p>
+<p>The <code>install.sh</code> script includes the code for checking out the code, building and installing applications and libraries. Just <a href="https://raw.githubusercontent.com/uv-cpp/s3client/main/install.sh">download</a> and run.</p>
 <div class="fragment"><div class="line">bash ./install.sh &lt;install path&gt;</div>
 </div><!-- fragment --><p><code>libcurl</code> must be available for the code to build.</p>
 <p>...or build it manually</p>
@@ -147,23 +147,23 @@ Build and install</h1>
 <p>Include files are found under <code>${CMAKE_INSTALL_PREFIX}/include/s3client</code>. The library is found under <code>${CMAKE_INSTALL_PREFIX}/lib</code> and the executables under <code>${CMAKE_INSTALL_PREFIX}/bin</code>.</p>
 <h2><a class="anchor" id="autotoc_md18"></a>
 Compilation options</h2>
-<p>By default the library and all the command line tools and the S3 API extensions are built.</p>
-<p>To disable building the command line tools set <code>APPS=OFF</code>, when this option is disabled, no external dependencies are required other than <em>libcurl</em>.</p>
+<p>By default, the library, command line tools and the S3 API extensions are built.</p>
+<p>To disable building the command line tools set <code>APPS=OFF</code>; when this option is disabled, no external dependencies are required other than <em>libcurl</em>.</p>
 <h1><a class="anchor" id="autotoc_md19"></a>
 Test</h1>
 <p>In order to test the tools and API you need access to an S3 storage service. One option is to use the free <em>play.min.io</em> service; other options are to configure a local instance of the <em>minio</em> server or use an AWS S3 account.</p>
 <p>When testing with an AWS S3 account extract credentials from file <code>.aws/credentials</code> and use the url: <code><a href="https://s3">https://s3</a>.&lt;region e.g. us-east-1&gt;.amazonaws.com</code> as the endpoint.</p>
 <p>The access and secret keys for <em>play.min.io</em> are stored inside the <code>~/.mc/config.json</code> file configured after installing the <a href="https://min.io/docs/minio/linux/reference/minio-mc.html">minio client</a>.</p>
-<p>The script <code>minio_podman_setup.sh</code> downloads configures and runs a <em>minio</em> server instance inside a container using <em>podman</em>.</p>
+<p>The <code>minio_podman_setup.sh</code> script downloads configures and runs a <em>minio</em> server instance inside a container using <em>podman</em>.</p>
 <p>Run the script after building all the applications, making sure that the <code>s3-gen-credentials</code> executable is findable through the <code>PATH</code> variable.</p>
 <p>Usage </p><div class="fragment"><div class="line">./minio_podman_setup.sh &lt;minio alias&gt; &lt;data path&gt;</div>
 </div><!-- fragment --><p> Run </p><div class="fragment"><div class="line">chmod u+x ./minio_podman_setup.sh</div>
 <div class="line">./minio_podman_setup.sh myalias ~/tmp/minio_data</div>
-</div><!-- fragment --><p>In cases where the <em>minio</em> server is already installed and available, you can invoke the <code>minio_run_server.sh</code> instead.</p>
+</div><!-- fragment --><p>In cases where the <em>minio</em> server is already installed and available, you can invoke the <code>minio_run_server.sh</code> script instead.</p>
 <div class="fragment"><div class="line">chmod u+x ./minio_run_server.sh</div>
 <div class="line">./minio_run_server.sh myalias ~/tmp/minio_data</div>
-</div><!-- fragment --><p>Both scripts output access, secret and URL which should be stored into environment variables, the optional third argument to the scripts is the name of the file where environment variables are stored: use <code>source</code> &lt;filename&gt; to set all environment variables.</p>
-<p>The <code>test</code> directory includes tests for the high level interface and the S3 API.</p>
+</div><!-- fragment --><p>Both scripts output access, secret and URL which should be stored into environment variables, the optional third argument to the scripts is the name of the file where environment variables are stored: use <code>source &lt;filename&gt;</code> to set all environment variables.</p>
+<p>The <code>test</code> directory includes tests for the high-level interface and the S3 API.</p>
 <p>All tests require passing the name of the environment variables storing access, secret and endpoint URL information.</p>
 <p>The provided <code>.sh</code> scripts inside the <code>test</code> directory can run all the tests at once.</p>
 <h1><a class="anchor" id="autotoc_md20"></a>
@@ -454,7 +454,7 @@ License</h1>
 <ul>
 <li><em>libcurl</em> - distributed under the curl license, derived from MIT/X</li>
 <li><em>Lyra</em> - distributed under the Boost license version 1.0</li>
-<li><em>Tinyxml2</em> - zlib (included in source tree)</li>
+<li><em>Tinyxml2</em> - zlib (included in the source tree)</li>
 <li><em>Doxygen Awesome</em> - MIT </li>
 </ul>
 </div></div><!-- PageDoc -->

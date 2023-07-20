@@ -193,58 +193,7 @@ var sectionId = 'dynsection-1';
 <!-- Node4 -->
 <g id="node4" class="node">
 <title>Node4</title>
-<g id="a_node4"><a xlink:href="parallel__upload_8cpp.html" target="_top" xlink:title="Parallel upload to S3 service.">
-<polygon fill="none" stroke="black" points="149,-78.5 149,-119.5 280,-119.5 280,-78.5 149,-78.5"/>
-<text text-anchor="start" x="157" y="-107.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
-<text text-anchor="start" x="157" y="-96.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/apps</text>
-<text text-anchor="middle" x="214.5" y="-85.5" font-family="Helvetica,sans-Serif" font-size="10.00">/parallel_upload.cpp</text>
-</a>
-</g>
-</g>
-<!-- Node3&#45;&gt;Node4 -->
-<g id="edge3" class="edge">
-<title>Node3&#45;&gt;Node4</title>
-<path fill="none" stroke="midnightblue" d="M319.68,-151.91C298.51,-141.46 274.03,-129.38 254.02,-119.51"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="318.32,-155.14 328.84,-156.43 321.42,-148.86 318.32,-155.14"/>
-</g>
-<!-- Node5 -->
-<g id="node5" class="node">
-<title>Node5</title>
-<g id="a_node5"><a xlink:href="apps_2s3-client_8cpp.html" target="_top" xlink:title="Send S3v4&#45;signed requests to S3 andpoint and print raw responses.">
-<polygon fill="none" stroke="black" points="0,-78.5 0,-119.5 131,-119.5 131,-78.5 0,-78.5"/>
-<text text-anchor="start" x="8" y="-107.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
-<text text-anchor="start" x="8" y="-96.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/apps</text>
-<text text-anchor="middle" x="65.5" y="-85.5" font-family="Helvetica,sans-Serif" font-size="10.00">/s3&#45;client.cpp</text>
-</a>
-</g>
-</g>
-<!-- Node3&#45;&gt;Node5 -->
-<g id="edge4" class="edge">
-<title>Node3&#45;&gt;Node5</title>
-<path fill="none" stroke="midnightblue" d="M293.33,-158.1C248.58,-147.33 190.72,-133.18 139.5,-120 136.79,-119.3 134.03,-118.59 131.25,-117.86"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="292.71,-161.55 303.25,-160.49 294.34,-154.74 292.71,-161.55"/>
-</g>
-<!-- Node6 -->
-<g id="node6" class="node">
-<title>Node6</title>
-<g id="a_node6"><a xlink:href="parallel__download_8cpp.html" target="_top" xlink:title="Parallel object download download from S3 service.">
-<polygon fill="none" stroke="black" points="298,-78.5 298,-119.5 429,-119.5 429,-78.5 298,-78.5"/>
-<text text-anchor="start" x="306" y="-107.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
-<text text-anchor="start" x="306" y="-96.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/apps</text>
-<text text-anchor="middle" x="363.5" y="-85.5" font-family="Helvetica,sans-Serif" font-size="10.00">/parallel_download.cpp</text>
-</a>
-</g>
-</g>
-<!-- Node3&#45;&gt;Node6 -->
-<g id="edge5" class="edge">
-<title>Node3&#45;&gt;Node6</title>
-<path fill="none" stroke="midnightblue" d="M366.55,-146.3C365.95,-137.3 365.32,-127.65 364.78,-119.51"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="363.06,-146.68 367.21,-156.43 370.05,-146.22 363.06,-146.68"/>
-</g>
-<!-- Node7 -->
-<g id="node7" class="node">
-<title>Node7</title>
-<g id="a_node7"><a xlink:href="presign__url_8cpp.html" target="_top" xlink:title="Presign URL.">
+<g id="a_node4"><a xlink:href="presign__url_8cpp.html" target="_top" xlink:title="Presign URL.">
 <polygon fill="none" stroke="black" points="447,-78.5 447,-119.5 578,-119.5 578,-78.5 447,-78.5"/>
 <text text-anchor="start" x="455" y="-107.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
 <text text-anchor="start" x="455" y="-96.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/apps</text>
@@ -252,11 +201,62 @@ var sectionId = 'dynsection-1';
 </a>
 </g>
 </g>
+<!-- Node3&#45;&gt;Node4 -->
+<g id="edge3" class="edge">
+<title>Node3&#45;&gt;Node4</title>
+<path fill="none" stroke="midnightblue" d="M414.68,-151.63C434.36,-141.24 457,-129.29 475.54,-119.51"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="412.79,-148.67 405.58,-156.43 416.06,-154.86 412.79,-148.67"/>
+</g>
+<!-- Node5 -->
+<g id="node5" class="node">
+<title>Node5</title>
+<g id="a_node5"><a xlink:href="apps_2s3-client_8cpp.html" target="_top" xlink:title="Send S3v4&#45;signed requests to S3 andpoint and print raw responses.">
+<polygon fill="none" stroke="black" points="149,-78.5 149,-119.5 280,-119.5 280,-78.5 149,-78.5"/>
+<text text-anchor="start" x="157" y="-107.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
+<text text-anchor="start" x="157" y="-96.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/apps</text>
+<text text-anchor="middle" x="214.5" y="-85.5" font-family="Helvetica,sans-Serif" font-size="10.00">/s3&#45;client.cpp</text>
+</a>
+</g>
+</g>
+<!-- Node3&#45;&gt;Node5 -->
+<g id="edge4" class="edge">
+<title>Node3&#45;&gt;Node5</title>
+<path fill="none" stroke="midnightblue" d="M319.68,-151.91C298.51,-141.46 274.03,-129.38 254.02,-119.51"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="318.32,-155.14 328.84,-156.43 321.42,-148.86 318.32,-155.14"/>
+</g>
+<!-- Node6 -->
+<g id="node6" class="node">
+<title>Node6</title>
+<g id="a_node6"><a xlink:href="parallel__upload_8cpp.html" target="_top" xlink:title="Parallel upload to S3 service.">
+<polygon fill="none" stroke="black" points="0,-78.5 0,-119.5 131,-119.5 131,-78.5 0,-78.5"/>
+<text text-anchor="start" x="8" y="-107.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
+<text text-anchor="start" x="8" y="-96.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/apps</text>
+<text text-anchor="middle" x="65.5" y="-85.5" font-family="Helvetica,sans-Serif" font-size="10.00">/parallel_upload.cpp</text>
+</a>
+</g>
+</g>
+<!-- Node3&#45;&gt;Node6 -->
+<g id="edge5" class="edge">
+<title>Node3&#45;&gt;Node6</title>
+<path fill="none" stroke="midnightblue" d="M293.33,-158.1C248.58,-147.33 190.72,-133.18 139.5,-120 136.79,-119.3 134.03,-118.59 131.25,-117.86"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="292.71,-161.55 303.25,-160.49 294.34,-154.74 292.71,-161.55"/>
+</g>
+<!-- Node7 -->
+<g id="node7" class="node">
+<title>Node7</title>
+<g id="a_node7"><a xlink:href="parallel__download_8cpp.html" target="_top" xlink:title="Parallel object download download from S3 service.">
+<polygon fill="none" stroke="black" points="298,-78.5 298,-119.5 429,-119.5 429,-78.5 298,-78.5"/>
+<text text-anchor="start" x="306" y="-107.5" font-family="Helvetica,sans-Serif" font-size="10.00">/home/ugovaretto/projects</text>
+<text text-anchor="start" x="306" y="-96.5" font-family="Helvetica,sans-Serif" font-size="10.00">/uv&#45;cpp/s3client/repo/apps</text>
+<text text-anchor="middle" x="363.5" y="-85.5" font-family="Helvetica,sans-Serif" font-size="10.00">/parallel_download.cpp</text>
+</a>
+</g>
+</g>
 <!-- Node3&#45;&gt;Node7 -->
 <g id="edge6" class="edge">
 <title>Node3&#45;&gt;Node7</title>
-<path fill="none" stroke="midnightblue" d="M414.68,-151.63C434.36,-141.24 457,-129.29 475.54,-119.51"/>
-<polygon fill="midnightblue" stroke="midnightblue" points="412.79,-148.67 405.58,-156.43 416.06,-154.86 412.79,-148.67"/>
+<path fill="none" stroke="midnightblue" d="M366.55,-146.3C365.95,-137.3 365.32,-127.65 364.78,-119.51"/>
+<polygon fill="midnightblue" stroke="midnightblue" points="363.06,-146.68 367.21,-156.43 370.05,-146.22 363.06,-146.68"/>
 </g>
 <!-- Node3&#45;&gt;Node8 -->
 <g id="edge7" class="edge">
@@ -304,15 +304,15 @@ var sectionId = 'dynsection-1';
 <path fill="none" stroke="midnightblue" d="M244.16,-308.47C269.63,-297.89 299.33,-285.56 323.53,-275.51"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="242.52,-305.36 234.63,-312.43 245.2,-311.82 242.52,-305.36"/>
 </g>
-<!-- Node11&#45;&gt;Node4 -->
+<!-- Node11&#45;&gt;Node5 -->
 <g id="edge13" class="edge">
-<title>Node11&#45;&gt;Node4</title>
+<title>Node11&#45;&gt;Node5</title>
 <path fill="none" stroke="midnightblue" d="M190.98,-302.11C196.58,-253.94 207.47,-160.44 212.2,-119.73"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="187.48,-301.88 189.8,-312.22 194.43,-302.69 187.48,-301.88"/>
 </g>
-<!-- Node11&#45;&gt;Node5 -->
+<!-- Node11&#45;&gt;Node6 -->
 <g id="edge14" class="edge">
-<title>Node11&#45;&gt;Node5</title>
+<title>Node11&#45;&gt;Node6</title>
 <path fill="none" stroke="midnightblue" d="M172.42,-303.32C147.28,-255.52 97.46,-160.78 75.88,-119.73"/>
 <polygon fill="midnightblue" stroke="midnightblue" points="169.35,-305 177.1,-312.22 175.54,-301.74 169.35,-305"/>
 </g>

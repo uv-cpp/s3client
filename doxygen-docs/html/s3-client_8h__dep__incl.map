@@ -1,9 +1,9 @@
 <map id="/home/ugovaretto/projects/uv&#45;cpp/s3client/repo/lib/include/s3&#45;client.h" name="/home/ugovaretto/projects/uv&#45;cpp/s3client/repo/lib/include/s3&#45;client.h">
 <area shape="rect" id="node1" title="declaration of functions and data types for sending S3 requests, signing URLs and downloading and upl..." alt="" coords="403,5,577,61"/>
-<area shape="rect" id="node2" href="$parallel__upload_8cpp.html" title="Parallel upload to S3 service." alt="" coords="5,109,180,165"/>
+<area shape="rect" id="node2" href="$presign__url_8cpp.html" title="Presign URL." alt="" coords="5,109,180,165"/>
 <area shape="rect" id="node3" href="$apps_2s3-client_8cpp.html" title="Send S3v4&#45;signed requests to S3 andpoint and print raw responses." alt="" coords="204,109,379,165"/>
-<area shape="rect" id="node4" href="$parallel__download_8cpp.html" title="Parallel object download download from S3 service." alt="" coords="403,109,577,165"/>
-<area shape="rect" id="node5" href="$presign__url_8cpp.html" title="Presign URL." alt="" coords="601,109,776,165"/>
+<area shape="rect" id="node4" href="$parallel__upload_8cpp.html" title="Parallel upload to S3 service." alt="" coords="403,109,577,165"/>
+<area shape="rect" id="node5" href="$parallel__download_8cpp.html" title="Parallel object download download from S3 service." alt="" coords="601,109,776,165"/>
 <area shape="rect" id="node6" href="$s3-api_8h.html" title="declarations of S3Api class." alt="" coords="801,109,974,165"/>
 <area shape="rect" id="node7" href="$bucket-test_8cpp.html" title="bucket tests" alt="" coords="702,213,875,269"/>
 <area shape="rect" id="node8" href="$xmlstreams_8h.html" title="xml parser and generator." alt="" coords="899,213,1073,269"/>
