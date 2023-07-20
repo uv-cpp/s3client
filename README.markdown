@@ -17,7 +17,7 @@ S3 API accessible through the `libs3client` library, see `s3-api.h` and
 Check out the `app` and `test` folders for usage examples.
 
 A small subset of the S3 actions is implemented, but any request can be sent 
-through the `S3API::Send` method and `SendS3Request` function.
+through the `S3Api::Send` method and `SendS3Request` function.
 
 XML requests and responses can be generated and parsed using the provided
 high-level XML parsing and generation functions;
