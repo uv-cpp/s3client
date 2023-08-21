@@ -105,7 +105,7 @@ $(document).ready(function(){initNavTree('md_docs_2custom__request.html',''); in
   <div class="headertitle"><div class="title">Implementing custom requests</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md23"></a> The provided functions and classes only support a basic subset of the AWS API; all the methods simply invoke the <code>S3Api::Send</code> method and return the parsed response. The preference is to avoid creating a fat interface with all the currently supported actions exposed as class methods which makes it impossible to extend the interface, and instead add free functions receiving a context argument and the relevant parameters to implement additional requests.</p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md2"></a> The provided functions and classes only support a basic subset of the AWS API; all the methods simply invoke the <code>S3Api::Send</code> method and return the parsed response. The preference is to avoid creating a fat interface with all the currently supported actions exposed as class methods which makes it impossible to extend the interface, and instead add free functions receiving a context argument and the relevant parameters to implement additional requests.</p>
 <p>The main value of the current implementation (and other similar C++ clients) is the generation and parsing of XML text in addition to S3v4 signing. However, client code will most likely need to translate from the returned objects to their own domain-specific internal representation and it might therefore be easier to just parse the XML directly instead of mapping XML constructs to pre-defined C++ structs.</p>
 <p>Any of the requests listed <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_Operations_Amazon_Simple_Storage_Service.html">here</a> can be sent using this library by:</p>
 <ol type="1">
@@ -122,7 +122,7 @@ $(document).ready(function(){initNavTree('md_docs_2custom__request.html',''); in
 </ul>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md27"></a>
+<h1><a class="anchor" id="autotoc_md7"></a>
 Example: Bucket tagging</h1>
 <p>We wold like to add the ability to tag buckets using code like:</p>
 <div class="fragment"><div class="line">TagMap tags = {{<span class="stringliteral">&quot;tag1&quot;</span>, <span class="stringliteral">&quot;value1&quot;</span>}, {<span class="stringliteral">&quot;tag2&quot;</span>, <span class="stringliteral">&quot;value2&quot;</span>}};</div>
@@ -133,7 +133,7 @@ Example: Bucket tagging</h1>
 <div class="line">TagMap tags = BucketTags(s3, bucket);</div>
 <div class="line">assert(tags[<span class="stringliteral">&quot;tags1&quot;</span>] == <span class="stringliteral">&quot;value1&quot;</span> &amp;&amp; tags[<span class="stringliteral">&quot;tags2&quot;</span>] == <span class="stringliteral">&quot;value2&quot;</span>);</div>
 </div><!-- fragment --><p>In the next section we are going to implement the <code>TagBucket</code> and <code>BucketTags</code> functions.</p>
-<h2><a class="anchor" id="autotoc_md28"></a>
+<h2><a class="anchor" id="autotoc_md9"></a>
 TagBucket: PutBucketTagging request</h2>
 <p>XML request body:</p>
 <p><a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_PutBucketTagging.html">AWS Action</a></p>
@@ -190,7 +190,7 @@ TagBucket: PutBucketTagging request</h2>
 <div class="line">}</div>
 <div class="ttc" id="aclasssss_1_1api_1_1S3Api_html"><div class="ttname"><a href="classsss_1_1api_1_1S3Api.html">sss::api::S3Api</a></div><div class="ttdoc">S3 Client inteface.</div><div class="ttdef"><b>Definition</b> s3-api.h:193</div></div>
 <div class="ttc" id="aclasssss_1_1api_1_1S3Api_html_ad09581bf28c4bbbcbb71b329959ec1ae"><div class="ttname"><a href="classsss_1_1api_1_1S3Api.html#ad09581bf28c4bbbcbb71b329959ec1ae">sss::api::S3Api::Send</a></div><div class="ttdeci">const WebClient &amp; Send(const SendParams &amp;p)</div><div class="ttdoc">Send request.</div><div class="ttdef"><b>Definition</b> s3-api.h:329</div></div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md29"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md11"></a>
 &lt;tt&gt;BucketTags&lt;/tt&gt;: GetBucketTagging response</h2>
 <p>XML response body:</p>
 <p><a href="https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketTagging.html">AWS Action</a></p>
