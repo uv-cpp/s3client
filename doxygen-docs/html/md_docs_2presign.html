@@ -105,17 +105,17 @@ $(document).ready(function(){initNavTree('md_docs_2presign.html',''); initResiza
   <div class="headertitle"><div class="title">Presign</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md21"></a> All requests can be issued through standard web clients such as <code>curl</code> specifying a pre-signed url on the command line.</p>
-<h1><a class="anchor" id="autotoc_md22"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md17"></a> All requests can be issued through standard web clients such as <code>curl</code> specifying a pre-signed url on the command line.</p>
+<h1><a class="anchor" id="autotoc_md18"></a>
 Example: Upload object</h1>
-<h2><a class="anchor" id="autotoc_md23"></a>
+<h2><a class="anchor" id="autotoc_md19"></a>
 Presign URL</h2>
 <p>Specify method, bucket name and key and expiration time of 10k seconds.</p>
 <div class="fragment"><div class="line">export PRESIGN=`build/s3-presign -a $S3CLIENT_TEST_ACCESS -s $S3CLIENT_TEST_SECRET -e $S3CLIENT_TEST_URL -m &quot;PUT&quot; -x 10000 -b buck -k xxx`</div>
-</div><!-- fragment --> <h2><a class="anchor" id="autotoc_md24"></a>
+</div><!-- fragment --> <h2><a class="anchor" id="autotoc_md20"></a>
 Upload object</h2>
 <p>Invoke <code>curl</code> and specify custom metadata field by adding an <code>x-amz-meta-</code> header. </p><div class="fragment"><div class="line">curl $PRESIGN -X PUT -F &quot;file=@CMakeCache.txt&quot; -H &quot;x-amz-meta-mymeta:123&quot;</div>
-</div><!-- fragment --> <h2><a class="anchor" id="autotoc_md25"></a>
+</div><!-- fragment --> <h2><a class="anchor" id="autotoc_md21"></a>
 Verify upload</h2>
 <p>Invoke <em>HEAD</em> operation on uploaded object and read metadata.</p>
 <div class="fragment"><div class="line">build/s3-client -a $S3CLIENT_TEST_ACCESS -s $S3CLIENT_TEST_SECRET -e $S3CLIENT_TEST_URL -b buck -k xxx -m HEAD</div>
