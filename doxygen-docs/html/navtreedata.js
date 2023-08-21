@@ -27,12 +27,12 @@ var NAVTREE =
   [ "SSS - S3 Toolkit", "index.html", [
     [ "S3 Toolkit", "index.html", "index" ],
     [ "API Test", "md_docs_2apitest.html", [
-      [ "Configuration", "md_docs_2apitest.html#autotoc_md1", null ]
+      [ "Configuration", "md_docs_2apitest.html#autotoc_md16", null ]
     ] ],
     [ "Implementing custom requests", "md_docs_2custom__request.html", [
-      [ "Example: Bucket tagging", "md_docs_2custom__request.html#autotoc_md8", [
-        [ "<tt>TagBucket</tt>: PutBucketTagging request", "md_docs_2custom__request.html#autotoc_md9", null ],
-        [ "<tt>BucketTags</tt>: GetBucketTagging response", "md_docs_2custom__request.html#autotoc_md10", null ]
+      [ "Example: Bucket tagging", "md_docs_2custom__request.html#autotoc_md18", [
+        [ "<tt>TagBucket</tt>: PutBucketTagging request", "md_docs_2custom__request.html#autotoc_md19", null ],
+        [ "<tt>BucketTags</tt>: GetBucketTagging response", "md_docs_2custom__request.html#autotoc_md20", null ]
       ] ]
     ] ],
     [ "Presign", "md_docs_2presign.html", [
