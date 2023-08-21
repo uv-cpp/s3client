@@ -1,8 +1,0 @@
-<map id="sss::HTTPHeaders" name="sss::HTTPHeaders">
-<area shape="rect" id="node1" title="Extract and return HTTP headers as key&#45;value pairs." alt="" coords="504,71,639,98"/>
-<area shape="rect" id="node2" href="$classsss_1_1api_1_1S3Api.html#a834e046a52178dcf540509df828b024f" title="Get returned HTTP headers. Use this method to retrieve additional information e.g...." alt="" coords="257,5,456,47"/>
-<area shape="rect" id="node3" href="$classsss_1_1api_1_1S3Api.html#aa4a2b1cc2c89a52d1aa89e571b785db2" title=" " alt="" coords="261,71,452,98"/>
-<area shape="rect" id="node4" href="$classsss_1_1api_1_1S3Api.html#a0382afb5f4a42d477af76ea322324ddd" title="Send HeadObject request." alt="" coords="263,122,451,149"/>
-<area shape="rect" id="node5" href="$classsss_1_1api_1_1S3Api.html#ae6a826615a079564b77bb680b6b75a34" title="Return object size." alt="" coords="5,97,209,123"/>
-<area shape="rect" id="node6" href="$classsss_1_1api_1_1S3Api.html#aa3f7a3001bdad58c7b0c04cbd0dc3236" title="Check if key exists." alt="" coords="16,147,199,174"/>
-</map>

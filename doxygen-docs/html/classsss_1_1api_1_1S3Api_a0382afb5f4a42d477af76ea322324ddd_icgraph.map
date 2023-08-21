@@ -1,5 +1,0 @@
-<map id="sss::api::S3Api::HeadObject" name="sss::api::S3Api::HeadObject">
-<area shape="rect" id="node1" title="Send HeadObject request." alt="" coords="257,31,445,57"/>
-<area shape="rect" id="node2" href="$classsss_1_1api_1_1S3Api.html#ae6a826615a079564b77bb680b6b75a34" title="Return object size." alt="" coords="5,5,209,32"/>
-<area shape="rect" id="node3" href="$classsss_1_1api_1_1S3Api.html#aa3f7a3001bdad58c7b0c04cbd0dc3236" title="Check if key exists." alt="" coords="16,56,199,83"/>
-</map>
