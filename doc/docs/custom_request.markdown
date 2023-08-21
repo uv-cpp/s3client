@@ -50,7 +50,7 @@ and read the tags with:
 In the next section we are going to implement the 
 `TagBucket` and `BucketTags` functions. 
 
-### `TagBucket`: PutBucketTagging request
+### TagBucket: PutBucketTagging request
 
 XML request body:
  
