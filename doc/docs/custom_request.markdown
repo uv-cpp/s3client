@@ -12,7 +12,8 @@ The main value of the current implementation (and other similar C++ clients)
 is the generation and parsing of XML text in addition to S3v4 signing.
 However, client code will most likely need to translate from the returned
 objects to their own domain-specific internal representation and it might
-therefore be easier to just parse the XML directly.
+therefore be easier to just parse the XML directly instead of mapping
+XML constructs to pre-defined C++ structs.
 
 Any of the requests listed [here](https://docs.aws.amazon.com/AmazonS3/latest/API/API_Operations_Amazon_Simple_Storage_Service.html)
 can be sent using this library by:
@@ -27,7 +28,7 @@ can be sent using this library by:
     or use a library like pugixml (XPath compliant, value semantics, supports
 range based loops)
     - in addition to high-level parsing functions, tinyXML2 is included in the
-    source tree, used internally, and can be used as well by client code
+    source tree, used internally but can be used as well by client code
 
 ## Example: Bucket tagging
 
@@ -35,7 +36,7 @@ We wold like to add the ability to tag buckets using code like:
 
 ```cpp
   TagMap tags = {{"tag1", "value1"}, {"tag2", "value2"}};
-  S3Api s(access, secret, endpointUrl);
+  S3Api s3(access, secret, endpointUrl);
   TagBucket(s3, "MyBucket", tags);
 ```
 and read the tags with:

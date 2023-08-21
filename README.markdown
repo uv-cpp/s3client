@@ -36,7 +36,7 @@ parallel file-systems with `stripe size = N * (part size)`.
 
 The code is `C++17` compliant.
 
-When disabling S3v4 signing the library can be used as a generic HTTP client
+When disabling S3v4 signing, the library can be used as a generic HTTP client
 library.
 
 Work to enable multi-level asynchronous operations is ongoing: each thread
@@ -58,11 +58,10 @@ Launch without arguments to see options.
 
 ## Build and install
 
-The `install.sh` script includes the code for checking out the code, building
+The `install.sh` script includes the code for checking out the repository and building
 and installing applications and libraries.
 Just [download](https://raw.githubusercontent.com/uv-cpp/s3client/main/install.sh)
 and run.
-
 
 ```sh
 bash ./install.sh <install path>
@@ -100,7 +99,7 @@ In order to test the tools and API you need access to an S3 storage service.
 One option is to use the free *play.min.io* service; other options are to 
 configure a local instance of the *minio* server or use an AWS S3 account.
 
-When testing with an AWS S3 account extract credentials from file `.aws/credentials`
+When testing with an AWS S3 account extract credentials from the file `.aws/credentials`
 and use the url: `https://s3.<region e.g. us-east-1>.amazonaws.com` as the endpoint.
 
 The access and secret keys for *play.min.io* are stored inside the
@@ -148,8 +147,7 @@ at once.
 ## Parallel data transfer
 
 The following considerations apply to the transfer of single large files
-over fast connections only (at least 10 Gib/s) and to S3 services able
-to ingest data at GiB/s rate.
+over fast connections only (at least 10 Gib/s).
 
 Parallel reads and writes from/to flash memory are faster than serial 
 ones, but with spinning disks the overall performance might not be 

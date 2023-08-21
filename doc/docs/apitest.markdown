@@ -9,7 +9,7 @@ Each test driver contains multiple tests printing output to `stdin` in *CSV* for
 
 `<test name>,<result = `1` for pass | `0` for fail>,<blank | optional error message>`
 
-and checks that an S3 endpoint is available and accessible and report an error in case of failure. 
+and checks that an S3 endpoint is available and accessible and reports an error in case of failure. 
 
 The test drivers will create buckets and objects named `sss-api-test-` + timestamp.
 
