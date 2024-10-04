@@ -94,7 +94,7 @@ struct ObjectInfo {
   std::string ownerID;
 };
 
-/// \brief XML -> C++ mapping of \c Grante record
+/// \brief XML -> C++ mapping of \c Grant record
 /// See https://docs.aws.amazon.com/AmazonS3/latest/API/API_GetBucketAcl.html
 /// \code{.cpp}
 /// struct Grant {

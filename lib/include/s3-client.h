@@ -1,4 +1,4 @@
-/*******************************************************************************
+k/*******************************************************************************
  * BSD 3-Clause License
  *
  * Copyright (c) 2020-2023, Ugo Varetto
@@ -55,7 +55,7 @@ using StringArray = std::vector<std::string>;
 using ETag = std::string;
 /// \brief {meta data header, meta data value}
 using MetaDataMap = std::map<std::string, std::string>;
-/// \brief multiplart upload id returned when starting a multipart uplaod
+/// \brief multiplart upload id returned when starting a multipart upload
 /// operation
 using UploadId = std::string;
 /**

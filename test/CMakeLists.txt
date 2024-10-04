@@ -71,5 +71,5 @@ target_link_libraries(presign-url-test s3client)
 target_link_libraries(xml-parse-test s3client)
 
 #include(GNUInstallDirs)
-#install(TARGETS bucket-test object-test multipart-uplaod-test 
+#install(TARGETS bucket-test object-test multipart-upload-test 
 #        RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/share/sss)

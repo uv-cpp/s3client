@@ -125,7 +125,7 @@ string UploadFile(const S3DataTransferConfig &cfg, const MetaDataMap &metaData,
   const string endpoint =
       cfg.endpoints[RandomIndex(0, cfg.endpoints.size() - 1)];
   S3Api s3(cfg.accessKey, cfg.secretKey, endpoint);
-  // begin uplaod request -> get upload id
+  // begin upload request -> get upload id
   const auto uploadId =
       s3.CreateMultipartUpload(cfg.bucket, cfg.key, 0, metaData);
 
@@ -160,7 +160,7 @@ string UploadData(const S3DataTransferConfig &cfg, const MetaDataMap &metaData,
   const string endpoint =
       cfg.endpoints[RandomIndex(0, cfg.endpoints.size() - 1)];
   S3Api s3(cfg.accessKey, cfg.secretKey, endpoint);
-  // begin uplaod request -> get upload id
+  // begin upload request -> get upload id
   const auto uploadId =
       s3.CreateMultipartUpload(cfg.bucket, cfg.key, 0, metaData);
 

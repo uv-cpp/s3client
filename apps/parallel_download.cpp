@@ -37,7 +37,7 @@
 
 /**
  * \file parallel_download.cpp
- * \brief Parallel object download download from S3 service
+ * \brief Parallel object download from S3 service
  */
 /// [Parallel object download]
 #include "lyra/lyra.hpp"
@@ -118,7 +118,7 @@ int main(int argc, char const *argv[]) {
       config.endpoints.push_back(endpoint);
     } else {
       if (endpointsFile.empty()) {
-        cerr << "Specify either an endpoing or a file to read endpoints from"
+        cerr << "Specify either an endpoint or a file to read endpoints from"
              << endl;
         exit(EXIT_FAILURE);
       }

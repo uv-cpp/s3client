@@ -39,7 +39,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project(s3-client
         VERSION 0.9.8
-        DESCRIPTION "Tools to sign and send S3 requests and to performan parallel object uplaod/download"
+        DESCRIPTION "Tools to sign and send S3 requests and to perform parallel object upload/download"
         LANGUAGES CXX)
 
 option(APPS "Build Apps" ON)
