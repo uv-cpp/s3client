@@ -20,3 +20,7 @@ repo
 doxygen*
 .nojekyll
 .#*
+*~
+\#*\#
+.\#*
+compile_commands.json
