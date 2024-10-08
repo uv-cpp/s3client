@@ -26,3 +26,4 @@ doxygen*
 compile_commands.json
 .project.el
 .projectile
+TAGS
